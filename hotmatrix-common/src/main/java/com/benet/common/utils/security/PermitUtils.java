@@ -7,8 +7,6 @@ import java.beans.PropertyDescriptor;
 import com.benet.common.constant.PmtConstants;
 import com.benet.common.utils.data.MessageUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,37 +81,5 @@ public class PermitUtils
             msg = MessageUtils.message(VIEW_PERMISSION, permission);
         }
         return msg;
-    }
-
-    /**
-     * 返回用户属性值
-     *
-     * @param property 属性名称
-     * @return 用户属性值
-     */
-    public static Object getPrincipalProperty(String property)
-    {
-        Subject subject = SecurityUtils.getSubject();
-        if (subject != null)
-        {
-            Object principal = subject.getPrincipal();
-            try
-            {
-                BeanInfo bi = Introspector.getBeanInfo(principal.getClass());
-                for (PropertyDescriptor pd : bi.getPropertyDescriptors())
-                {
-                    if (pd.getName().equals(property) == true)
-                    {
-                        return pd.getReadMethod().invoke(principal, (Object[]) null);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                log.error("Error reading property [{}] from principal of type [{}]", property,
-                        principal.getClass().getName());
-            }
-        }
-        return null;
     }
 }

@@ -7,7 +7,6 @@ import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.manager.AsyncManager;
 import com.benet.framework.manager.factory.AsyncFactory;
-import com.benet.framework.utils.ShiroUtils;
 import com.benet.system.domain.SysOperLog;
 import com.benet.system.domain.SysUser;
 import org.aspectj.lang.JoinPoint;
@@ -76,13 +75,15 @@ public class OperatelogAspect
             }
 
             // 获取当前的用户
-            SysUser currentUser = ShiroUtils.getSysUser();
+            //SysUser currentUser = ShiroUtils.getSysUser();
+            SysUser currentUser = null;
 
             // *========数据库日志=========*//
             SysOperLog operLog = new SysOperLog();
             operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
             // 请求的地址
-            String ip = ShiroUtils.getIp();
+            //String ip = ShiroUtils.getIp();
+            String ip = "";
             operLog.setOperIp(ip);
             // 返回参数
             operLog.setJsonResult(JsonHelper.marshal(jsonResult));

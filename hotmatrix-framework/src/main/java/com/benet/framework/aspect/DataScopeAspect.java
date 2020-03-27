@@ -3,7 +3,6 @@ package com.benet.framework.aspect;
 import com.benet.common.annotation.DataScope;
 import com.benet.common.core.domain.BaseEntity;
 import com.benet.common.utils.string.StringUtils;
-import com.benet.framework.utils.ShiroUtils;
 import com.benet.system.domain.SysRole;
 import com.benet.system.domain.SysUser;
 import org.aspectj.lang.JoinPoint;
@@ -76,7 +75,8 @@ public class DataScopeAspect
             return;
         }
         // 获取当前的用户
-        SysUser currentUser = ShiroUtils.getSysUser();
+        //SysUser currentUser = ShiroUtils.getSysUser();
+        SysUser currentUser = null;
         if (currentUser != null)
         {
             // 如果是超级管理员，则不过滤数据

@@ -6,7 +6,6 @@ import com.benet.common.core.domain.AjaxResult;
 import com.benet.common.exception.BusinessException;
 import com.benet.common.utils.security.PermitUtils;
 import com.benet.common.utils.web.ServletUtils;
-import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
@@ -28,8 +27,8 @@ public class GlobalExceptionHandler
     /**
      * 权限校验失败 如果请求为ajax返回json，普通请求跳转页面
      */
-    @ExceptionHandler(AuthorizationException.class)
-    public Object handleAuthorizationException(HttpServletRequest request, AuthorizationException e)
+    //@ExceptionHandler(AuthorizationException.class)
+    public Object handleAuthorizationException(HttpServletRequest request, Exception e)
     {
         log.error(e.getMessage(), e);
         if (ServletUtils.isAjaxRequest(request))

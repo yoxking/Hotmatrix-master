@@ -1,8 +1,5 @@
 package com.benet.framework.manager;
 
-import com.benet.framework.shiro.web.session.SpringSessionValidationScheduler;
-import net.sf.ehcache.CacheManager;
-import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +16,11 @@ public class ShutupManager
 {
     private static final Logger logger = LoggerFactory.getLogger("sys-user");
 
-    @Autowired(required = false)
+   /* @Autowired(required = false)
     private SpringSessionValidationScheduler springSessionValidationScheduler;
 
     @Autowired(required = false)
-    private EhCacheManager ehCacheManager;
+    private EhCacheManager ehCacheManager;*/
 
     @PreDestroy
     public void destroy()
@@ -38,7 +35,7 @@ public class ShutupManager
      */
     private void shutdownSpringSessionValidationScheduler()
     {
-        if (springSessionValidationScheduler != null && springSessionValidationScheduler.isEnabled())
+        /*if (springSessionValidationScheduler != null && springSessionValidationScheduler.isEnabled())
         {
             try
             {
@@ -49,7 +46,7 @@ public class ShutupManager
             {
                 logger.error(e.getMessage(), e);
             }
-        }
+        }*/
     }
 
     /**
@@ -70,7 +67,7 @@ public class ShutupManager
 
     private void shutdownEhCacheManager()
     {
-        try
+        /*try
         {
             logger.info("====关闭缓存====");
             if (ehCacheManager != null)
@@ -82,6 +79,6 @@ public class ShutupManager
         catch (Exception e)
         {
             logger.error(e.getMessage(), e);
-        }
+        }*/
     }
 }

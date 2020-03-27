@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.benet.common.json.JsonHelper;
 import com.benet.common.utils.net.IpnetUtils;
-import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,7 +121,8 @@ public class OplogUtils
 
     protected static String getUsername()
     {
-        return (String) SecurityUtils.getSubject().getPrincipal();
+        //return (String) SecurityUtils.getSubject().getPrincipal();
+        return "";
     }
 
     public static Logger getAccessLog()
