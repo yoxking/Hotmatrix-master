@@ -3,6 +3,7 @@ package com.benet.system.mapper;
 import java.util.List;
 
 import com.benet.system.domain.SysUserRole;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -10,6 +11,7 @@ import org.apache.ibatis.annotations.Param;
  * 
  * @author ruoyi
  */
+@Mapper
 public interface SysUserRoleMapper
 {
     /**

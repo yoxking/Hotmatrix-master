@@ -29,11 +29,11 @@
         <velocity.version>1.7</velocity.version>
         <swagger.version>2.9.2</swagger.version>
         <fastjson.version>1.2.67</fastjson.version>
-        <javajwt.version>0.9.1</javajwt.version>
+        <javajwt.version>0.9.0</javajwt.version>
         <commons.io.version>2.6</commons.io.version>
         <commons.fileupload.version>1.4</commons.fileupload.version>
         <poi.version>3.17</poi.version>
-        <jedis.version>3.2.0</jedis.version>
+        <jedis.version>3.1.0</jedis.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -136,26 +136,6 @@
                 <version>${fastjson.version}</version>
             </dependency>
 
-            <!-- redis 缓存操作 -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-data-redis</artifactId>
-                <version>2.2.5.RELEASE</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>io.lettuce</groupId>
-                        <artifactId>lettuce-core</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <!-- jedis客户端 -->
-            <dependency>
-                <groupId>redis.clients</groupId>
-                <artifactId>jedis</artifactId>
-                <version>${jedis.version}</version>
-            </dependency>
-
             <!--io常用工具类 -->
             <dependency>
                 <groupId>commons-io</groupId>
@@ -188,11 +168,11 @@
     </dependencyManagement>
 
     <modules>
-        <module>hotmatrix-common</module>
         <module>hotmatrix-admin</module>
+        <module>hotmatrix-common</module>
         <module>hotmatrix-framework</module>
-        <module>hotmatrix-system</module>
         <module>hotmatrix-quartz</module>
+        <module>hotmatrix-system</module>
     </modules>
 
     <dependencies>

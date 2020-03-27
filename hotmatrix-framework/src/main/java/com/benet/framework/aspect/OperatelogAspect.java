@@ -7,7 +7,6 @@ import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.manager.AsyncManager;
 import com.benet.framework.manager.factory.AsyncFactory;
-import com.benet.system.domain.SysOperLog;
 import com.benet.system.domain.SysUser;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
@@ -74,46 +73,7 @@ public class OperatelogAspect
                 return;
             }
 
-            // 获取当前的用户
-            //SysUser currentUser = ShiroUtils.getSysUser();
-            SysUser currentUser = null;
 
-            // *========数据库日志=========*//
-            SysOperLog operLog = new SysOperLog();
-            operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
-            // 请求的地址
-            //String ip = ShiroUtils.getIp();
-            String ip = "";
-            operLog.setOperIp(ip);
-            // 返回参数
-            operLog.setJsonResult(JsonHelper.marshal(jsonResult));
-
-            operLog.setOperUrl(ServletUtils.getRequest().getRequestURI());
-            if (currentUser != null)
-            {
-                operLog.setOperName(currentUser.getLoginName());
-                if (StringUtils.isNotNull(currentUser.getDept())
-                        && StringUtils.isNotEmpty(currentUser.getDept().getDeptName()))
-                {
-                    operLog.setDeptName(currentUser.getDept().getDeptName());
-                }
-            }
-
-            if (e != null)
-            {
-                operLog.setStatus(BusinessStatus.FAIL.ordinal());
-                operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
-            }
-            // 设置方法名称
-            String className = joinPoint.getTarget().getClass().getName();
-            String methodName = joinPoint.getSignature().getName();
-            operLog.setMethod(className + "." + methodName + "()");
-            // 设置请求方式
-            operLog.setRequestMethod(ServletUtils.getRequest().getMethod());
-            // 处理设置注解上的参数
-            getControllerMethodDescription(controllerLog, operLog);
-            // 保存数据库
-            AsyncManager.me().execute(AsyncFactory.recordOper(operLog));
         }
         catch (Exception exp)
         {
@@ -131,20 +91,9 @@ public class OperatelogAspect
      * @param operLog 操作日志
      * @throws Exception
      */
-    public void getControllerMethodDescription(Oplog log, SysOperLog operLog) throws Exception
+    public void getControllerMethodDescription(Oplog log, Object operLog) throws Exception
     {
-        // 设置action动作
-        operLog.setBusinessType(log.businessType().ordinal());
-        // 设置标题
-        operLog.setTitle(log.title());
-        // 设置操作人类别
-        operLog.setOperatorType(log.operatorType().ordinal());
-        // 是否需要保存request，参数和值
-        if (log.isSaveRequestData())
-        {
-            // 获取参数的信息，传入到数据库中。
-            setRequestValue(operLog);
-        }
+
     }
 
     /**
@@ -153,11 +102,8 @@ public class OperatelogAspect
      * @param operLog 操作日志
      * @throws Exception 异常
      */
-    private void setRequestValue(SysOperLog operLog) throws Exception
+    private void setRequestValue(Object operLog) throws Exception
     {
-        Map<String, String[]> map = ServletUtils.getRequest().getParameterMap();
-        String params = JsonHelper.marshal(map);
-        operLog.setOperParam(StringUtils.substring(params, 0, 2000));
     }
 
     /**

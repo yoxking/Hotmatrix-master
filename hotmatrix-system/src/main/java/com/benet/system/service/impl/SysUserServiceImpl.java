@@ -11,7 +11,6 @@ import com.benet.common.utils.security.Md5Utils;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.system.domain.*;
 import com.benet.system.mapper.*;
-import com.benet.system.service.ISysConfigService;
 import com.benet.system.service.ISysUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,17 +34,9 @@ public class SysUserServiceImpl implements ISysUserService
     @Autowired
     private SysRoleMapper roleMapper;
 
-    @Autowired
-    private SysPostMapper postMapper;
-
-    @Autowired
-    private SysUserPostMapper userPostMapper;
 
     @Autowired
     private SysUserRoleMapper userRoleMapper;
-
-    @Autowired
-    private ISysConfigService configService;
 
     /**
      * 根据条件分页查询用户列表
@@ -144,7 +135,7 @@ public class SysUserServiceImpl implements ISysUserService
         // 删除用户与角色关联
         userRoleMapper.deleteUserRoleByUserId(userId);
         // 删除用户与岗位表
-        userPostMapper.deleteUserPostByUserId(userId);
+        //userPostMapper.deleteUserPostByUserId(userId);
         return userMapper.deleteUserById(userId);
     }
 
@@ -200,7 +191,7 @@ public class SysUserServiceImpl implements ISysUserService
         // 新增用户与角色管理
         insertUserRole(user);
         // 删除用户与岗位关联
-        userPostMapper.deleteUserPostByUserId(userId);
+        //userPostMapper.deleteUserPostByUserId(userId);
         // 新增用户与岗位管理
         insertUserPost(user);
         return userMapper.updateUser(user);
@@ -263,23 +254,7 @@ public class SysUserServiceImpl implements ISysUserService
      */
     public void insertUserPost(SysUser user)
     {
-        Long[] posts = user.getPostIds();
-        if (StringUtils.isNotNull(posts))
-        {
-            // 新增用户与岗位管理
-            List<SysUserPost> list = new ArrayList<SysUserPost>();
-            for (Long postId : posts)
-            {
-                SysUserPost up = new SysUserPost();
-                up.setUserId(user.getUserId());
-                up.setPostId(postId);
-                list.add(up);
-            }
-            if (list.size() > 0)
-            {
-                userPostMapper.batchUserPost(list);
-            }
-        }
+
     }
 
     /**
@@ -379,17 +354,7 @@ public class SysUserServiceImpl implements ISysUserService
     @Override
     public String selectUserPostGroup(Long userId)
     {
-        List<SysPost> list = postMapper.selectPostsByUserId(userId);
-        StringBuffer idsStr = new StringBuffer();
-        for (SysPost post : list)
-        {
-            idsStr.append(post.getPostName()).append(",");
-        }
-        if (StringUtils.isNotEmpty(idsStr.toString()))
-        {
-            return idsStr.substring(0, idsStr.length() - 1);
-        }
-        return idsStr.toString();
+        return "";
     }
 
     /**
@@ -411,7 +376,7 @@ public class SysUserServiceImpl implements ISysUserService
         int failureNum = 0;
         StringBuilder successMsg = new StringBuilder();
         StringBuilder failureMsg = new StringBuilder();
-        String password = configService.selectConfigByKey("sys.user.initPassword");
+        String password = "aaaaaa";
         for (SysUser user : userList)
         {
             try

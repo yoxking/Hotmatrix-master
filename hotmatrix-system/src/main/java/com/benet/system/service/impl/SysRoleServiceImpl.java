@@ -13,10 +13,8 @@ import com.benet.common.exception.BusinessException;
 import com.benet.common.utils.spring.SpringUtils;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.system.domain.SysRole;
-import com.benet.system.domain.SysRoleDept;
 import com.benet.system.domain.SysRoleMenu;
 import com.benet.system.domain.SysUserRole;
-import com.benet.system.mapper.SysRoleDeptMapper;
 import com.benet.system.mapper.SysRoleMapper;
 import com.benet.system.mapper.SysRoleMenuMapper;
 import com.benet.system.mapper.SysUserRoleMapper;
@@ -42,8 +40,6 @@ public class SysRoleServiceImpl implements ISysRoleService
     @Autowired
     private SysUserRoleMapper userRoleMapper;
 
-    @Autowired
-    private SysRoleDeptMapper roleDeptMapper;
 
     /**
      * 根据条件分页查询角色数据
@@ -206,7 +202,7 @@ public class SysRoleServiceImpl implements ISysRoleService
         // 修改角色信息
         roleMapper.updateRole(role);
         // 删除角色与部门关联
-        roleDeptMapper.deleteRoleDeptByRoleId(role.getRoleId());
+        //roleDeptMapper.deleteRoleDeptByRoleId(role.getRoleId());
         // 新增角色和部门信息（数据权限）
         return insertRoleDept(role);
     }
@@ -243,7 +239,7 @@ public class SysRoleServiceImpl implements ISysRoleService
     public int insertRoleDept(SysRole role)
     {
         int rows = 1;
-        // 新增角色与部门（数据权限）管理
+       /* // 新增角色与部门（数据权限）管理
         List<SysRoleDept> list = new ArrayList<SysRoleDept>();
         for (Long deptId : role.getDeptIds())
         {
@@ -255,7 +251,7 @@ public class SysRoleServiceImpl implements ISysRoleService
         if (list.size() > 0)
         {
             rows = roleDeptMapper.batchRoleDept(list);
-        }
+        }*/
         return rows;
     }
 

@@ -7,12 +7,6 @@ import com.benet.common.utils.net.AddressUtils;
 import com.benet.common.utils.spring.SpringUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.utils.OplogUtils;
-import com.benet.system.domain.SysLogininfor;
-import com.benet.system.domain.SysOperLog;
-import com.benet.system.domain.SysUserOnline;
-import com.benet.system.service.ISysOperLogService;
-import com.benet.system.service.ISysUserOnlineService;
-import com.benet.system.service.impl.SysLogininforServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -64,16 +58,14 @@ public class AsyncFactory
      * @param operLog 操作日志信息
      * @return 任务task
      */
-    public static TimerTask recordOper(final SysOperLog operLog)
+    public static TimerTask recordOper(final Object operLog)
     {
         return new TimerTask()
         {
             @Override
             public void run()
             {
-                // 远程查询操作地点
-                operLog.setOperLocation(AddressUtils.getRealAddressByIP(operLog.getOperIp()));
-                SpringUtils.getBean(ISysOperLogService.class).insertOperlog(operLog);
+
             }
         };
     }
@@ -110,25 +102,7 @@ public class AsyncFactory
                 String os = userAgent.getOperatingSystem().getName();
                 // 获取客户端浏览器
                 String browser = userAgent.getBrowser().getName();
-                // 封装对象
-                SysLogininfor logininfor = new SysLogininfor();
-                logininfor.setLoginName(username);
-                logininfor.setIpaddr(ip);
-                logininfor.setLoginLocation(address);
-                logininfor.setBrowser(browser);
-                logininfor.setOs(os);
-                logininfor.setMsg(message);
-                // 日志状态
-                if (PubConstants.LOGIN_SUCCESS.equals(status) || PubConstants.LOGOUT.equals(status))
-                {
-                    logininfor.setStatus(PubConstants.SUCCESS);
-                }
-                else if (PubConstants.LOGIN_FAIL.equals(status))
-                {
-                    logininfor.setStatus(PubConstants.FAIL);
-                }
-                // 插入数据
-                SpringUtils.getBean(SysLogininforServiceImpl.class).insertLogininfor(logininfor);
+
             }
         };
     }

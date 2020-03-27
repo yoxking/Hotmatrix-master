@@ -13,7 +13,7 @@ import org.springframework.util.CollectionUtils;
 /**
  * RuoYi首创 自定义权限实现，ss取自SpringSecurity首字母
  * 
- * @author ruoyi
+ * @author yoxking
  */
 @Service("ps")
 public class PermissionService

@@ -1,6 +1,7 @@
 package com.benet.system.mapper;
 
 import com.benet.system.domain.SysRoleMenu;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  * 
  * @author ruoyi
  */
+@Mapper
 public interface SysRoleMenuMapper
 {
     /**
