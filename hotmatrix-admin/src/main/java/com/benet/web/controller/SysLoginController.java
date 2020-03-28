@@ -7,6 +7,8 @@ import com.benet.common.enums.BusinessType;
 import com.benet.framework.security.service.SysLoginService;
 import com.benet.system.domain.SysMenu;
 import com.benet.system.service.ISysMenuService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import java.util.List;
  * 
  * @author yoxking
  */
+@Api(description = "生产者进程API接口")
 @RestController
 public class SysLoginController
 {
@@ -71,6 +74,7 @@ public class SysLoginController
         return ajax;
     }
 
+    @ApiOperation(value="发送解析文本", notes="发送解析文本", produces="application/json")
     @GetMapping("/test3")
     public AjaxResult test3()
     {
