@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.benet.system.mapper.SysAppinfoMapper">
+    
+    <resultMap type="SysAppinfo" id="SysAppinfoResult">
+        <result property="id"    column="id"    />
+        <result property="appNo"    column="app_no"    />
+        <result property="appCnname"    column="app_cnname"    />
+        <result property="appEnname"    column="app_enname"    />
+        <result property="appCode"    column="app_code"    />
+        <result property="classNo"    column="class_no"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="appUrl"    column="app_url"    />
+        <result property="appVer"    column="app_ver"    />
+        <result property="email"    column="email"    />
+        <result property="summary"    column="summary"    />
+        <result property="edogNo"    column="edog_no"    />
+        <result property="edogType"    column="edog_type"    />
+        <result property="registDate"    column="regist_date"    />
+        <result property="activeDate"    column="active_date"    />
+        <result property="activeCount"    column="active_count"    />
+        <result property="activeCode"    column="active_code"    />
+        <result property="checkState"    column="check_state"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+        <result property="comments"    column="comments"    />
+        <result property="version"    column="version"    />
+    </resultMap>
+
+    <sql id="selectSysAppinfoVo">
+        select id, app_no, app_cnname, app_enname, app_code, class_no, order_no, app_url, app_ver, email, summary, edog_no, edog_type, regist_date, active_date, active_count, active_code, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, version from sys_appinfo
+    </sql>
+
+    <select id="selectSysAppinfoList" parameterType="SysAppinfo" resultMap="SysAppinfoResult">
+        <include refid="selectSysAppinfoVo"/>
+        <where>  
+            <if test="appNo != null  and appNo != ''"> and app_no = #{appNo}</if>
+            <if test="appCnname != null  and appCnname != ''"> and app_cnname like concat('%', #{appCnname}, '%')</if>
+            <if test="appEnname != null  and appEnname != ''"> and app_enname like concat('%', #{appEnname}, '%')</if>
+            <if test="appCode != null  and appCode != ''"> and app_code = #{appCode}</if>
+            <if test="classNo != null  and classNo != ''"> and class_no = #{classNo}</if>
+            <if test="orderNo != null "> and order_no = #{orderNo}</if>
+            <if test="appUrl != null  and appUrl != ''"> and app_url = #{appUrl}</if>
+            <if test="appVer != null  and appVer != ''"> and app_ver = #{appVer}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="summary != null  and summary != ''"> and summary = #{summary}</if>
+            <if test="edogNo != null  and edogNo != ''"> and edog_no = #{edogNo}</if>
+            <if test="edogType != null  and edogType != ''"> and edog_type = #{edogType}</if>
+            <if test="registDate != null "> and regist_date = #{registDate}</if>
+            <if test="activeDate != null "> and active_date = #{activeDate}</if>
+            <if test="activeCount != null "> and active_count = #{activeCount}</if>
+            <if test="activeCode != null  and activeCode != ''"> and active_code = #{activeCode}</if>
+            <if test="checkState != null  and checkState != ''"> and check_state = #{checkState}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+            <if test="comments != null  and comments != ''"> and comments = #{comments}</if>
+            <if test="version != null "> and version = #{version}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysAppinfoById" parameterType="Long" resultMap="SysAppinfoResult">
+        <include refid="selectSysAppinfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSysAppinfo" parameterType="SysAppinfo" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_appinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appNo != null  and appNo != ''">app_no,</if>
+            <if test="appCnname != null  and appCnname != ''">app_cnname,</if>
+            <if test="appEnname != null  and appEnname != ''">app_enname,</if>
+            <if test="appCode != null  and appCode != ''">app_code,</if>
+            <if test="classNo != null  and classNo != ''">class_no,</if>
+            <if test="orderNo != null ">order_no,</if>
+            <if test="appUrl != null  and appUrl != ''">app_url,</if>
+            <if test="appVer != null  and appVer != ''">app_ver,</if>
+            <if test="email != null  and email != ''">email,</if>
+            <if test="summary != null  and summary != ''">summary,</if>
+            <if test="edogNo != null  and edogNo != ''">edog_no,</if>
+            <if test="edogType != null  and edogType != ''">edog_type,</if>
+            <if test="registDate != null ">regist_date,</if>
+            <if test="activeDate != null ">active_date,</if>
+            <if test="activeCount != null ">active_count,</if>
+            <if test="activeCode != null  and activeCode != ''">active_code,</if>
+            <if test="checkState != null  and checkState != ''">check_state,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">delete_flag,</if>
+            <if test="comments != null  and comments != ''">comments,</if>
+            <if test="version != null ">version,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appNo != null  and appNo != ''">#{appNo},</if>
+            <if test="appCnname != null  and appCnname != ''">#{appCnname},</if>
+            <if test="appEnname != null  and appEnname != ''">#{appEnname},</if>
+            <if test="appCode != null  and appCode != ''">#{appCode},</if>
+            <if test="classNo != null  and classNo != ''">#{classNo},</if>
+            <if test="orderNo != null ">#{orderNo},</if>
+            <if test="appUrl != null  and appUrl != ''">#{appUrl},</if>
+            <if test="appVer != null  and appVer != ''">#{appVer},</if>
+            <if test="email != null  and email != ''">#{email},</if>
+            <if test="summary != null  and summary != ''">#{summary},</if>
+            <if test="edogNo != null  and edogNo != ''">#{edogNo},</if>
+            <if test="edogType != null  and edogType != ''">#{edogType},</if>
+            <if test="registDate != null ">#{registDate},</if>
+            <if test="activeDate != null ">#{activeDate},</if>
+            <if test="activeCount != null ">#{activeCount},</if>
+            <if test="activeCode != null  and activeCode != ''">#{activeCode},</if>
+            <if test="checkState != null  and checkState != ''">#{checkState},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">#{deleteFlag},</if>
+            <if test="comments != null  and comments != ''">#{comments},</if>
+            <if test="version != null ">#{version},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysAppinfo" parameterType="SysAppinfo">
+        update sys_appinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="appNo != null  and appNo != ''">app_no = #{appNo},</if>
+            <if test="appCnname != null  and appCnname != ''">app_cnname = #{appCnname},</if>
+            <if test="appEnname != null  and appEnname != ''">app_enname = #{appEnname},</if>
+            <if test="appCode != null  and appCode != ''">app_code = #{appCode},</if>
+            <if test="classNo != null  and classNo != ''">class_no = #{classNo},</if>
+            <if test="orderNo != null ">order_no = #{orderNo},</if>
+            <if test="appUrl != null  and appUrl != ''">app_url = #{appUrl},</if>
+            <if test="appVer != null  and appVer != ''">app_ver = #{appVer},</if>
+            <if test="email != null  and email != ''">email = #{email},</if>
+            <if test="summary != null  and summary != ''">summary = #{summary},</if>
+            <if test="edogNo != null  and edogNo != ''">edog_no = #{edogNo},</if>
+            <if test="edogType != null  and edogType != ''">edog_type = #{edogType},</if>
+            <if test="registDate != null ">regist_date = #{registDate},</if>
+            <if test="activeDate != null ">active_date = #{activeDate},</if>
+            <if test="activeCount != null ">active_count = #{activeCount},</if>
+            <if test="activeCode != null  and activeCode != ''">active_code = #{activeCode},</if>
+            <if test="checkState != null  and checkState != ''">check_state = #{checkState},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">delete_flag = #{deleteFlag},</if>
+            <if test="comments != null  and comments != ''">comments = #{comments},</if>
+            <if test="version != null ">version = #{version},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysAppinfoById" parameterType="Long">
+        delete from sys_appinfo where id = #{id}
+    </delete>
+
+    <delete id="deleteSysAppinfoByIds" parameterType="String">
+        delete from sys_appinfo where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

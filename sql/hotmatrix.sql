@@ -705,3 +705,32 @@ create table sys_appinfo (
   UNIQUE INDEX idx_appno (`app_no`)
 ) engine=innodb auto_increment=100 comment = '应用信息表';
 
+
+
+-- ----------------------------
+-- 26、系统访问记录
+-- ----------------------------
+drop table if exists sys_logininfor;
+create table sys_logininfor (
+  id			 bigint(20)      not null auto_increment    comment 'id',
+  login_no        bigint(20)     not null    				comment '访问ID',
+  login_name     varchar(50)    default ''                comment '登录账号',
+  ipaddr         varchar(50)    default ''                comment '登录IP地址',
+  location 		varchar(255)   default ''                comment '登录地点',
+  browser        varchar(50)    default ''                comment '浏览器类型',
+  os             varchar(50)    default ''                comment '操作系统',
+  status         char(1)        default '0'               comment '登录状态（0成功 1失败）',
+  message            varchar(255)   default ''                comment '提示消息',
+  login_time     datetime                                 comment '访问时间',
+  branch_no         varchar(20)     default ''				   comment '分支编号',
+  create_by         varchar(64)     default ''                 comment '创建者',
+  create_time 	    datetime                                   comment '创建时间',
+  update_by         varchar(64)     default ''                 comment '更新者',
+  update_time       datetime                                   comment '更新时间',
+  delete_flag       char(1)         default '1'                comment '删除标志（1代表存在 0代表删除）',
+  comments          varchar(256)     default ''                comment '更新者',
+  app_code          varchar(256)     default ''                comment '应用编码',
+  version           bigint(20)       default 0                 comment '版本号',
+  primary key (id),
+  UNIQUE INDEX idx_loginno (`login_no`)
+) engine=innodb auto_increment=100 comment = '系统访问记录';
