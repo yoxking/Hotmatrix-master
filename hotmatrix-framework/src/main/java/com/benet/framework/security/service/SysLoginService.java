@@ -2,10 +2,19 @@ package com.benet.framework.security.service;
 
 import javax.annotation.Resource;
 
+import com.benet.common.constant.JwtConstants;
+import com.benet.common.constant.PubConstants;
+import com.benet.common.exception.base.BaseException;
+import com.benet.common.exception.user.CaptchaException;
+import com.benet.common.exception.user.UserPasswordNotMatchException;
+import com.benet.common.utils.data.MessageUtils;
+import com.benet.framework.manager.AsyncManager;
+import com.benet.framework.manager.factory.AsyncFactory;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -38,20 +47,20 @@ public class SysLoginService
      */
     public String login(String username, String password, String code, String uuid)
     {
-        /*String verifyKey = Constants.CAPTCHA_CODE_KEY + uuid;
-        String captcha = redisCache.getCacheObject(verifyKey);
-        redisCache.deleteObject(verifyKey);
-       *//* if (captcha == null)
-        {
-            //AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire")));
-            //throw new CaptchaExpireException();
+        String verifyKey = JwtConstants.CAPTCHA_CODE_KEY + uuid;
+        String captcha = redisUtils.getCacheObject(verifyKey);
+        redisUtils.deleteObject(verifyKey);
 
+        if (captcha == null)
+        {
+            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, PubConstants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire")));
+            throw new CaptchaException();
         }
         if (!code.equalsIgnoreCase(captcha))
         {
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error")));
+            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, PubConstants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error")));
             throw new CaptchaException();
-        }*/
+        }
         // 用户验证
         Authentication authentication = null;
         try
@@ -62,18 +71,18 @@ public class SysLoginService
         }
         catch (Exception e)
         {
-            /*if (e instanceof BadCredentialsException)
+            if (e instanceof BadCredentialsException)
             {
-                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
+                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, PubConstants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
                 throw new UserPasswordNotMatchException();
             }
             else
             {
-                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, e.getMessage()));
-                throw new CustomException(e.getMessage());
-            }*/
+                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, PubConstants.LOGIN_FAIL, e.getMessage()));
+                throw new BaseException(e.getMessage());
+            }
         }
-        //AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
+        AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, PubConstants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         // 生成token
         return tokenService.createToken(loginUser);

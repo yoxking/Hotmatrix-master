@@ -37,7 +37,7 @@ public class PermissionService
      * @param permission 权限字符串
      * @return 用户是否具备某权限
      */
-    public boolean hasPermi(String permission)
+    public boolean hasPermit(String permission)
     {
         if (StringUtils.isEmpty(permission))
         {
@@ -57,9 +57,9 @@ public class PermissionService
      * @param permission 权限字符串
      * @return 用户是否不具备某权限
      */
-    public boolean lacksPermi(String permission)
+    public boolean lacksPermit(String permission)
     {
-        return hasPermi(permission) != true;
+        return hasPermit(permission) != true;
     }
 
     /**
@@ -68,7 +68,7 @@ public class PermissionService
      * @param permissions 以 PERMISSION_NAMES_DELIMETER 为分隔符的权限列表
      * @return 用户是否具有以下任意一个权限
      */
-    public boolean hasAnyPermi(String permissions)
+    public boolean hasAnyPermit(String permissions)
     {
         if (StringUtils.isEmpty(permissions))
         {

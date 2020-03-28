@@ -20,7 +20,7 @@ import com.alibaba.fastjson.JSON;
  * @author ruoyi
  */
 @Component
-public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable
+public class UnauthenticationHandler implements AuthenticationEntryPoint, Serializable
 {
     private static final long serialVersionUID = -8970718410437077606L;
 

@@ -1,6 +1,7 @@
 package com.benet.framework.security.service;
 
 import com.benet.common.enums.UserStatus;
+import com.benet.common.exception.base.BaseException;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.system.domain.SysUser;
@@ -41,16 +42,15 @@ public class MyUserDetailsService implements UserDetailsService
         else if (UserStatus.DELETED.getCode().equals(user.getDelFlag()))
         {
             log.info("登录用户：{} 已被删除.", username);
-            //throw new BaseException("对不起，您的账号：" + username + " 已被删除");
+            throw new BaseException("对不起，您的账号：" + username + " 已被删除");
         }
         else if (UserStatus.DISABLE.getCode().equals(user.getStatus()))
         {
             log.info("登录用户：{} 已被停用.", username);
-            //throw new BaseException("对不起，您的账号：" + username + " 已停用");
+            throw new BaseException("对不起，您的账号：" + username + " 已停用");
         }
 
-        UserDetails s= createLoginUser(user);
-        return s;
+        return createLoginUser(user);
     }
 
     public UserDetails createLoginUser(SysUser user)

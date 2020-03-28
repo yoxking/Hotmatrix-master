@@ -1,5 +1,7 @@
 package com.benet.framework.utils;
 
+import com.benet.common.enums.HttpStatus;
+import com.benet.common.exception.user.UserException;
 import com.benet.framework.security.LoginUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -8,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 /**
  * 安全服务工具类
  * 
- * @author ruoyi
+ * @author yoxking
  */
 public class SecurityUtils
 {
@@ -39,7 +41,7 @@ public class SecurityUtils
         }
         catch (Exception e)
         {
-            //throw new CustomException("获取用户信息异常", HttpStatus.UNAUTHORIZED);
+            //throw new UserException("获取用户信息异常", HttpStatus.UNAUTHORIZED);
             return null;
         }
     }

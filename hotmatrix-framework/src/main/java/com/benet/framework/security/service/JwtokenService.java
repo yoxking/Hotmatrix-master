@@ -6,10 +6,14 @@ import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpServletRequest;
 
 import com.benet.common.constant.JwtConstants;
+import com.benet.common.utils.net.AddressUtils;
+import com.benet.common.utils.net.IpnetUtils;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.uuid.UuidUtils;
+import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.utils.RedisUtils;
+import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -145,12 +149,12 @@ public class JwtokenService
      */
     public void setUserAgent(LoginUser loginUser)
     {
-       /* UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
-        String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
+       UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+        String ip = IpnetUtils.getIpAddr(ServletUtils.getRequest());
         loginUser.setIpaddr(ip);
         loginUser.setLoginLocation(AddressUtils.getRealAddressByIP(ip));
         loginUser.setBrowser(userAgent.getBrowser().getName());
-        loginUser.setOs(userAgent.getOperatingSystem().getName());*/
+        loginUser.setOs(userAgent.getOperatingSystem().getName());
     }
     
     /**
