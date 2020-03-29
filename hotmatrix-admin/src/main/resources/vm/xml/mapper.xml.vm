@@ -14,82 +14,103 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select#foreach($column in $columns) $column.columnName#if($velocityCount != $columns.size()),#end#end from ${tableName}
     </sql>
 
-    <select id="select${ClassName}List" parameterType="${ClassName}" resultMap="${ClassName}Result">
+    <select id="getAllRecords" resultMap="${ClassName}Result">
         <include refid="select${ClassName}Vo"/>
-        <where>  
-#foreach($column in $columns)
-#set($queryType=$column.queryType)
-#set($javaField=$column.javaField)
-#set($javaType=$column.javaType)
-#set($columnName=$column.columnName)
-#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
-#if($column.query)
-#if($column.queryType == "EQ")
-            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and $columnName = #{$javaField}</if>
-#elseif($queryType == "NE")
-            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and $columnName != #{$javaField}</if>
-#elseif($queryType == "GT")
-            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and $columnName &gt; #{$javaField}</if>
-#elseif($queryType == "GTE")
-            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and $columnName &gt;= #{$javaField}</if>
-#elseif($queryType == "LT")
-            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and $columnName &lt; #{$javaField}</if>
-#elseif($queryType == "LTE")
-            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and $columnName &lt;= #{$javaField}</if>
-#elseif($queryType == "LIKE")
-            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and $columnName like concat('%', #{$javaField}, '%')</if>
-#elseif($queryType == "BETWEEN")
-            <if test="params.begin$AttrName != null and params.begin$AttrName != '' and params.end$AttrName != null and params.end$AttrName != ''"> and $columnName between #{params.begin$AttrName} and #{params.end$AttrName}</if>
-#end
-#end
-#end
-        </where>
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%')
     </select>
-    
-    <select id="select${ClassName}ById" parameterType="${pkColumn.javaType}" resultMap="${ClassName}Result">
+
+    <select id="getRecordsByClassNo" resultMap="${ClassName}Result">
         <include refid="select${ClassName}Vo"/>
-        where ${pkColumn.columnName} = #{${pkColumn.javaField}}
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and class_no=#{classNo}
     </select>
-        
+
+    <select id="getRecordsByPaging" resultMap="${ClassName}Result">
+        <include refid="select${ClassName}Vo"/>
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and #{condition} order by #{orderField} #{orderType} limit #{pageIndex},#{pageSize}
+    </select>
+
+    <select id="getRecordByNo" resultMap="${ClassName}Result">
+        <include refid="select${ClassName}Vo"/>
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no = #{appCode}
+    </select>
+
+    <select id="getRecordNameByNo">
+        select app_cnname from ${tableName}
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no = #{appNo}
+    </select>
+
+    <select id="getCountByCondition">
+        select count(*) from ${tableName}
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%')
+        <if test="condition != null  and condition != ''"> and #{condition}</if>
+    </select>
+
     <insert id="insert${ClassName}" parameterType="${ClassName}"#if($pkColumn.increment) useGeneratedKeys="true" keyProperty="$pkColumn.javaField"#end>
         insert into ${tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
-#foreach($column in $columns)
-#if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
-            <if test="$column.javaField != null #if($column.javaType == 'String' ) and $column.javaField != ''#end">$column.columnName,</if>
-#end
-#end
-         </trim>
+            #foreach($column in $columns)
+                #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
+                    <if test="$column.javaField != null #if($column.javaType == 'String' ) and $column.javaField != ''#end">$column.columnName,</if>
+                #end
+            #end
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-#foreach($column in $columns)
-#if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
-            <if test="$column.javaField != null #if($column.javaType == 'String' ) and $column.javaField != ''#end">#{$column.javaField},</if>
-#end
-#end
-         </trim>
+            #foreach($column in $columns)
+                #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
+                    <if test="$column.javaField != null #if($column.javaType == 'String' ) and $column.javaField != ''#end">#{$column.javaField},</if>
+                #end
+            #end
+        </trim>
     </insert>
 
     <update id="update${ClassName}" parameterType="${ClassName}">
         update ${tableName}
         <trim prefix="SET" suffixOverrides=",">
-#foreach($column in $columns)
-#if($column.columnName != $pkColumn.columnName)
-            <if test="$column.javaField != null #if($column.javaType == 'String' ) and $column.javaField != ''#end">$column.columnName = #{$column.javaField},</if>
-#end
-#end
+            #foreach($column in $columns)
+                #if($column.columnName != $pkColumn.columnName)
+                    <if test="$column.javaField != null #if($column.javaType == 'String' ) and $column.javaField != ''#end">$column.columnName = #{$column.javaField},</if>
+                #end
+            #end
         </trim>
-        where ${pkColumn.columnName} = #{${pkColumn.javaField}}
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and version=#{version} and app_no = #{appNo}
     </update>
 
-    <delete id="delete${ClassName}ById" parameterType="${pkColumn.javaType}">
-        delete from ${tableName} where ${pkColumn.columnName} = #{${pkColumn.javaField}}
+    <delete id="HardDeleteRecord">
+        delete from ${tableName}
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no = #{appNo}
     </delete>
 
-    <delete id="delete${ClassName}ByIds" parameterType="String">
-        delete from ${tableName} where ${pkColumn.columnName} in 
-        <foreach item="${pkColumn.javaField}" collection="array" open="(" separator="," close=")">
-            #{${pkColumn.javaField}}
+    <delete id="HardDeleteByNos">
+        delete from ${tableName}
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no in
+        <foreach item="no" collection="array" open="(" separator="," close=")">
+            #{no}
         </foreach>
+    </delete>
+
+    <delete id="HardDeleteByCondition">
+        delete from ${tableName}
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%')
+        <if test="condition != null  and condition != ''"> and #{condition}</if>
+    </delete>
+
+    <delete id="SoftDeleteRecord">
+        update ${tableName} set delete_flag='0'
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no = #{appNo}
+    </delete>
+
+    <delete id="SoftDeleteByNos">
+        update ${tableName} set delete_flag='0'
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no in
+        <foreach item="no" collection="array" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="SoftDeleteByCondition">
+        update ${tableName} set delete_flag='0'
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%')
+        <if test="condition != null  and condition != ''"> and #{condition}</if>
     </delete>
     
 </mapper>

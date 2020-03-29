@@ -30,6 +30,9 @@ public class GlobalConfig
     /** 获取地址开关 */
     private static boolean addressEnabled;
 
+    /** 获取地址开关 */
+    private static String appCode;
+
     public static String getName()
     {
         return name;
@@ -88,6 +91,16 @@ public class GlobalConfig
     public void setAddressEnabled(boolean addressEnabled)
     {
         GlobalConfig.addressEnabled = addressEnabled;
+    }
+
+    public static String getAppCode()
+    {
+        return appCode;
+    }
+
+    public void setAppCode(String appCode)
+    {
+        GlobalConfig.appCode = appCode;
     }
 
     /**

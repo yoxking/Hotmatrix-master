@@ -1,83 +1,78 @@
-package ${packageName}.service.impl;
+package com.benet.system.service.impl;
 
 import java.util.List;
 import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
-#foreach ($column in $columns)
-#if($column.javaField == 'createTime' || $column.javaField == 'updateTime')
 import com.benet.common.utils.date.DateUtils;
-#break
-#end
-#end
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ${packageName}.mapper.${ClassName}Mapper;
-import ${packageName}.domain.${ClassName};
-import ${packageName}.service.I${ClassName}Service;
+import com.benet.system.mapper.SysMessageinfoMapper;
+import com.benet.system.domain.SysMessageinfo;
+import com.benet.system.service.ISysMessageinfoService;
 
 /**
- * ${functionName}Service业务层处理
+ * 消息信息Service业务层处理
  * 
- * @author ${author}
- * @date ${datetime}
+ * @author yoxking
+ * @date 2020-03-29
  */
 @Service
-public class ${ClassName}ServiceImpl implements I${ClassName}Service 
+public class SysMessageinfoServiceImpl implements ISysMessageinfoService 
 {
     @Autowired
-    private ${ClassName}Mapper ${className}Mapper;
+    private SysMessageinfoMapper sysMessageinfoMapper;
 
     /**
-     * 查询所有${functionName}列表
+     * 查询所有消息信息列表
      *
-     * @return ${functionName}集合
+     * @return 消息信息集合
      */
     @Override
-    public List<${ClassName}> getAllRecords() {
-        return ${className}Mapper.getAllRecords(GlobalConfig.getAppCode());
+    public List<SysMessageinfo> getAllRecords() {
+        return sysMessageinfoMapper.getAllRecords(GlobalConfig.getAppCode());
     }
 
     /**
-     * 按分类查询${functionName}列表
+     * 按分类查询消息信息列表
      *
      * @param classNo 分类编号
-     * @return ${functionName}集合
+     * @return 消息信息集合
      */
     @Override
-    public List<${ClassName}> getRecordsByClassNo(String classNo) {
+    public List<SysMessageinfo> getRecordsByClassNo(String classNo) {
         if (StringUtils.isNotEmpty(classNo)) {
-            return ${className}Mapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
+            return sysMessageinfoMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
         }
         return null;
     }
 
     /**
-     * 分页查询${functionName}列表
+     * 分页查询消息信息列表
      *
      * @param model 分页模型
-     * @return ${functionName}集合
+     * @return 消息信息集合
      */
     @Override
-    public List<${ClassName}> getRecordsByPaging(PagingModel model) {
+    public List<SysMessageinfo> getRecordsByPaging(PagingModel model) {
         if (StringUtils.isNotNull(model)) {
-            return ${className}Mapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+            return sysMessageinfoMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
         }
         return null;
     }
 
 
     /**
-     * 分页查询${functionName}列表
+     * 分页查询消息信息列表
      *
      * @param pageIndex 当前页起始索引
      * @param pageSize 页面大小
      * @param condition 条件
      * @param orderField 排序列
      * @param orderType 排序类型
-     * @return ${functionName}集合
+     * @return 消息信息集合
      */
-    public List<${ClassName}> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
+    public List<SysMessageinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();
         model.setPageIndex(pageIndex * pageSize);
@@ -93,151 +88,151 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
         } else {
             model.setOrderType(orderType);
         }
-        return ${className}Mapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+        return sysMessageinfoMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
     }
 
     /**
-     * 查询${functionName}
+     * 查询消息信息
      *
-     * @param no ${functionName}ID
-     * @return ${functionName}
+     * @param no 消息信息ID
+     * @return 消息信息
      */
     @Override
-    public ${ClassName} getRecordByNo(String no) {
+    public SysMessageinfo getRecordByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return ${className}Mapper.getRecordByNo(GlobalConfig.getAppCode(),no);
+            return sysMessageinfoMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
         }
         return null;
     }
 
     /**
-     * 查询${functionName}名称
+     * 查询消息信息名称
      *
-     * @param no ${functionName}ID
+     * @param no 消息信息ID
      * @return 名称
      */
     @Override
     public String getRecordNameByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return ${className}Mapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
+            return sysMessageinfoMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
         }
         return null;
     }
 
     /**
-     * 查询${functionName}计数
+     * 查询消息信息计数
      *
      * @param condition 查询条件
      * @return 结果
      */
     @Override
     public int getCountByCondition(String condition) {
-        return ${className}Mapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
+        return sysMessageinfoMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
     }
 
     /**
-     * 新增${functionName}
+     * 新增消息信息
      *
-     * @param info ${functionName}
+     * @param info 消息信息
      * @return 结果
      */
     @Override
-    public int AddNewRecord(${ClassName} info) {
+    public int AddNewRecord(SysMessageinfo info) {
         info.setCreateTime(DateUtils.getNowDate());
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
         info.setVersion(1L);
-        return ${className}Mapper.AddNewRecord(info);
+        return sysMessageinfoMapper.AddNewRecord(info);
     }
 
     /**
-     * 更新${functionName}
+     * 更新消息信息
      *
-     * @param info ${functionName}
+     * @param info 消息信息
      * @return 结果
      */
     @Override
-    public int UpdateRecord(${ClassName} info) {
+    public int UpdateRecord(SysMessageinfo info) {
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
-        return ${className}Mapper.UpdateRecord(info);
+        return sysMessageinfoMapper.UpdateRecord(info);
     }
 
     /**
-     * 硬删除${functionName}
+     * 硬删除消息信息
      *
-     * @param no ${functionName}ID
+     * @param no 消息信息ID
      * @return 结果
      */
     @Override
     public int HardDeleteRecord(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return ${className}Mapper.HardDeleteRecord(GlobalConfig.getAppCode(),no);
+            return sysMessageinfoMapper.HardDeleteRecord(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }
 
     /**
-     * 批量硬删除${functionName}
+     * 批量硬删除消息信息
      *
-     * @param nos ${functionName}IDs
+     * @param nos 消息信息IDs
      * @return 结果
      */
     @Override
     public int HardDeleteByNos(String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return ${className}Mapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return sysMessageinfoMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
         }
         return 0;
     }
 
     /**
-     * 按条件硬删除${functionName}
+     * 按条件硬删除消息信息
      *
      * @param condition 条件
      * @return 结果
      */
     @Override
     public int HardDeleteByCondition(String condition) {
-        return ${className}Mapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
+        return sysMessageinfoMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
     }
 
     /**
-     * 软删除${functionName}
+     * 软删除消息信息
      *
-     * @param no ${functionName}ID
+     * @param no 消息信息ID
      * @return 结果
      */
     @Override
     public int SoftDeleteRecord(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return ${className}Mapper.SoftDeleteRecord(GlobalConfig.getAppCode(),no);
+            return sysMessageinfoMapper.SoftDeleteRecord(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }
 
     /**
-     * 批量软删除${functionName}
+     * 批量软删除消息信息
      *
-     * @param nos ${functionName}IDs
+     * @param nos 消息信息IDs
      * @return 结果
      */
     @Override
     public int SoftDeleteByNos(String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return ${className}Mapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return sysMessageinfoMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
         }
         return 0;
     }
 
     /**
-     * 按条件软删除${functionName}
+     * 按条件软删除消息信息
      *
      * @param condition 条件
      * @return 结果
      */
     @Override
     public int SoftDeleteByCondition(String condition) {
-        return ${className}Mapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
+        return sysMessageinfoMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
     }
 }

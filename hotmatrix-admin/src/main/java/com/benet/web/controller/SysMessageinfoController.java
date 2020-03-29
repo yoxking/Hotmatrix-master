@@ -1,4 +1,4 @@
-package ${packageName}.controller;
+package com.benet.web.controller;
 
 import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,35 +12,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import ${packageName}.domain.${ClassName};
-import ${packageName}.service.I${ClassName}Service;
+import com.benet.system.domain.SysMessageinfo;
+import com.benet.system.service.ISysMessageinfoService;
 import com.benet.common.annotation.Oplog;
 import com.benet.common.core.controller.BaseController;
 import com.benet.common.core.domain.AjaxResult;
 import com.benet.common.enums.BusinessType;
 import com.benet.common.utils.poi.ExcelUtils;
 import com.benet.common.utils.string.StringUtils;
-#if($table.crud)
 import com.benet.common.core.pager.TableDataInfo;
-#elseif($table.tree)
-#end
 
 /**
- * ${functionName}Controller
+ * 消息信息Controller
  * 
- * @author ${author}
- * @date ${datetime}
+ * @author yoxking
+ * @date 2020-03-29
  */
 @RestController
-@RequestMapping("/${moduleName}/${businessName}")
-public class ${ClassName}Controller extends BaseController
+@RequestMapping("/system/messageinfo")
+public class SysMessageinfoController extends BaseController
 {
     @Autowired
-    private I${ClassName}Service ${className}Service;
+    private ISysMessageinfoService sysMessageinfoService;
     /**
          * 首页
          */
-    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:index')")
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -49,95 +46,95 @@ public class ${ClassName}Controller extends BaseController
     }
 
     /**
-     * 查询${functionName}列表
+     * 查询消息信息列表
      */
-    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:list')")
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:list')")
     @GetMapping(value="/list")
     public TableDataInfo list()
     {
         startPage();
-        List<${ClassName}> list = ${className}Service.getAllRecords();
+        List<SysMessageinfo> list = sysMessageinfoService.getAllRecords();
         return getDataTable(list);
     }
 
     /**
-     * 查询${functionName}列表
+     * 查询消息信息列表
      */
-    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:search')")
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:search')")
     @GetMapping(value="/search/{condition}")
     public TableDataInfo search(@PathVariable("condition") String condition)
     {
-        List<${ClassName}> list = ${className}Service.getRecordsByPaging(1,10,condition,"id","asc");
+        List<SysMessageinfo> list = sysMessageinfoService.getRecordsByPaging(1,10,condition,"id","asc");
         return getDataTable(list);
     }
 
     /**
-     * 新增${functionName}
+     * 新增消息信息
      */
-    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:add')")
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:add')")
     @GetMapping(value="/add")
     public AjaxResult add()
     {
-        ${ClassName} info=new ${ClassName}();
+        SysMessageinfo info=new SysMessageinfo();
         return AjaxResult.success(info);
     }
 
     /**
-     * 编辑${functionName}
+     * 编辑消息信息
      */
-    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:edit')")
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:edit')")
     @GetMapping(value="/edit/{id}")
     public AjaxResult edit(@PathVariable("id") String id)
     {
-        return AjaxResult.success(${className}Service.getRecordByNo(id));
+        return AjaxResult.success(sysMessageinfoService.getRecordByNo(id));
     }
 
     /**
-     * 保存${functionName}
+     * 保存消息信息
      */
-    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:save')")
-    @Oplog(title = "${functionName}", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:save')")
+    @Oplog(title = "消息信息", businessType = BusinessType.UPDATE)
     @PostMapping(value = "/save")
-    public AjaxResult save(@RequestBody ${ClassName} ${className}) {
-        if (StringUtils.isNull(${className}Service.getRecordByNo(${className}.getDeptNo()))) {
-            return toAjax(${className}Service.AddNewRecord(${className}));
+    public AjaxResult save(@RequestBody SysMessageinfo sysMessageinfo) {
+        if (StringUtils.isNull(sysMessageinfoService.getRecordByNo(sysMessageinfo.getMssgNo()))) {
+            return toAjax(sysMessageinfoService.AddNewRecord(sysMessageinfo));
         } else {
-            return toAjax(${className}Service.UpdateRecord(${className}));
+            return toAjax(sysMessageinfoService.UpdateRecord(sysMessageinfo));
         }
     }
 
     /**
-     * 删除${functionName}
+     * 删除消息信息
      */
-    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:delete')")
-    @Oplog(title = "${functionName}", businessType = BusinessType.DELETE)
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:delete')")
+    @Oplog(title = "消息信息", businessType = BusinessType.DELETE)
     //@GetMapping("/delete/{ids}")
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(${className}Service.SoftDeleteByNos(ids));
+        return toAjax(sysMessageinfoService.SoftDeleteByNos(ids));
     }
 
     /**
-     * 获取${functionName}详细信息
+     * 获取消息信息详细信息
      */
-    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:detail')")
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:detail')")
     @GetMapping(value = "/detail/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(${className}Service.getRecordByNo(id));
+        return AjaxResult.success(sysMessageinfoService.getRecordByNo(id));
     }
 
     /**
-     * 导出${functionName}列表
+     * 导出消息信息列表
      */
-    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:export')")
-    @Oplog(title = "${functionName}", businessType = BusinessType.EXPORT)
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:export')")
+    @Oplog(title = "消息信息", businessType = BusinessType.EXPORT)
     @GetMapping("/export/{condition}")
     public AjaxResult export(@PathVariable("condition") String condition)
     {
-        List<${ClassName}> list = ${className}Service.getRecordsByPaging(1,10,condition,"id","asc");
-        ExcelUtils<${ClassName}> util = new ExcelUtils<${ClassName}>(${ClassName}.class);
+        List<SysMessageinfo> list = sysMessageinfoService.getRecordsByPaging(1,10,condition,"id","asc");
+        ExcelUtils<SysMessageinfo> util = new ExcelUtils<SysMessageinfo>(SysMessageinfo.class);
         return util.exportExcel(list, "menu");
     }
 

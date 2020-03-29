@@ -11,15 +11,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.ruoyi.framework.aspectj.lang.annotation.Log;
-import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
+import org.springframework.web.servlet.ModelAndView;
 import ${packageName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
-import com.ruoyi.framework.web.controller.BaseController;
-import com.ruoyi.framework.web.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.benet.common.annotation.Oplog;
+import com.benet.common.core.controller.BaseController;
+import com.benet.common.core.domain.AjaxResult;
+import com.benet.common.enums.BusinessType;
+import com.benet.common.utils.poi.ExcelUtils;
+import com.benet.common.utils.string.StringUtils;
 #if($table.crud)
-import com.ruoyi.framework.web.page.TableDataInfo;
+import com.benet.common.core.pager.TableDataInfo;
 #elseif($table.tree)
 #end
 
@@ -35,80 +37,108 @@ public class ${ClassName}Controller extends BaseController
 {
     @Autowired
     private I${ClassName}Service ${className}Service;
+    /**
+         * 首页
+         */
+    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:index')")
+    @GetMapping(value="/index")
+    public ModelAndView index()
+    {
+        ModelAndView mv=new ModelAndView("index");
+        return mv;
+    }
 
     /**
      * 查询${functionName}列表
      */
-    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:list')")
-    @GetMapping("/list")
-#if($table.crud)
-    public TableDataInfo list(${ClassName} ${className})
+    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:list')")
+    @GetMapping(value="/list")
+    public TableDataInfo list()
     {
         startPage();
-        List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
+        List<${ClassName}> list = ${className}Service.getAllRecords();
         return getDataTable(list);
     }
-#elseif($table.tree)
-    public AjaxResult list(${ClassName} ${className})
-    {
-        List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
-        return AjaxResult.success(list);
-    }
-#end
 
     /**
-     * 导出${functionName}列表
+     * 查询${functionName}列表
      */
-    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:export')")
-    @Log(title = "${functionName}", businessType = BusinessType.EXPORT)
-    @GetMapping("/export")
-    public AjaxResult export(${ClassName} ${className})
+    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:search')")
+    @GetMapping(value="/search/{condition}")
+    public TableDataInfo search(@PathVariable("condition") String condition)
     {
-        List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
-        ExcelUtil<${ClassName}> util = new ExcelUtil<${ClassName}>(${ClassName}.class);
-        return util.exportExcel(list, "${businessName}");
-    }
-
-    /**
-     * 获取${functionName}详细信息
-     */
-    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:query')")
-    @GetMapping(value = "/{${pkColumn.javaField}}")
-    public AjaxResult getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
-    {
-        return AjaxResult.success(${className}Service.select${ClassName}ById(${pkColumn.javaField}));
+        List<${ClassName}> list = ${className}Service.getRecordsByPaging(1,10,condition,"id","asc");
+        return getDataTable(list);
     }
 
     /**
      * 新增${functionName}
      */
-    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:add')")
-    @Log(title = "${functionName}", businessType = BusinessType.INSERT)
-    @PostMapping
-    public AjaxResult add(@RequestBody ${ClassName} ${className})
+    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:add')")
+    @GetMapping(value="/add")
+    public AjaxResult add()
     {
-        return toAjax(${className}Service.insert${ClassName}(${className}));
+        ${ClassName} info=new ${ClassName}();
+        return AjaxResult.success(info);
     }
 
     /**
-     * 修改${functionName}
+     * 编辑${functionName}
      */
-    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:edit')")
-    @Log(title = "${functionName}", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public AjaxResult edit(@RequestBody ${ClassName} ${className})
+    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:edit')")
+    @GetMapping(value="/edit/{id}")
+    public AjaxResult edit(@PathVariable("id") String id)
     {
-        return toAjax(${className}Service.update${ClassName}(${className}));
+        return AjaxResult.success(${className}Service.getRecordByNo(id));
+    }
+
+    /**
+     * 保存${functionName}
+     */
+    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:save')")
+    @Oplog(title = "${functionName}", businessType = BusinessType.UPDATE)
+    @PostMapping(value = "/save")
+    public AjaxResult save(@RequestBody ${ClassName} ${className}) {
+        if (StringUtils.isNull(${className}Service.getRecordByNo(${className}.getDeptNo()))) {
+            return toAjax(${className}Service.AddNewRecord(${className}));
+        } else {
+            return toAjax(${className}Service.UpdateRecord(${className}));
+        }
     }
 
     /**
      * 删除${functionName}
      */
-    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:remove')")
-    @Log(title = "${functionName}", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{${pkColumn.javaField}s}")
-    public AjaxResult remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s)
+    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:delete')")
+    @Oplog(title = "${functionName}", businessType = BusinessType.DELETE)
+    //@GetMapping("/delete/{ids}")
+    @DeleteMapping("/{ids}")
+    public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(${className}Service.delete${ClassName}ByIds(${pkColumn.javaField}s));
+        return toAjax(${className}Service.SoftDeleteByNos(ids));
     }
+
+    /**
+     * 获取${functionName}详细信息
+     */
+    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:detail')")
+    @GetMapping(value = "/detail/{id}")
+    public AjaxResult detail(@PathVariable("id") String id)
+    {
+        return AjaxResult.success(${className}Service.getRecordByNo(id));
+    }
+
+    /**
+     * 导出${functionName}列表
+     */
+    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:export')")
+    @Oplog(title = "${functionName}", businessType = BusinessType.EXPORT)
+    @GetMapping("/export/{condition}")
+    public AjaxResult export(@PathVariable("condition") String condition)
+    {
+        List<${ClassName}> list = ${className}Service.getRecordsByPaging(1,10,condition,"id","asc");
+        ExcelUtils<${ClassName}> util = new ExcelUtils<${ClassName}>(${ClassName}.class);
+        return util.exportExcel(list, "menu");
+    }
+
 }

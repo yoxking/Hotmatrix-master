@@ -1,6 +1,8 @@
 package com.benet.system.service;
 
 import java.util.List;
+
+import com.benet.common.core.pager.PagingModel;
 import com.benet.system.domain.SysAppinfo;
 
 /**
@@ -12,50 +14,113 @@ import com.benet.system.domain.SysAppinfo;
 public interface ISysAppinfoService 
 {
     /**
-     * 查询应用信息
-     * 
-     * @param id 应用信息ID
-     * @return 应用信息
+     * 查询所有信息列表
+     *
+     * @return 分支信息列表
      */
-    public SysAppinfo selectSysAppinfoById(Long id);
+    public List<SysAppinfo> getAllRecords();
 
     /**
-     * 查询应用信息列表
-     * 
-     * @param sysAppinfo 应用信息
-     * @return 应用信息集合
+     * 按分类查询分支信息列表
+     *
+     * @param classNo 分类编号
+     * @return 分支信息列表
      */
-    public List<SysAppinfo> selectSysAppinfoList(SysAppinfo sysAppinfo);
+    public List<SysAppinfo> getRecordsByClassNo(String classNo);
 
     /**
-     * 新增应用信息
-     * 
-     * @param sysAppinfo 应用信息
+     * 分页查询分支信息列表
+     *
+     * @param model 分页模型
+     * @return 分支信息列表
+     */
+    public List<SysAppinfo> getRecordsByPaging(PagingModel model);
+
+    /**
+     * 查询分支信息
+     *
+     * @param no 分支信息ID
+     * @return 分支信息
+     */
+    public SysAppinfo getRecordByNo(String no);
+
+    /**
+     * 查询分支信息名称
+     *
+     * @param no 分支信息ID
+     * @return 名称
+     */
+    public String getRecordNameByNo(String no);
+
+    /**
+     * 查询分支信息计数
+     *
+     * @param condition 查询条件
+     * @return 计数
+     */
+    public int getCountByCondition(String condition);
+
+    /**
+     * 新增分支信息
+     *
+     * @param info 分支信息
      * @return 结果
      */
-    public int insertSysAppinfo(SysAppinfo sysAppinfo);
+    public int AddNewRecord(SysAppinfo info);
 
     /**
-     * 修改应用信息
-     * 
-     * @param sysAppinfo 应用信息
+     * 更新分支信息
+     *
+     * @param info 分支信息
      * @return 结果
      */
-    public int updateSysAppinfo(SysAppinfo sysAppinfo);
+    public int UpdateRecord(SysAppinfo info);
 
     /**
-     * 批量删除应用信息
-     * 
-     * @param ids 需要删除的应用信息ID
+     * 硬删除分支信息
+     *
+     * @param no 分支信息ID
      * @return 结果
      */
-    public int deleteSysAppinfoByIds(Long[] ids);
+    public int HardDeleteRecord(String no);
 
     /**
-     * 删除应用信息信息
-     * 
-     * @param id 应用信息ID
+     * 硬删除分支信息
+     *
+     * @param nos 分支信息IDs
      * @return 结果
      */
-    public int deleteSysAppinfoById(Long id);
+    public int HardDeleteByNos(String[] nos);
+
+    /**
+     * 硬删除分支信息
+     *
+     * @param condition 条件
+     * @return 结果
+     */
+    public int HardDeleteByCondition(String condition);
+
+    /**
+     * 软删除分支信息
+     *
+     * @param no 分支信息ID
+     * @return 结果
+     */
+    public int SoftDeleteRecord(String no);
+
+    /**
+     * 软删除分支信息
+     *
+     * @param nos 分支信息IDs
+     * @return 结果
+     */
+    public int SoftDeleteByNos(String[] nos);
+
+    /**
+     * 软删除分支信息
+     *
+     * @param condition 条件
+     * @return 结果
+     */
+    public int SoftDeleteByCondition(String condition);
 }

@@ -36,35 +36,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select id, app_no, app_cnname, app_enname, app_code, class_no, order_no, app_url, app_ver, email, summary, edog_no, edog_type, regist_date, active_date, active_count, active_code, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, version from sys_appinfo
     </sql>
 
-    <select id="selectSysAppinfoList" parameterType="SysAppinfo" resultMap="SysAppinfoResult">
+    <select id="getAllRecords" resultMap="SysAppinfoResult">
         <include refid="selectSysAppinfoVo"/>
-        <where>  
-            <if test="appNo != null  and appNo != ''"> and app_no = #{appNo}</if>
-            <if test="appCnname != null  and appCnname != ''"> and app_cnname like concat('%', #{appCnname}, '%')</if>
-            <if test="appEnname != null  and appEnname != ''"> and app_enname like concat('%', #{appEnname}, '%')</if>
-            <if test="appCode != null  and appCode != ''"> and app_code = #{appCode}</if>
-            <if test="classNo != null  and classNo != ''"> and class_no = #{classNo}</if>
-            <if test="orderNo != null "> and order_no = #{orderNo}</if>
-            <if test="appUrl != null  and appUrl != ''"> and app_url = #{appUrl}</if>
-            <if test="appVer != null  and appVer != ''"> and app_ver = #{appVer}</if>
-            <if test="email != null  and email != ''"> and email = #{email}</if>
-            <if test="summary != null  and summary != ''"> and summary = #{summary}</if>
-            <if test="edogNo != null  and edogNo != ''"> and edog_no = #{edogNo}</if>
-            <if test="edogType != null  and edogType != ''"> and edog_type = #{edogType}</if>
-            <if test="registDate != null "> and regist_date = #{registDate}</if>
-            <if test="activeDate != null "> and active_date = #{activeDate}</if>
-            <if test="activeCount != null "> and active_count = #{activeCount}</if>
-            <if test="activeCode != null  and activeCode != ''"> and active_code = #{activeCode}</if>
-            <if test="checkState != null  and checkState != ''"> and check_state = #{checkState}</if>
-            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
-            <if test="comments != null  and comments != ''"> and comments = #{comments}</if>
-            <if test="version != null "> and version = #{version}</if>
-        </where>
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%')
+    </select>
+
+    <select id="getRecordsByClassNo" resultMap="SysAppinfoResult">
+        <include refid="selectSysAppinfoVo"/>
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and class_no=#{classNo}
+    </select>
+
+    <select id="getRecordsByPaging" resultMap="SysAppinfoResult">
+        <include refid="selectSysAppinfoVo"/>
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and #{condition} order by #{orderField} #{orderType} limit #{pageIndex},#{pageSize}
     </select>
     
-    <select id="selectSysAppinfoById" parameterType="Long" resultMap="SysAppinfoResult">
+    <select id="getRecordByNo" resultMap="SysAppinfoResult">
         <include refid="selectSysAppinfoVo"/>
-        where id = #{id}
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no = #{appCode}
+    </select>
+
+    <select id="getRecordNameByNo">
+        select app_cnname from sys_appinfo
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no = #{appNo}
+    </select>
+
+    <select id="getCountByCondition">
+        select count(*) from sys_appinfo
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%')
+        <if test="condition != null  and condition != ''"> and #{condition}</if>
     </select>
         
     <insert id="insertSysAppinfo" parameterType="SysAppinfo" useGeneratedKeys="true" keyProperty="id">
@@ -149,20 +149,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateTime != null ">update_time = #{updateTime},</if>
             <if test="deleteFlag != null  and deleteFlag != ''">delete_flag = #{deleteFlag},</if>
             <if test="comments != null  and comments != ''">comments = #{comments},</if>
-            <if test="version != null ">version = #{version},</if>
+            <if test="version != null ">version = #{version}+1,</if>
         </trim>
-        where id = #{id}
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and version=#{version} and app_no = #{appNo}
     </update>
 
-    <delete id="deleteSysAppinfoById" parameterType="Long">
-        delete from sys_appinfo where id = #{id}
+    <delete id="HardDeleteRecord">
+        delete from sys_appinfo
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no = #{appNo}
     </delete>
 
-    <delete id="deleteSysAppinfoByIds" parameterType="String">
-        delete from sys_appinfo where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
+    <delete id="HardDeleteByNos">
+        delete from sys_appinfo
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no in
+        <foreach item="no" collection="array" open="(" separator="," close=")">
+            #{no}
         </foreach>
     </delete>
-    
+
+    <delete id="HardDeleteByCondition">
+        delete from sys_appinfo
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%')
+        <if test="condition != null  and condition != ''"> and #{condition}</if>
+    </delete>
+
+    <delete id="SoftDeleteRecord">
+        update sys_appinfo set delete_flag='0'
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no = #{appNo}
+    </delete>
+
+    <delete id="SoftDeleteByNos">
+        update sys_appinfo set delete_flag='0'
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no in
+        <foreach item="no" collection="array" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="SoftDeleteByCondition">
+        update sys_appinfo set delete_flag='0'
+        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%')
+        <if test="condition != null  and condition != ''"> and #{condition}</if>
+    </delete>
 </mapper>

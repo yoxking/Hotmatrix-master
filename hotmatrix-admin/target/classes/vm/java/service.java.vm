@@ -1,6 +1,7 @@
 package ${packageName}.service;
 
 import java.util.List;
+import com.benet.common.core.pager.PagingModel;
 import ${packageName}.domain.${ClassName};
 
 /**
@@ -12,50 +13,125 @@ import ${packageName}.domain.${ClassName};
 public interface I${ClassName}Service 
 {
     /**
-     * 查询${functionName}
-     * 
-     * @param ${pkColumn.javaField} ${functionName}ID
-     * @return ${functionName}
-     */
-    public ${ClassName} select${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField});
-
-    /**
-     * 查询${functionName}列表
-     * 
-     * @param ${className} ${functionName}
+     * 查询所有${functionName}列表
+     *
      * @return ${functionName}集合
      */
-    public List<${ClassName}> select${ClassName}List(${ClassName} ${className});
+    public List<${ClassName}> getAllRecords();
+
+    /**
+     * 按分类查询${functionName}列表
+     *
+     * @param classNo 分类编号
+     * @return ${functionName}集合
+     */
+    public List<${ClassName}> getRecordsByClassNo(String classNo);
+
+    /**
+     * 分页查询${functionName}列表
+     *
+     * @param model 分页模型
+     * @return ${functionName}集合
+     */
+    public List<${ClassName}> getRecordsByPaging(PagingModel model);
+
+    /**
+     * 分页查询${functionName}列表
+     *
+     * @param pageIndex 当前页索引
+     * @param pageSize 分页大小
+     * @param condition 分页条件
+     * @param orderField 排序列
+     * @param orderType 排序类型
+     * @return ${functionName}集合
+     */
+    public List<${ClassName}> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType);
+
+    /**
+     * 查询${functionName}
+     *
+     * @param no ${functionName}ID
+     * @return ${functionName}
+     */
+    public ${ClassName} getRecordByNo(String no);
+
+    /**
+     * 查询${functionName}名称
+     *
+     * @param no ${functionName}ID
+     * @return 名称
+     */
+    public String getRecordNameByNo(String no);
+
+    /**
+     * 查询${functionName}计数
+     *
+     * @param condition 查询条件
+     * @return 结果
+     */
+    public int getCountByCondition(String condition);
 
     /**
      * 新增${functionName}
-     * 
-     * @param ${className} ${functionName}
+     *
+     * @param info ${functionName}
      * @return 结果
      */
-    public int insert${ClassName}(${ClassName} ${className});
+    public int AddNewRecord(${ClassName} info);
 
     /**
-     * 修改${functionName}
-     * 
-     * @param ${className} ${functionName}
+     * 更新${functionName}
+     *
+     * @param info ${functionName}
      * @return 结果
      */
-    public int update${ClassName}(${ClassName} ${className});
+    public int UpdateRecord(${ClassName} info);
 
     /**
-     * 批量删除${functionName}
-     * 
-     * @param ${pkColumn.javaField}s 需要删除的${functionName}ID
+     * 硬删除${functionName}
+     *
+     * @param no ${functionName}ID
      * @return 结果
      */
-    public int delete${ClassName}ByIds(${pkColumn.javaType}[] ${pkColumn.javaField}s);
+    public int HardDeleteRecord(String no);
 
     /**
-     * 删除${functionName}信息
-     * 
-     * @param ${pkColumn.javaField} ${functionName}ID
+     * 批量硬删除${functionName}
+     *
+     * @param nos ${functionName}IDs
      * @return 结果
      */
-    public int delete${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField});
+    public int HardDeleteByNos(String[] nos);
+
+    /**
+     * 按条件硬删除${functionName}
+     *
+     * @param condition 条件
+     * @return 结果
+     */
+    public int HardDeleteByCondition(String condition);
+
+    /**
+     * 软删除${functionName}
+     *
+     * @param no ${functionName}ID
+     * @return 结果
+     */
+    public int SoftDeleteRecord(String no);
+
+    /**
+     * 批量软删除${functionName}
+     *
+     * @param nos ${functionName}IDs
+     * @return 结果
+     */
+    public int SoftDeleteByNos(String[] nos);
+
+    /**
+     * 按条件软删除${functionName}
+     *
+     * @param condition 条件
+     * @return 结果
+     */
+    public int SoftDeleteByCondition(String condition);
 }
