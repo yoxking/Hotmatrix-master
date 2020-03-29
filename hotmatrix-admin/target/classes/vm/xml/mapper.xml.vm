@@ -16,36 +16,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getAllRecords" resultMap="${ClassName}Result">
         <include refid="select${ClassName}Vo"/>
-        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%')
+        where delete_flag='1' and app_code=#{appCode}
     </select>
 
     <select id="getRecordsByClassNo" resultMap="${ClassName}Result">
         <include refid="select${ClassName}Vo"/>
-        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and class_no=#{classNo}
+        where delete_flag='1' and app_code=#{appCode} and class_no=#{classNo}
     </select>
 
     <select id="getRecordsByPaging" resultMap="${ClassName}Result">
         <include refid="select${ClassName}Vo"/>
-        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and #{condition} order by #{orderField} #{orderType} limit #{pageIndex},#{pageSize}
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="model.condition != null  and model.condition != ''"> and #{model.condition}</if>
+        order by #{model.orderField} #{model.orderType} limit #{model.pageIndex},#{model.pageSize}
     </select>
 
     <select id="getRecordByNo" resultMap="${ClassName}Result">
         <include refid="select${ClassName}Vo"/>
-        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no = #{appCode}
+        where delete_flag='1' and app_code=#{appCode} and xxxxxxxxx_no = #{no}
     </select>
 
-    <select id="getRecordNameByNo">
+    <select id="getRecordNameByNo" resultType="String">
         select app_cnname from ${tableName}
-        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no = #{appNo}
+        where delete_flag='1' and app_code=#{appCode} and xxxxxxxxx_no = #{no}
     </select>
 
-    <select id="getCountByCondition">
+    <select id="getCountByCondition" resultType="Integer">
         select count(*) from ${tableName}
-        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%')
+        where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''"> and #{condition}</if>
     </select>
 
-    <insert id="insert${ClassName}" parameterType="${ClassName}"#if($pkColumn.increment) useGeneratedKeys="true" keyProperty="$pkColumn.javaField"#end>
+    <insert id="AddNewRecord" parameterType="${ClassName}"#if($pkColumn.increment) useGeneratedKeys="true" keyProperty="$pkColumn.javaField"#end>
         insert into ${tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
             #foreach($column in $columns)
@@ -63,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </trim>
     </insert>
 
-    <update id="update${ClassName}" parameterType="${ClassName}">
+    <update id="UpdateRecord" parameterType="${ClassName}">
         update ${tableName}
         <trim prefix="SET" suffixOverrides=",">
             #foreach($column in $columns)
@@ -72,44 +74,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 #end
             #end
         </trim>
-        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and version=#{version} and app_no = #{appNo}
+        where delete_flag='1' and app_code=#{appCode} and version=#{version} and xxxxxxxxx_no = #{no}
     </update>
 
-    <delete id="HardDeleteRecord">
+    <delete id="HardDeleteByNo">
         delete from ${tableName}
-        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no = #{appNo}
+        where delete_flag='1' and app_code=#{appCode} and xxxxxxxxx_no = #{no}
     </delete>
 
     <delete id="HardDeleteByNos">
         delete from ${tableName}
-        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no in
-        <foreach item="no" collection="array" open="(" separator="," close=")">
+        where delete_flag='1' and app_code=#{appCode} and app_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
         </foreach>
     </delete>
 
     <delete id="HardDeleteByCondition">
         delete from ${tableName}
-        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%')
+        where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''"> and #{condition}</if>
     </delete>
 
-    <delete id="SoftDeleteRecord">
+    <delete id="SoftDeleteByNo">
         update ${tableName} set delete_flag='0'
-        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no = #{appNo}
+        where delete_flag='1' and app_code=#{appCode} and xxxxxxxxx_no = #{no}
     </delete>
 
     <delete id="SoftDeleteByNos">
         update ${tableName} set delete_flag='0'
-        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%') and app_no in
-        <foreach item="no" collection="array" open="(" separator="," close=")">
+        where delete_flag='1' and app_code=#{appCode} and app_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
         </foreach>
     </delete>
 
     <delete id="SoftDeleteByCondition">
         update ${tableName} set delete_flag='0'
-        where delete_flag='1' and app_code like concat('%', #{appCode}, ';%')
+        where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''"> and #{condition}</if>
     </delete>
     

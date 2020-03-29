@@ -7,73 +7,73 @@ import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.benet.system.mapper.SysMessageinfoMapper;
-import com.benet.system.domain.SysMessageinfo;
-import com.benet.system.service.ISysMessageinfoService;
+import com.benet.system.mapper.SysAppclassMapper;
+import com.benet.system.domain.SysAppclass;
+import com.benet.system.service.ISysAppclassService;
 
 /**
- * 消息信息Service业务层处理
+ * 应用类型Service业务层处理
  * 
  * @author yoxking
  * @date 2020-03-29
  */
 @Service
-public class SysMessageinfoServiceImpl implements ISysMessageinfoService 
+public class SysAppclassServiceImpl implements ISysAppclassService 
 {
     @Autowired
-    private SysMessageinfoMapper sysMessageinfoMapper;
+    private SysAppclassMapper sysAppclassMapper;
 
     /**
-     * 查询所有消息信息列表
+     * 查询所有应用类型列表
      *
-     * @return 消息信息集合
+     * @return 应用类型集合
      */
     @Override
-    public List<SysMessageinfo> getAllRecords() {
-        return sysMessageinfoMapper.getAllRecords(GlobalConfig.getAppCode());
+    public List<SysAppclass> getAllRecords() {
+        return sysAppclassMapper.getAllRecords(GlobalConfig.getAppCode());
     }
 
     /**
-     * 按分类查询消息信息列表
+     * 按分类查询应用类型列表
      *
      * @param classNo 分类编号
-     * @return 消息信息集合
+     * @return 应用类型集合
      */
     @Override
-    public List<SysMessageinfo> getRecordsByClassNo(String classNo) {
+    public List<SysAppclass> getRecordsByClassNo(String classNo) {
         if (StringUtils.isNotEmpty(classNo)) {
-            return sysMessageinfoMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
+            return sysAppclassMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
         }
         return null;
     }
 
     /**
-     * 分页查询消息信息列表
+     * 分页查询应用类型列表
      *
      * @param model 分页模型
-     * @return 消息信息集合
+     * @return 应用类型集合
      */
     @Override
-    public List<SysMessageinfo> getRecordsByPaging(PagingModel model) {
+    public List<SysAppclass> getRecordsByPaging(PagingModel model) {
         if (StringUtils.isNotNull(model)) {
             model.setPageIndex(model.getPageIndex()*model.getPageSize());
-            return sysMessageinfoMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+            return sysAppclassMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
         }
         return null;
     }
 
 
     /**
-     * 分页查询消息信息列表
+     * 分页查询应用类型列表
      *
      * @param pageIndex 当前页起始索引
      * @param pageSize 页面大小
      * @param condition 条件
      * @param orderField 排序列
      * @param orderType 排序类型
-     * @return 消息信息集合
+     * @return 应用类型集合
      */
-    public List<SysMessageinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
+    public List<SysAppclass> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();
         model.setPageIndex(pageIndex * pageSize);
@@ -89,151 +89,151 @@ public class SysMessageinfoServiceImpl implements ISysMessageinfoService
         } else {
             model.setOrderType(orderType);
         }
-        return sysMessageinfoMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+        return sysAppclassMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
     }
 
     /**
-     * 查询消息信息
+     * 查询应用类型
      *
-     * @param no 消息信息ID
-     * @return 消息信息
+     * @param no 应用类型ID
+     * @return 应用类型
      */
     @Override
-    public SysMessageinfo getRecordByNo(String no) {
+    public SysAppclass getRecordByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysMessageinfoMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
+            return sysAppclassMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
         }
         return null;
     }
 
     /**
-     * 查询消息信息名称
+     * 查询应用类型名称
      *
-     * @param no 消息信息ID
+     * @param no 应用类型ID
      * @return 名称
      */
     @Override
     public String getRecordNameByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysMessageinfoMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
+            return sysAppclassMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
         }
         return null;
     }
 
     /**
-     * 查询消息信息计数
+     * 查询应用类型计数
      *
      * @param condition 查询条件
      * @return 结果
      */
     @Override
     public int getCountByCondition(String condition) {
-        return sysMessageinfoMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
+        return sysAppclassMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
     }
 
     /**
-     * 新增消息信息
+     * 新增应用类型
      *
-     * @param info 消息信息
+     * @param info 应用类型
      * @return 结果
      */
     @Override
-    public int AddNewRecord(SysMessageinfo info) {
+    public int AddNewRecord(SysAppclass info) {
         info.setCreateTime(DateUtils.getNowDate());
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
         info.setVersion(1L);
-        return sysMessageinfoMapper.AddNewRecord(info);
+        return sysAppclassMapper.AddNewRecord(info);
     }
 
     /**
-     * 更新消息信息
+     * 更新应用类型
      *
-     * @param info 消息信息
+     * @param info 应用类型
      * @return 结果
      */
     @Override
-    public int UpdateRecord(SysMessageinfo info) {
+    public int UpdateRecord(SysAppclass info) {
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
-        return sysMessageinfoMapper.UpdateRecord(info);
+        return sysAppclassMapper.UpdateRecord(info);
     }
 
     /**
-     * 硬删除消息信息
+     * 硬删除应用类型
      *
-     * @param no 消息信息ID
+     * @param no 应用类型ID
      * @return 结果
      */
     @Override
-    public int HardDeleteByNo(String no) {
+    public int HardDeleteRecord(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysMessageinfoMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
+            return sysAppclassMapper.HardDeleteRecord(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }
 
     /**
-     * 批量硬删除消息信息
+     * 批量硬删除应用类型
      *
-     * @param nos 消息信息IDs
+     * @param nos 应用类型IDs
      * @return 结果
      */
     @Override
     public int HardDeleteByNos(String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return sysMessageinfoMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return sysAppclassMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
         }
         return 0;
     }
 
     /**
-     * 按条件硬删除消息信息
+     * 按条件硬删除应用类型
      *
      * @param condition 条件
      * @return 结果
      */
     @Override
     public int HardDeleteByCondition(String condition) {
-        return sysMessageinfoMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
+        return sysAppclassMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
     }
 
     /**
-     * 软删除消息信息
+     * 软删除应用类型
      *
-     * @param no 消息信息ID
+     * @param no 应用类型ID
      * @return 结果
      */
     @Override
-    public int SoftDeleteByNo(String no) {
+    public int SoftDeleteRecord(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysMessageinfoMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
+            return sysAppclassMapper.SoftDeleteRecord(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }
 
     /**
-     * 批量软删除消息信息
+     * 批量软删除应用类型
      *
-     * @param nos 消息信息IDs
+     * @param nos 应用类型IDs
      * @return 结果
      */
     @Override
     public int SoftDeleteByNos(String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return sysMessageinfoMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return sysAppclassMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
         }
         return 0;
     }
 
     /**
-     * 按条件软删除消息信息
+     * 按条件软删除应用类型
      *
      * @param condition 条件
      * @return 结果
      */
     @Override
     public int SoftDeleteByCondition(String condition) {
-        return sysMessageinfoMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
+        return sysAppclassMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
     }
 }

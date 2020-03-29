@@ -93,7 +93,7 @@ public interface ISysMessageinfoService
      * @param no 消息信息ID
      * @return 结果
      */
-    public int HardDeleteRecord(String no);
+    public int HardDeleteByNo(String no);
 
     /**
      * 批量硬删除消息信息
@@ -117,7 +117,7 @@ public interface ISysMessageinfoService
      * @param no 消息信息ID
      * @return 结果
      */
-    public int SoftDeleteRecord(String no);
+    public int SoftDeleteByNo(String no);
 
     /**
      * 批量软删除消息信息

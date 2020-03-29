@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.benet.system.mapper.SysAppclassMapper">
+    
+    <resultMap type="SysAppclass" id="SysAppclassResult">
+        <result property="id"    column="id"    />
+        <result property="classNo"    column="class_no"    />
+        <result property="className"    column="class_name"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+        <result property="comments"    column="comments"    />
+        <result property="appCode"    column="app_code"    />
+        <result property="version"    column="version"    />
+    </resultMap>
+
+    <sql id="selectSysAppclassVo">
+        select id, class_no, class_name, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_appclass
+    </sql>
+
+    <select id="getAllRecords" resultMap="SysAppclassResult">
+        <include refid="selectSysAppclassVo"/>
+        where delete_flag='1' and app_code=#{appCode}
+    </select>
+
+    <select id="getRecordsByClassNo" resultMap="SysAppclassResult">
+        <include refid="selectSysAppclassVo"/>
+        where delete_flag='1' and app_code=#{appCode} and class_no=#{classNo}
+    </select>
+
+    <select id="getRecordsByPaging" resultMap="SysAppclassResult">
+        <include refid="selectSysAppclassVo"/>
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="model.condition != null  and model.condition != ''"> and #{model.condition}</if>
+        order by #{model.orderField} #{model.orderType} limit #{model.pageIndex},#{model.pageSize}
+    </select>
+
+    <select id="getRecordByNo" resultMap="SysAppclassResult">
+        <include refid="selectSysAppclassVo"/>
+        where delete_flag='1' and app_code=#{appCode} and class_no = #{no}
+    </select>
+
+    <select id="getRecordNameByNo" resultType="String">
+        select class_name from sys_appclass
+        where delete_flag='1' and app_code=#{appCode} and class_no = #{no}
+    </select>
+
+    <select id="getCountByCondition" resultType="Integer">
+        select count(*) from sys_appclass
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''"> and #{condition}</if>
+    </select>
+
+    <insert id="insertSysAppclass" parameterType="SysAppclass" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_appclass
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                                                                            <if test="classNo != null  and classNo != ''">class_no,</if>
+                                                                <if test="className != null  and className != ''">class_name,</if>
+                                                                <if test="createBy != null  and createBy != ''">create_by,</if>
+                                                                <if test="createTime != null ">create_time,</if>
+                                                                <if test="updateBy != null  and updateBy != ''">update_by,</if>
+                                                                <if test="updateTime != null ">update_time,</if>
+                                                                <if test="deleteFlag != null  and deleteFlag != ''">delete_flag,</if>
+                                                                <if test="comments != null  and comments != ''">comments,</if>
+                                                                <if test="appCode != null  and appCode != ''">app_code,</if>
+                                                                <if test="version != null ">version,</if>
+                                    </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                                                                            <if test="classNo != null  and classNo != ''">#{classNo},</if>
+                                                                <if test="className != null  and className != ''">#{className},</if>
+                                                                <if test="createBy != null  and createBy != ''">#{createBy},</if>
+                                                                <if test="createTime != null ">#{createTime},</if>
+                                                                <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+                                                                <if test="updateTime != null ">#{updateTime},</if>
+                                                                <if test="deleteFlag != null  and deleteFlag != ''">#{deleteFlag},</if>
+                                                                <if test="comments != null  and comments != ''">#{comments},</if>
+                                                                <if test="appCode != null  and appCode != ''">#{appCode},</if>
+                                                                <if test="version != null ">#{version},</if>
+                                    </trim>
+    </insert>
+
+    <update id="updateSysAppclass" parameterType="SysAppclass">
+        update sys_appclass
+        <trim prefix="SET" suffixOverrides=",">
+                                                                            <if test="classNo != null  and classNo != ''">class_no = #{classNo},</if>
+                                                                <if test="className != null  and className != ''">class_name = #{className},</if>
+                                                                <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+                                                                <if test="createTime != null ">create_time = #{createTime},</if>
+                                                                <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+                                                                <if test="updateTime != null ">update_time = #{updateTime},</if>
+                                                                <if test="deleteFlag != null  and deleteFlag != ''">delete_flag = #{deleteFlag},</if>
+                                                                <if test="comments != null  and comments != ''">comments = #{comments},</if>
+                                                                <if test="appCode != null  and appCode != ''">app_code = #{appCode},</if>
+                                                                <if test="version != null ">version = #{version},</if>
+                                    </trim>
+        where delete_flag='1' and app_code=#{appCode} and version=#{version} and class_no = #{no}
+    </update>
+
+    <delete id="HardDeleteRecord">
+        delete from sys_appclass
+        where delete_flag='1' and app_code=#{appCode} and class_no = #{no}
+    </delete>
+
+    <delete id="HardDeleteByNos">
+        delete from sys_appclass
+        where delete_flag='1' and app_code=#{appCode} and class_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="HardDeleteByCondition">
+        delete from sys_appclass
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''"> and #{condition}</if>
+    </delete>
+
+    <delete id="SoftDeleteRecord">
+        update sys_appclass set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and class_no = #{no}
+    </delete>
+
+    <delete id="SoftDeleteByNos">
+        update sys_appclass set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and class_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="SoftDeleteByCondition">
+        update sys_appclass set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''"> and #{condition}</if>
+    </delete>
+    
+</mapper>

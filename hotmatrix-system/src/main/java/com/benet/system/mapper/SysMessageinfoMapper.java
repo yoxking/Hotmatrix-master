@@ -91,7 +91,7 @@ public interface SysMessageinfoMapper
      * @param no 消息信息ID
      * @return 结果
      */
-    public int HardDeleteRecord(@Param("appCode") String appCode,@Param("no") String no);
+    public int HardDeleteByNo(@Param("appCode") String appCode,@Param("no") String no);
 
     /**
      * 批量硬删除消息信息
@@ -118,7 +118,7 @@ public interface SysMessageinfoMapper
      * @param no 消息信息ID
      * @return 结果
      */
-    public int SoftDeleteRecord(@Param("appCode") String appCode,@Param("no") String no);
+    public int SoftDeleteByNo(@Param("appCode") String appCode,@Param("no") String no);
 
     /**
      * 批量软删除消息信息

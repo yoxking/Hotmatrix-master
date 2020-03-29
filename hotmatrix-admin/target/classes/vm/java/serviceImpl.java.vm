@@ -61,6 +61,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
     @Override
     public List<${ClassName}> getRecordsByPaging(PagingModel model) {
         if (StringUtils.isNotNull(model)) {
+            model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
             return ${className}Mapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
         }
         return null;
@@ -80,7 +81,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
     public List<${ClassName}> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();
-        model.setPageIndex(pageIndex * pageSize);
+        model.setPageIndex((pageIndex-1) * pageSize);
         model.setPageSize(pageSize);
         model.setCondition(condition);
         if (StringUtils.isEmpty(orderField)) {
@@ -91,7 +92,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
         if (StringUtils.isEmpty(orderType)) {
             model.setOrderType("Asc");
         } else {
-            model.setOrderType("Desc");
+            model.setOrderType(orderType);
         }
         return ${className}Mapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
     }
@@ -170,9 +171,9 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
      * @return 结果
      */
     @Override
-    public int HardDeleteRecord(String no) {
+    public int HardDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return ${className}Mapper.HardDeleteRecord(GlobalConfig.getAppCode(),no);
+            return ${className}Mapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }
@@ -209,9 +210,9 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
      * @return 结果
      */
     @Override
-    public int SoftDeleteRecord(String no) {
+    public int SoftDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return ${className}Mapper.SoftDeleteRecord(GlobalConfig.getAppCode(),no);
+            return ${className}Mapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }
