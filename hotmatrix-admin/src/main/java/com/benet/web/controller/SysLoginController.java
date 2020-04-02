@@ -22,7 +22,7 @@ import java.util.List;
  * 
  * @author yoxking
  */
-@Api(description = "生产者进程API接口")
+@Api(tags = "SysLogin")
 @RestController
 public class SysLoginController
 {
