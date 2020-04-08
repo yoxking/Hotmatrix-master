@@ -9,7 +9,7 @@ import com.benet.common.core.domain.BaseEntity;
  * 分支信息对象 sys_branchinfo
  * 
  * @author yoxking
- * @date 2020-03-28
+ * @date 2020-04-06
  */
 public class SysBranchinfo extends BaseEntity
 {

@@ -7,7 +7,7 @@ package com.benet.common.enums;
  */
 public enum UserStatus
 {
-    OK("0", "正常"), DISABLE("1", "停用"), DELETED("2", "删除");
+    DELETED("0", "删除"),OK("1", "正常"), DISABLE("2", "停用");
 
     private final String code;
     private final String info;

@@ -5,7 +5,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.benet.common.constant.JwtConstants;
 import com.benet.common.constant.PubConstants;
 import com.benet.common.core.domain.AjaxResult;
 import com.benet.common.enums.HttpStatus;
@@ -14,7 +13,7 @@ import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.manager.AsyncManager;
 import com.benet.framework.manager.factory.AsyncFactory;
 import com.benet.framework.security.LoginUser;
-import com.benet.framework.security.service.JwtokenService;
+import com.benet.framework.security.service.MyJwtokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
@@ -30,7 +29,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 public class SylogoutSuccessHandler implements LogoutSuccessHandler
 {
     @Autowired
-    private JwtokenService jwtokenService;
+    private MyJwtokenService jwtokenService;
 
     /**
      * 退出处理
@@ -50,6 +49,6 @@ public class SylogoutSuccessHandler implements LogoutSuccessHandler
             // 记录用户退出日志
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(userName, PubConstants.LOGOUT, "退出成功"));
         }
-        ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.error(HttpStatus.SUCCESS+"", "退出成功")));
+        ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.success(HttpStatus.SUCCESS+"", "退出成功")));
     }
 }

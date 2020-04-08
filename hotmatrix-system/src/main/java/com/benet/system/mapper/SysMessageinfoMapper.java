@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
  * 消息信息Mapper接口
  * 
  * @author yoxking
- * @date 2020-03-29
+ * @date 2020-04-06
  */
 @Mapper
 public interface SysMessageinfoMapper 

@@ -3,7 +3,7 @@ package com.benet.framework.security;
 import java.util.Collection;
 import java.util.Set;
 
-import com.benet.system.domain.SysUser;
+import com.benet.system.domain.SysSuserinfo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -55,12 +55,12 @@ public class LoginUser implements UserDetails
     /**
      * 权限列表
      */
-    private Set<String> permissions;
+    private Set<String> permits;
 
     /**
      * 用户信息
      */
-    private SysUser user;
+    private SysSuserinfo user;
 
     public String getToken()
     {
@@ -76,10 +76,10 @@ public class LoginUser implements UserDetails
     {
     }
 
-    public LoginUser(SysUser user, Set<String> permissions)
+    public LoginUser(SysSuserinfo user, Set<String> permits)
     {
         this.user = user;
-        this.permissions = permissions;
+        this.permits = permits;
     }
 
     @JsonIgnore
@@ -92,7 +92,7 @@ public class LoginUser implements UserDetails
     @Override
     public String getUsername()
     {
-        return user.getUserName();
+        return user.getUserCnname();
     }
 
     /**
@@ -201,22 +201,22 @@ public class LoginUser implements UserDetails
         this.expireTime = expireTime;
     }
 
-    public Set<String> getPermissions()
+    public Set<String> getPermits()
     {
-        return permissions;
+        return permits;
     }
 
-    public void setPermissions(Set<String> permissions)
+    public void setPermits(Set<String> permits)
     {
-        this.permissions = permissions;
+        this.permits = permits;
     }
 
-    public SysUser getUser()
+    public SysSuserinfo getUser()
     {
         return user;
     }
 
-    public void setUser(SysUser user)
+    public void setUser(SysSuserinfo user)
     {
         this.user = user;
     }

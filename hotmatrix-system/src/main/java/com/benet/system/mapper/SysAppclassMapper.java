@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
  * 应用类型Mapper接口
  * 
  * @author yoxking
- * @date 2020-03-29
+ * @date 2020-04-06
  */
 @Mapper
 public interface SysAppclassMapper 
@@ -91,7 +91,7 @@ public interface SysAppclassMapper
      * @param no 应用类型ID
      * @return 结果
      */
-    public int HardDeleteRecord(@Param("appCode") String appCode,@Param("no") String no);
+    public int HardDeleteByNo(@Param("appCode") String appCode,@Param("no") String no);
 
     /**
      * 批量硬删除应用类型
@@ -118,7 +118,7 @@ public interface SysAppclassMapper
      * @param no 应用类型ID
      * @return 结果
      */
-    public int SoftDeleteRecord(@Param("appCode") String appCode,@Param("no") String no);
+    public int SoftDeleteByNo(@Param("appCode") String appCode,@Param("no") String no);
 
     /**
      * 批量软删除应用类型

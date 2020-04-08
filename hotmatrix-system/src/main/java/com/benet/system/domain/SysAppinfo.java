@@ -1,16 +1,16 @@
 package com.benet.system.domain;
 
-import com.benet.common.annotation.Excel;
-import com.benet.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import com.benet.common.annotation.Excel;
+import com.benet.common.core.domain.BaseEntity;
 import java.util.Date;
 
 /**
  * 应用信息对象 sys_appinfo
  * 
  * @author yoxking
- * @date 2020-03-28
+ * @date 2020-04-06
  */
 public class SysAppinfo extends BaseEntity
 {

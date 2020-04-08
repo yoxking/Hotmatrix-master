@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.benet.system.mapper.SysAppclassMapper">
-    
+
     <resultMap type="SysAppclass" id="SysAppclassResult">
-        <result property="id"    column="id"    />
-        <result property="classNo"    column="class_no"    />
-        <result property="className"    column="class_name"    />
-        <result property="createBy"    column="create_by"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateBy"    column="update_by"    />
-        <result property="updateTime"    column="update_time"    />
-        <result property="deleteFlag"    column="delete_flag"    />
-        <result property="comments"    column="comments"    />
-        <result property="appCode"    column="app_code"    />
-        <result property="version"    column="version"    />
+        <result property="id" column="id"/>
+        <result property="classNo" column="class_no"/>
+        <result property="className" column="class_name"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteFlag" column="delete_flag"/>
+        <result property="comments" column="comments"/>
+        <result property="appCode" column="app_code"/>
+        <result property="version" column="version"/>
     </resultMap>
 
     <sql id="selectSysAppclassVo">
@@ -35,74 +35,72 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="getRecordsByPaging" resultMap="SysAppclassResult">
         <include refid="selectSysAppclassVo"/>
         where delete_flag='1' and app_code=#{appCode}
-        <if test="model.condition != null  and model.condition != ''"> and #{model.condition}</if>
+        <if test="model.condition != null  and model.condition != ''">and #{model.condition}</if>
         order by #{model.orderField} #{model.orderType} limit #{model.pageIndex},#{model.pageSize}
     </select>
 
     <select id="getRecordByNo" resultMap="SysAppclassResult">
         <include refid="selectSysAppclassVo"/>
-        where delete_flag='1' and app_code=#{appCode} and class_no = #{no}
+        where delete_flag='1' and app_code=#{appCode} and class_no=#{no}
     </select>
 
     <select id="getRecordNameByNo" resultType="String">
-        select class_name from sys_appclass
-        where delete_flag='1' and app_code=#{appCode} and class_no = #{no}
+        select className from sys_appclass
+        where delete_flag='1' and app_code=#{appCode} and class_no=#{no}
     </select>
 
     <select id="getCountByCondition" resultType="Integer">
         select count(*) from sys_appclass
         where delete_flag='1' and app_code=#{appCode}
-        <if test="condition != null  and condition != ''"> and #{condition}</if>
+        <if test="condition != null  and condition != ''">and #{condition}</if>
     </select>
 
-    <insert id="insertSysAppclass" parameterType="SysAppclass" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_appclass
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-                                                                            <if test="classNo != null  and classNo != ''">class_no,</if>
-                                                                <if test="className != null  and className != ''">class_name,</if>
-                                                                <if test="createBy != null  and createBy != ''">create_by,</if>
-                                                                <if test="createTime != null ">create_time,</if>
-                                                                <if test="updateBy != null  and updateBy != ''">update_by,</if>
-                                                                <if test="updateTime != null ">update_time,</if>
-                                                                <if test="deleteFlag != null  and deleteFlag != ''">delete_flag,</if>
-                                                                <if test="comments != null  and comments != ''">comments,</if>
-                                                                <if test="appCode != null  and appCode != ''">app_code,</if>
-                                                                <if test="version != null ">version,</if>
-                                    </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-                                                                            <if test="classNo != null  and classNo != ''">#{classNo},</if>
-                                                                <if test="className != null  and className != ''">#{className},</if>
-                                                                <if test="createBy != null  and createBy != ''">#{createBy},</if>
-                                                                <if test="createTime != null ">#{createTime},</if>
-                                                                <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
-                                                                <if test="updateTime != null ">#{updateTime},</if>
-                                                                <if test="deleteFlag != null  and deleteFlag != ''">#{deleteFlag},</if>
-                                                                <if test="comments != null  and comments != ''">#{comments},</if>
-                                                                <if test="appCode != null  and appCode != ''">#{appCode},</if>
-                                                                <if test="version != null ">#{version},</if>
-                                    </trim>
+    <insert id="AddNewRecord" parameterType="SysAppclass" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_appclass (
+        <if test="info.classNo != null  and info.classNo != ''">class_no,</if>
+        <if test="info.className != null  and info.className != ''">class_name,</if>
+        <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
+        <if test="info.createTime != null ">create_time,</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">update_by,</if>
+        <if test="info.updateTime != null ">update_time,</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag,</if>
+        <if test="info.comments != null  and info.comments != ''">comments,</if>
+        <if test="info.appCode != null  and info.appCode != ''">app_code,</if>
+        <if test="info.version != null ">version</if>
+        )values(
+        <if test="info.classNo != null  and info.classNo != ''">#{info.classNo},</if>
+        <if test="info.className != null  and info.className != ''">#{info.className},</if>
+        <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
+        <if test="info.createTime != null ">#{info.createTime},</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">#{info.updateBy},</if>
+        <if test="info.updateTime != null ">#{info.updateTime},</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">#{info.deleteFlag},</if>
+        <if test="info.comments != null  and info.comments != ''">#{info.comments},</if>
+        <if test="info.appCode != null  and info.appCode != ''">#{info.appCode},</if>
+        <if test="info.version != null ">#{info.version}</if>
+        )
     </insert>
 
-    <update id="updateSysAppclass" parameterType="SysAppclass">
+    <update id="UpdateRecord" parameterType="SysAppclass">
         update sys_appclass
-        <trim prefix="SET" suffixOverrides=",">
-                                                                            <if test="classNo != null  and classNo != ''">class_no = #{classNo},</if>
-                                                                <if test="className != null  and className != ''">class_name = #{className},</if>
-                                                                <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
-                                                                <if test="createTime != null ">create_time = #{createTime},</if>
-                                                                <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
-                                                                <if test="updateTime != null ">update_time = #{updateTime},</if>
-                                                                <if test="deleteFlag != null  and deleteFlag != ''">delete_flag = #{deleteFlag},</if>
-                                                                <if test="comments != null  and comments != ''">comments = #{comments},</if>
-                                                                <if test="appCode != null  and appCode != ''">app_code = #{appCode},</if>
-                                                                <if test="version != null ">version = #{version},</if>
-                                    </trim>
-        where delete_flag='1' and app_code=#{appCode} and version=#{version} and class_no = #{no}
+        <set>
+            <if test="info.classNo != null  and info.classNo != ''">class_no = #{info.classNo},</if>
+            <if test="info.className != null  and info.className != ''">class_name = #{info.className},</if>
+            <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
+            <if test="info.createTime != null ">create_time = #{info.createTime},</if>
+            <if test="info.updateBy != null  and info.updateBy != ''">update_by = #{info.updateBy},</if>
+            <if test="info.updateTime != null ">update_time = #{info.updateTime},</if>
+            <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag = #{info.deleteFlag},</if>
+            <if test="info.comments != null  and info.comments != ''">comments = #{info.comments},</if>
+            <if test="info.appCode != null  and info.appCode != ''">app_code = #{info.appCode},</if>
+            <if test="info.version != null ">version = version+1</if>
+        </set>
+        where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and class_no=#{info.classNo}
     </update>
 
-    <delete id="HardDeleteRecord">
+    <delete id="HardDeleteByNo">
         delete from sys_appclass
-        where delete_flag='1' and app_code=#{appCode} and class_no = #{no}
+        where delete_flag='1' and app_code=#{appCode} and class_no=#{no}
     </delete>
 
     <delete id="HardDeleteByNos">
@@ -116,12 +114,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="HardDeleteByCondition">
         delete from sys_appclass
         where delete_flag='1' and app_code=#{appCode}
-        <if test="condition != null  and condition != ''"> and #{condition}</if>
+        <if test="condition != null  and condition != ''">and #{condition}</if>
     </delete>
 
-    <delete id="SoftDeleteRecord">
+    <delete id="SoftDeleteByNo">
         update sys_appclass set delete_flag='0'
-        where delete_flag='1' and app_code=#{appCode} and class_no = #{no}
+        where delete_flag='1' and app_code=#{appCode} and class_no=#{no}
     </delete>
 
     <delete id="SoftDeleteByNos">
@@ -135,7 +133,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="SoftDeleteByCondition">
         update sys_appclass set delete_flag='0'
         where delete_flag='1' and app_code=#{appCode}
-        <if test="condition != null  and condition != ''"> and #{condition}</if>
+        <if test="condition != null  and condition != ''">and #{condition}</if>
     </delete>
-    
+
 </mapper>

@@ -15,7 +15,7 @@ import com.benet.system.service.ISysAppclassService;
  * 应用类型Service业务层处理
  * 
  * @author yoxking
- * @date 2020-03-29
+ * @date 2020-04-06
  */
 @Service
 public class SysAppclassServiceImpl implements ISysAppclassService 
@@ -56,7 +56,7 @@ public class SysAppclassServiceImpl implements ISysAppclassService
     @Override
     public List<SysAppclass> getRecordsByPaging(PagingModel model) {
         if (StringUtils.isNotNull(model)) {
-            model.setPageIndex(model.getPageIndex()*model.getPageSize());
+            model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
             return sysAppclassMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
         }
         return null;
@@ -76,7 +76,7 @@ public class SysAppclassServiceImpl implements ISysAppclassService
     public List<SysAppclass> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();
-        model.setPageIndex(pageIndex * pageSize);
+        model.setPageIndex((pageIndex-1) * pageSize);
         model.setPageSize(pageSize);
         model.setCondition(condition);
         if (StringUtils.isEmpty(orderField)) {
@@ -166,9 +166,9 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @return 结果
      */
     @Override
-    public int HardDeleteRecord(String no) {
+    public int HardDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysAppclassMapper.HardDeleteRecord(GlobalConfig.getAppCode(),no);
+            return sysAppclassMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }
@@ -205,9 +205,9 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @return 结果
      */
     @Override
-    public int SoftDeleteRecord(String no) {
+    public int SoftDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysAppclassMapper.SoftDeleteRecord(GlobalConfig.getAppCode(),no);
+            return sysAppclassMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }

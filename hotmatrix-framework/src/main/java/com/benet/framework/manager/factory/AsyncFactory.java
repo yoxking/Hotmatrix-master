@@ -7,8 +7,8 @@ import com.benet.common.utils.net.AddressUtils;
 import com.benet.common.utils.spring.SpringUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.utils.OplogUtils;
-import com.benet.system.domain.SysOperLog;
-import com.benet.system.service.ISysOperLogService;
+import com.benet.system.domain.SysOperatelogs;
+import com.benet.system.service.ISysOperatelogsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -26,10 +26,10 @@ public class AsyncFactory
     /**
      * 操作日志记录
      * 
-     * @param operateLog 操作日志信息
+     * @param opertLog 操作日志信息
      * @return 任务task
      */
-    public static TimerTask recordOperate(final SysOperLog operateLog)
+    public static TimerTask recordOperate(final SysOperatelogs opertLog)
     {
         return new TimerTask()
         {
@@ -37,8 +37,8 @@ public class AsyncFactory
             public void run()
             {
                 // 远程查询操作地点
-                operateLog.setOperLocation(AddressUtils.getRealAddressByIP(operateLog.getOperIp()));
-                SpringUtils.getBean(ISysOperLogService.class).insertOperlog(operateLog);
+                opertLog.setOpertLocation(AddressUtils.getRealAddressByIP(opertLog.getOpertIp()));
+                SpringUtils.getBean(ISysOperatelogsService.class).AddNewRecord(opertLog);
             }
         };
     }

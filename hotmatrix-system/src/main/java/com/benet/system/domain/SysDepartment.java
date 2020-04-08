@@ -9,7 +9,7 @@ import com.benet.common.core.domain.BaseEntity;
  * 部门信息对象 sys_department
  * 
  * @author yoxking
- * @date 2020-03-29
+ * @date 2020-04-06
  */
 public class SysDepartment extends BaseEntity
 {

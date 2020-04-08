@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
  * 部门信息Mapper接口
  * 
  * @author yoxking
- * @date 2020-03-29
+ * @date 2020-04-06
  */
 @Mapper
 public interface SysDepartmentMapper 
@@ -91,7 +91,7 @@ public interface SysDepartmentMapper
      * @param no 部门信息ID
      * @return 结果
      */
-    public int HardDeleteRecord(@Param("appCode") String appCode,@Param("no") String no);
+    public int HardDeleteByNo(@Param("appCode") String appCode,@Param("no") String no);
 
     /**
      * 批量硬删除部门信息
@@ -118,7 +118,7 @@ public interface SysDepartmentMapper
      * @param no 部门信息ID
      * @return 结果
      */
-    public int SoftDeleteRecord(@Param("appCode") String appCode,@Param("no") String no);
+    public int SoftDeleteByNo(@Param("appCode") String appCode,@Param("no") String no);
 
     /**
      * 批量软删除部门信息

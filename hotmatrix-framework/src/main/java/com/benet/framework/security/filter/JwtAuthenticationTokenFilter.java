@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.benet.common.utils.string.StringUtils;
 import com.benet.framework.security.LoginUser;
-import com.benet.framework.security.service.JwtokenService;
+import com.benet.framework.security.service.MyJwtokenService;
 import com.benet.framework.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,7 +26,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter
 {
     @Autowired
-    private JwtokenService jwtokenService;
+    private MyJwtokenService jwtokenService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)

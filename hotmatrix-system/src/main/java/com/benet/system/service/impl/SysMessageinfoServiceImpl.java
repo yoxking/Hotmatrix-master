@@ -15,7 +15,7 @@ import com.benet.system.service.ISysMessageinfoService;
  * 消息信息Service业务层处理
  * 
  * @author yoxking
- * @date 2020-03-29
+ * @date 2020-04-06
  */
 @Service
 public class SysMessageinfoServiceImpl implements ISysMessageinfoService 
@@ -56,7 +56,7 @@ public class SysMessageinfoServiceImpl implements ISysMessageinfoService
     @Override
     public List<SysMessageinfo> getRecordsByPaging(PagingModel model) {
         if (StringUtils.isNotNull(model)) {
-            model.setPageIndex(model.getPageIndex()*model.getPageSize());
+            model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
             return sysMessageinfoMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
         }
         return null;
@@ -76,7 +76,7 @@ public class SysMessageinfoServiceImpl implements ISysMessageinfoService
     public List<SysMessageinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();
-        model.setPageIndex(pageIndex * pageSize);
+        model.setPageIndex((pageIndex-1) * pageSize);
         model.setPageSize(pageSize);
         model.setCondition(condition);
         if (StringUtils.isEmpty(orderField)) {

@@ -8,7 +8,7 @@ import com.benet.system.domain.SysDepartment;
  * 部门信息Service接口
  * 
  * @author yoxking
- * @date 2020-03-29
+ * @date 2020-04-06
  */
 public interface ISysDepartmentService 
 {
@@ -38,9 +38,9 @@ public interface ISysDepartmentService
     /**
      * 分页查询部门信息列表
      *
-     * @param pageIndex 当前页起始索引
-     * @param pageSize 页面大小
-     * @param condition 条件
+     * @param pageIndex 当前页索引
+     * @param pageSize 分页大小
+     * @param condition 分页条件
      * @param orderField 排序列
      * @param orderType 排序类型
      * @return 部门信息集合
@@ -93,7 +93,7 @@ public interface ISysDepartmentService
      * @param no 部门信息ID
      * @return 结果
      */
-    public int HardDeleteRecord(String no);
+    public int HardDeleteByNo(String no);
 
     /**
      * 批量硬删除部门信息
@@ -117,7 +117,7 @@ public interface ISysDepartmentService
      * @param no 部门信息ID
      * @return 结果
      */
-    public int SoftDeleteRecord(String no);
+    public int SoftDeleteByNo(String no);
 
     /**
      * 批量软删除部门信息

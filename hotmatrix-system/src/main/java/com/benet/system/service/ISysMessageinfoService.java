@@ -8,7 +8,7 @@ import com.benet.system.domain.SysMessageinfo;
  * 消息信息Service接口
  * 
  * @author yoxking
- * @date 2020-03-29
+ * @date 2020-04-06
  */
 public interface ISysMessageinfoService 
 {

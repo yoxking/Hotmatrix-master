@@ -10,7 +10,7 @@ import java.util.Date;
  * 消息信息对象 sys_messageinfo
  * 
  * @author yoxking
- * @date 2020-03-29
+ * @date 2020-04-06
  */
 public class SysMessageinfo extends BaseEntity
 {

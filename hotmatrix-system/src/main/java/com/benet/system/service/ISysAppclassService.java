@@ -8,7 +8,7 @@ import com.benet.system.domain.SysAppclass;
  * 应用类型Service接口
  * 
  * @author yoxking
- * @date 2020-03-29
+ * @date 2020-04-06
  */
 public interface ISysAppclassService 
 {
@@ -93,7 +93,7 @@ public interface ISysAppclassService
      * @param no 应用类型ID
      * @return 结果
      */
-    public int HardDeleteRecord(String no);
+    public int HardDeleteByNo(String no);
 
     /**
      * 批量硬删除应用类型
@@ -117,7 +117,7 @@ public interface ISysAppclassService
      * @param no 应用类型ID
      * @return 结果
      */
-    public int SoftDeleteRecord(String no);
+    public int SoftDeleteByNo(String no);
 
     /**
      * 批量软删除应用类型

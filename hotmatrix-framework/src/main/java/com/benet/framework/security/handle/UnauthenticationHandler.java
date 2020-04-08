@@ -29,6 +29,6 @@ public class UnauthenticationHandler implements AuthenticationEntryPoint, Serial
             throws IOException
     {
         String msg = StringUtils.format("请求访问：{}，认证失败，无法访问系统资源", request.getRequestURI());
-        ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.error(HttpStatus.UNAUTHORIZED+"", msg)));
+        ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.warn("认证失败", msg)));
     }
 }

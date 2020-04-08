@@ -9,7 +9,7 @@ import com.benet.common.core.domain.BaseEntity;
  * 应用类型对象 sys_appclass
  * 
  * @author yoxking
- * @date 2020-03-29
+ * @date 2020-04-06
  */
 public class SysAppclass extends BaseEntity
 {

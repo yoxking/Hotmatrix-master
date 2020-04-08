@@ -15,7 +15,7 @@ import com.benet.system.service.ISysDepartmentService;
  * 部门信息Service业务层处理
  * 
  * @author yoxking
- * @date 2020-03-29
+ * @date 2020-04-06
  */
 @Service
 public class SysDepartmentServiceImpl implements ISysDepartmentService 
@@ -56,10 +56,12 @@ public class SysDepartmentServiceImpl implements ISysDepartmentService
     @Override
     public List<SysDepartment> getRecordsByPaging(PagingModel model) {
         if (StringUtils.isNotNull(model)) {
+            model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
             return sysDepartmentMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
         }
         return null;
     }
+
 
     /**
      * 分页查询部门信息列表
@@ -74,7 +76,7 @@ public class SysDepartmentServiceImpl implements ISysDepartmentService
     public List<SysDepartment> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();
-        model.setPageIndex(pageIndex * pageSize);
+        model.setPageIndex((pageIndex-1) * pageSize);
         model.setPageSize(pageSize);
         model.setCondition(condition);
         if (StringUtils.isEmpty(orderField)) {
@@ -85,9 +87,9 @@ public class SysDepartmentServiceImpl implements ISysDepartmentService
         if (StringUtils.isEmpty(orderType)) {
             model.setOrderType("Asc");
         } else {
-            model.setOrderType("Desc");
+            model.setOrderType(orderType);
         }
-        return sysDepartmentMapper.getRecordsByPaging(GlobalConfig.getAppCode(), model);
+        return sysDepartmentMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
     }
 
     /**
@@ -164,9 +166,9 @@ public class SysDepartmentServiceImpl implements ISysDepartmentService
      * @return 结果
      */
     @Override
-    public int HardDeleteRecord(String no) {
+    public int HardDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysDepartmentMapper.HardDeleteRecord(GlobalConfig.getAppCode(),no);
+            return sysDepartmentMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }
@@ -203,9 +205,9 @@ public class SysDepartmentServiceImpl implements ISysDepartmentService
      * @return 结果
      */
     @Override
-    public int SoftDeleteRecord(String no) {
+    public int SoftDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysDepartmentMapper.SoftDeleteRecord(GlobalConfig.getAppCode(),no);
+            return sysDepartmentMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }

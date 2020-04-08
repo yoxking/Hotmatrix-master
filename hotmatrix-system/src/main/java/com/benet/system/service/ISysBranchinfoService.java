@@ -1,61 +1,137 @@
 package com.benet.system.service;
 
 import java.util.List;
+import com.benet.common.core.pager.PagingModel;
 import com.benet.system.domain.SysBranchinfo;
 
 /**
  * 分支信息Service接口
  * 
  * @author yoxking
- * @date 2020-03-28
+ * @date 2020-04-06
  */
 public interface ISysBranchinfoService 
 {
     /**
-     * 查询分支信息
-     * 
-     * @param id 分支信息ID
-     * @return 分支信息
-     */
-    public SysBranchinfo selectSysBranchinfoById(Long id);
-
-    /**
-     * 查询分支信息列表
-     * 
-     * @param sysBranchinfo 分支信息
+     * 查询所有分支信息列表
+     *
      * @return 分支信息集合
      */
-    public List<SysBranchinfo> selectSysBranchinfoList(SysBranchinfo sysBranchinfo);
+    public List<SysBranchinfo> getAllRecords();
+
+    /**
+     * 按分类查询分支信息列表
+     *
+     * @param classNo 分类编号
+     * @return 分支信息集合
+     */
+    public List<SysBranchinfo> getRecordsByClassNo(String classNo);
+
+    /**
+     * 分页查询分支信息列表
+     *
+     * @param model 分页模型
+     * @return 分支信息集合
+     */
+    public List<SysBranchinfo> getRecordsByPaging(PagingModel model);
+
+    /**
+     * 分页查询分支信息列表
+     *
+     * @param pageIndex 当前页索引
+     * @param pageSize 分页大小
+     * @param condition 分页条件
+     * @param orderField 排序列
+     * @param orderType 排序类型
+     * @return 分支信息集合
+     */
+    public List<SysBranchinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType);
+
+    /**
+     * 查询分支信息
+     *
+     * @param no 分支信息ID
+     * @return 分支信息
+     */
+    public SysBranchinfo getRecordByNo(String no);
+
+    /**
+     * 查询分支信息名称
+     *
+     * @param no 分支信息ID
+     * @return 名称
+     */
+    public String getRecordNameByNo(String no);
+
+    /**
+     * 查询分支信息计数
+     *
+     * @param condition 查询条件
+     * @return 结果
+     */
+    public int getCountByCondition(String condition);
 
     /**
      * 新增分支信息
-     * 
-     * @param sysBranchinfo 分支信息
+     *
+     * @param info 分支信息
      * @return 结果
      */
-    public int insertSysBranchinfo(SysBranchinfo sysBranchinfo);
+    public int AddNewRecord(SysBranchinfo info);
 
     /**
-     * 修改分支信息
-     * 
-     * @param sysBranchinfo 分支信息
+     * 更新分支信息
+     *
+     * @param info 分支信息
      * @return 结果
      */
-    public int updateSysBranchinfo(SysBranchinfo sysBranchinfo);
+    public int UpdateRecord(SysBranchinfo info);
 
     /**
-     * 批量删除分支信息
-     * 
-     * @param ids 需要删除的分支信息ID
+     * 硬删除分支信息
+     *
+     * @param no 分支信息ID
      * @return 结果
      */
-    public int deleteSysBranchinfoByIds(Long[] ids);
+    public int HardDeleteByNo(String no);
 
     /**
-     * 删除分支信息信息
-     * 
-     * @param id 分支信息ID
+     * 批量硬删除分支信息
+     *
+     * @param nos 分支信息IDs
      * @return 结果
      */
-    public int deleteSysBranchinfoById(Long id);
+    public int HardDeleteByNos(String[] nos);
+
+    /**
+     * 按条件硬删除分支信息
+     *
+     * @param condition 条件
+     * @return 结果
+     */
+    public int HardDeleteByCondition(String condition);
+
+    /**
+     * 软删除分支信息
+     *
+     * @param no 分支信息ID
+     * @return 结果
+     */
+    public int SoftDeleteByNo(String no);
+
+    /**
+     * 批量软删除分支信息
+     *
+     * @param nos 分支信息IDs
+     * @return 结果
+     */
+    public int SoftDeleteByNos(String[] nos);
+
+    /**
+     * 按条件软删除分支信息
+     *
+     * @param condition 条件
+     * @return 结果
+     */
+    public int SoftDeleteByCondition(String condition);
 }

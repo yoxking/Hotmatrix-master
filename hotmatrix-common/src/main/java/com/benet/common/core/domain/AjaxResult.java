@@ -1,5 +1,6 @@
 package com.benet.common.core.domain;
 
+import com.benet.common.enums.HttpStatus;
 import com.benet.common.utils.string.StringUtils;
 
 import java.util.HashMap;
@@ -27,11 +28,11 @@ public class AjaxResult extends HashMap<String, Object>
     public enum Type
     {
         /** 成功 */
-        SUCCESS(0),
-        /** 警告 */
-        WARN(301),
+        SUCCESS(HttpStatus.SUCCESS),
+        /** 警告 /未授权*/
+        WARN(HttpStatus.UNAUTHORIZED),
         /** 错误 */
-        ERROR(500);
+        ERROR(HttpStatus.ERROR);
         private final int value;
 
         Type(int value)

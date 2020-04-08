@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
 public class SysLoginService
 {
     @Autowired
-    private JwtokenService tokenService;
+    private MyJwtokenService tokenService;
 
     @Resource
     private AuthenticationManager authenticationManager;

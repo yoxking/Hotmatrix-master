@@ -1,11 +1,10 @@
 package com.benet.system.service.impl;
 
 import java.util.List;
-
 import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PagingModel;
-import com.benet.common.utils.date.DateUtils;
 import com.benet.common.utils.string.StringUtils;
+import com.benet.common.utils.date.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.benet.system.mapper.SysAppinfoMapper;
@@ -16,18 +15,18 @@ import com.benet.system.service.ISysAppinfoService;
  * 应用信息Service业务层处理
  * 
  * @author yoxking
- * @date 2020-03-28
+ * @date 2020-04-06
  */
 @Service
-public class SysAppinfoServiceImpl implements ISysAppinfoService {
-
+public class SysAppinfoServiceImpl implements ISysAppinfoService 
+{
     @Autowired
     private SysAppinfoMapper sysAppinfoMapper;
 
     /**
-     * 查询所有信息列表
+     * 查询所有应用信息列表
      *
-     * @return 分支信息列表
+     * @return 应用信息集合
      */
     @Override
     public List<SysAppinfo> getAllRecords() {
@@ -35,10 +34,10 @@ public class SysAppinfoServiceImpl implements ISysAppinfoService {
     }
 
     /**
-     * 按分类查询分支信息列表
+     * 按分类查询应用信息列表
      *
      * @param classNo 分类编号
-     * @return 分支信息列表
+     * @return 应用信息集合
      */
     @Override
     public List<SysAppinfo> getRecordsByClassNo(String classNo) {
@@ -49,24 +48,55 @@ public class SysAppinfoServiceImpl implements ISysAppinfoService {
     }
 
     /**
-     * 分页查询分支信息列表
+     * 分页查询应用信息列表
      *
      * @param model 分页模型
-     * @return 分支信息列表
+     * @return 应用信息集合
      */
     @Override
     public List<SysAppinfo> getRecordsByPaging(PagingModel model) {
         if (StringUtils.isNotNull(model)) {
+            model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
             return sysAppinfoMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
         }
         return null;
     }
 
+
     /**
-     * 查询分支信息
+     * 分页查询应用信息列表
      *
-     * @param no 分支信息ID
-     * @return 分支信息
+     * @param pageIndex 当前页起始索引
+     * @param pageSize 页面大小
+     * @param condition 条件
+     * @param orderField 排序列
+     * @param orderType 排序类型
+     * @return 应用信息集合
+     */
+    public List<SysAppinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
+
+        PagingModel model = new PagingModel();
+        model.setPageIndex((pageIndex-1) * pageSize);
+        model.setPageSize(pageSize);
+        model.setCondition(condition);
+        if (StringUtils.isEmpty(orderField)) {
+            model.setOrderField("id");
+        } else {
+            model.setOrderField(orderField);
+        }
+        if (StringUtils.isEmpty(orderType)) {
+            model.setOrderType("Asc");
+        } else {
+            model.setOrderType(orderType);
+        }
+        return sysAppinfoMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+    }
+
+    /**
+     * 查询应用信息
+     *
+     * @param no 应用信息ID
+     * @return 应用信息
      */
     @Override
     public SysAppinfo getRecordByNo(String no) {
@@ -77,9 +107,9 @@ public class SysAppinfoServiceImpl implements ISysAppinfoService {
     }
 
     /**
-     * 查询分支信息名称
+     * 查询应用信息名称
      *
-     * @param no 分支信息ID
+     * @param no 应用信息ID
      * @return 名称
      */
     @Override
@@ -91,10 +121,10 @@ public class SysAppinfoServiceImpl implements ISysAppinfoService {
     }
 
     /**
-     * 查询分支信息计数
+     * 查询应用信息计数
      *
      * @param condition 查询条件
-     * @return 计数
+     * @return 结果
      */
     @Override
     public int getCountByCondition(String condition) {
@@ -102,9 +132,9 @@ public class SysAppinfoServiceImpl implements ISysAppinfoService {
     }
 
     /**
-     * 新增分支信息
+     * 新增应用信息
      *
-     * @param info 分支信息
+     * @param info 应用信息
      * @return 结果
      */
     @Override
@@ -117,9 +147,9 @@ public class SysAppinfoServiceImpl implements ISysAppinfoService {
     }
 
     /**
-     * 更新分支信息
+     * 更新应用信息
      *
-     * @param info 分支信息
+     * @param info 应用信息
      * @return 结果
      */
     @Override
@@ -130,23 +160,23 @@ public class SysAppinfoServiceImpl implements ISysAppinfoService {
     }
 
     /**
-     * 硬删除分支信息
+     * 硬删除应用信息
      *
-     * @param no 分支信息ID
+     * @param no 应用信息ID
      * @return 结果
      */
     @Override
-    public int HardDeleteRecord(String no) {
+    public int HardDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysAppinfoMapper.HardDeleteRecord(GlobalConfig.getAppCode(),no);
+            return sysAppinfoMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }
 
     /**
-     * 硬删除分支信息
+     * 批量硬删除应用信息
      *
-     * @param nos 分支信息IDs
+     * @param nos 应用信息IDs
      * @return 结果
      */
     @Override
@@ -158,7 +188,7 @@ public class SysAppinfoServiceImpl implements ISysAppinfoService {
     }
 
     /**
-     * 硬删除分支信息
+     * 按条件硬删除应用信息
      *
      * @param condition 条件
      * @return 结果
@@ -169,23 +199,23 @@ public class SysAppinfoServiceImpl implements ISysAppinfoService {
     }
 
     /**
-     * 软删除分支信息
+     * 软删除应用信息
      *
-     * @param no 分支信息ID
+     * @param no 应用信息ID
      * @return 结果
      */
     @Override
-    public int SoftDeleteRecord(String no) {
+    public int SoftDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysAppinfoMapper.SoftDeleteRecord(GlobalConfig.getAppCode(),no);
+            return sysAppinfoMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }
 
     /**
-     * 软删除分支信息
+     * 批量软删除应用信息
      *
-     * @param nos 分支信息IDs
+     * @param nos 应用信息IDs
      * @return 结果
      */
     @Override
@@ -197,7 +227,7 @@ public class SysAppinfoServiceImpl implements ISysAppinfoService {
     }
 
     /**
-     * 软删除分支信息
+     * 按条件软删除应用信息
      *
      * @param condition 条件
      * @return 结果

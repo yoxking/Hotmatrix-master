@@ -5,8 +5,8 @@ import com.benet.common.constant.JwtConstants;
 import com.benet.common.core.domain.AjaxResult;
 import com.benet.common.enums.BusinessType;
 import com.benet.framework.security.service.SysLoginService;
-import com.benet.system.domain.SysMenu;
-import com.benet.system.service.ISysMenuService;
+import com.benet.system.domain.SysPermitinfo;
+import com.benet.system.service.ISysPermitinfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class SysLoginController
 
 
     @Autowired
-    ISysMenuService sysMenuService;
+    ISysPermitinfoService sysPermitService;
     /**
      * 登录方法
      * 
@@ -57,10 +57,7 @@ public class SysLoginController
     @GetMapping("/test")
     public AjaxResult test()
     {
-        AjaxResult ajax = AjaxResult.success();
-        List<SysMenu> myList=sysMenuService.selectMenuAll(2L);
-
-        ajax.put(JwtConstants.TOKEN, "xxxxxxxxxx");
+        AjaxResult ajax = new AjaxResult(AjaxResult.Type.SUCCESS,"","yyyyyyyy");
         return ajax;
     }
 
@@ -79,7 +76,7 @@ public class SysLoginController
     public AjaxResult test3()
     {
         AjaxResult ajax = AjaxResult.success();
-        List<SysMenu> myList=sysMenuService.selectMenuAll(2L);
+        List<SysPermitinfo> myList=sysPermitService.getAllRecords();
 
         ajax.put(JwtConstants.TOKEN, "xxxxxxxxxx");
         return ajax;
