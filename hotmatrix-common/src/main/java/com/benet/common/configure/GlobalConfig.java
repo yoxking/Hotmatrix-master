@@ -30,8 +30,11 @@ public class GlobalConfig
     /** 获取地址开关 */
     private static boolean addressEnabled;
 
-    /** 获取地址开关 */
+    /** 应用编号 */
     private static String appCode;
+
+    /** 分支编号 */
+    private static String branchNo;
 
     public static String getName()
     {
@@ -101,6 +104,14 @@ public class GlobalConfig
     public void setAppCode(String appCode)
     {
         GlobalConfig.appCode = appCode;
+    }
+
+    public static String getBranchNo() {
+        return branchNo;
+    }
+
+    public static void setBranchNo(String branchNo) {
+        GlobalConfig.branchNo = branchNo;
     }
 
     /**

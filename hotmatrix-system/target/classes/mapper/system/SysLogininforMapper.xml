@@ -65,7 +65,7 @@
 
     <insert id="AddNewRecord" parameterType="SysLogininfor" useGeneratedKeys="true" keyProperty="id">
         insert into sys_logininfor (
-        <if test="info.loginNo != null ">login_no,</if>
+        <if test="info.loginNo != null and info.loginNo != ''">login_no,</if>
         <if test="info.loginName != null  and info.loginName != ''">login_name,</if>
         <if test="info.ipaddr != null  and info.ipaddr != ''">ipaddr,</if>
         <if test="info.location != null  and info.location != ''">location,</if>
@@ -84,7 +84,7 @@
         <if test="info.appCode != null  and info.appCode != ''">app_code,</if>
         <if test="info.version != null ">version</if>
         )values(
-        <if test="info.loginNo != null ">#{info.loginNo},</if>
+        <if test="info.loginNo != null and info.loginNo != ''">#{info.loginNo},</if>
         <if test="info.loginName != null  and info.loginName != ''">#{info.loginName},</if>
         <if test="info.ipaddr != null  and info.ipaddr != ''">#{info.ipaddr},</if>
         <if test="info.location != null  and info.location != ''">#{info.location},</if>

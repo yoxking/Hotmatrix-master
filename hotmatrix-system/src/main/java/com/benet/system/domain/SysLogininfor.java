@@ -21,7 +21,7 @@ public class SysLogininfor extends BaseEntity
 
     /** 访问ID */
     @Excel(name = "访问ID")
-    private Long loginNo;
+    private String loginNo;
 
     /** 登录账号 */
     @Excel(name = "登录账号")
@@ -84,16 +84,16 @@ public class SysLogininfor extends BaseEntity
     {
         return id;
     }
-    public void setLoginNo(Long loginNo) 
-    {
+
+    public String getLoginNo() {
+        return loginNo;
+    }
+
+    public void setLoginNo(String loginNo) {
         this.loginNo = loginNo;
     }
 
-    public Long getLoginNo() 
-    {
-        return loginNo;
-    }
-    public void setLoginName(String loginName) 
+    public void setLoginName(String loginName)
     {
         this.loginName = loginName;
     }

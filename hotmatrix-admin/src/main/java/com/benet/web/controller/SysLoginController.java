@@ -44,12 +44,17 @@ public class SysLoginController
     @PostMapping("/login")
     public AjaxResult login(String username, String password, String code, String uuid)
     {
-        AjaxResult ajax = AjaxResult.success();
+        try {
+            AjaxResult ajax = AjaxResult.success();
 
-        // 生成令牌
-        String token = loginService.login(username, password, code, uuid);
-        ajax.put(JwtConstants.TOKEN, token);
-        return ajax;
+            // 生成令牌
+            String token = loginService.login(username, password, code, uuid);
+            ajax.put(JwtConstants.TOKEN, token);
+            return ajax;
+        }
+        catch (Exception e){
+            return AjaxResult.error(e.getMessage());
+        }
     }
 
 

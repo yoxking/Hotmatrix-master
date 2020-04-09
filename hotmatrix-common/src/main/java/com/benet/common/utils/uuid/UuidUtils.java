@@ -1,5 +1,7 @@
 package com.benet.common.utils.uuid;
 
+import java.util.Random;
+
 /**
  * ID生成器工具类
  *
@@ -44,5 +46,19 @@ public class UuidUtils {
     public static String fastSimpleUUID()
     {
         return UUID.fastUUID().toString(true);
+    }
+
+    public static String shortUUID() {
+
+        int first = new Random(10).nextInt(8) + 1;
+        System.out.println(first);
+        int hashCodeV = UUID.randomUUID().toString().hashCode();
+        if (hashCodeV < 0) {//有可能是负数
+            hashCodeV = -hashCodeV;
+        }
+        // 0 代表前面补充0
+        // 4 代表长度为4
+        // d 代表参数为正数型
+        return first + String.format("%015d", hashCodeV);
     }
 }

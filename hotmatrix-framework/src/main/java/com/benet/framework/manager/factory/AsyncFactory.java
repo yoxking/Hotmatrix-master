@@ -2,12 +2,18 @@ package com.benet.framework.manager.factory;
 
 import java.util.TimerTask;
 
+import com.benet.common.configure.GlobalConfig;
 import com.benet.common.constant.PubConstants;
+import com.benet.common.utils.date.DateUtils;
 import com.benet.common.utils.net.AddressUtils;
+import com.benet.common.utils.net.IpnetUtils;
 import com.benet.common.utils.spring.SpringUtils;
+import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.utils.OplogUtils;
+import com.benet.system.domain.SysLogininfor;
 import com.benet.system.domain.SysOperatelogs;
+import com.benet.system.service.ISysLogininforService;
 import com.benet.system.service.ISysOperatelogsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,8 +61,7 @@ public class AsyncFactory
     public static TimerTask recordLogininfor(final String username, final String status, final String message, final Object... args)
     {
         final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
-        //final String ip = ShiroUtils.getIp();
-        final String ip = "";
+        final String ip = IpnetUtils.getHostIp();
         return new TimerTask()
         {
             @Override
@@ -75,26 +80,30 @@ public class AsyncFactory
                 String os = userAgent.getOperatingSystem().getName();
                 // 获取客户端浏览器
                 String browser = userAgent.getBrowser().getName();
-/*
+
                 // 封装对象
                 SysLogininfor logininfor = new SysLogininfor();
-                logininfor.setUserName(username);
+                logininfor.setLoginNo(UuidUtils.shortUUID());
+                logininfor.setLoginName(username);
                 logininfor.setIpaddr(ip);
-                logininfor.setLoginLocation(address);
+                logininfor.setLocation(address);
                 logininfor.setBrowser(browser);
                 logininfor.setOs(os);
-                logininfor.setMsg(message);
+                logininfor.setMessage(message);
                 // 日志状态
-                if (Constants.LOGIN_SUCCESS.equals(status) || Constants.LOGOUT.equals(status))
+                if (PubConstants.LOGIN_SUCCESS.equals(status) || PubConstants.LOGOUT.equals(status))
                 {
-                    logininfor.setStatus(Constants.SUCCESS);
+                    logininfor.setStatus(PubConstants.SUCCESS);
                 }
-                else if (Constants.LOGIN_FAIL.equals(status))
+                else if (PubConstants.LOGIN_FAIL.equals(status))
                 {
-                    logininfor.setStatus(Constants.FAIL);
+                    logininfor.setStatus(PubConstants.FAIL);
                 }
+                logininfor.setLoginTime(DateUtils.getNowDate());
+                logininfor.setBranchNo(GlobalConfig.getBranchNo());
+
                 // 插入数据
-                SpringUtils.getBean(ISysLogininforService.class).insertLogininfor(logininfor);*/
+                SpringUtils.getBean(ISysLogininforService.class).AddNewRecord(logininfor);
             }
         };
     }
