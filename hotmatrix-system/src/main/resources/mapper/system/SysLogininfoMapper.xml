@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.benet.system.mapper.SysLogininforMapper">
+<mapper namespace="com.benet.system.mapper.SysLogininfoMapper">
 
-    <resultMap type="SysLogininfor" id="SysLogininforResult">
+    <resultMap type="SysLogininfo" id="SysLogininfoResult">
         <result property="id" column="id"/>
         <result property="loginNo" column="login_no"/>
         <result property="loginName" column="login_name"/>
@@ -26,29 +26,29 @@
         <result property="version" column="version"/>
     </resultMap>
 
-    <sql id="selectSysLogininforVo">
-        select id, login_no, login_name, ipaddr, location, browser, os, status, message, login_time, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_logininfor
+    <sql id="selectSysLogininfoVo">
+        select id, login_no, login_name, ipaddr, location, browser, os, status, message, login_time, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_logininfo
     </sql>
 
-    <select id="getAllRecords" resultMap="SysLogininforResult">
-        <include refid="selectSysLogininforVo"/>
+    <select id="getAllRecords" resultMap="SysLogininfoResult">
+        <include refid="selectSysLogininfoVo"/>
         where delete_flag='1' and app_code=#{appCode}
     </select>
 
-    <select id="getRecordsByClassNo" resultMap="SysLogininforResult">
-        <include refid="selectSysLogininforVo"/>
+    <select id="getRecordsByClassNo" resultMap="SysLogininfoResult">
+        <include refid="selectSysLogininfoVo"/>
         where delete_flag='1' and app_code=#{appCode} and class_no=#{classNo}
     </select>
 
-    <select id="getRecordsByPaging" resultMap="SysLogininforResult">
-        <include refid="selectSysLogininforVo"/>
+    <select id="getRecordsByPaging" resultMap="SysLogininfoResult">
+        <include refid="selectSysLogininfoVo"/>
         where delete_flag='1' and app_code=#{appCode}
         <if test="model.condition != null  and model.condition != ''">and #{model.condition}</if>
         order by #{model.orderField} #{model.orderType} limit #{model.pageIndex},#{model.pageSize}
     </select>
 
-    <select id="getRecordByNo" resultMap="SysLogininforResult">
-        <include refid="selectSysLogininforVo"/>
+    <select id="getRecordByNo" resultMap="SysLogininfoResult">
+        <include refid="selectSysLogininfoVo"/>
         where delete_flag='1' and app_code=#{appCode} and login_no = #{no}
     </select>
 
@@ -63,8 +63,8 @@
         <if test="condition != null  and condition != ''">and #{condition}</if>
     </select>
 
-    <insert id="AddNewRecord" parameterType="SysLogininfor" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_logininfor (
+    <insert id="AddNewRecord" parameterType="SysLogininfo" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_logininfo (
         <if test="info.loginNo != null and info.loginNo != ''">login_no,</if>
         <if test="info.loginName != null  and info.loginName != ''">login_name,</if>
         <if test="info.ipaddr != null  and info.ipaddr != ''">ipaddr,</if>
@@ -105,8 +105,8 @@
         )
     </insert>
 
-    <update id="UpdateRecord" parameterType="SysLogininfor">
-        update sys_logininfor
+    <update id="UpdateRecord" parameterType="SysLogininfo">
+        update sys_logininfo
         <set>
             <if test="info.loginNo != null ">login_no = #{info.loginNo},</if>
             <if test="info.loginName != null  and info.loginName != ''">login_name = #{info.loginName},</if>
@@ -131,12 +131,12 @@
     </update>
 
     <delete id="HardDeleteByNo">
-        delete from sys_logininfor
+        delete from sys_logininfo
         where delete_flag='1' and app_code=#{appCode} and login_no = #{no}
     </delete>
 
     <delete id="HardDeleteByNos">
-        delete from sys_logininfor
+        delete from sys_logininfo
         where delete_flag='1' and app_code=#{appCode} and login_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
@@ -144,18 +144,18 @@
     </delete>
 
     <delete id="HardDeleteByCondition">
-        delete from sys_logininfor
+        delete from sys_logininfo
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and #{condition}</if>
     </delete>
 
     <delete id="SoftDeleteByNo">
-        update sys_logininfor set delete_flag='0'
+        update sys_logininfo set delete_flag='0'
         where delete_flag='1' and app_code=#{appCode} and login_no = #{no}
     </delete>
 
     <delete id="SoftDeleteByNos">
-        update sys_logininfor set delete_flag='0'
+        update sys_logininfo set delete_flag='0'
         where delete_flag='1' and app_code=#{appCode} and login_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
@@ -163,7 +163,7 @@
     </delete>
 
     <delete id="SoftDeleteByCondition">
-        update sys_logininfor set delete_flag='0'
+        update sys_logininfo set delete_flag='0'
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and #{condition}</if>
     </delete>

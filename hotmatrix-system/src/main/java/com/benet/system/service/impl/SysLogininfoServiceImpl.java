@@ -7,9 +7,9 @@ import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.benet.system.mapper.SysLogininforMapper;
-import com.benet.system.domain.SysLogininfor;
-import com.benet.system.service.ISysLogininforService;
+import com.benet.system.mapper.SysLogininfoMapper;
+import com.benet.system.domain.SysLogininfo;
+import com.benet.system.service.ISysLogininfoService;
 
 /**
  * 系统访问记录Service业务层处理
@@ -18,10 +18,10 @@ import com.benet.system.service.ISysLogininforService;
  * @date 2020-04-06
  */
 @Service
-public class SysLogininforServiceImpl implements ISysLogininforService 
+public class SysLogininfoServiceImpl implements ISysLogininfoService
 {
     @Autowired
-    private SysLogininforMapper sysLogininforMapper;
+    private SysLogininfoMapper sysLogininfoMapper;
 
     /**
      * 查询所有系统访问记录列表
@@ -29,8 +29,8 @@ public class SysLogininforServiceImpl implements ISysLogininforService
      * @return 系统访问记录集合
      */
     @Override
-    public List<SysLogininfor> getAllRecords() {
-        return sysLogininforMapper.getAllRecords(GlobalConfig.getAppCode());
+    public List<SysLogininfo> getAllRecords() {
+        return sysLogininfoMapper.getAllRecords(GlobalConfig.getAppCode());
     }
 
     /**
@@ -40,9 +40,9 @@ public class SysLogininforServiceImpl implements ISysLogininforService
      * @return 系统访问记录集合
      */
     @Override
-    public List<SysLogininfor> getRecordsByClassNo(String classNo) {
+    public List<SysLogininfo> getRecordsByClassNo(String classNo) {
         if (StringUtils.isNotEmpty(classNo)) {
-            return sysLogininforMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
+            return sysLogininfoMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
         }
         return null;
     }
@@ -54,10 +54,10 @@ public class SysLogininforServiceImpl implements ISysLogininforService
      * @return 系统访问记录集合
      */
     @Override
-    public List<SysLogininfor> getRecordsByPaging(PagingModel model) {
+    public List<SysLogininfo> getRecordsByPaging(PagingModel model) {
         if (StringUtils.isNotNull(model)) {
             model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
-            return sysLogininforMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+            return sysLogininfoMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
         }
         return null;
     }
@@ -73,7 +73,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService
      * @param orderType 排序类型
      * @return 系统访问记录集合
      */
-    public List<SysLogininfor> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
+    public List<SysLogininfo> getRecordsByPaging(int pageIndex, int pageSize, String condition, String orderField, String orderType) {
 
         PagingModel model = new PagingModel();
         model.setPageIndex((pageIndex-1) * pageSize);
@@ -89,7 +89,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService
         } else {
             model.setOrderType(orderType);
         }
-        return sysLogininforMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+        return sysLogininfoMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
     }
 
     /**
@@ -99,9 +99,9 @@ public class SysLogininforServiceImpl implements ISysLogininforService
      * @return 系统访问记录
      */
     @Override
-    public SysLogininfor getRecordByNo(String no) {
+    public SysLogininfo getRecordByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysLogininforMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
+            return sysLogininfoMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
         }
         return null;
     }
@@ -115,7 +115,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService
     @Override
     public String getRecordNameByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysLogininforMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
+            return sysLogininfoMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
         }
         return null;
     }
@@ -128,7 +128,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService
      */
     @Override
     public int getCountByCondition(String condition) {
-        return sysLogininforMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
+        return sysLogininfoMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
     }
 
     /**
@@ -138,12 +138,12 @@ public class SysLogininforServiceImpl implements ISysLogininforService
      * @return 结果
      */
     @Override
-    public int AddNewRecord(SysLogininfor info) {
+    public int AddNewRecord(SysLogininfo info) {
         info.setCreateTime(DateUtils.getNowDate());
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
         info.setVersion(1L);
-        return sysLogininforMapper.AddNewRecord(info);
+        return sysLogininfoMapper.AddNewRecord(info);
     }
 
     /**
@@ -153,10 +153,10 @@ public class SysLogininforServiceImpl implements ISysLogininforService
      * @return 结果
      */
     @Override
-    public int UpdateRecord(SysLogininfor info) {
+    public int UpdateRecord(SysLogininfo info) {
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
-        return sysLogininforMapper.UpdateRecord(info);
+        return sysLogininfoMapper.UpdateRecord(info);
     }
 
     /**
@@ -168,7 +168,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService
     @Override
     public int HardDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysLogininforMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
+            return sysLogininfoMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }
@@ -182,7 +182,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService
     @Override
     public int HardDeleteByNos(String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return sysLogininforMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return sysLogininfoMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
         }
         return 0;
     }
@@ -195,7 +195,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService
      */
     @Override
     public int HardDeleteByCondition(String condition) {
-        return sysLogininforMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
+        return sysLogininfoMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
     }
 
     /**
@@ -207,7 +207,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService
     @Override
     public int SoftDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysLogininforMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
+            return sysLogininfoMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }
@@ -221,7 +221,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService
     @Override
     public int SoftDeleteByNos(String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return sysLogininforMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return sysLogininfoMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
         }
         return 0;
     }
@@ -234,6 +234,6 @@ public class SysLogininforServiceImpl implements ISysLogininforService
      */
     @Override
     public int SoftDeleteByCondition(String condition) {
-        return sysLogininforMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
+        return sysLogininfoMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
     }
 }

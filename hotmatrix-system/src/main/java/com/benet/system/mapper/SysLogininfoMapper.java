@@ -2,7 +2,7 @@ package com.benet.system.mapper;
 
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
-import com.benet.system.domain.SysLogininfor;
+import com.benet.system.domain.SysLogininfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Param;
  * @date 2020-04-06
  */
 @Mapper
-public interface SysLogininforMapper 
+public interface SysLogininfoMapper
 {
     /**
      * 查询所有系统访问记录列表
@@ -21,7 +21,7 @@ public interface SysLogininforMapper
      * @param appCode 应用编号
      * @return 系统访问记录集合
      */
-    public List<SysLogininfor> getAllRecords(@Param("appCode") String appCode);
+    public List<SysLogininfo> getAllRecords(@Param("appCode") String appCode);
 
     /**
      * 按分类查询系统访问记录列表
@@ -30,7 +30,7 @@ public interface SysLogininforMapper
      * @param classNo 分类编号
      * @return 系统访问记录集合
      */
-    public List<SysLogininfor> getRecordsByClassNo(@Param("appCode") String appCode,@Param("classNo") String classNo);
+    public List<SysLogininfo> getRecordsByClassNo(@Param("appCode") String appCode, @Param("classNo") String classNo);
 
     /**
      * 分页查询系统访问记录列表
@@ -39,7 +39,7 @@ public interface SysLogininforMapper
      * @param model 分页模型
      * @return 系统访问记录集合
      */
-    public List<SysLogininfor> getRecordsByPaging(@Param("appCode") String appCode,@Param("model") PagingModel model);
+    public List<SysLogininfo> getRecordsByPaging(@Param("appCode") String appCode, @Param("model") PagingModel model);
 
     /**
      * 查询系统访问记录
@@ -48,7 +48,7 @@ public interface SysLogininforMapper
      * @param no 系统访问记录ID
      * @return 系统访问记录
      */
-    public SysLogininfor getRecordByNo(@Param("appCode") String appCode,@Param("no") String no);
+    public SysLogininfo getRecordByNo(@Param("appCode") String appCode, @Param("no") String no);
 
     /**
      * 查询系统访问记录名称
@@ -74,7 +74,7 @@ public interface SysLogininforMapper
      * @param info 系统访问记录
      * @return 结果
      */
-    public int AddNewRecord(@Param("info") SysLogininfor info);
+    public int AddNewRecord(@Param("info") SysLogininfo info);
 
     /**
      * 更新系统访问记录
@@ -82,7 +82,7 @@ public interface SysLogininforMapper
      * @param info 系统访问记录
      * @return 结果
      */
-    public int UpdateRecord(@Param("info") SysLogininfor info);
+    public int UpdateRecord(@Param("info") SysLogininfo info);
 
     /**
      * 硬删除系统访问记录

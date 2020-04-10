@@ -147,6 +147,13 @@ public interface SysRoleinfoMapper
      */
     public List<SysRoleinfo> getRecordsByUserNo(@Param("appCode") String appCode,@Param("userNo") String userNo);
 
+    /**
+     * 根据用户ID查询角色标识
+     *
+     * @param userNo 用户ID
+     * @return 角色列表
+     */
+    public List<String> getRoleCodesByUserNo(@Param("appCode") String appCode,@Param("userNo") String userNo);
 
     /**
      * 校验角色名称是否唯一

@@ -11,9 +11,9 @@ import com.benet.common.utils.spring.SpringUtils;
 import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.utils.OplogUtils;
-import com.benet.system.domain.SysLogininfor;
+import com.benet.system.domain.SysLogininfo;
 import com.benet.system.domain.SysOperatelogs;
-import com.benet.system.service.ISysLogininforService;
+import com.benet.system.service.ISysLogininfoService;
 import com.benet.system.service.ISysOperatelogsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,7 +82,7 @@ public class AsyncFactory
                 String browser = userAgent.getBrowser().getName();
 
                 // 封装对象
-                SysLogininfor logininfor = new SysLogininfor();
+                SysLogininfo logininfor = new SysLogininfo();
                 logininfor.setLoginNo(UuidUtils.shortUUID());
                 logininfor.setLoginName(username);
                 logininfor.setIpaddr(ip);
@@ -103,7 +103,7 @@ public class AsyncFactory
                 logininfor.setBranchNo(GlobalConfig.getBranchNo());
 
                 // 插入数据
-                SpringUtils.getBean(ISysLogininforService.class).AddNewRecord(logininfor);
+                SpringUtils.getBean(ISysLogininfoService.class).AddNewRecord(logininfor);
             }
         };
     }

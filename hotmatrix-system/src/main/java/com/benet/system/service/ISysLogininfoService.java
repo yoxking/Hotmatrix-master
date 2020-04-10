@@ -2,7 +2,7 @@ package com.benet.system.service;
 
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
-import com.benet.system.domain.SysLogininfor;
+import com.benet.system.domain.SysLogininfo;
 
 /**
  * 系统访问记录Service接口
@@ -10,14 +10,14 @@ import com.benet.system.domain.SysLogininfor;
  * @author yoxking
  * @date 2020-04-06
  */
-public interface ISysLogininforService 
+public interface ISysLogininfoService
 {
     /**
      * 查询所有系统访问记录列表
      *
      * @return 系统访问记录集合
      */
-    public List<SysLogininfor> getAllRecords();
+    public List<SysLogininfo> getAllRecords();
 
     /**
      * 按分类查询系统访问记录列表
@@ -25,7 +25,7 @@ public interface ISysLogininforService
      * @param classNo 分类编号
      * @return 系统访问记录集合
      */
-    public List<SysLogininfor> getRecordsByClassNo(String classNo);
+    public List<SysLogininfo> getRecordsByClassNo(String classNo);
 
     /**
      * 分页查询系统访问记录列表
@@ -33,7 +33,7 @@ public interface ISysLogininforService
      * @param model 分页模型
      * @return 系统访问记录集合
      */
-    public List<SysLogininfor> getRecordsByPaging(PagingModel model);
+    public List<SysLogininfo> getRecordsByPaging(PagingModel model);
 
     /**
      * 分页查询系统访问记录列表
@@ -45,7 +45,7 @@ public interface ISysLogininforService
      * @param orderType 排序类型
      * @return 系统访问记录集合
      */
-    public List<SysLogininfor> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType);
+    public List<SysLogininfo> getRecordsByPaging(int pageIndex, int pageSize, String condition, String orderField, String orderType);
 
     /**
      * 查询系统访问记录
@@ -53,7 +53,7 @@ public interface ISysLogininforService
      * @param no 系统访问记录ID
      * @return 系统访问记录
      */
-    public SysLogininfor getRecordByNo(String no);
+    public SysLogininfo getRecordByNo(String no);
 
     /**
      * 查询系统访问记录名称
@@ -77,7 +77,7 @@ public interface ISysLogininforService
      * @param info 系统访问记录
      * @return 结果
      */
-    public int AddNewRecord(SysLogininfor info);
+    public int AddNewRecord(SysLogininfo info);
 
     /**
      * 更新系统访问记录
@@ -85,7 +85,7 @@ public interface ISysLogininforService
      * @param info 系统访问记录
      * @return 结果
      */
-    public int UpdateRecord(SysLogininfor info);
+    public int UpdateRecord(SysLogininfo info);
 
     /**
      * 硬删除系统访问记录

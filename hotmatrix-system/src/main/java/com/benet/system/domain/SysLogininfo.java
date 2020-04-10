@@ -7,12 +7,12 @@ import com.benet.common.core.domain.BaseEntity;
 import java.util.Date;
 
 /**
- * 系统访问记录对象 sys_logininfor
+ * 系统访问记录对象 sys_logininfo
  * 
  * @author yoxking
  * @date 2020-04-06
  */
-public class SysLogininfor extends BaseEntity
+public class SysLogininfo extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 

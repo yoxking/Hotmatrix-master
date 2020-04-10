@@ -169,6 +169,13 @@
         where r.delete_flag='1' and r.app_code=#{appCode} and ur.user_no=#{userNo}
     </select>
 
+    <select id="getRoleCodesByUserNo" resultType="String">
+		select distinct r.role_code
+		from sys_roleinfo r
+		left join sys_suserrole ur on r.role_no = ur.role_no
+		where r.delete_flag='1' and r.app_code=#{appCode} and ur.user_no = #{userNo}
+	</select>
+
     <select id="checkRoleNameUnique" resultType="Integer">
         select count(*) from sys_roleinfo
         where delete_flag='1' and app_code=#{appCode} and  role_name=#{roleName}

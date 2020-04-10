@@ -264,16 +264,16 @@ public class SysRoleinfoServiceImpl implements ISysRoleinfoService
      */
     public Set<String> getRoleCodesByUserNo(String userNo){
 
-        List<SysRoleinfo> permits = sysRoleinfoMapper.getRecordsByUserNo(GlobalConfig.getAppCode(),userNo);
-        Set<String> permsSet = new HashSet<>();
-        for (SysRoleinfo permit : permits)
+        List<String> roles = sysRoleinfoMapper.getRoleCodesByUserNo(GlobalConfig.getAppCode(),userNo);
+        Set<String> rolesSet = new HashSet<>();
+        for (String role : roles)
         {
-            if (StringUtils.isNotNull(permit))
+            if (StringUtils.isNotEmpty(role))
             {
-                permsSet.addAll(Arrays.asList(permit.getRoleCode().trim().split(",")));
+                rolesSet.addAll(Arrays.asList(role.trim().split(",")));
             }
         }
-        return permsSet;
+        return rolesSet;
     }
 
     /**

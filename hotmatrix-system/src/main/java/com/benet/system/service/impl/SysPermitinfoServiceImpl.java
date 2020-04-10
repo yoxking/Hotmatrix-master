@@ -273,9 +273,9 @@ public class SysPermitinfoServiceImpl implements ISysPermitinfoService
      * @return 菜单列表
      */
     @Override
-    public Set<String> getPermitsByRoleNo(String roleNo){
+    public Set<String> getPermitCodesByRoleNo(String roleNo){
 
-        List<String> permits = sysPermitinfoMapper.getPermitsByRoleNo(GlobalConfig.getAppCode(),roleNo);
+        List<String> permits = sysPermitinfoMapper.getPermitCodesByRoleNo(GlobalConfig.getAppCode(),roleNo);
         Set<String> permsSet = new HashSet<>();
         for (String permit : permits)
         {
@@ -294,9 +294,9 @@ public class SysPermitinfoServiceImpl implements ISysPermitinfoService
      * @return 权限列表
      */
     @Override
-    public Set<String> getPermitsByUserNo(String userNo){
+    public Set<String> getPermitCodesByUserNo(String userNo){
 
-        List<String> permits = sysPermitinfoMapper.getPermitsByUserNo(GlobalConfig.getAppCode(),userNo);
+        List<String> permits = sysPermitinfoMapper.getPermitCodesByUserNo(GlobalConfig.getAppCode(),userNo);
         Set<String> permsSet = new HashSet<>();
         for (String permit : permits)
         {

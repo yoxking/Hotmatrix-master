@@ -56,6 +56,6 @@ public class MyUserDetailsService implements UserDetailsService
 
     public UserDetails createLoginUser(SysSuserinfo user)
     {
-        return new LoginUser(user, permitService.getPermitsByUserNo(user.getUserNo()));
+        return new LoginUser(user, permitService.getPermitCodesByUserNo(user.getUserNo()));
     }
 }

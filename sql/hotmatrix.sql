@@ -187,7 +187,7 @@ create table sys_roleinfo (
   id                bigint(20)      not null auto_increment    comment 'ID',
   role_no           varchar(20)     not null                   comment '角色ID',
   role_name         varchar(50)     default ''                   comment '角色名称',
-  role_code         varchar(100)    default ''                   comment '角色权限字符串',
+  role_code         varchar(100)    default ''                   comment '角色标识',
   order_no          int(4)          default 0                   comment '显示顺序',
   data_scope        char(1)         default '1'                comment '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）',
   check_state       char(1)         default '0'                comment '状态（1正常 0停用）',
@@ -213,13 +213,13 @@ create table sys_permitinfo (
   id                bigint(20)      not null auto_increment      comment 'ID',
   permit_no         varchar(20)      not null                  comment '菜单ID',
   permit_name       varchar(50)     default ''                   comment '菜单名称',
+  permit_code       varchar(200)    default ''                 comment '权限标识',
   permit_type       char(1)         default ''                 comment '菜单类型（M目录 C菜单 F按钮）',
   parent_no         varchar(20)      default '0' 		       comment '父菜单ID',
   order_no          int(4)          default 0                  comment '显示顺序',
   url               varchar(200)    default '#'                comment '请求地址',
   icon              varchar(200)    default '#'                comment '菜单图标',
   target            varchar(20)     default ''                 comment '打开方式（menuItem页签 menuBlank新窗口）',
-  permits           varchar(200)    default ''              comment '权限标识',
   visible           char(1)         default '0'                  comment '显示状态（0显示 1隐藏）',
   check_state       char(1)         default '0'                comment '状态（1正常 0停用）',
   branch_no         varchar(20)     default ''				   comment '分支编号',
@@ -710,8 +710,8 @@ create table sys_appinfo (
 -- ----------------------------
 -- 26、系统访问记录
 -- ----------------------------
-drop table if exists sys_logininfor;
-create table sys_logininfor (
+drop table if exists sys_logininfo;
+create table sys_logininfo (
   id			 bigint(20)      not null auto_increment    comment 'id',
   login_no        bigint(20)     not null    				comment '访问ID',
   login_name     varchar(50)    default ''                comment '登录账号',

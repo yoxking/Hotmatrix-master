@@ -162,7 +162,7 @@ public interface ISysPermitinfoService
      * @param roleNo 角色ID
      * @return 菜单列表
      */
-    public Set<String> getPermitsByRoleNo(String roleNo);
+    public Set<String> getPermitCodesByRoleNo(String roleNo);
 
     /**
      * 根据用户ID查询权限
@@ -170,7 +170,7 @@ public interface ISysPermitinfoService
      * @param userNo 用户ID
      * @return 权限列表
      */
-    public Set<String> getPermitsByUserNo(String userNo);
+    public Set<String> getPermitCodesByUserNo(String userNo);
 
     /**
      * 校验菜单名称是否唯一

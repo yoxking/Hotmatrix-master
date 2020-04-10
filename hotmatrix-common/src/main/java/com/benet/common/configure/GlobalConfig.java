@@ -110,7 +110,7 @@ public class GlobalConfig
         return branchNo;
     }
 
-    public static void setBranchNo(String branchNo) {
+    public void setBranchNo(String branchNo) {
         GlobalConfig.branchNo = branchNo;
     }
 

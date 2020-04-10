@@ -157,20 +157,20 @@ public interface SysPermitinfoMapper
 
 
     /**
-     * 根据角色ID查询菜单
+     * 根据角色ID查询权限标识
      *
      * @param roleNo 角色ID
      * @return 菜单列表
      */
-    public List<String> getPermitsByRoleNo(@Param("appCode") String appCode,@Param("roleNo") String roleNo);
+    public List<String> getPermitCodesByRoleNo(@Param("appCode") String appCode,@Param("roleNo") String roleNo);
 
     /**
-     * 根据用户ID查询权限
+     * 根据用户ID查询权限标识
      *
      * @param userNo 用户ID
      * @return 权限列表
      */
-    public List<String> getPermitsByUserNo(@Param("appCode") String appCode,@Param("userNo") String userNo);
+    public List<String> getPermitCodesByUserNo(@Param("appCode") String appCode,@Param("userNo") String userNo);
 
     /**
      * 校验菜单名称是否唯一

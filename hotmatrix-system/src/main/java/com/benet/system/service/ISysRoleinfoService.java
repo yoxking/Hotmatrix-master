@@ -149,7 +149,7 @@ public interface ISysRoleinfoService
 
 
     /**
-     * 根据用户ID查询角色
+     * 根据用户ID查询角色标识
      *
      * @param userNo 用户ID
      * @return 权限列表

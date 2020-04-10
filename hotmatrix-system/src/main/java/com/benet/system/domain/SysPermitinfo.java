@@ -26,6 +26,10 @@ public class SysPermitinfo extends BaseEntity
     @Excel(name = "菜单名称")
     private String permitName;
 
+    /** 权限标识 */
+    @Excel(name = "权限标识")
+    private String permitCode;
+
     /** 菜单类型（M目录 C菜单 F按钮） */
     @Excel(name = "菜单类型", readConverterExp = "M=目录,C=菜单,F=按钮")
     private String permitType;
@@ -49,10 +53,6 @@ public class SysPermitinfo extends BaseEntity
     /** 打开方式（menuItem页签 menuBlank新窗口） */
     @Excel(name = "打开方式", readConverterExp = "m=enuItem页签,m=enuBlank新窗口")
     private String target;
-
-    /** 权限标识 */
-    @Excel(name = "权限标识")
-    private String permits;
 
     /** 显示状态（0显示 1隐藏） */
     @Excel(name = "显示状态", readConverterExp = "0=显示,1=隐藏")
@@ -114,7 +114,15 @@ public class SysPermitinfo extends BaseEntity
         this.permitType = permitType;
     }
 
-    public String getPermitType() 
+    public String getPermitCode() {
+        return permitCode;
+    }
+
+    public void setPermitCode(String permitCode) {
+        this.permitCode = permitCode;
+    }
+
+    public String getPermitType()
     {
         return permitType;
     }
@@ -163,15 +171,7 @@ public class SysPermitinfo extends BaseEntity
     {
         return target;
     }
-    public void setPermits(String permits) 
-    {
-        this.permits = permits;
-    }
 
-    public String getPermits() 
-    {
-        return permits;
-    }
     public void setVisible(String visible) 
     {
         this.visible = visible;
@@ -242,13 +242,13 @@ public class SysPermitinfo extends BaseEntity
             .append("id", getId())
             .append("permitNo", getPermitNo())
             .append("permitName", getPermitName())
+                .append("permitCode", getPermitCode())
             .append("permitType", getPermitType())
             .append("parentNo", getParentNo())
             .append("orderNo", getOrderNo())
             .append("url", getUrl())
             .append("icon", getIcon())
             .append("target", getTarget())
-            .append("permits", getPermits())
             .append("visible", getVisible())
             .append("checkState", getCheckState())
             .append("branchNo", getBranchNo())
