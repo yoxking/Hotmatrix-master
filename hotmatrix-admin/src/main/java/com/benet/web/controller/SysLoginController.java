@@ -57,7 +57,6 @@ public class SysLoginController
         }
     }
 
-
     @Oplog(title = "用户管理", businessType = BusinessType.INSERT)
     @GetMapping("/test")
     public AjaxResult test()

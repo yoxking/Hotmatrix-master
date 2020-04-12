@@ -155,6 +155,15 @@ public interface SysPermitinfoMapper
      */
     public List<SysPermitinfo> getRecordsByUserNo(@Param("appCode") String appCode,@Param("userNo") String userNo);
 
+    /**
+     * 根据用户ID查询子菜单
+     *
+     * @param parentNo 父ID
+     * @param userNo 用户ID
+     * @return 菜单列表
+     */
+    public List<SysPermitinfo> getChildrenByUserNo(@Param("appCode") String appCode,@Param("parentNo") String parentNo,@Param("userNo") String userNo);
+
 
     /**
      * 根据角色ID查询权限标识

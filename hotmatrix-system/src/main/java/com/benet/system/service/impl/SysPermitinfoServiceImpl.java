@@ -1,9 +1,6 @@
 package com.benet.system.service.impl;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PagingModel;
@@ -265,6 +262,55 @@ public class SysPermitinfoServiceImpl implements ISysPermitinfoService
         return sysPermitinfoMapper.getRecordsByUserNo(GlobalConfig.getAppCode(),userNo);
     }
 
+    /**
+     * 根据用户ID查询子菜单
+     *
+     * @param parentNo 父ID
+     * @param userNo 用户ID
+     * @return 菜单列表
+     */
+    public List<SysPermitinfo> getChildrenByUserNo(String parentNo,String userNo){
+        return sysPermitinfoMapper.getChildrenByUserNo(GlobalConfig.getAppCode(),parentNo,userNo);
+    }
+
+    /**
+     * 根据用户ID查询建菜单树
+     *
+     * @param parentNo 父ID
+     * @param userNo 用户ID
+     * @return 菜单列表
+     */
+    public List<SysPermitinfo> getTreeMenuByUserNo(String parentNo,String userNo){
+
+        List<SysPermitinfo> treeMenu=new ArrayList<>();
+        List<SysPermitinfo> treePermit=getChildrenByUserNo(parentNo,userNo);
+        if(treePermit!=null&&treePermit.size()>0){
+            for (SysPermitinfo permit:treePermit) {
+                treeMenu.add(permit);
+                recursionFun(permit, userNo);
+            }
+        }
+        return treeMenu;
+    }
+
+    /**
+     * 递归列表
+     *
+     * @param info
+     * @param userNo
+     */
+    private void recursionFun(SysPermitinfo info,String userNo)
+    {
+        // 得到子节点列表
+        List<SysPermitinfo> childList = getChildrenByUserNo(info.getPermitNo(),userNo);
+        info.setChildren(childList);
+
+        if(childList!=null&&childList.size()>0) {
+            for (SysPermitinfo child : childList) {
+                recursionFun(child, userNo);
+            }
+        }
+    }
 
     /**
      * 根据角色ID查询菜单

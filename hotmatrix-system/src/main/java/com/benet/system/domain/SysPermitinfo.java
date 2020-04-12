@@ -5,6 +5,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.benet.common.annotation.Excel;
 import com.benet.common.core.domain.BaseEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 菜单权限对象 sys_permitinfo
  * 
@@ -42,13 +45,25 @@ public class SysPermitinfo extends BaseEntity
     @Excel(name = "显示顺序")
     private Integer orderNo;
 
-    /** 请求地址 */
-    @Excel(name = "请求地址")
-    private String url;
+    /** 链接类型（0内部链接 1外部链接） */
+    @Excel(name = "链接类型", readConverterExp = "0内部链接,1外部链接")
+    private String linkType;
 
     /** 菜单图标 */
     @Excel(name = "菜单图标")
-    private String icon;
+    private String menuIcon;
+
+    /** 请求地址 */
+    @Excel(name = "请求地址")
+    private String pathUrl;
+
+    /** 组件路径 */
+    @Excel(name = "组件路径")
+    private String component;
+
+    /** 重定向地址 */
+    @Excel(name = "重定向地址")
+    private String redirect;
 
     /** 打开方式（menuItem页签 menuBlank新窗口） */
     @Excel(name = "打开方式", readConverterExp = "m=enuItem页签,m=enuBlank新窗口")
@@ -81,6 +96,9 @@ public class SysPermitinfo extends BaseEntity
     /** 版本号 */
     @Excel(name = "版本号")
     private Long version;
+
+    /** 子菜单 */
+    private List<SysPermitinfo> children = new ArrayList<SysPermitinfo>();
 
     public void setId(Long id) 
     {
@@ -144,25 +162,48 @@ public class SysPermitinfo extends BaseEntity
     {
         return orderNo;
     }
-    public void setUrl(String url) 
-    {
-        this.url = url;
+
+    public String getLinkType() {
+        return linkType;
     }
 
-    public String getUrl() 
-    {
-        return url;
-    }
-    public void setIcon(String icon) 
-    {
-        this.icon = icon;
+    public void setLinkType(String linkType) {
+        this.linkType = linkType;
     }
 
-    public String getIcon() 
-    {
-        return icon;
+    public String getMenuIcon() {
+        return menuIcon;
     }
-    public void setTarget(String target) 
+
+    public void setMenuIcon(String menuIcon) {
+        this.menuIcon = menuIcon;
+    }
+
+    public String getPathUrl() {
+        return pathUrl;
+    }
+
+    public void setPathUrl(String pathUrl) {
+        this.pathUrl = pathUrl;
+    }
+
+    public String getComponent() {
+        return component;
+    }
+
+    public void setComponent(String component) {
+        this.component = component;
+    }
+
+    public String getRedirect() {
+        return redirect;
+    }
+
+    public void setRedirect(String redirect) {
+        this.redirect = redirect;
+    }
+
+    public void setTarget(String target)
     {
         this.target = target;
     }
@@ -236,6 +277,14 @@ public class SysPermitinfo extends BaseEntity
         return version;
     }
 
+    public List<SysPermitinfo> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<SysPermitinfo> children) {
+        this.children = children;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -246,8 +295,10 @@ public class SysPermitinfo extends BaseEntity
             .append("permitType", getPermitType())
             .append("parentNo", getParentNo())
             .append("orderNo", getOrderNo())
-            .append("url", getUrl())
-            .append("icon", getIcon())
+                .append("linkType", getLinkType())
+                .append("menuIcon", getMenuIcon())
+            .append("pathUrl", getPathUrl())
+                .append("component", getComponent())
             .append("target", getTarget())
             .append("visible", getVisible())
             .append("checkState", getCheckState())

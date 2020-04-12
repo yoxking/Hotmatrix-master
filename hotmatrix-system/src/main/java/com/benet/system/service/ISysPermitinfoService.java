@@ -155,6 +155,24 @@ public interface ISysPermitinfoService
      */
     public List<SysPermitinfo> getRecordsByUserNo(String userNo);
 
+    /**
+     * 根据用户ID查询子菜单
+     *
+     * @param parentNo 父ID
+     * @param userNo 用户ID
+     * @return 菜单列表
+     */
+    public List<SysPermitinfo> getChildrenByUserNo(String parentNo,String userNo);
+
+    /**
+     * 根据用户ID查询建菜单树
+     *
+     * @param parentNo 父ID
+     * @param userNo 用户ID
+     * @return 菜单列表
+     */
+    public List<SysPermitinfo> getTreeMenuByUserNo(String parentNo,String userNo);
+
 
     /**
      * 根据角色ID查询菜单

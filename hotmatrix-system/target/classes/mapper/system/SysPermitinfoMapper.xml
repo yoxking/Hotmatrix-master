@@ -12,8 +12,11 @@
         <result property="permitType" column="permit_type"/>
         <result property="parentNo" column="parent_no"/>
         <result property="orderNo" column="order_no"/>
-        <result property="url" column="url"/>
-        <result property="icon" column="icon"/>
+        <result property="linkType" column="link_type"/>
+        <result property="menuIcon" column="menu_icon"/>
+        <result property="pathUrl" column="path_url"/>
+        <result property="component" column="component"/>
+        <result property="redirect" column="redirect"/>
         <result property="target" column="target"/>
         <result property="visible" column="visible"/>
         <result property="checkState" column="check_state"/>
@@ -29,7 +32,7 @@
     </resultMap>
 
     <sql id="selectSysPermitinfoVo">
-        select id, permit_no, permit_name, permit_code, permit_type, parent_no, order_no, url, icon, target, visible, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_permitinfo
+        select id, permit_no, permit_name, permit_code, permit_type, parent_no, order_no,link_type,menu_icon,path_url,  component,redirect,target, visible, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_permitinfo
     </sql>
 
     <select id="getAllRecords" resultMap="SysPermitinfoResult">
@@ -73,8 +76,11 @@
         <if test="info.permitType != null  and info.permitType != ''">permit_type,</if>
         <if test="info.parentNo != null  and info.parentNo != ''">parent_no,</if>
         <if test="info.orderNo != null ">order_no,</if>
-        <if test="info.url != null  and info.url != ''">url,</if>
-        <if test="info.icon != null  and info.icon != ''">icon,</if>
+        <if test="info.linkType != null  and info.linkType != ''">link_type,</if>
+        <if test="info.menuIcon != null  and info.menuIcon != ''">menu_icon,</if>
+        <if test="info.pathUrl != null  and info.pathUrl != ''">path_url,</if>
+        <if test="info.component != null  and info.component != ''">component,</if>
+        <if test="info.redirect != null  and info.redirect != ''">redirect,</if>
         <if test="info.target != null  and info.target != ''">target,</if>
         <if test="info.visible != null  and info.visible != ''">visible,</if>
         <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
@@ -94,8 +100,11 @@
         <if test="info.permitType != null  and info.permitType != ''">#{info.permitType},</if>
         <if test="info.parentNo != null  and info.parentNo != ''">#{info.parentNo},</if>
         <if test="info.orderNo != null ">#{info.orderNo},</if>
-        <if test="info.url != null  and info.url != ''">#{info.url},</if>
-        <if test="info.icon != null  and info.icon != ''">#{info.icon},</if>
+        <if test="info.linkType != null  and info.linkType != ''">#{info.linkType},</if>
+        <if test="info.menuIcon != null  and info.menuIcon != ''">#{info.menuIcon},</if>
+        <if test="info.pathUrl != null  and info.pathUrl != ''">#{info.pathUrl},</if>
+        <if test="info.component != null  and info.component != ''">#{info.component},</if>
+        <if test="info.redirect != null  and info.redirect != ''">#{info.redirect},</if>
         <if test="info.target != null  and info.target != ''">#{info.target},</if>
         <if test="info.visible != null  and info.visible != ''">#{info.visible},</if>
         <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
@@ -120,8 +129,11 @@
             <if test="info.permitType != null  and info.permitType != ''">permit_type = #{info.permitType},</if>
             <if test="info.parentNo != null  and info.parentNo != ''">parent_no = #{info.parentNo},</if>
             <if test="info.orderNo != null ">order_no = #{info.orderNo},</if>
-            <if test="info.url != null  and info.url != ''">url = #{info.url},</if>
-            <if test="info.icon != null  and info.icon != ''">icon = #{info.icon},</if>
+            <if test="info.linkType != null  and info.linkType != ''">link_type = #{info.linkType},</if>
+            <if test="info.menuIcon != null  and info.menuIcon != ''">menu_icon = #{info.menuIcon},</if>
+            <if test="info.pathUrl != null  and info.pathUrl != ''">path_url = #{info.pathUrl},</if>
+            <if test="info.component != null  and info.component != ''">component = #{info.component},</if>
+            <if test="info.redirect != null  and info.redirect != ''">redirect = #{info.redirect},</if>
             <if test="info.target != null  and info.target != ''">target = #{info.target},</if>
             <if test="info.visible != null  and info.visible != ''">visible = #{info.visible},</if>
             <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
@@ -177,7 +189,7 @@
     </delete>
 
     <select id="getRecordsByRoleNo" resultMap="SysPermitinfoResult">
-        select distinct p.id, p.permit_no, p.permit_name,  p.permit_code,p.permit_type, p.parent_no, p.order_no, p.url, p.icon, p.target, p.visible, p.check_state, p.branch_no, p.create_by, p.create_time, p.update_by, p.update_time, p.delete_flag, p.comments, p.app_code, p.version
+        select distinct p.id, p.permit_no, p.permit_name,  p.permit_code,p.permit_type, p.parent_no, p.order_no,p.link_type,p.menu_icon, p.path_url, p.component,p.redirect, p.target, p.visible, p.check_state, p.branch_no, p.create_by, p.create_time, p.update_by, p.update_time, p.delete_flag, p.comments, p.app_code, p.version
 		from sys_permitinfo p
 		left join sys_rolepermit rp on p.permit_no = rp.permit_no
 		where p.delete_flag='1' and p.app_code=#{appCode} and rp.role_no = #{roleNo}
@@ -185,11 +197,21 @@
     </select>
 
     <select id="getRecordsByUserNo" resultMap="SysPermitinfoResult">
-        select distinct p.id, p.permit_no, p.permit_name, p.permit_code,p.permit_type, p.parent_no, p.order_no, p.url, p.icon, p.target,  p.visible, p.check_state, p.branch_no, p.create_by, p.create_time, p.update_by, p.update_time, p.delete_flag, p.comments, p.app_code, p.version
+        select distinct p.id, p.permit_no, p.permit_name, p.permit_code,p.permit_type, p.parent_no, p.order_no, p.link_type, p.menu_icon, p.path_url, p.component,p.redirect,  p.target,  p.visible, p.check_state, p.branch_no, p.create_by, p.create_time, p.update_by, p.update_time, p.delete_flag, p.comments, p.app_code, p.version
 		from sys_permitinfo p
 		left join sys_rolepermit rp on p.permit_no = rp.permit_no
 		left join sys_suserrole ur on rp.role_no = ur.role_no
 		where p.delete_flag='1' and p.app_code=#{appCode} and ur.user_no = #{userNo}
+		order by p.parent_no, p.order_no
+    </select>
+
+    <select id="getChildrenByUserNo" resultMap="SysPermitinfoResult">
+        select distinct p.id, p.permit_no, p.permit_name, p.permit_code,p.permit_type, p.parent_no, p.order_no, p.link_type, p.menu_icon, p.path_url, p.component,p.redirect,  p.target,  p.visible, p.check_state, p.branch_no, p.create_by, p.create_time, p.update_by, p.update_time, p.delete_flag, p.comments, p.app_code, p.version
+		from sys_permitinfo p
+		left join sys_rolepermit rp on p.permit_no = rp.permit_no
+		left join sys_suserrole ur on rp.role_no = ur.role_no
+		where p.delete_flag='1' and p.app_code=#{appCode} and p.parent_no = #{parentNo} and ur.user_no = #{userNo}
+		order by p.parent_no, p.order_no
     </select>
 
     <select id="getPermitCodesByRoleNo" resultType="String">
