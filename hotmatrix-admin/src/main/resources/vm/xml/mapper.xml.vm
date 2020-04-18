@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="getRecordsByPaging" resultMap="${ClassName}Result">
         <include refid="select${ClassName}Vo"/>
         where delete_flag='1' and app_code=#{appCode}
-        <if test="model.condition != null  and model.condition != ''"> and #{model.condition}</if>
+        <if test="model.condition != null  and model.condition != ''"> and ${model.condition}</if>
         order by #{model.orderField} #{model.orderType} limit #{model.pageIndex},#{model.pageSize}
     </select>
 
@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="getCountByCondition" resultType="Integer">
         select count(*) from ${tableName}
         where delete_flag='1' and app_code=#{appCode}
-        <if test="condition != null  and condition != ''"> and #{condition}</if>
+        <if test="condition != null  and condition != ''"> and ${condition}</if>
     </select>
 
     <insert id="AddNewRecord" parameterType="${ClassName}" #if($pkColumn.increment) useGeneratedKeys="true" keyProperty="$pkColumn.javaField"#end>
@@ -91,7 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="HardDeleteByCondition">
         delete from ${tableName}
         where delete_flag='1' and app_code=#{appCode}
-        <if test="condition != null  and condition != ''"> and #{condition}</if>
+        <if test="condition != null  and condition != ''"> and ${condition}</if>
     </delete>
 
     <delete id="SoftDeleteByNo">
@@ -110,7 +110,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="SoftDeleteByCondition">
         update ${tableName} set delete_flag='0'
         where delete_flag='1' and app_code=#{appCode}
-        <if test="condition != null  and condition != ''"> and #{condition}</if>
+        <if test="condition != null  and condition != ''"> and ${condition}</if>
     </delete>
     
 </mapper>

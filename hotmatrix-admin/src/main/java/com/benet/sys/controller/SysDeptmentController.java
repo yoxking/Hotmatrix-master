@@ -10,13 +10,19 @@ import com.benet.common.enums.BusinessType;
 import com.benet.common.utils.poi.ExcelUtils;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.uuid.UuidUtils;
+import com.benet.common.utils.web.ServletUtils;
+import com.benet.framework.security.LoginUser;
+import com.benet.framework.security.service.MyJwtokenService;
+import com.benet.sys.vmodel.DeptmentVo;
 import com.benet.system.domain.SysDepartment;
 import com.benet.system.service.ISysDepartmentService;
+import com.benet.system.service.impl.SysDepartmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +34,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/sys/deptment")
 public class SysDeptmentController extends BaseController {
+
+    @Autowired
+    private MyJwtokenService tokenService;
+
     @Autowired
     private ISysDepartmentService sysDepartmentService;
 
@@ -53,12 +63,51 @@ public class SysDeptmentController extends BaseController {
     }
 
     /**
+     * 查询部门信息列表
+     */
+    //@PreAuthorize("@ps.hasPermit('system:department:list')")
+    @GetMapping(value = "/tree")
+    public TableDataInfo tree() {
+        int count = sysDepartmentService.getCountByCondition("");
+        List<DeptmentVo> list = buildDeptTree("0");
+        return getDataTable(list, count);
+    }
+
+    private List<DeptmentVo> buildDeptTree(String parentNo) {
+
+        List<DeptmentVo> deptTree = null;
+        DeptmentVo dept = null;
+        List<SysDepartment> infoList = sysDepartmentService.getRecordsByClassNo(parentNo);
+
+        if (infoList != null && infoList.size() > 0) {
+            deptTree = new ArrayList<>();
+            for (SysDepartment info : infoList) {
+                dept = new DeptmentVo();
+                dept.setDeptNo(info.getDeptNo());
+                dept.setDeptName(info.getDeptName());
+                dept.setParentNo(info.getParentNo());
+                dept.setOrderNo(info.getOrderNo());
+                dept.setLeader(info.getLeader());
+                dept.setTelephone(info.getTelephone());
+                dept.setEmail(info.getEmail());
+                dept.setComments(info.getComments());
+                dept.setChildren(buildDeptTree(info.getDeptNo()));
+                deptTree.add(dept);
+            }
+        }
+        return deptTree;
+    }
+
+    /**
      * 新增部门信息
      */
     //@PreAuthorize("@ps.hasPermit('system:department:add')")
     @PostMapping
     public AjaxResult add(@RequestBody SysDepartment sysDepartment) {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysDepartment.setDeptNo(UuidUtils.shortUUID());
+        sysDepartment.setCreateBy(loginUser.getUser().getUserNo());
+        sysDepartment.setUpdateBy(loginUser.getUser().getUserNo());
         return toAjax(sysDepartmentService.AddNewRecord(sysDepartment));
     }
 
@@ -69,6 +118,8 @@ public class SysDeptmentController extends BaseController {
     //@PostMapping(value = "/edit")
     @PutMapping
     public AjaxResult edit(@RequestBody SysDepartment sysDepartment) {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        sysDepartment.setUpdateBy(loginUser.getUser().getUserNo());
         return toAjax(sysDepartmentService.UpdateRecord(sysDepartment));
     }
 
@@ -79,9 +130,14 @@ public class SysDeptmentController extends BaseController {
     @Oplog(title = "部门信息", businessType = BusinessType.UPDATE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysDepartment sysDepartment) {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         if (StringUtils.isNull(sysDepartmentService.getRecordByNo(sysDepartment.getDeptNo()))) {
+            sysDepartment.setDeptNo(UuidUtils.shortUUID());
+            sysDepartment.setCreateBy(loginUser.getUser().getUserNo());
+            sysDepartment.setUpdateBy(loginUser.getUser().getUserNo());
             return toAjax(sysDepartmentService.AddNewRecord(sysDepartment));
         } else {
+            sysDepartment.setUpdateBy(loginUser.getUser().getUserNo());
             return toAjax(sysDepartmentService.UpdateRecord(sysDepartment));
         }
     }
@@ -110,19 +166,21 @@ public class SysDeptmentController extends BaseController {
      * 导出部门信息列表
      */
     //@PreAuthorize("@ps.hasPermit('system:department:export')")
-    @Oplog(title = "部门信息", businessType = BusinessType.EXPORT)
-    @GetMapping("/export/{condition}")
-    public AjaxResult export(@PathVariable("condition") String condition) {
+    //@Oplog(title = "部门信息", businessType = BusinessType.EXPORT)
+    @PostMapping("/export")
+    public AjaxResult export(@RequestBody PageRequest pRequest) {
+
+        int count = sysDepartmentService.getCountByCondition(pRequest.getCondition());
         PagingModel model = new PagingModel();
         model.setPageIndex(1);
-        model.setPageSize(1000);
+        model.setPageSize(count);
         model.setOrderField("id");
         model.setOrderType("Asc");
-        model.setCondition(condition);
+        model.setCondition(pRequest.getCondition());
 
         List<SysDepartment> list = sysDepartmentService.getRecordsByPaging(model);
         ExcelUtils<SysDepartment> util = new ExcelUtils<SysDepartment>(SysDepartment.class);
-        return util.exportExcel(list, "menu");
+        return util.exportExcel(list, "department");
     }
 
 }

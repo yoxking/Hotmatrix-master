@@ -50,7 +50,7 @@
     <select id="getRecordsByPaging" resultMap="SysRuserinfoResult">
         <include refid="selectSysRuserinfoVo"/>
         where delete_flag='1' and app_code=#{appCode}
-        <if test="model.condition != null  and model.condition != ''">and #{model.condition}</if>
+        <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
         order by #{model.orderField} #{model.orderType} limit #{model.pageIndex},#{model.pageSize}
     </select>
 
@@ -67,7 +67,7 @@
     <select id="getCountByCondition" resultType="Integer">
         select count(*) from sys_ruserinfo
         where delete_flag='1' and app_code=#{appCode}
-        <if test="condition != null  and condition != ''">and #{condition}</if>
+        <if test="condition != null  and condition != ''">and ${condition}</if>
     </select>
 
     <insert id="AddNewRecord" parameterType="SysRuserinfo" useGeneratedKeys="true" keyProperty="id">
@@ -174,7 +174,7 @@
     <delete id="HardDeleteByCondition">
         delete from sys_ruserinfo
         where delete_flag='1' and app_code=#{appCode}
-        <if test="condition != null  and condition != ''">and #{condition}</if>
+        <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>
 
     <delete id="SoftDeleteByNo">
@@ -193,7 +193,7 @@
     <delete id="SoftDeleteByCondition">
         update sys_ruserinfo set delete_flag='0'
         where delete_flag='1' and app_code=#{appCode}
-        <if test="condition != null  and condition != ''">and #{condition}</if>
+        <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>
 
 </mapper>

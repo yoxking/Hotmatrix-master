@@ -7,7 +7,7 @@
     <select id="getCountByCondition" resultType="Integer">
         select count(*) from sys_rolepermit
         where delete_flag='1' and app_code=#{appCode}
-        <if test="condition != null  and condition != ''">and #{condition}</if>
+        <if test="condition != null  and condition != ''">and ${condition}</if>
     </select>
 
     <insert id="AddNewRecord" parameterType="SysRolepermit" useGeneratedKeys="true" keyProperty="id">
