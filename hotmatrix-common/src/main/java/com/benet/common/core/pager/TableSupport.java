@@ -14,18 +14,19 @@ public class TableSupport
     /**
      * 封装分页对象
      */
-    public static PageDomain getPageDomain()
+    public static PagingModel getPagingMode()
     {
-        PageDomain pageDomain = new PageDomain();
-        pageDomain.setPageNum(ServletUtils.getParameterToInt(PubConstants.PAGE_NUM));
-        pageDomain.setPageSize(ServletUtils.getParameterToInt(PubConstants.PAGE_SIZE));
-        pageDomain.setOrderByColumn(ServletUtils.getParameter(PubConstants.ORDER_BY_COLUMN));
-        pageDomain.setIsAsc(ServletUtils.getParameter(PubConstants.IS_ASC));
-        return pageDomain;
+        PagingModel pagingModel = new PagingModel();
+        pagingModel.setPageIndex(ServletUtils.getParameterToInt(PubConstants.PAGE_NUM));
+        pagingModel.setPageSize(ServletUtils.getParameterToInt(PubConstants.PAGE_SIZE));
+        pagingModel.setOrderType("Asc");
+        pagingModel.setOrderField("*");
+        pagingModel.setCondition("");
+        return pagingModel;
     }
 
-    public static PageDomain buildPageRequest()
+    public static PagingModel buildPageRequest()
     {
-        return getPageDomain();
+        return getPagingMode();
     }
 }

@@ -92,7 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 // 过滤请求
                 .authorizeRequests()
                 // 对于登录login 验证码captchaImage 允许匿名访问
-                .antMatchers("/login", "/codeImage","/test3").anonymous()
+                .antMatchers("/sys/login", "/sys/codeImage").anonymous()
                 .antMatchers(
                         HttpMethod.GET,
                         "/*.html",
@@ -114,7 +114,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .anyRequest().authenticated()
                 .and()
                 .headers().frameOptions().disable();
-        httpSecurity.logout().logoutUrl("/logout").logoutSuccessHandler(sylogoutSuccessHandler);
+        httpSecurity.logout().logoutUrl("/sys/logout").logoutSuccessHandler(sylogoutSuccessHandler);
         // 添加JWT filter
         httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }

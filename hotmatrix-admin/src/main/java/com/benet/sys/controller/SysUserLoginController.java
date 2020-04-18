@@ -1,25 +1,36 @@
-package com.benet.web.controller;
+package com.benet.sys.controller;
 
+import com.benet.common.constant.JwtConstants;
 import com.benet.common.core.domain.AjaxResult;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
+import com.benet.framework.security.service.SysLoginService;
 import com.benet.framework.utils.RouterUtils;
 import com.benet.framework.web.vmodel.RouterVo;
 import com.benet.system.domain.SysPermitinfo;
 import com.benet.system.domain.SysSuserinfo;
 import com.benet.system.service.ISysPermitinfoService;
 import com.benet.system.service.ISysRoleinfoService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
 
+/**
+ * 登录验证
+ * 
+ * @author yoxking
+ */
+@Api(tags = "SysLogin")
 @RestController
-public class SysUserController {
+@RequestMapping("/sys")
+public class SysUserLoginController
+{
+    @Autowired
+    private SysLoginService loginService;
 
     @Autowired
     private ISysRoleinfoService roleService;
@@ -27,16 +38,40 @@ public class SysUserController {
     @Autowired
     private ISysPermitinfoService permitService;
 
-
     @Autowired
     private MyJwtokenService tokenService;
+
+    /**
+     * 登录方法
+     * 
+     * @param username 用户名
+     * @param password 密码
+     * @param code 验证码
+     * @param uuid 唯一标识
+     * @return 结果
+     */
+    @PostMapping("/login")
+    public AjaxResult login(String username, String password, String code, String uuid)
+    {
+        try {
+            AjaxResult ajax = AjaxResult.success();
+
+            // 生成令牌
+            String token = loginService.login(username, password, code, uuid);
+            ajax.put(JwtConstants.TOKEN, token);
+            return ajax;
+        }
+        catch (Exception e){
+            return AjaxResult.error(e.getMessage());
+        }
+    }
 
     /**
      * 获取用户信息
      *
      * @return 用户信息
      */
-    @GetMapping("getInfo")
+    @GetMapping("/getInfo")
     public AjaxResult getInfo()
     {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
@@ -54,18 +89,19 @@ public class SysUserController {
 
 
     /**
-     * 获取路由信息
+     * 按父菜单ID获取路由信息
      *
+     * @param parentId 父菜单ID
      * @return 路由信息
      */
-    @GetMapping("getRouters/{menuId}")
-    public AjaxResult getRouters(@PathVariable("menuId") String menuId)
+    @GetMapping("/getRouters/{parentId}")
+    public AjaxResult getRouters(@PathVariable("parentId") String parentId)
     {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         // 用户信息
         SysSuserinfo user = loginUser.getUser();
-        List<SysPermitinfo> menus = permitService.getTreeMenuByUserNo(menuId,user.getUserNo());
-        List<RouterVo> v=RouterUtils.buildMenus(menus);
+        List<SysPermitinfo> menus = permitService.getTreeMenuByUserNo(parentId,user.getUserNo());
+        List<RouterVo> v= RouterUtils.buildMenus(menus);
         return AjaxResult.success(v);
     }
 
@@ -74,7 +110,7 @@ public class SysUserController {
      *
      * @return 路由信息
      */
-    @GetMapping("getTopMenu")
+    @GetMapping("/getTopMenu")
     public AjaxResult getTopMenu()
     {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());

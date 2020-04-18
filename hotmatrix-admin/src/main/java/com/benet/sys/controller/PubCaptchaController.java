@@ -1,4 +1,4 @@
-package com.benet.web.controller;
+package com.benet.sys.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -19,10 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 验证码操作处理
  * 
- * @author ruoyi
+ * @author yoxking
  */
 @RestController
-public class CaptchaController
+@RequestMapping("/sys")
+public class PubCaptchaController
 {
     @Autowired
     private RedisUtils redisUtils;

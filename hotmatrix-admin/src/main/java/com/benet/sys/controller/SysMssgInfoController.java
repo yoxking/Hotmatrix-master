@@ -1,42 +1,36 @@
-package com.benet.web.controller;
+package com.benet.sys.controller;
 
-import java.util.List;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-import com.benet.system.domain.SysMessageinfo;
-import com.benet.system.service.ISysMessageinfoService;
 import com.benet.common.annotation.Oplog;
 import com.benet.common.core.controller.BaseController;
 import com.benet.common.core.domain.AjaxResult;
+import com.benet.common.core.pager.TableDataInfo;
 import com.benet.common.enums.BusinessType;
 import com.benet.common.utils.poi.ExcelUtils;
 import com.benet.common.utils.string.StringUtils;
-import com.benet.common.core.pager.TableDataInfo;
+import com.benet.system.domain.SysMessageinfo;
+import com.benet.system.service.ISysMessageinfoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 /**
  * 消息信息Controller
- * 
+ *
  * @author yoxking
  * @date 2020-03-29
  */
 @RestController
-@RequestMapping("/system/messageinfo")
-public class SysMessageinfoController extends BaseController
+@RequestMapping("/sys/mssginfo")
+public class SysMssgInfoController extends BaseController
 {
     @Autowired
     private ISysMessageinfoService sysMessageinfoService;
     /**
-         * 首页
-         */
+     * 首页
+     */
     @PreAuthorize("@ps.hasPermit('system:messageinfo:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
@@ -52,7 +46,6 @@ public class SysMessageinfoController extends BaseController
     @GetMapping(value="/list")
     public TableDataInfo list()
     {
-        startPage();
         List<SysMessageinfo> list = sysMessageinfoService.getAllRecords();
         return getDataTable(list);
     }

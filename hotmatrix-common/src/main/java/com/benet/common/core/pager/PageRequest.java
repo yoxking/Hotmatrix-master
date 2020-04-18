@@ -1,22 +1,20 @@
 package com.benet.common.core.pager;
 
+import com.benet.common.utils.string.StringUtils;
+
 /**
- * 分页数据模型
+ * 分页请求数据
  *
  * @author yoxking
  */
-public class PagingModel {
-
-    /** 当前页起始索引 */
+public class PageRequest
+{
+    /** 当前记录起始索引 */
     private Integer pageIndex;
     /** 每页显示记录数 */
     private Integer pageSize;
-    /** 条件 */
+    /** 查询条件 */
     private String condition;
-    /** 排序列 */
-    private String orderField;
-    /** 排序的方向 "desc" 或者 "asc". */
-    private String orderType;
 
     public Integer getPageIndex() {
         return pageIndex;
@@ -40,21 +38,5 @@ public class PagingModel {
 
     public void setCondition(String condition) {
         this.condition = condition;
-    }
-
-    public String getOrderField() {
-        return orderField;
-    }
-
-    public void setOrderField(String orderField) {
-        this.orderField = orderField;
-    }
-
-    public String getOrderType() {
-        return orderType;
-    }
-
-    public void setOrderType(String orderType) {
-        this.orderType = orderType;
     }
 }

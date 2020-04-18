@@ -1,42 +1,36 @@
-package com.benet.web.controller;
+package com.benet.sys.controller;
 
-import java.util.List;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-import com.benet.system.domain.SysAppclass;
-import com.benet.system.service.ISysAppclassService;
 import com.benet.common.annotation.Oplog;
 import com.benet.common.core.controller.BaseController;
 import com.benet.common.core.domain.AjaxResult;
+import com.benet.common.core.pager.TableDataInfo;
 import com.benet.common.enums.BusinessType;
 import com.benet.common.utils.poi.ExcelUtils;
 import com.benet.common.utils.string.StringUtils;
-import com.benet.common.core.pager.TableDataInfo;
+import com.benet.system.domain.SysAppclass;
+import com.benet.system.service.ISysAppclassService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 /**
  * 应用类型Controller
- * 
+ *
  * @author yoxking
  * @date 2020-03-29
  */
 @RestController
-@RequestMapping("/web/appclass")
-public class SysAppclassController extends BaseController
-{
+@RequestMapping("/sys/appclass")
+public class SysAppClassController  extends BaseController {
+
     @Autowired
     private ISysAppclassService sysAppclassService;
     /**
-         * 首页
-         */
+     * 首页
+     */
     @PreAuthorize("@ps.hasPermit('system:appclass:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
@@ -52,7 +46,6 @@ public class SysAppclassController extends BaseController
     @GetMapping(value="/list")
     public TableDataInfo list()
     {
-        startPage();
         List<SysAppclass> list = sysAppclassService.getRecordsByPaging(0,10,"","id","asc");
         return getDataTable(list);
     }
@@ -137,5 +130,4 @@ public class SysAppclassController extends BaseController
         ExcelUtils<SysAppclass> util = new ExcelUtils<SysAppclass>(SysAppclass.class);
         return util.exportExcel(list, "menu");
     }
-
 }
