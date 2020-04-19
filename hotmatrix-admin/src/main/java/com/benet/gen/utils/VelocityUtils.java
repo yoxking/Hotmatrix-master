@@ -7,8 +7,8 @@ import java.util.List;
 import com.benet.common.constant.GenConstants;
 import com.benet.common.utils.date.DateUtils;
 import com.benet.common.utils.string.StringUtils;
-import com.benet.gen.domain.GenTable;
-import com.benet.gen.domain.GenTableColumn;
+import com.benet.gen.domain.SysTabcolumn;
+import com.benet.gen.domain.SysTableinfo;
 import org.apache.velocity.VelocityContext;
 import com.alibaba.fastjson.JSONObject;
 
@@ -25,42 +25,42 @@ public class VelocityUtils
      * 
      * @return 模板列表
      */
-    public static VelocityContext prepareContext(GenTable genTable)
+    public static VelocityContext prepareContext(SysTableinfo tableInfo)
     {
-        String moduleName = genTable.getModuleName();
-        String businessName = genTable.getBusinessName();
-        String packageName = genTable.getPackageName();
-        String tplCategory = genTable.getTplCategory();
-        String functionName = genTable.getFunctionName();
+        String moduleName = tableInfo.getModuleName();
+        String businessName = tableInfo.getBusinessName();
+        String packageName = tableInfo.getPackageName();
+        String tplCategory = tableInfo.getTplCategory();
+        String functionName = tableInfo.getFunctionName();
 
         VelocityContext velocityContext = new VelocityContext();
-        velocityContext.put("tplCategory", genTable.getTplCategory());
-        velocityContext.put("tableName", genTable.getTableName());
+        velocityContext.put("tplCategory", tableInfo.getTplCategory());
+        velocityContext.put("tableName", tableInfo.getTableName());
         velocityContext.put("functionName", StringUtils.isNotEmpty(functionName) ? functionName : "【请填写功能名称】");
-        velocityContext.put("ClassName", genTable.getClassName());
-        velocityContext.put("className", StringUtils.uncapitalize(genTable.getClassName()));
-        velocityContext.put("moduleName", genTable.getModuleName());
-        velocityContext.put("BusinessName", StringUtils.capitalize(genTable.getBusinessName()));
-        velocityContext.put("businessName", genTable.getBusinessName());
+        velocityContext.put("ClassName", tableInfo.getClassName());
+        velocityContext.put("className", StringUtils.uncapitalize(tableInfo.getClassName()));
+        velocityContext.put("moduleName", tableInfo.getModuleName());
+        velocityContext.put("BusinessName", StringUtils.capitalize(tableInfo.getBusinessName()));
+        velocityContext.put("businessName", tableInfo.getBusinessName());
         velocityContext.put("basePackage", getPackagePrefix(packageName));
         velocityContext.put("packageName", packageName);
-        velocityContext.put("author", genTable.getFunctionAuthor());
+        velocityContext.put("author", tableInfo.getFunctionAuthor());
         velocityContext.put("datetime", DateUtils.getDate());
-        velocityContext.put("pkColumn", genTable.getPkColumn());
-        velocityContext.put("importList", getImportList(genTable.getColumns()));
+        velocityContext.put("pkColumn", tableInfo.getPkColumn());
+        velocityContext.put("importList", getImportList(tableInfo.getColumns()));
         velocityContext.put("permissionPrefix", getPermissionPrefix(moduleName, businessName));
-        velocityContext.put("columns", genTable.getColumns());
-        velocityContext.put("table", genTable);
+        velocityContext.put("columns", tableInfo.getColumns());
+        velocityContext.put("table", tableInfo);
         if (GenConstants.TPL_TREE.equals(tplCategory))
         {
-            setTreeVelocityContext(velocityContext, genTable);
+            setTreeVelocityContext(velocityContext, tableInfo);
         }
         return velocityContext;
     }
 
-    public static void setTreeVelocityContext(VelocityContext context, GenTable genTable)
+    public static void setTreeVelocityContext(VelocityContext context, SysTableinfo tableInfo)
     {
-        String options = genTable.getOptions();
+        String options = tableInfo.getOptions();
         JSONObject paramsObj = JSONObject.parseObject(options);
         String treeCode = getTreecode(paramsObj);
         String treeParentCode = getTreeParentCode(paramsObj);
@@ -69,7 +69,7 @@ public class VelocityUtils
         context.put("treeCode", treeCode);
         context.put("treeParentCode", treeParentCode);
         context.put("treeName", treeName);
-        context.put("expandColumn", getExpandColumn(genTable));
+        context.put("expandColumn", getExpandColumn(tableInfo));
         if (paramsObj.containsKey(GenConstants.TREE_PARENT_CODE))
         {
             context.put("tree_parent_code", paramsObj.getString(GenConstants.TREE_PARENT_CODE));
@@ -110,18 +110,18 @@ public class VelocityUtils
     /**
      * 获取文件名
      */
-    public static String getFileName(String template, GenTable genTable)
+    public static String getFileName(String template, SysTableinfo tableInfo)
     {
         // 文件名称
         String fileName = "";
         // 包路径
-        String packageName = genTable.getPackageName();
+        String packageName = tableInfo.getPackageName();
         // 模块名
-        String moduleName = genTable.getModuleName();
+        String moduleName = tableInfo.getModuleName();
         // 大写类名
-        String className = genTable.getClassName();
+        String className = tableInfo.getClassName();
         // 业务名称
-        String businessName = genTable.getBusinessName();
+        String businessName = tableInfo.getBusinessName();
 
         String javaPath = PROJECT_PATH + "/" + StringUtils.replace(packageName, ".", "/");
         String mybatisPath = MYBATIS_PATH + "/" + moduleName;
@@ -189,16 +189,16 @@ public class VelocityUtils
      * @param columns 列集合
      * @return 返回需要导入的包列表
      */
-    public static HashSet<String> getImportList(List<GenTableColumn> columns)
+    public static HashSet<String> getImportList(List<SysTabcolumn> columns)
     {
         HashSet<String> importList = new HashSet<String>();
-        for (GenTableColumn column : columns)
+        for (SysTabcolumn column : columns)
         {
-            if (!column.isSuperColumn() && GenConstants.TYPE_DATE.equals(column.getJavaType()))
+            if (!column.isSuperField() && GenConstants.TYPE_DATE.equals(column.getJavaType()))
             {
                 importList.add("java.util.Date");
             }
-            else if (!column.isSuperColumn() && GenConstants.TYPE_BIGDECIMAL.equals(column.getJavaType()))
+            else if (!column.isSuperField() && GenConstants.TYPE_BIGDECIMAL.equals(column.getJavaType()))
             {
                 importList.add("java.math.BigDecimal");
             }
@@ -267,16 +267,16 @@ public class VelocityUtils
     /**
      * 获取需要在哪一列上面显示展开按钮
      * 
-     * @param genTable 业务表对象
+     * @param tableInfo 业务表对象
      * @return 展开按钮列序号
      */
-    public static int getExpandColumn(GenTable genTable)
+    public static int getExpandColumn(SysTableinfo tableInfo)
     {
-        String options = genTable.getOptions();
+        String options = tableInfo.getOptions();
         JSONObject paramsObj = JSONObject.parseObject(options);
         String treeName = paramsObj.getString(GenConstants.TREE_NAME);
         int num = 0;
-        for (GenTableColumn column : genTable.getColumns())
+        for (SysTabcolumn column : tableInfo.getColumns())
         {
             if (column.isList())
             {

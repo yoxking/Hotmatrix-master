@@ -12,10 +12,10 @@ import com.benet.common.core.domain.AjaxResult;
 import com.benet.common.core.pager.TableDataInfo;
 import com.benet.common.core.text.ConvertHelper;
 import com.benet.common.enums.BusinessType;
-import com.benet.gen.domain.GenTable;
-import com.benet.gen.domain.GenTableColumn;
-import com.benet.gen.service.IGenTableColumnService;
-import com.benet.gen.service.IGenTableService;
+import com.benet.gen.domain.SysTabcolumn;
+import com.benet.gen.domain.SysTableinfo;
+import com.benet.gen.service.ISysTabcolumnService;
+import com.benet.gen.service.ISysTableinfoService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -38,31 +38,31 @@ import org.springframework.web.bind.annotation.RestController;
 public class GenController extends BaseController
 {
     @Autowired
-    private IGenTableService genTableService;
+    private ISysTableinfoService tableInfoService;
 
     @Autowired
-    private IGenTableColumnService genTableColumnService;
+    private ISysTabcolumnService tabColumnService;
 
     /**
      * 查询代码生成列表
      */
     @GetMapping("/list")
-    public TableDataInfo genList(GenTable genTable)
+    public TableDataInfo genList()
     {
-        List<GenTable> list = genTableService.selectGenTableList(genTable);
+        List<SysTableinfo> list = tableInfoService.getRecordsByPaging(1,10,"","id","Asc");
         return getDataTable(list);
     }
 
     /**
      * 修改代码生成业务
      */
-    @GetMapping(value = "/{talbleId}")
-    public AjaxResult getInfo(@PathVariable Long talbleId)
+    @GetMapping(value = "/{tableNo}")
+    public AjaxResult getInfo(@PathVariable String tableNo)
     {
-        GenTable table = genTableService.selectGenTableById(talbleId);
-        List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(talbleId);
+        SysTableinfo tableInfo = tableInfoService.getRecordByNo(tableNo);
+        List<SysTabcolumn> list = tabColumnService.getRecordsByClassNo(tableNo);
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("info", table);
+        map.put("info", tableInfo);
         map.put("rows", list);
         return AjaxResult.success(map);
     }
@@ -70,21 +70,21 @@ public class GenController extends BaseController
     /**
      * 查询数据库列表
      */
-    @GetMapping("/db/list")
-    public TableDataInfo dataList(GenTable genTable)
+    @GetMapping("/table/list")
+    public TableDataInfo tableList()
     {
-        List<GenTable> list = genTableService.selectDbTableList(genTable);
+        List<SysTableinfo> list = tableInfoService.getDbTableList("");
         return getDataTable(list);
     }
 
     /**
      * 查询数据表字段列表
      */
-    @GetMapping(value = "/column/{talbleId}")
-    public TableDataInfo columnList(Long tableId)
+    @GetMapping(value = "/column/{tableNo}")
+    public TableDataInfo columnList(@PathVariable String tableNo)
     {
         TableDataInfo dataInfo = new TableDataInfo();
-        List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
+        List<SysTabcolumn> list = tabColumnService.getRecordsByClassNo(tableNo);
         dataInfo.setRows(list);
         dataInfo.setTotal(list.size());
         return dataInfo;
@@ -95,12 +95,12 @@ public class GenController extends BaseController
      */
     @Oplog(title = "代码生成", businessType = BusinessType.IMPORT)
     @PostMapping("/importTable")
-    public AjaxResult importTableSave(String tables)
+    public AjaxResult importTable(String tables)
     {
         String[] tableNames = ConvertHelper.toStrArray(tables);
         // 查询表信息
-        List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);
-        genTableService.importGenTable(tableList);
+        List<SysTableinfo> tableList = tableInfoService.getDbTableListByNames(tableNames);
+        tableInfoService.importTableInfo(tableList);
         return AjaxResult.success();
     }
 
@@ -109,29 +109,29 @@ public class GenController extends BaseController
      */
     @Oplog(title = "代码生成", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult editSave(@Validated @RequestBody GenTable genTable)
+    public AjaxResult save(@Validated @RequestBody SysTableinfo tableInfo)
     {
-        System.out.println(genTable.getParams().size());
-        genTableService.validateEdit(genTable);
-        genTableService.updateGenTable(genTable);
+        System.out.println(tableInfo.getParams().size());
+        tableInfoService.validateEdit(tableInfo);
+        tableInfoService.UpdateRecord(tableInfo);
         return AjaxResult.success();
     }
 
     @Oplog(title = "代码生成", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{tableIds}")
-    public AjaxResult remove(@PathVariable Long[] tableIds)
+    @DeleteMapping("/{tableNos}")
+    public AjaxResult remove(@PathVariable String[] tableNos)
     {
-        genTableService.deleteGenTableByIds(tableIds);
+        tableInfoService.HardDeleteByNos(tableNos);
         return AjaxResult.success();
     }
 
     /**
      * 预览代码
      */
-    @GetMapping("/preview/{tableId}")
-    public AjaxResult preview(@PathVariable("tableId") Long tableId) throws IOException
+    @GetMapping("/preview/{tableNo}")
+    public AjaxResult preview(@PathVariable("tableNo") String tableNo) throws IOException
     {
-        Map<String, String> dataMap = genTableService.previewCode(tableId);
+        Map<String, String> dataMap = tableInfoService.previewCode(tableNo);
         return AjaxResult.success(dataMap);
     }
 
@@ -142,7 +142,7 @@ public class GenController extends BaseController
     @GetMapping("/genCode/{tableName}")
     public void genCode(HttpServletResponse response, @PathVariable("tableName") String tableName) throws IOException
     {
-        byte[] data = genTableService.generatorCode(tableName);
+        byte[] data = tableInfoService.generateCode(tableName);
         genCode(response, data);
     }
 
@@ -154,7 +154,7 @@ public class GenController extends BaseController
     public void batchGenCode(HttpServletResponse response, String tables) throws IOException
     {
         String[] tableNames = ConvertHelper.toStrArray(tables);
-        byte[] data = genTableService.generatorCode(tableNames);
+        byte[] data = tableInfoService.generateCode(tableNames);
         genCode(response, data);
     }
 

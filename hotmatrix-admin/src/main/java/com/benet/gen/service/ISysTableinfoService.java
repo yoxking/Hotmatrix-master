@@ -1,8 +1,11 @@
-package com.benet.system.service;
+package com.benet.gen.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.benet.common.core.pager.PagingModel;
-import com.benet.system.domain.SysTableinfo;
+import com.benet.gen.domain.SysTableinfo;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 代码生成业务Service接口
@@ -45,7 +48,7 @@ public interface ISysTableinfoService
      * @param orderType 排序类型
      * @return 代码生成业务集合
      */
-    public List<SysTableinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType);
+    public List<SysTableinfo> getRecordsByPaging(int pageIndex, int pageSize, String condition, String orderField, String orderType);
 
     /**
      * 查询代码生成业务
@@ -54,6 +57,14 @@ public interface ISysTableinfoService
      * @return 代码生成业务
      */
     public SysTableinfo getRecordByNo(String no);
+
+    /**
+     * 查询代码生成业务
+     *
+     * @param tableName 表名
+     * @return 代码生成业务
+     */
+    public SysTableinfo getRecordByName(String tableName);
 
     /**
      * 查询代码生成业务名称
@@ -134,4 +145,68 @@ public interface ISysTableinfoService
      * @return 结果
      */
     public int SoftDeleteByCondition(String condition);
+
+
+    /**
+     * 查询据库列表
+     *
+     * @param condition 业务信息
+     * @return 数据库表集合
+     */
+    public List<SysTableinfo> getDbTableList(String condition);
+
+    /**
+     * 查询据库列表
+     *
+     * @param tableNames 表名称组
+     * @return 数据库表集合
+     */
+    public List<SysTableinfo> getDbTableListByNames(String[] tableNames);
+
+    /**
+     * 查询表名称业务信息
+     *
+     * @param tableName 表名称
+     * @return 业务信息
+     */
+    public SysTableinfo getDbTableByName(String tableName);
+
+
+    /**
+     * 导入表结构
+     *
+     * @param tableList 导入表列表
+     */
+    public void importTableInfo(List<SysTableinfo> tableList);
+
+    /**
+     * 预览代码
+     *
+     * @param tableNo 表编号
+     * @return 预览数据列表
+     */
+    public Map<String, String> previewCode(String tableNo);
+
+    /**
+     * 生成代码
+     *
+     * @param tableName 表名称
+     * @return 数据
+     */
+    public byte[] generateCode(String tableName);
+
+    /**
+     * 批量生成代码
+     *
+     * @param tableNames 表数组
+     * @return 数据
+     */
+    public byte[] generateCode(String[] tableNames);
+
+    /**
+     * 修改保存参数校验
+     *
+     * @param tableInfo 业务信息
+     */
+    public void validateEdit(SysTableinfo tableInfo);
 }

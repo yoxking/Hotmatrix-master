@@ -17,16 +17,16 @@ public class VelocityInitializer
      */
     public static void initVelocity()
     {
-        Properties p = new Properties();
+        Properties prop = new Properties();
         try
         {
             // 加载classpath目录下的vm文件
-            p.setProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+            prop.setProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
             // 定义字符集
-            p.setProperty(Velocity.ENCODING_DEFAULT, PubConstants.UTF8);
-            p.setProperty(Velocity.OUTPUT_ENCODING, PubConstants.UTF8);
+            prop.setProperty(Velocity.ENCODING_DEFAULT, PubConstants.UTF8);
+            prop.setProperty(Velocity.OUTPUT_ENCODING, PubConstants.UTF8);
             // 初始化Velocity引擎，指定配置Properties
-            Velocity.init(p);
+            Velocity.init(prop);
         }
         catch (Exception e)
         {

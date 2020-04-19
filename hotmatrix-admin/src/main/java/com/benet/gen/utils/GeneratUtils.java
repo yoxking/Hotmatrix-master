@@ -5,8 +5,9 @@ import java.util.Arrays;
 import com.benet.common.configure.GenertConfig;
 import com.benet.common.constant.GenConstants;
 import com.benet.common.utils.string.StringUtils;
-import com.benet.gen.domain.GenTable;
-import com.benet.gen.domain.GenTableColumn;
+import com.benet.common.utils.uuid.UuidUtils;
+import com.benet.gen.domain.SysTabcolumn;
+import com.benet.gen.domain.SysTableinfo;
 import org.apache.commons.lang3.RegExUtils;
 
 /**
@@ -19,98 +20,101 @@ public class GeneratUtils
     /**
      * 初始化表信息
      */
-    public static void initTable(GenTable genTable, String operName)
+    public static void initTable(SysTableinfo tableInfo, String opertName)
     {
-        genTable.setClassName(convertClassName(genTable.getTableName()));
-        genTable.setPackageName(GenertConfig.getPackageName());
-        genTable.setModuleName(getModuleName(GenertConfig.getPackageName()));
-        genTable.setBusinessName(getBusinessName(genTable.getTableName()));
-        genTable.setFunctionName(replaceText(genTable.getTableComment()));
-        genTable.setFunctionAuthor(GenertConfig.getAuthor());
-        genTable.setCreateBy(operName);
+        tableInfo.setTableNo(UuidUtils.shortUUID());
+        tableInfo.setClassName(convertClassName(tableInfo.getTableName()));
+        tableInfo.setPackageName(GenertConfig.getPackageName());
+        tableInfo.setModuleName(getModuleName(GenertConfig.getPackageName()));
+        tableInfo.setBusinessName(getBusinessName(tableInfo.getTableName()));
+        tableInfo.setFunctionName(replaceText(tableInfo.getTableComment()));
+        tableInfo.setFunctionAuthor(GenertConfig.getAuthor());
+        tableInfo.setCreateBy(opertName);
     }
 
     /**
      * 初始化列属性字段
      */
-    public static void initColumnField(GenTableColumn column, GenTable table)
+    public static void initColumnField(SysTabcolumn tableField, SysTableinfo tableInfo)
     {
-        String dataType = getDbType(column.getColumnType());
-        String columnName = column.getColumnName();
-        column.setTableId(table.getTableId());
-        column.setCreateBy(table.getCreateBy());
+        String dataType = getDbType(tableField.getColumnType());
+        String fieldName = tableField.getColumnName();
+        tableField.setColumnNo(UuidUtils.shortUUID());
+        tableField.setOrderNo(1);
+        tableField.setTableNo(tableInfo.getTableNo());
+        tableField.setCreateBy(tableInfo.getCreateBy());
         // 设置java字段名
-        column.setJavaField(StringUtils.toCamelCase(columnName));
+        tableField.setJavaField(StringUtils.toCamelCase(fieldName));
 
         if (arraysContains(GenConstants.COLUMNTYPE_STR, dataType))
         {
-            column.setJavaType(GenConstants.TYPE_STRING);
+            tableField.setJavaType(GenConstants.TYPE_STRING);
             // 字符串长度超过500设置为文本域
-            Integer columnLength = getColumnLength(column.getColumnType());
-            String htmlType = columnLength >= 500 ? GenConstants.HTML_TEXTAREA : GenConstants.HTML_INPUT;
-            column.setHtmlType(htmlType);
+            Integer fieldLength = getFieldLength(tableField.getColumnType());
+            String htmlType = fieldLength >= 500 ? GenConstants.HTML_TEXTAREA : GenConstants.HTML_INPUT;
+            tableField.setHtmlType(htmlType);
         }
         else if (arraysContains(GenConstants.COLUMNTYPE_TIME, dataType))
         {
-            column.setJavaType(GenConstants.TYPE_DATE);
-            column.setHtmlType(GenConstants.HTML_DATETIME);
+            tableField.setJavaType(GenConstants.TYPE_DATE);
+            tableField.setHtmlType(GenConstants.HTML_DATETIME);
         }
         else if (arraysContains(GenConstants.COLUMNTYPE_NUMBER, dataType))
         {
-            column.setHtmlType(GenConstants.HTML_INPUT);
+            tableField.setHtmlType(GenConstants.HTML_INPUT);
 
             // 如果是浮点型
-            String[] str = StringUtils.split(StringUtils.substringBetween(column.getColumnType(), "(", ")"), ",");
+            String[] str = StringUtils.split(StringUtils.substringBetween(tableField.getColumnType(), "(", ")"), ",");
             if (str != null && str.length == 2 && Integer.parseInt(str[1]) > 0)
             {
-                column.setJavaType(GenConstants.TYPE_DOUBLE);
+                tableField.setJavaType(GenConstants.TYPE_DOUBLE);
             }
             // 如果是整形
             else if (str != null && str.length == 1 && Integer.parseInt(str[0]) <= 10)
             {
-                column.setJavaType(GenConstants.TYPE_INTEGER);
+                tableField.setJavaType(GenConstants.TYPE_INTEGER);
             }
             // 长整形
             else
             {
-                column.setJavaType(GenConstants.TYPE_LONG);
+                tableField.setJavaType(GenConstants.TYPE_LONG);
             }
         }
 
         // 插入字段（默认所有字段都需要插入）
-        column.setIsInsert(GenConstants.REQUIRE);
+        tableField.setIsInsert(GenConstants.REQUIRE);
 
         // 编辑字段
-        if (!arraysContains(GenConstants.COLUMNNAME_NOT_EDIT, columnName) && !column.isPk())
+        if (!arraysContains(GenConstants.COLUMNNAME_NOT_EDIT, fieldName) && !tableField.isPk())
         {
-            column.setIsEdit(GenConstants.REQUIRE);
+            tableField.setIsEdit(GenConstants.REQUIRE);
         }
         // 列表字段
-        if (!arraysContains(GenConstants.COLUMNNAME_NOT_LIST, columnName) && !column.isPk())
+        if (!arraysContains(GenConstants.COLUMNNAME_NOT_LIST, fieldName) && !tableField.isPk())
         {
-            column.setIsList(GenConstants.REQUIRE);
+            tableField.setIsList(GenConstants.REQUIRE);
         }
         // 查询字段
-        if (!arraysContains(GenConstants.COLUMNNAME_NOT_QUERY, columnName) && !column.isPk())
+        if (!arraysContains(GenConstants.COLUMNNAME_NOT_QUERY, fieldName) && !tableField.isPk())
         {
-            column.setIsQuery(GenConstants.REQUIRE);
+            tableField.setIsQuery(GenConstants.REQUIRE);
         }
 
         // 查询字段类型
-        if (StringUtils.endsWithIgnoreCase(columnName, "name"))
+        if (StringUtils.endsWithIgnoreCase(fieldName, "name"))
         {
-            column.setQueryType(GenConstants.QUERY_LIKE);
+            tableField.setQueryType(GenConstants.QUERY_LIKE);
         }
         // 状态字段设置单选框
-        if (StringUtils.endsWithIgnoreCase(columnName, "status"))
+        if (StringUtils.endsWithIgnoreCase(fieldName, "status"))
         {
-            column.setHtmlType(GenConstants.HTML_RADIO);
+            tableField.setHtmlType(GenConstants.HTML_RADIO);
         }
         // 类型&性别字段设置下拉框
-        else if (StringUtils.endsWithIgnoreCase(columnName, "type")
-                || StringUtils.endsWithIgnoreCase(columnName, "sex"))
+        else if (StringUtils.endsWithIgnoreCase(fieldName, "type")
+                || StringUtils.endsWithIgnoreCase(fieldName, "sex"))
         {
-            column.setHtmlType(GenConstants.HTML_SELECT);
+            tableField.setHtmlType(GenConstants.HTML_SELECT);
         }
     }
 
@@ -201,38 +205,38 @@ public class GeneratUtils
      */
     public static String replaceText(String text)
     {
-        return RegExUtils.replaceAll(text, "(?:表|若依)", "");
+        return RegExUtils.replaceAll(text, "(?:表|基云)", "");
     }
 
     /**
      * 获取数据库类型字段
      * 
-     * @param columnType 列类型
+     * @param fieldType 列类型
      * @return 截取后的列类型
      */
-    public static String getDbType(String columnType)
+    public static String getDbType(String fieldType)
     {
-        if (StringUtils.indexOf(columnType, "(") > 0)
+        if (StringUtils.indexOf(fieldType, "(") > 0)
         {
-            return StringUtils.substringBefore(columnType, "(");
+            return StringUtils.substringBefore(fieldType, "(");
         }
         else
         {
-            return columnType;
+            return fieldType;
         }
     }
 
     /**
      * 获取字段长度
      * 
-     * @param columnType 列类型
+     * @param fieldType 列类型
      * @return 截取后的列类型
      */
-    public static Integer getColumnLength(String columnType)
+    public static Integer getFieldLength(String fieldType)
     {
-        if (StringUtils.indexOf(columnType, "(") > 0)
+        if (StringUtils.indexOf(fieldType, "(") > 0)
         {
-            String length = StringUtils.substringBetween(columnType, "(", ")");
+            String length = StringUtils.substringBetween(fieldType, "(", ")");
             return Integer.valueOf(length);
         }
         else

@@ -98,11 +98,8 @@ public class SysUserLoginController
     public AjaxResult getRouters(@PathVariable("parentId") String parentId)
     {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        // 用户信息
-        SysSuserinfo user = loginUser.getUser();
-        List<SysPermitinfo> menus = permitService.getTreeMenuByUserNo(parentId,user.getUserNo());
-        List<RouterVo> v= RouterUtils.buildMenus(menus);
-        return AjaxResult.success(v);
+        List<SysPermitinfo> permitTree = permitService.getPermitTreeByUserNo(parentId,loginUser.getUser().getUserNo());
+        return AjaxResult.success(RouterUtils.buildMenus(permitTree));
     }
 
     /**

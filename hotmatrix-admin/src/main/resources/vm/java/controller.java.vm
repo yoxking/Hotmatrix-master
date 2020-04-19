@@ -36,10 +36,13 @@ import com.benet.common.core.pager.TableDataInfo;
 public class ${ClassName}Controller extends BaseController
 {
     @Autowired
+    private MyJwtokenService tokenService;
+
+    @Autowired
     private I${ClassName}Service ${className}Service;
     /**
-         * 首页
-         */
+     * 首页
+     */
     @PreAuthorize("@ps.hasPermit('${permissionPrefix}:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
@@ -52,45 +55,40 @@ public class ${ClassName}Controller extends BaseController
      * 查询${functionName}列表
      */
     @PreAuthorize("@ps.hasPermit('${permissionPrefix}:list')")
-    @GetMapping(value="/list")
-    public TableDataInfo list()
+    @PostMapping(value = "/list")
+    public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        startPage();
-        List<${ClassName}> list = ${className}Service.getAllRecords();
-        return getDataTable(list);
-    }
-
-    /**
-     * 查询${functionName}列表
-     */
-    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:search')")
-    @GetMapping(value="/search/{condition}")
-    public TableDataInfo search(@PathVariable("condition") String condition)
-    {
-        List<${ClassName}> list = ${className}Service.getRecordsByPaging(1,10,condition,"id","asc");
-        return getDataTable(list);
+        int count = ${className}Service.getCountByCondition(pRequest.getCondition());
+        List<${ClassName}> list = ${className}Service.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        return getDataTable(list, count);
     }
 
     /**
      * 新增${functionName}
      */
     @PreAuthorize("@ps.hasPermit('${permissionPrefix}:add')")
-    @GetMapping(value="/add")
-    public AjaxResult add()
+    @Oplog(title = "${functionName}", businessType = BusinessType.INSERT)
+    @PostMapping
+    public AjaxResult add(@RequestBody ${ClassName} ${className}) {
     {
-        ${ClassName} info=new ${ClassName}();
-        return AjaxResult.success(info);
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        ${className}.setDeptNo(UuidUtils.shortUUID());
+        ${className}.setCreateBy(loginUser.getUser().getUserNo());
+        ${className}.setUpdateBy(loginUser.getUser().getUserNo());
+        return toAjax(${className}Service.AddNewRecord(${className}));
     }
 
     /**
      * 编辑${functionName}
      */
     @PreAuthorize("@ps.hasPermit('${permissionPrefix}:edit')")
-    @GetMapping(value="/edit/{id}")
-    public AjaxResult edit(@PathVariable("id") String id)
-    {
-        return AjaxResult.success(${className}Service.getRecordByNo(id));
-    }
+    @Oplog(title = "${functionName}", businessType = BusinessType.UPDATE)
+    @PutMapping
+        public AjaxResult edit(@RequestBody ${ClassName} ${className}) {
+            LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        ${className}.setUpdateBy(loginUser.getUser().getUserNo());
+            return toAjax(${className}Service.UpdateRecord(${className}));
+        }
 
     /**
      * 保存${functionName}
@@ -99,9 +97,14 @@ public class ${ClassName}Controller extends BaseController
     @Oplog(title = "${functionName}", businessType = BusinessType.UPDATE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody ${ClassName} ${className}) {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         if (StringUtils.isNull(${className}Service.getRecordByNo(${className}.getDeptNo()))) {
+            ${className}.setDeptNo(UuidUtils.shortUUID());
+            ${className}.setCreateBy(loginUser.getUser().getUserNo());
+            ${className}.setUpdateBy(loginUser.getUser().getUserNo());
             return toAjax(${className}Service.AddNewRecord(${className}));
         } else {
+            ${className}.setUpdateBy(loginUser.getUser().getUserNo());
             return toAjax(${className}Service.UpdateRecord(${className}));
         }
     }
@@ -111,7 +114,6 @@ public class ${ClassName}Controller extends BaseController
      */
     @PreAuthorize("@ps.hasPermit('${permissionPrefix}:delete')")
     @Oplog(title = "${functionName}", businessType = BusinessType.DELETE)
-    //@GetMapping("/delete/{ids}")
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
@@ -122,7 +124,7 @@ public class ${ClassName}Controller extends BaseController
      * 获取${functionName}详细信息
      */
     @PreAuthorize("@ps.hasPermit('${permissionPrefix}:detail')")
-    @GetMapping(value = "/detail/{id}")
+    @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
         return AjaxResult.success(${className}Service.getRecordByNo(id));
@@ -133,12 +135,14 @@ public class ${ClassName}Controller extends BaseController
      */
     @PreAuthorize("@ps.hasPermit('${permissionPrefix}:export')")
     @Oplog(title = "${functionName}", businessType = BusinessType.EXPORT)
-    @GetMapping("/export/{condition}")
-    public AjaxResult export(@PathVariable("condition") String condition)
+    @PostMapping("/export")
+    public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        List<${ClassName}> list = ${className}Service.getRecordsByPaging(1,10,condition,"id","asc");
+        int count = ${className}Service.getCountByCondition(pRequest.getCondition());
+
+        List<${ClassName}> list = ${className}Service.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<${ClassName}> util = new ExcelUtils<${ClassName}>(${ClassName}.class);
-        return util.exportExcel(list, "menu");
+        return util.exportExcel(list, "${ClassName}");
     }
 
 }

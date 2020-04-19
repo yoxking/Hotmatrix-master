@@ -1,5 +1,6 @@
-package com.benet.system.domain;
+package com.benet.gen.domain;
 
+import com.benet.common.utils.string.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.benet.common.annotation.Excel;
@@ -11,7 +12,7 @@ import com.benet.common.core.domain.BaseEntity;
  * @author yoxking
  * @date 2020-04-06
  */
-public class SysTablefield extends BaseEntity
+public class SysTabcolumn extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
@@ -20,7 +21,7 @@ public class SysTablefield extends BaseEntity
 
     /** 字段编号 */
     @Excel(name = "字段编号")
-    private String fieldNo;
+    private String columnNo;
 
     /** 归属表编号 */
     @Excel(name = "归属表编号")
@@ -28,15 +29,15 @@ public class SysTablefield extends BaseEntity
 
     /** 字段名称 */
     @Excel(name = "字段名称")
-    private String fieldName;
+    private String columnName;
 
     /** 字段描述 */
     @Excel(name = "字段描述")
-    private String fieldRemark;
+    private String columnComment;
 
     /** 字段类型 */
     @Excel(name = "字段类型")
-    private String fieldType;
+    private String columnType;
 
     /** JAVA类型 */
     @Excel(name = "JAVA类型")
@@ -86,6 +87,9 @@ public class SysTablefield extends BaseEntity
     @Excel(name = "字典类型")
     private String dictType;
 
+    /** 排序 */
+    private Integer orderNo;
+
     /** 删除标志（1代表存在 0代表删除） */
     @Excel(name = "删除标志", readConverterExp = "1=代表存在,0=代表删除")
     private String deleteFlag;
@@ -111,16 +115,16 @@ public class SysTablefield extends BaseEntity
     {
         return id;
     }
-    public void setFieldNo(String fieldNo) 
-    {
-        this.fieldNo = fieldNo;
+
+    public String getColumnNo() {
+        return columnNo;
     }
 
-    public String getFieldNo() 
-    {
-        return fieldNo;
+    public void setColumnNo(String columnNo) {
+        this.columnNo = columnNo;
     }
-    public void setTableNo(String tableNo) 
+
+    public void setTableNo(String tableNo)
     {
         this.tableNo = tableNo;
     }
@@ -129,34 +133,32 @@ public class SysTablefield extends BaseEntity
     {
         return tableNo;
     }
-    public void setFieldName(String fieldName) 
-    {
-        this.fieldName = fieldName;
+
+    public String getColumnName() {
+        return columnName;
     }
 
-    public String getFieldName() 
-    {
-        return fieldName;
-    }
-    public void setFieldRemark(String fieldRemark) 
-    {
-        this.fieldRemark = fieldRemark;
+    public void setColumnName(String columnName) {
+        this.columnName = columnName;
     }
 
-    public String getFieldRemark() 
-    {
-        return fieldRemark;
-    }
-    public void setFieldType(String fieldType) 
-    {
-        this.fieldType = fieldType;
+    public String getColumnComment() {
+        return columnComment;
     }
 
-    public String getFieldType() 
-    {
-        return fieldType;
+    public void setColumnComment(String columnComment) {
+        this.columnComment = columnComment;
     }
-    public void setJavaType(String javaType) 
+
+    public String getColumnType() {
+        return columnType;
+    }
+
+    public void setColumnType(String columnType) {
+        this.columnType = columnType;
+    }
+
+    public void setJavaType(String javaType)
     {
         this.javaType = javaType;
     }
@@ -183,6 +185,18 @@ public class SysTablefield extends BaseEntity
     {
         return isPk;
     }
+
+
+    public boolean isPk()
+    {
+        return isPk(this.isPk);
+    }
+
+    public boolean isPk(String isPk)
+    {
+        return isPk != null && StringUtils.equals("1", isPk);
+    }
+
     public void setIsIncrement(String isIncrement) 
     {
         this.isIncrement = isIncrement;
@@ -191,6 +205,16 @@ public class SysTablefield extends BaseEntity
     public String getIsIncrement() 
     {
         return isIncrement;
+    }
+
+    public boolean isIncrement()
+    {
+        return isIncrement(this.isIncrement);
+    }
+
+    public boolean isIncrement(String isIncrement)
+    {
+        return isIncrement != null && StringUtils.equals("1", isIncrement);
     }
     public void setIsRequired(String isRequired) 
     {
@@ -201,6 +225,16 @@ public class SysTablefield extends BaseEntity
     {
         return isRequired;
     }
+
+    public boolean isRequired()
+    {
+        return isRequired(this.isRequired);
+    }
+
+    public boolean isRequired(String isRequired)
+    {
+        return isRequired != null && StringUtils.equals("1", isRequired);
+    }
     public void setIsInsert(String isInsert) 
     {
         this.isInsert = isInsert;
@@ -210,16 +244,38 @@ public class SysTablefield extends BaseEntity
     {
         return isInsert;
     }
-    public void setIsEdit(String isEdit) 
+
+    public boolean isInsert()
+    {
+        return isInsert(this.isInsert);
+    }
+
+    public boolean isInsert(String isInsert)
+    {
+        return isInsert != null && StringUtils.equals("1", isInsert);
+    }
+
+    public void setIsEdit(String isEdit)
     {
         this.isEdit = isEdit;
     }
 
-    public String getIsEdit() 
+    public String getIsEdit()
     {
         return isEdit;
     }
-    public void setIsList(String isList) 
+
+    public boolean isEdit()
+    {
+        return isInsert(this.isEdit);
+    }
+
+    public boolean isEdit(String isEdit)
+    {
+        return isEdit != null && StringUtils.equals("1", isEdit);
+    }
+
+    public void setIsList(String isList)
     {
         this.isList = isList;
     }
@@ -227,6 +283,16 @@ public class SysTablefield extends BaseEntity
     public String getIsList() 
     {
         return isList;
+    }
+
+    public boolean isList()
+    {
+        return isList(this.isList);
+    }
+
+    public boolean isList(String isList)
+    {
+        return isList != null && StringUtils.equals("1", isList);
     }
     public void setIsQuery(String isQuery) 
     {
@@ -236,6 +302,16 @@ public class SysTablefield extends BaseEntity
     public String getIsQuery() 
     {
         return isQuery;
+    }
+
+    public boolean isQuery()
+    {
+        return isQuery(this.isQuery);
+    }
+
+    public boolean isQuery(String isQuery)
+    {
+        return isQuery != null && StringUtils.equals("1", isQuery);
     }
     public void setQueryType(String queryType) 
     {
@@ -264,7 +340,64 @@ public class SysTablefield extends BaseEntity
     {
         return dictType;
     }
-    public void setDeleteFlag(String deleteFlag) 
+
+    public Integer getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public boolean isSuperField()
+    {
+        return isSuperField(this.javaField);
+    }
+
+    public static boolean isSuperField(String javaField)
+    {
+        return StringUtils.equalsAnyIgnoreCase(javaField,
+                // BaseEntity
+                "createBy", "createTime", "updateBy", "updateTime", "comments",
+                // TreeEntity
+                "parentName", "parentNo", "orderNo", "ancestors");
+    }
+
+    public boolean isUsableField()
+    {
+        return isUsableField(javaField);
+    }
+
+    public static boolean isUsableField(String javaField)
+    {
+        // isSuperColumn()中的名单用于避免生成多余Domain属性，若某些属性在生成页面时需要用到不能忽略，则放在此处白名单
+        return StringUtils.equalsAnyIgnoreCase(javaField, "parentNo", "orderNo");
+    }
+
+    public String readConverterExp()
+    {
+        String remarks = StringUtils.substringBetween(this.columnComment, "（", "）");
+        StringBuffer sb = new StringBuffer();
+        if (StringUtils.isNotEmpty(remarks))
+        {
+            for (String value : remarks.split(" "))
+            {
+                if (StringUtils.isNotEmpty(value))
+                {
+                    Object startStr = value.subSequence(0, 1);
+                    String endStr = value.substring(1);
+                    sb.append("").append(startStr).append("=").append(endStr).append(",");
+                }
+            }
+            return sb.deleteCharAt(sb.length() - 1).toString();
+        }
+        else
+        {
+            return this.columnComment;
+        }
+    }
+
+    public void setDeleteFlag(String deleteFlag)
     {
         this.deleteFlag = deleteFlag;
     }
@@ -305,11 +438,11 @@ public class SysTablefield extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("fieldNo", getFieldNo())
+            .append("columnNo", getColumnNo())
             .append("tableNo", getTableNo())
-            .append("fieldName", getFieldName())
-            .append("fieldRemark", getFieldRemark())
-            .append("fieldType", getFieldType())
+            .append("columnName", getColumnName())
+            .append("columnComment", getColumnComment())
+            .append("columnType", getColumnType())
             .append("javaType", getJavaType())
             .append("javaField", getJavaField())
             .append("isPk", getIsPk())
@@ -322,6 +455,7 @@ public class SysTablefield extends BaseEntity
             .append("queryType", getQueryType())
             .append("htmlType", getHtmlType())
             .append("dictType", getDictType())
+                .append("orderNo", getOrderNo())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())

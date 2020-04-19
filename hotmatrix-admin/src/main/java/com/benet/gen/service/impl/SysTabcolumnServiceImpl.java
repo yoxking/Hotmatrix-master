@@ -1,79 +1,79 @@
-package com.benet.system.service.impl;
+package com.benet.gen.service.impl;
 
 import java.util.List;
 import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
+import com.benet.gen.domain.SysTabcolumn;
+import com.benet.gen.mapper.SysTabcolumnMapper;
+import com.benet.gen.service.ISysTabcolumnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.benet.system.mapper.SysTableinfoMapper;
-import com.benet.system.domain.SysTableinfo;
-import com.benet.system.service.ISysTableinfoService;
 
 /**
- * 代码生成业务Service业务层处理
+ * 代码生成业务字段Service业务层处理
  * 
  * @author yoxking
  * @date 2020-04-06
  */
 @Service
-public class SysTableinfoServiceImpl implements ISysTableinfoService 
+public class SysTabcolumnServiceImpl implements ISysTabcolumnService
 {
     @Autowired
-    private SysTableinfoMapper sysTableinfoMapper;
+    private SysTabcolumnMapper sysTabcolumnMapper;
 
     /**
-     * 查询所有代码生成业务列表
+     * 查询所有代码生成业务字段列表
      *
-     * @return 代码生成业务集合
+     * @return 代码生成业务字段集合
      */
     @Override
-    public List<SysTableinfo> getAllRecords() {
-        return sysTableinfoMapper.getAllRecords(GlobalConfig.getAppCode());
+    public List<SysTabcolumn> getAllRecords() {
+        return sysTabcolumnMapper.getAllRecords();
     }
 
     /**
-     * 按分类查询代码生成业务列表
+     * 按分类查询代码生成业务字段列表
      *
      * @param classNo 分类编号
-     * @return 代码生成业务集合
+     * @return 代码生成业务字段集合
      */
     @Override
-    public List<SysTableinfo> getRecordsByClassNo(String classNo) {
+    public List<SysTabcolumn> getRecordsByClassNo(String classNo) {
         if (StringUtils.isNotEmpty(classNo)) {
-            return sysTableinfoMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
+            return sysTabcolumnMapper.getRecordsByClassNo(classNo);
         }
         return null;
     }
 
     /**
-     * 分页查询代码生成业务列表
+     * 分页查询代码生成业务字段列表
      *
      * @param model 分页模型
-     * @return 代码生成业务集合
+     * @return 代码生成业务字段集合
      */
     @Override
-    public List<SysTableinfo> getRecordsByPaging(PagingModel model) {
+    public List<SysTabcolumn> getRecordsByPaging(PagingModel model) {
         if (StringUtils.isNotNull(model)) {
             model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
-            return sysTableinfoMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+            return sysTabcolumnMapper.getRecordsByPaging(model);
         }
         return null;
     }
 
 
     /**
-     * 分页查询代码生成业务列表
+     * 分页查询代码生成业务字段列表
      *
      * @param pageIndex 当前页起始索引
      * @param pageSize 页面大小
      * @param condition 条件
      * @param orderField 排序列
      * @param orderType 排序类型
-     * @return 代码生成业务集合
+     * @return 代码生成业务字段集合
      */
-    public List<SysTableinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
+    public List<SysTabcolumn> getRecordsByPaging(int pageIndex, int pageSize, String condition, String orderField, String orderType) {
 
         PagingModel model = new PagingModel();
         model.setPageIndex((pageIndex-1) * pageSize);
@@ -89,151 +89,161 @@ public class SysTableinfoServiceImpl implements ISysTableinfoService
         } else {
             model.setOrderType(orderType);
         }
-        return sysTableinfoMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+        return sysTabcolumnMapper.getRecordsByPaging(model);
     }
 
     /**
-     * 查询代码生成业务
+     * 查询代码生成业务字段
      *
-     * @param no 代码生成业务ID
-     * @return 代码生成业务
+     * @param no 代码生成业务字段ID
+     * @return 代码生成业务字段
      */
     @Override
-    public SysTableinfo getRecordByNo(String no) {
+    public SysTabcolumn getRecordByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysTableinfoMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
+            return sysTabcolumnMapper.getRecordByNo(no);
         }
         return null;
     }
 
     /**
-     * 查询代码生成业务名称
+     * 查询代码生成业务字段名称
      *
-     * @param no 代码生成业务ID
+     * @param no 代码生成业务字段ID
      * @return 名称
      */
     @Override
     public String getRecordNameByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysTableinfoMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
+            return sysTabcolumnMapper.getRecordNameByNo(no);
         }
         return null;
     }
 
     /**
-     * 查询代码生成业务计数
+     * 查询代码生成业务字段计数
      *
      * @param condition 查询条件
      * @return 结果
      */
     @Override
     public int getCountByCondition(String condition) {
-        return sysTableinfoMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
+        return sysTabcolumnMapper.getCountByCondition(condition);
     }
 
     /**
-     * 新增代码生成业务
+     * 新增代码生成业务字段
      *
-     * @param info 代码生成业务
+     * @param info 代码生成业务字段
      * @return 结果
      */
     @Override
-    public int AddNewRecord(SysTableinfo info) {
+    public int AddNewRecord(SysTabcolumn info) {
         info.setCreateTime(DateUtils.getNowDate());
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
         info.setVersion(1L);
-        return sysTableinfoMapper.AddNewRecord(info);
+        return sysTabcolumnMapper.AddNewRecord(info);
     }
 
     /**
-     * 更新代码生成业务
+     * 更新代码生成业务字段
      *
-     * @param info 代码生成业务
+     * @param info 代码生成业务字段
      * @return 结果
      */
     @Override
-    public int UpdateRecord(SysTableinfo info) {
+    public int UpdateRecord(SysTabcolumn info) {
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
-        return sysTableinfoMapper.UpdateRecord(info);
+        return sysTabcolumnMapper.UpdateRecord(info);
     }
 
     /**
-     * 硬删除代码生成业务
+     * 硬删除代码生成业务字段
      *
-     * @param no 代码生成业务ID
+     * @param no 代码生成业务字段ID
      * @return 结果
      */
     @Override
     public int HardDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysTableinfoMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
+            return sysTabcolumnMapper.HardDeleteByNo(no);
         }
         return 0;
     }
 
     /**
-     * 批量硬删除代码生成业务
+     * 批量硬删除代码生成业务字段
      *
-     * @param nos 代码生成业务IDs
+     * @param nos 代码生成业务字段IDs
      * @return 结果
      */
     @Override
     public int HardDeleteByNos(String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return sysTableinfoMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return sysTabcolumnMapper.HardDeleteByNos(nos);
         }
         return 0;
     }
 
     /**
-     * 按条件硬删除代码生成业务
+     * 按条件硬删除代码生成业务字段
      *
      * @param condition 条件
      * @return 结果
      */
     @Override
     public int HardDeleteByCondition(String condition) {
-        return sysTableinfoMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
+        return sysTabcolumnMapper.HardDeleteByCondition(condition);
     }
 
     /**
-     * 软删除代码生成业务
+     * 软删除代码生成业务字段
      *
-     * @param no 代码生成业务ID
+     * @param no 代码生成业务字段ID
      * @return 结果
      */
     @Override
     public int SoftDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysTableinfoMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
+            return sysTabcolumnMapper.SoftDeleteByNo(no);
         }
         return 0;
     }
 
     /**
-     * 批量软删除代码生成业务
+     * 批量软删除代码生成业务字段
      *
-     * @param nos 代码生成业务IDs
+     * @param nos 代码生成业务字段IDs
      * @return 结果
      */
     @Override
     public int SoftDeleteByNos(String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return sysTableinfoMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return sysTabcolumnMapper.SoftDeleteByNos(nos);
         }
         return 0;
     }
 
     /**
-     * 按条件软删除代码生成业务
+     * 按条件软删除代码生成业务字段
      *
      * @param condition 条件
      * @return 结果
      */
     @Override
     public int SoftDeleteByCondition(String condition) {
-        return sysTableinfoMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
+        return sysTabcolumnMapper.SoftDeleteByCondition(condition);
+    }
+
+    /**
+     * 根据表名称查询列信息
+     *
+     * @param tableName 表名称
+     * @return 列信息
+     */
+    public List<SysTabcolumn> getDbTableColumnsByName(String tableName){
+        return sysTabcolumnMapper.getDbTableColumnsByName(tableName);
     }
 }

@@ -1,9 +1,14 @@
-package com.benet.system.domain;
+package com.benet.gen.domain;
 
+import com.benet.common.constant.GenConstants;
+import com.benet.common.utils.string.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.benet.common.annotation.Excel;
 import com.benet.common.core.domain.BaseEntity;
+
+import java.util.List;
 
 /**
  * 代码生成业务对象 sys_tableinfo
@@ -28,7 +33,7 @@ public class SysTableinfo extends BaseEntity
 
     /** 表描述 */
     @Excel(name = "表描述")
-    private String tableRemark;
+    private String tableComment;
 
     /** 实体类名称 */
     @Excel(name = "实体类名称")
@@ -58,9 +63,24 @@ public class SysTableinfo extends BaseEntity
     @Excel(name = "生成功能作者")
     private String functionAuthor;
 
+    /** 主键信息 */
+    private SysTabcolumn pkColumn;
+
+    /** 表列信息 */
+    private List<SysTabcolumn> columns;
+
     /** 其它生成选项 */
     @Excel(name = "其它生成选项")
     private String options;
+
+    /** 树编码字段 */
+    private String treeCode;
+
+    /** 树父编码字段 */
+    private String treeParentCode;
+
+    /** 树名称字段 */
+    private String treeName;
 
     /** 删除标志（1代表存在 0代表删除） */
     @Excel(name = "删除标志", readConverterExp = "1=代表存在,0=代表删除")
@@ -105,16 +125,16 @@ public class SysTableinfo extends BaseEntity
     {
         return tableName;
     }
-    public void setTableRemark(String tableRemark) 
-    {
-        this.tableRemark = tableRemark;
+
+    public String getTableComment() {
+        return tableComment;
     }
 
-    public String getTableRemark() 
-    {
-        return tableRemark;
+    public void setTableComment(String tableComment) {
+        this.tableComment = tableComment;
     }
-    public void setClassName(String className) 
+
+    public void setClassName(String className)
     {
         this.className = className;
     }
@@ -177,16 +197,91 @@ public class SysTableinfo extends BaseEntity
     {
         return functionAuthor;
     }
-    public void setOptions(String options) 
-    {
+
+    public SysTabcolumn getPkColumn() {
+        return pkColumn;
+    }
+
+    public void setPkColumn(SysTabcolumn pkColumn) {
+        this.pkColumn = pkColumn;
+    }
+
+    public List<SysTabcolumn> getColumns() {
+        return columns;
+    }
+
+    public void setColumns(List<SysTabcolumn> columns) {
+        this.columns = columns;
+    }
+
+    public String getOptions() {
+        return options;
+    }
+
+    public void setOptions(String options) {
         this.options = options;
     }
 
-    public String getOptions() 
-    {
-        return options;
+    public String getTreeCode() {
+        return treeCode;
     }
-    public void setDeleteFlag(String deleteFlag) 
+
+    public void setTreeCode(String treeCode) {
+        this.treeCode = treeCode;
+    }
+
+    public String getTreeParentCode() {
+        return treeParentCode;
+    }
+
+    public void setTreeParentCode(String treeParentCode) {
+        this.treeParentCode = treeParentCode;
+    }
+
+    public String getTreeName() {
+        return treeName;
+    }
+
+    public void setTreeName(String treeName) {
+        this.treeName = treeName;
+    }
+
+    public boolean isTree()
+    {
+        return isTree(this.tplCategory);
+    }
+
+    public static boolean isTree(String tplCategory)
+    {
+        return tplCategory != null && StringUtils.equals(GenConstants.TPL_TREE, tplCategory);
+    }
+
+    public boolean isCrud()
+    {
+        return isCrud(this.tplCategory);
+    }
+
+    public static boolean isCrud(String tplCategory)
+    {
+        return tplCategory != null && StringUtils.equals(GenConstants.TPL_CRUD, tplCategory);
+    }
+
+    public boolean isSuperField(String javaField)
+    {
+        return isSuperField(this.tplCategory, javaField);
+    }
+
+    public static boolean isSuperField(String tplCategory, String javaField)
+    {
+        if (isTree(tplCategory))
+        {
+            return StringUtils.equalsAnyIgnoreCase(javaField,
+                    ArrayUtils.addAll(GenConstants.TREE_ENTITY, GenConstants.BASE_ENTITY));
+        }
+        return StringUtils.equalsAnyIgnoreCase(javaField, GenConstants.BASE_ENTITY);
+    }
+
+    public void setDeleteFlag(String deleteFlag)
     {
         this.deleteFlag = deleteFlag;
     }
@@ -229,7 +324,7 @@ public class SysTableinfo extends BaseEntity
             .append("id", getId())
             .append("tableNo", getTableNo())
             .append("tableName", getTableName())
-            .append("tableRemark", getTableRemark())
+            .append("tableComment", getTableComment())
             .append("className", getClassName())
             .append("tplCategory", getTplCategory())
             .append("packageName", getPackageName())

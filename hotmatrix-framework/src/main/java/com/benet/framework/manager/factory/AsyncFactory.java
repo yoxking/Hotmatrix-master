@@ -43,6 +43,7 @@ public class AsyncFactory
             public void run()
             {
                 // 远程查询操作地点
+                opertLog.setOplogNo(UuidUtils.shortUUID());
                 opertLog.setOpertLocation(AddressUtils.getRealAddressByIP(opertLog.getOpertIp()));
                 SpringUtils.getBean(ISysOperatelogsService.class).AddNewRecord(opertLog);
             }

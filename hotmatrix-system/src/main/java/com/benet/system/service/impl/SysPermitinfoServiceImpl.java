@@ -6,6 +6,7 @@ import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
+import com.benet.system.domain.SysDepartment;
 import com.benet.system.mapper.SysRolepermitMapper;
 import com.benet.system.mapper.SysSuserroleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -273,6 +274,7 @@ public class SysPermitinfoServiceImpl implements ISysPermitinfoService
         return sysPermitinfoMapper.getChildrenByUserNo(GlobalConfig.getAppCode(),parentNo,userNo);
     }
 
+
     /**
      * 根据用户ID查询建菜单树
      *
@@ -280,36 +282,21 @@ public class SysPermitinfoServiceImpl implements ISysPermitinfoService
      * @param userNo 用户ID
      * @return 菜单列表
      */
-    public List<SysPermitinfo> getTreeMenuByUserNo(String parentNo,String userNo){
+    @Override
+    public List<SysPermitinfo> getPermitTreeByUserNo(String parentNo,String userNo) {
 
-        List<SysPermitinfo> treeMenu=new ArrayList<>();
-        List<SysPermitinfo> treePermit=getChildrenByUserNo(parentNo,userNo);
-        if(treePermit!=null&&treePermit.size()>0){
-            for (SysPermitinfo permit:treePermit) {
-                treeMenu.add(permit);
-                recursionFun(permit, userNo);
+        List<SysPermitinfo> permitTree = null;
+        SysPermitinfo permit = null;
+        List<SysPermitinfo> infoList = getChildrenByUserNo(parentNo,userNo);
+
+        if (infoList != null && infoList.size() > 0) {
+            permitTree = new ArrayList<>();
+            for (SysPermitinfo info : infoList) {
+                info.setChildren(getPermitTreeByUserNo(info.getPermitNo(),userNo));
+                permitTree.add(info);
             }
         }
-        return treeMenu;
-    }
-
-    /**
-     * 递归列表
-     *
-     * @param info
-     * @param userNo
-     */
-    private void recursionFun(SysPermitinfo info,String userNo)
-    {
-        // 得到子节点列表
-        List<SysPermitinfo> childList = getChildrenByUserNo(info.getPermitNo(),userNo);
-        info.setChildren(childList);
-
-        if(childList!=null&&childList.size()>0) {
-            for (SysPermitinfo child : childList) {
-                recursionFun(child, userNo);
-            }
-        }
+        return permitTree;
     }
 
     /**

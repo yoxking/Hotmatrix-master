@@ -63,9 +63,9 @@ public class SysDeptmentController extends BaseController {
     }
 
     /**
-     * 查询部门信息列表
+     * 查询部门信息树形列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:department:list')")
+    //@PreAuthorize("@ps.hasPermit('system:department:tree')")
     @GetMapping(value = "/tree")
     public TableDataInfo tree() {
         int count = sysDepartmentService.getCountByCondition("");
@@ -102,6 +102,7 @@ public class SysDeptmentController extends BaseController {
      * 新增部门信息
      */
     //@PreAuthorize("@ps.hasPermit('system:department:add')")
+    //@Oplog(title = "部门信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SysDepartment sysDepartment) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
@@ -115,7 +116,7 @@ public class SysDeptmentController extends BaseController {
      * 编辑部门信息
      */
     // @PreAuthorize("@ps.hasPermit('system:department:edit')")
-    //@PostMapping(value = "/edit")
+    //@Oplog(title = "部门信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SysDepartment sysDepartment) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
@@ -127,7 +128,7 @@ public class SysDeptmentController extends BaseController {
      * 保存部门信息
      */
     //@PreAuthorize("@ps.hasPermit('system:department:save')")
-    @Oplog(title = "部门信息", businessType = BusinessType.UPDATE)
+    //@Oplog(title = "部门信息", businessType = BusinessType.UPDATE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysDepartment sysDepartment) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
@@ -146,8 +147,7 @@ public class SysDeptmentController extends BaseController {
      * 删除部门信息
      */
     //@PreAuthorize("@ps.hasPermit('system:department:delete')")
-    @Oplog(title = "部门信息", businessType = BusinessType.DELETE)
-    //@GetMapping("/delete/{ids}")
+    //@Oplog(title = "部门信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids) {
         return toAjax(sysDepartmentService.SoftDeleteByNos(ids));
@@ -171,14 +171,8 @@ public class SysDeptmentController extends BaseController {
     public AjaxResult export(@RequestBody PageRequest pRequest) {
 
         int count = sysDepartmentService.getCountByCondition(pRequest.getCondition());
-        PagingModel model = new PagingModel();
-        model.setPageIndex(1);
-        model.setPageSize(count);
-        model.setOrderField("id");
-        model.setOrderType("Asc");
-        model.setCondition(pRequest.getCondition());
 
-        List<SysDepartment> list = sysDepartmentService.getRecordsByPaging(model);
+        List<SysDepartment> list = sysDepartmentService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysDepartment> util = new ExcelUtils<SysDepartment>(SysDepartment.class);
         return util.exportExcel(list, "department");
     }

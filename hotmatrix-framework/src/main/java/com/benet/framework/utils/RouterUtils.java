@@ -31,10 +31,10 @@ public class RouterUtils {
             router.setComponent(permit.getComponent());
             router.setChildren(null);
 
-            List<SysPermitinfo> cMenus = permit.getChildren();
-            if (!cMenus.isEmpty() && cMenus.size() > 0 && "M".equals(permit.getPermitType()))
+            List<SysPermitinfo> childMenus = permit.getChildren();
+            if (childMenus!=null&&!childMenus.isEmpty() && childMenus.size() > 0 && "M".equals(permit.getPermitType()))
             {
-                router.setChildren(buildMenus(cMenus));
+                router.setChildren(buildMenus(childMenus));
             }
             routers.add(router);
         }
