@@ -1,6 +1,11 @@
 package ${packageName}.controller;
 
 import java.util.List;
+import com.benet.common.core.pager.PageRequest;
+import com.benet.common.utils.uuid.UuidUtils;
+import com.benet.common.utils.web.ServletUtils;
+import com.benet.framework.security.LoginUser;
+import com.benet.framework.security.service.MyJwtokenService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,11 +71,10 @@ public class ${ClassName}Controller extends BaseController
     /**
      * 新增${functionName}
      */
-    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:add')")
+    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:insert')")
     @Oplog(title = "${functionName}", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody ${ClassName} ${className}) {
-    {
+    public AjaxResult insert(@RequestBody ${ClassName} ${className}) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         ${className}.setDeptNo(UuidUtils.shortUUID());
         ${className}.setCreateBy(loginUser.getUser().getUserNo());
@@ -81,10 +85,10 @@ public class ${ClassName}Controller extends BaseController
     /**
      * 编辑${functionName}
      */
-    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:edit')")
+    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:update')")
     @Oplog(title = "${functionName}", businessType = BusinessType.UPDATE)
     @PutMapping
-        public AjaxResult edit(@RequestBody ${ClassName} ${className}) {
+        public AjaxResult update(@RequestBody ${ClassName} ${className}) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         ${className}.setUpdateBy(loginUser.getUser().getUserNo());
             return toAjax(${className}Service.UpdateRecord(${className}));
@@ -94,7 +98,7 @@ public class ${ClassName}Controller extends BaseController
      * 保存${functionName}
      */
     @PreAuthorize("@ps.hasPermit('${permissionPrefix}:save')")
-    @Oplog(title = "${functionName}", businessType = BusinessType.UPDATE)
+    @Oplog(title = "${functionName}", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody ${ClassName} ${className}) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());

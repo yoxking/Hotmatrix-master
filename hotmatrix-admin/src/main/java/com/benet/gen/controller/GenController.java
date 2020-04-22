@@ -47,7 +47,7 @@ public class GenController extends BaseController
      * 查询代码生成列表
      */
     @GetMapping("/list")
-    public TableDataInfo genList()
+    public TableDataInfo list()
     {
         List<SysTableinfo> list = tableInfoService.getRecordsByPaging(1,10,"","id","Asc");
         return getDataTable(list);
@@ -57,7 +57,7 @@ public class GenController extends BaseController
      * 修改代码生成业务
      */
     @GetMapping(value = "/{tableNo}")
-    public AjaxResult getInfo(@PathVariable String tableNo)
+    public AjaxResult detail(@PathVariable String tableNo)
     {
         SysTableinfo tableInfo = tableInfoService.getRecordByNo(tableNo);
         List<SysTabcolumn> list = tabColumnService.getRecordsByClassNo(tableNo);
@@ -119,7 +119,7 @@ public class GenController extends BaseController
 
     @Oplog(title = "代码生成", businessType = BusinessType.DELETE)
     @DeleteMapping("/{tableNos}")
-    public AjaxResult remove(@PathVariable String[] tableNos)
+    public AjaxResult delete(@PathVariable String[] tableNos)
     {
         tableInfoService.HardDeleteByNos(tableNos);
         return AjaxResult.success();

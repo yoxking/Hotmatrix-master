@@ -104,6 +104,9 @@ public class VelocityUtils
         {
             templates.add("vm/vue/index-tree.vue.vm");
         }
+        templates.add("vm/vue/List.vue.vm");
+        templates.add("vm/vue/Edit.vue.vm");
+        templates.add("vm/vue/Detail.vue.vm");
         return templates;
     }
 
@@ -166,6 +169,18 @@ public class VelocityUtils
         else if (template.contains("index-tree.vue.vm"))
         {
             fileName = StringUtils.format("{}/views/{}/{}/index.vue", vuePath, moduleName, businessName);
+        }
+        else if (template.contains("List.vue.vm"))
+        {
+            fileName = StringUtils.format("{}/views/{}/{}/List.vue", vuePath, moduleName, businessName);
+        }
+        else if (template.contains("Edit.vue.vm"))
+        {
+            fileName = StringUtils.format("{}/views/{}/{}/Edit.vue", vuePath, moduleName, businessName);
+        }
+        else if (template.contains("Detail.vue.vm"))
+        {
+            fileName = StringUtils.format("{}/views/{}/{}/Detail.vue", vuePath, moduleName, businessName);
         }
         return fileName;
     }

@@ -101,10 +101,10 @@ public class SysDeptmentController extends BaseController {
     /**
      * 新增部门信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:department:add')")
+    //@PreAuthorize("@ps.hasPermit('system:department:insert')")
     //@Oplog(title = "部门信息", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody SysDepartment sysDepartment) {
+    public AjaxResult insert(@RequestBody SysDepartment sysDepartment) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysDepartment.setDeptNo(UuidUtils.shortUUID());
         sysDepartment.setCreateBy(loginUser.getUser().getUserNo());
@@ -115,10 +115,10 @@ public class SysDeptmentController extends BaseController {
     /**
      * 编辑部门信息
      */
-    // @PreAuthorize("@ps.hasPermit('system:department:edit')")
+    // @PreAuthorize("@ps.hasPermit('system:department:update')")
     //@Oplog(title = "部门信息", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody SysDepartment sysDepartment) {
+    public AjaxResult update(@RequestBody SysDepartment sysDepartment) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysDepartment.setUpdateBy(loginUser.getUser().getUserNo());
         return toAjax(sysDepartmentService.UpdateRecord(sysDepartment));
@@ -128,7 +128,7 @@ public class SysDeptmentController extends BaseController {
      * 保存部门信息
      */
     //@PreAuthorize("@ps.hasPermit('system:department:save')")
-    //@Oplog(title = "部门信息", businessType = BusinessType.UPDATE)
+    //@Oplog(title = "部门信息", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysDepartment sysDepartment) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
