@@ -63,15 +63,12 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="spanCol">
-          <a-form-item label="简介"
-                       :labelCol="{span: 6}"
-                       :wrapperCol="{span: 16}">
-            {{model.summary}}
+        <a-col :span="24">
+          <a-form-item label="备注"
+                       :labelCol="{span: 3}"
+                       :wrapperCol="{span: 20}">
+            {{model.comments}}
           </a-form-item>
-        </a-col>
-        <a-col :span="spanCol">
-          &nbsp;
         </a-col>
       </a-row>
     </a-form>
@@ -105,7 +102,7 @@
     },
     methods: {
       doClose () {
-        this.$dlg.closeAll()
+        this.$emit('close', { code: 202 })
       }
     },
     mounted () {

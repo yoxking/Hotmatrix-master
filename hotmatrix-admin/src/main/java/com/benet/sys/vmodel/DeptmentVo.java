@@ -6,6 +6,12 @@ import java.util.List;
 
 public class DeptmentVo {
 
+    /** id */
+    private String id;
+
+    /** 标准 */
+    private String label;
+
     /** 部门id */
     private String deptNo;
 
@@ -31,6 +37,22 @@ public class DeptmentVo {
     private String comments;
 
     private List<DeptmentVo> children;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
     public String getDeptNo() {
         return deptNo;

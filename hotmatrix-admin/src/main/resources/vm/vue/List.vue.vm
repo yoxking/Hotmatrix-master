@@ -142,7 +142,9 @@
         id: ''
         },
         #[[callback]]#: data => {
-        that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
         })
       },
@@ -179,7 +181,9 @@
         id: val
         },
         #[[callback]]#: data => {
-        that.getDataSource()
+          if (data !== undefined && data.code === 200) {
+            that.getDataSource()
+          }
         }
         })
       },

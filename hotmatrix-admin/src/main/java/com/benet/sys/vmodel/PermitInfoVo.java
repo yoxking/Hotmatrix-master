@@ -4,6 +4,12 @@ import java.util.List;
 
 public class PermitInfoVo {
 
+    /** id */
+    private String id;
+
+    /** 标准 */
+    private String label;
+
     /** 权限id */
     private String permitNo;
 
@@ -20,6 +26,22 @@ public class PermitInfoVo {
     private String comments;
 
     private List<PermitInfoVo> children;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
     public String getPermitNo() {
         return permitNo;

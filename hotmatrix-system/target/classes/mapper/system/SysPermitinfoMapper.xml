@@ -42,7 +42,7 @@
 
     <select id="getRecordsByClassNo" resultMap="SysPermitinfoResult">
         <include refid="selectSysPermitinfoVo"/>
-        where delete_flag='1' and app_code=#{appCode} and permit_type=#{classNo}
+        where delete_flag='1' and app_code=#{appCode} and parent_no=#{classNo}
     </select>
 
     <select id="getRecordsByPaging" resultMap="SysPermitinfoResult">

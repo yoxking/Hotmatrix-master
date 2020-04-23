@@ -83,6 +83,8 @@ public class SysDeptmentController extends BaseController {
             deptTree = new ArrayList<>();
             for (SysDepartment info : infoList) {
                 dept = new DeptmentVo();
+                dept.setId(info.getDeptNo());
+                dept.setLabel(info.getDeptName());
                 dept.setDeptNo(info.getDeptNo());
                 dept.setDeptName(info.getDeptName());
                 dept.setParentNo(info.getParentNo());

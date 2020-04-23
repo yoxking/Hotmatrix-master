@@ -90,6 +90,8 @@ public class SysOrganizinfoController extends BaseController
             orgzTree = new ArrayList<>();
             for (SysOrganizinfo info : infoList) {
                 orgnz = new OrgnzInfoVo();
+                orgnz.setId(info.getOrganizNo());
+                orgnz.setLabel(info.getOrganizName());
                 orgnz.setOrgnzNo(info.getOrganizNo());
                 orgnz.setOrgnzName(info.getOrganizName());
                 orgnz.setParentNo(info.getParentNo());

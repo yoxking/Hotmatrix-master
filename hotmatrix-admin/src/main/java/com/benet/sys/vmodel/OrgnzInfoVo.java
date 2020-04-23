@@ -4,6 +4,12 @@ import java.util.List;
 
 public class OrgnzInfoVo {
 
+    /** id */
+    private String id;
+
+    /** 标准 */
+    private String label;
+
     /** 机构id */
     private String orgnzNo;
 
@@ -20,6 +26,22 @@ public class OrgnzInfoVo {
     private String comments;
 
     private List<OrgnzInfoVo> children;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
     public String getOrgnzNo() {
         return orgnzNo;

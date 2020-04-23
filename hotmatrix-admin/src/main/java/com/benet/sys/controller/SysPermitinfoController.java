@@ -60,7 +60,7 @@ public class SysPermitinfoController extends BaseController
     /**
      * 查询菜单权限列表
      */
-    @PreAuthorize("@ps.hasPermit('system:permitinfo:list')")
+    //@PreAuthorize("@ps.hasPermit('system:permitinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -90,7 +90,9 @@ public class SysPermitinfoController extends BaseController
             permitTree = new ArrayList<>();
             for (SysPermitinfo info : infoList) {
                 permit = new PermitInfoVo();
-                permit.setParentNo(info.getPermitNo());
+                permit.setId(info.getPermitNo());
+                permit.setLabel(info.getPermitName());
+                permit.setPermitNo(info.getPermitNo());
                 permit.setPermitName(info.getPermitName());
                 permit.setParentNo(info.getParentNo());
                 permit.setOrderNo(info.getOrderNo());
@@ -106,7 +108,7 @@ public class SysPermitinfoController extends BaseController
     /**
      * 新增菜单权限
      */
-    @PreAuthorize("@ps.hasPermit('system:permitinfo:insert')")
+    //@PreAuthorize("@ps.hasPermit('system:permitinfo:insert')")
     @Oplog(title = "菜单权限", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysPermitinfo sysPermitinfo) {
@@ -120,7 +122,7 @@ public class SysPermitinfoController extends BaseController
     /**
      * 编辑菜单权限
      */
-    @PreAuthorize("@ps.hasPermit('system:permitinfo:update')")
+    //@PreAuthorize("@ps.hasPermit('system:permitinfo:update')")
     @Oplog(title = "菜单权限", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysPermitinfo sysPermitinfo) {
@@ -132,7 +134,7 @@ public class SysPermitinfoController extends BaseController
     /**
      * 保存菜单权限
      */
-    @PreAuthorize("@ps.hasPermit('system:permitinfo:save')")
+    //@PreAuthorize("@ps.hasPermit('system:permitinfo:save')")
     @Oplog(title = "菜单权限", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysPermitinfo sysPermitinfo) {
@@ -151,7 +153,7 @@ public class SysPermitinfoController extends BaseController
     /**
      * 删除菜单权限
      */
-    @PreAuthorize("@ps.hasPermit('system:permitinfo:delete')")
+    //@PreAuthorize("@ps.hasPermit('system:permitinfo:delete')")
     @Oplog(title = "菜单权限", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -162,7 +164,7 @@ public class SysPermitinfoController extends BaseController
     /**
      * 获取菜单权限详细信息
      */
-    @PreAuthorize("@ps.hasPermit('system:permitinfo:detail')")
+    //@PreAuthorize("@ps.hasPermit('system:permitinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -172,7 +174,7 @@ public class SysPermitinfoController extends BaseController
     /**
      * 导出菜单权限列表
      */
-    @PreAuthorize("@ps.hasPermit('system:permitinfo:export')")
+    //@PreAuthorize("@ps.hasPermit('system:permitinfo:export')")
     @Oplog(title = "菜单权限", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
