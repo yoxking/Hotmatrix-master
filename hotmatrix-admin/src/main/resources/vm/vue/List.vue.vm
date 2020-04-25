@@ -107,7 +107,7 @@
         // 查询参数
         pageParam: {
           pageIndex: 1, // 第几页
-          pageSize: 2, // 每页中显示数据的条数
+          pageSize: 10, // 每页中显示数据的条数
           pageTotal: 0,
           condition: ''
         }
@@ -134,17 +134,12 @@
       },
       handleAdd () {
         const that = this
-        this.#[[$]]#dlg.modal(edit, {
+        this.$dlg.modal(edit,{
         title: '新增',
         width: 950,
         height: 700,
         params: {
         id: ''
-        },
-        #[[callback]]#: data => {
-          if (data !== undefined && data.code === 200) {
-            that.getDataSource()
-          }
         }
         })
       },
@@ -160,7 +155,7 @@
             onOk () {
               let selectedRowKeys = []
               selectedRecords.map(function (item) {
-                selectedRowKeys.push(item.deptNo)
+                selectedRowKeys.push(item.branchNo)
               })
               del${BusinessName}(selectedRowKeys).then(response => {
                 that.getDataSource()
@@ -173,17 +168,12 @@
       },
       handleEdt (val) {
         const that = this
-        this.#[[$]]#dlg.modal(edit, {
+        this.$dlg.modal(edit, {
         title: '编辑',
         width: 950,
         height: 700,
         params: {
         id: val
-        },
-        #[[callback]]#: data => {
-          if (data !== undefined && data.code === 200) {
-            that.getDataSource()
-          }
         }
         })
       },

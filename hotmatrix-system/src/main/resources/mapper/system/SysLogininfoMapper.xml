@@ -8,13 +8,13 @@
         <result property="id" column="id"/>
         <result property="loginNo" column="login_no"/>
         <result property="loginName" column="login_name"/>
-        <result property="ipaddr" column="ipaddr"/>
+        <result property="loginTime" column="login_time"/>
+        <result property="ipAddress" column="ip_address"/>
         <result property="location" column="location"/>
         <result property="browser" column="browser"/>
         <result property="os" column="os"/>
         <result property="status" column="status"/>
         <result property="message" column="message"/>
-        <result property="loginTime" column="login_time"/>
         <result property="branchNo" column="branch_no"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -27,7 +27,7 @@
     </resultMap>
 
     <sql id="selectSysLogininfoVo">
-        select id, login_no, login_name, ipaddr, location, browser, os, status, message, login_time, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_logininfo
+        select id, login_no, login_name,login_time, ip_address, location, browser, os, status, message,  branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_logininfo
     </sql>
 
     <select id="getAllRecords" resultMap="SysLogininfoResult">
@@ -53,12 +53,12 @@
     </select>
 
     <select id="getRecordNameByNo" resultType="String">
-        select login_name from sys_logininfor
+        select login_name from sys_logininfo
         where delete_flag='1' and app_code=#{appCode} and login_no = #{no}
     </select>
 
     <select id="getCountByCondition" resultType="Integer">
-        select count(*) from sys_logininfor
+        select count(*) from sys_logininfo
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </select>
@@ -67,13 +67,13 @@
         insert into sys_logininfo (
         <if test="info.loginNo != null and info.loginNo != ''">login_no,</if>
         <if test="info.loginName != null  and info.loginName != ''">login_name,</if>
-        <if test="info.ipaddr != null  and info.ipaddr != ''">ipaddr,</if>
+        <if test="info.loginTime != null ">login_time,</if>
+        <if test="info.ipAddress != null  and info.ipAddress != ''">ip_address,</if>
         <if test="info.location != null  and info.location != ''">location,</if>
         <if test="info.browser != null  and info.browser != ''">browser,</if>
         <if test="info.os != null  and info.os != ''">os,</if>
         <if test="info.status != null  and info.status != ''">status,</if>
         <if test="info.message != null  and info.message != ''">message,</if>
-        <if test="info.loginTime != null ">login_time,</if>
         <if test="info.branchNo != null  and info.branchNo != ''">branch_no,</if>
         <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
         <if test="info.createTime != null ">create_time,</if>
@@ -86,13 +86,13 @@
         )values(
         <if test="info.loginNo != null and info.loginNo != ''">#{info.loginNo},</if>
         <if test="info.loginName != null  and info.loginName != ''">#{info.loginName},</if>
-        <if test="info.ipaddr != null  and info.ipaddr != ''">#{info.ipaddr},</if>
+        <if test="info.loginTime != null ">#{info.loginTime},</if>
+        <if test="info.ipAddress != null  and info.ipAddress != ''">#{info.ipAddress},</if>
         <if test="info.location != null  and info.location != ''">#{info.location},</if>
         <if test="info.browser != null  and info.browser != ''">#{info.browser},</if>
         <if test="info.os != null  and info.os != ''">#{info.os},</if>
         <if test="info.status != null  and info.status != ''">#{info.status},</if>
         <if test="info.message != null  and info.message != ''">#{info.message},</if>
-        <if test="info.loginTime != null ">#{info.loginTime},</if>
         <if test="info.branchNo != null  and info.branchNo != ''">#{info.branchNo},</if>
         <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
         <if test="info.createTime != null ">#{info.createTime},</if>
@@ -110,13 +110,13 @@
         <set>
             <if test="info.loginNo != null ">login_no = #{info.loginNo},</if>
             <if test="info.loginName != null  and info.loginName != ''">login_name = #{info.loginName},</if>
-            <if test="info.ipaddr != null  and info.ipaddr != ''">ipaddr = #{info.ipaddr},</if>
+            <if test="info.loginTime != null ">login_time = #{info.loginTime},</if>
+            <if test="info.ipAddress != null  and info.ipAddress != ''">ip_address = #{info.ipAddress},</if>
             <if test="info.location != null  and info.location != ''">location = #{info.location},</if>
             <if test="info.browser != null  and info.browser != ''">browser = #{info.browser},</if>
             <if test="info.os != null  and info.os != ''">os = #{info.os},</if>
             <if test="info.status != null  and info.status != ''">status = #{info.status},</if>
             <if test="info.message != null  and info.message != ''">message = #{info.message},</if>
-            <if test="info.loginTime != null ">login_time = #{info.loginTime},</if>
             <if test="info.branchNo != null  and info.branchNo != ''">branch_no = #{info.branchNo},</if>
             <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
             <if test="info.createTime != null ">create_time = #{info.createTime},</if>

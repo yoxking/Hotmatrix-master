@@ -45,7 +45,7 @@ public class SysSuserinfoController extends BaseController
     /**
      * 首页
      */
-    @PreAuthorize("@ps.hasPermit('system:suserinfo:index')")
+    //@PreAuthorize("@ps.hasPermit('system:suserinfo:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -56,7 +56,7 @@ public class SysSuserinfoController extends BaseController
     /**
      * 查询系统用户信息列表
      */
-    @PreAuthorize("@ps.hasPermit('system:suserinfo:list')")
+    //@PreAuthorize("@ps.hasPermit('system:suserinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -68,7 +68,7 @@ public class SysSuserinfoController extends BaseController
     /**
      * 新增系统用户信息
      */
-    @PreAuthorize("@ps.hasPermit('system:suserinfo:insert')")
+    //@PreAuthorize("@ps.hasPermit('system:suserinfo:insert')")
     @Oplog(title = "系统用户信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysSuserinfo sysSuserinfo) {
@@ -82,7 +82,7 @@ public class SysSuserinfoController extends BaseController
     /**
      * 编辑系统用户信息
      */
-    @PreAuthorize("@ps.hasPermit('system:suserinfo:update')")
+    //@PreAuthorize("@ps.hasPermit('system:suserinfo:update')")
     @Oplog(title = "系统用户信息", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysSuserinfo sysSuserinfo) {
@@ -94,7 +94,7 @@ public class SysSuserinfoController extends BaseController
     /**
      * 保存系统用户信息
      */
-    @PreAuthorize("@ps.hasPermit('system:suserinfo:save')")
+    //@PreAuthorize("@ps.hasPermit('system:suserinfo:save')")
     @Oplog(title = "系统用户信息", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysSuserinfo sysSuserinfo) {
@@ -113,7 +113,7 @@ public class SysSuserinfoController extends BaseController
     /**
      * 删除系统用户信息
      */
-    @PreAuthorize("@ps.hasPermit('system:suserinfo:delete')")
+    //@PreAuthorize("@ps.hasPermit('system:suserinfo:delete')")
     @Oplog(title = "系统用户信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -124,7 +124,7 @@ public class SysSuserinfoController extends BaseController
     /**
      * 获取系统用户信息详细信息
      */
-    @PreAuthorize("@ps.hasPermit('system:suserinfo:detail')")
+    //@PreAuthorize("@ps.hasPermit('system:suserinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -134,7 +134,7 @@ public class SysSuserinfoController extends BaseController
     /**
      * 导出系统用户信息列表
      */
-    @PreAuthorize("@ps.hasPermit('system:suserinfo:export')")
+    //@PreAuthorize("@ps.hasPermit('system:suserinfo:export')")
     @Oplog(title = "系统用户信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

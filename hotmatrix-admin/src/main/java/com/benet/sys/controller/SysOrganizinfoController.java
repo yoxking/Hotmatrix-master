@@ -49,7 +49,7 @@ public class SysOrganizinfoController extends BaseController
     /**
      * 首页
      */
-    @PreAuthorize("@ps.hasPermit('system:organizinfo:index')")
+    //@PreAuthorize("@ps.hasPermit('system:organizinfo:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -60,7 +60,7 @@ public class SysOrganizinfoController extends BaseController
     /**
      * 查询机构信息列表
      */
-    @PreAuthorize("@ps.hasPermit('system:organizinfo:list')")
+    //@PreAuthorize("@ps.hasPermit('system:organizinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -76,11 +76,11 @@ public class SysOrganizinfoController extends BaseController
     @GetMapping(value = "/tree")
     public TableDataInfo tree() {
         int count = sysOrganizinfoService.getCountByCondition("");
-        List<OrgnzInfoVo> list = buildDeptTree("0");
+        List<OrgnzInfoVo> list = buildOrgzTree("0");
         return getDataTable(list, count);
     }
 
-    private List<OrgnzInfoVo> buildDeptTree(String parentNo) {
+    private List<OrgnzInfoVo> buildOrgzTree(String parentNo) {
 
         List<OrgnzInfoVo> orgzTree = null;
         OrgnzInfoVo orgnz = null;
@@ -92,12 +92,12 @@ public class SysOrganizinfoController extends BaseController
                 orgnz = new OrgnzInfoVo();
                 orgnz.setId(info.getOrganizNo());
                 orgnz.setLabel(info.getOrganizName());
-                orgnz.setOrgnzNo(info.getOrganizNo());
-                orgnz.setOrgnzName(info.getOrganizName());
+                orgnz.setOrganizNo(info.getOrganizNo());
+                orgnz.setOrganizName(info.getOrganizName());
                 orgnz.setParentNo(info.getParentNo());
                 orgnz.setOrderNo(info.getOrderNo());
                 orgnz.setComments(info.getComments());
-                orgnz.setChildren(buildDeptTree(info.getOrganizNo()));
+                orgnz.setChildren(buildOrgzTree(info.getOrganizNo()));
                 orgzTree.add(orgnz);
             }
         }
@@ -108,7 +108,7 @@ public class SysOrganizinfoController extends BaseController
     /**
      * 新增机构信息
      */
-    @PreAuthorize("@ps.hasPermit('system:organizinfo:insert')")
+    //@PreAuthorize("@ps.hasPermit('system:organizinfo:insert')")
     @Oplog(title = "机构信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysOrganizinfo sysOrganizinfo) {
@@ -122,7 +122,7 @@ public class SysOrganizinfoController extends BaseController
     /**
      * 编辑机构信息
      */
-    @PreAuthorize("@ps.hasPermit('system:organizinfo:update')")
+    //@PreAuthorize("@ps.hasPermit('system:organizinfo:update')")
     @Oplog(title = "机构信息", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysOrganizinfo sysOrganizinfo) {
@@ -134,7 +134,7 @@ public class SysOrganizinfoController extends BaseController
     /**
      * 保存机构信息
      */
-    @PreAuthorize("@ps.hasPermit('system:organizinfo:save')")
+    //@PreAuthorize("@ps.hasPermit('system:organizinfo:save')")
     @Oplog(title = "机构信息", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysOrganizinfo sysOrganizinfo) {
@@ -153,7 +153,7 @@ public class SysOrganizinfoController extends BaseController
     /**
      * 删除机构信息
      */
-    @PreAuthorize("@ps.hasPermit('system:organizinfo:delete')")
+    //@PreAuthorize("@ps.hasPermit('system:organizinfo:delete')")
     @Oplog(title = "机构信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -164,7 +164,7 @@ public class SysOrganizinfoController extends BaseController
     /**
      * 获取机构信息详细信息
      */
-    @PreAuthorize("@ps.hasPermit('system:organizinfo:detail')")
+    //@PreAuthorize("@ps.hasPermit('system:organizinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -174,7 +174,7 @@ public class SysOrganizinfoController extends BaseController
     /**
      * 导出机构信息列表
      */
-    @PreAuthorize("@ps.hasPermit('system:organizinfo:export')")
+    //@PreAuthorize("@ps.hasPermit('system:organizinfo:export')")
     @Oplog(title = "机构信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

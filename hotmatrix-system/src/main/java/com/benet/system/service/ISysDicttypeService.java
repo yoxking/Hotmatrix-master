@@ -2,22 +2,22 @@ package com.benet.system.service;
 
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
-import com.benet.system.domain.SysDictclass;
+import com.benet.system.domain.SysDicttype;
 
 /**
  * 字典类型Service接口
  * 
  * @author yoxking
- * @date 2020-04-06
+ * @date 2020-04-23
  */
-public interface ISysDictclassService 
+public interface ISysDicttypeService 
 {
     /**
      * 查询所有字典类型列表
      *
      * @return 字典类型集合
      */
-    public List<SysDictclass> getAllRecords();
+    public List<SysDicttype> getAllRecords();
 
     /**
      * 按分类查询字典类型列表
@@ -25,7 +25,7 @@ public interface ISysDictclassService
      * @param classNo 分类编号
      * @return 字典类型集合
      */
-    public List<SysDictclass> getRecordsByClassNo(String classNo);
+    public List<SysDicttype> getRecordsByClassNo(String classNo);
 
     /**
      * 分页查询字典类型列表
@@ -33,7 +33,7 @@ public interface ISysDictclassService
      * @param model 分页模型
      * @return 字典类型集合
      */
-    public List<SysDictclass> getRecordsByPaging(PagingModel model);
+    public List<SysDicttype> getRecordsByPaging(PagingModel model);
 
     /**
      * 分页查询字典类型列表
@@ -45,7 +45,7 @@ public interface ISysDictclassService
      * @param orderType 排序类型
      * @return 字典类型集合
      */
-    public List<SysDictclass> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType);
+    public List<SysDicttype> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType);
 
     /**
      * 查询字典类型
@@ -53,7 +53,7 @@ public interface ISysDictclassService
      * @param no 字典类型ID
      * @return 字典类型
      */
-    public SysDictclass getRecordByNo(String no);
+    public SysDicttype getRecordByNo(String no);
 
     /**
      * 查询字典类型名称
@@ -77,7 +77,7 @@ public interface ISysDictclassService
      * @param info 字典类型
      * @return 结果
      */
-    public int AddNewRecord(SysDictclass info);
+    public int AddNewRecord(SysDicttype info);
 
     /**
      * 更新字典类型
@@ -85,7 +85,7 @@ public interface ISysDictclassService
      * @param info 字典类型
      * @return 结果
      */
-    public int UpdateRecord(SysDictclass info);
+    public int UpdateRecord(SysDicttype info);
 
     /**
      * 硬删除字典类型

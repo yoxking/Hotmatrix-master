@@ -11,10 +11,10 @@ public class OrgnzInfoVo {
     private String label;
 
     /** 机构id */
-    private String orgnzNo;
+    private String organizNo;
 
     /** 机构名称 */
-    private String orgnzName;
+    private String organizName;
 
     /** 父机构id */
     private String parentNo;
@@ -43,20 +43,20 @@ public class OrgnzInfoVo {
         this.label = label;
     }
 
-    public String getOrgnzNo() {
-        return orgnzNo;
+    public String getOrganizNo() {
+        return organizNo;
     }
 
-    public void setOrgnzNo(String orgnzNo) {
-        this.orgnzNo = orgnzNo;
+    public void setOrganizNo(String organizNo) {
+        this.organizNo = organizNo;
     }
 
-    public String getOrgnzName() {
-        return orgnzName;
+    public String getOrganizName() {
+        return organizName;
     }
 
-    public void setOrgnzName(String orgnzName) {
-        this.orgnzName = orgnzName;
+    public void setOrganizName(String organizName) {
+        this.organizName = organizName;
     }
 
     public String getParentNo() {

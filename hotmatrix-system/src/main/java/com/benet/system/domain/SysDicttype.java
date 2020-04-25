@@ -5,13 +5,15 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.benet.common.annotation.Excel;
 import com.benet.common.core.domain.BaseEntity;
 
+import java.util.Date;
+
 /**
- * 字典类型对象 sys_dictclass
+ * 字典类型对象 sys_dicttype
  * 
  * @author yoxking
- * @date 2020-04-06
+ * @date 2020-04-23
  */
-public class SysDictclass extends BaseEntity
+public class SysDicttype extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
@@ -20,23 +22,35 @@ public class SysDictclass extends BaseEntity
 
     /** 字典主键 */
     @Excel(name = "字典主键")
-    private String classNo;
+    private String dictNo;
 
     /** 字典名称 */
     @Excel(name = "字典名称")
-    private String className;
+    private String dictName;
 
     /** 字典类型 */
     @Excel(name = "字典类型")
     private String dictType;
 
-    /** 显示顺序 */
-    @Excel(name = "显示顺序")
-    private Integer orderNo;
+    /** 状态（1正常 0停用） */
+    @Excel(name = "状态", readConverterExp = "1=正常,0=停用")
+    private String checkState;
 
     /** 分支编号 */
     @Excel(name = "分支编号")
     private String branchNo;
+
+    /** 创建者 */
+    private String createBy;
+
+    /** 创建时间 */
+    private Date createTime;
+
+    /** 更新者 */
+    private String updateBy;
+
+    /** 更新时间 */
+    private Date updateTime;
 
     /** 删除标志（1代表存在 0代表删除） */
     @Excel(name = "删除标志", readConverterExp = "1=代表存在,0=代表删除")
@@ -63,23 +77,23 @@ public class SysDictclass extends BaseEntity
     {
         return id;
     }
-    public void setClassNo(String classNo) 
+    public void setDictNo(String dictNo) 
     {
-        this.classNo = classNo;
+        this.dictNo = dictNo;
     }
 
-    public String getClassNo() 
+    public String getDictNo() 
     {
-        return classNo;
+        return dictNo;
     }
-    public void setClassName(String className) 
+    public void setDictName(String dictName) 
     {
-        this.className = className;
+        this.dictName = dictName;
     }
 
-    public String getClassName() 
+    public String getDictName() 
     {
-        return className;
+        return dictName;
     }
     public void setDictType(String dictType) 
     {
@@ -90,14 +104,14 @@ public class SysDictclass extends BaseEntity
     {
         return dictType;
     }
-    public void setOrderNo(Integer orderNo) 
+    public void setCheckState(String checkState) 
     {
-        this.orderNo = orderNo;
+        this.checkState = checkState;
     }
 
-    public Integer getOrderNo() 
+    public String getCheckState() 
     {
-        return orderNo;
+        return checkState;
     }
     public void setBranchNo(String branchNo) 
     {
@@ -107,6 +121,42 @@ public class SysDictclass extends BaseEntity
     public String getBranchNo() 
     {
         return branchNo;
+    }
+    public void setCreateBy(String createBy) 
+    {
+        this.createBy = createBy;
+    }
+
+    public String getCreateBy() 
+    {
+        return createBy;
+    }
+    public void setCreateTime(Date createTime) 
+    {
+        this.createTime = createTime;
+    }
+
+    public Date getCreateTime() 
+    {
+        return createTime;
+    }
+    public void setUpdateBy(String updateBy) 
+    {
+        this.updateBy = updateBy;
+    }
+
+    public String getUpdateBy() 
+    {
+        return updateBy;
+    }
+    public void setUpdateTime(Date updateTime) 
+    {
+        this.updateTime = updateTime;
+    }
+
+    public Date getUpdateTime() 
+    {
+        return updateTime;
     }
     public void setDeleteFlag(String deleteFlag) 
     {
@@ -149,10 +199,10 @@ public class SysDictclass extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("classNo", getClassNo())
-            .append("className", getClassName())
+            .append("dictNo", getDictNo())
+            .append("dictName", getDictName())
             .append("dictType", getDictType())
-            .append("orderNo", getOrderNo())
+            .append("checkState", getCheckState())
             .append("branchNo", getBranchNo())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())

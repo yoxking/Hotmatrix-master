@@ -2,7 +2,7 @@ package com.benet.system.mapper;
 
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
-import com.benet.system.domain.SysDictinfo;
+import com.benet.system.domain.SysDictdata;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,10 +10,10 @@ import org.apache.ibatis.annotations.Param;
  * 字典数据Mapper接口
  * 
  * @author yoxking
- * @date 2020-04-06
+ * @date 2020-04-23
  */
 @Mapper
-public interface SysDictinfoMapper 
+public interface SysDictdataMapper 
 {
     /**
      * 查询所有字典数据列表
@@ -21,7 +21,7 @@ public interface SysDictinfoMapper
      * @param appCode 应用编号
      * @return 字典数据集合
      */
-    public List<SysDictinfo> getAllRecords(@Param("appCode") String appCode);
+    public List<SysDictdata> getAllRecords(@Param("appCode") String appCode);
 
     /**
      * 按分类查询字典数据列表
@@ -30,7 +30,7 @@ public interface SysDictinfoMapper
      * @param classNo 分类编号
      * @return 字典数据集合
      */
-    public List<SysDictinfo> getRecordsByClassNo(@Param("appCode") String appCode,@Param("classNo") String classNo);
+    public List<SysDictdata> getRecordsByClassNo(@Param("appCode") String appCode,@Param("classNo") String classNo);
 
     /**
      * 分页查询字典数据列表
@@ -39,7 +39,7 @@ public interface SysDictinfoMapper
      * @param model 分页模型
      * @return 字典数据集合
      */
-    public List<SysDictinfo> getRecordsByPaging(@Param("appCode") String appCode,@Param("model") PagingModel model);
+    public List<SysDictdata> getRecordsByPaging(@Param("appCode") String appCode,@Param("model") PagingModel model);
 
     /**
      * 查询字典数据
@@ -48,7 +48,7 @@ public interface SysDictinfoMapper
      * @param no 字典数据ID
      * @return 字典数据
      */
-    public SysDictinfo getRecordByNo(@Param("appCode") String appCode,@Param("no") String no);
+    public SysDictdata getRecordByNo(@Param("appCode") String appCode,@Param("no") String no);
 
     /**
      * 查询字典数据名称
@@ -74,7 +74,7 @@ public interface SysDictinfoMapper
      * @param info 字典数据
      * @return 结果
      */
-    public int AddNewRecord(@Param("info") SysDictinfo info);
+    public int AddNewRecord(@Param("info") SysDictdata info);
 
     /**
      * 更新字典数据
@@ -82,7 +82,7 @@ public interface SysDictinfoMapper
      * @param info 字典数据
      * @return 结果
      */
-    public int UpdateRecord(@Param("info") SysDictinfo info);
+    public int UpdateRecord(@Param("info") SysDictdata info);
 
     /**
      * 硬删除字典数据

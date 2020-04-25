@@ -7,21 +7,21 @@ import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.benet.system.mapper.SysDictclassMapper;
-import com.benet.system.domain.SysDictclass;
-import com.benet.system.service.ISysDictclassService;
+import com.benet.system.mapper.SysDicttypeMapper;
+import com.benet.system.domain.SysDicttype;
+import com.benet.system.service.ISysDicttypeService;
 
 /**
  * 字典类型Service业务层处理
  * 
  * @author yoxking
- * @date 2020-04-06
+ * @date 2020-04-23
  */
 @Service
-public class SysDictclassServiceImpl implements ISysDictclassService 
+public class SysDicttypeServiceImpl implements ISysDicttypeService 
 {
     @Autowired
-    private SysDictclassMapper sysDictclassMapper;
+    private SysDicttypeMapper sysDicttypeMapper;
 
     /**
      * 查询所有字典类型列表
@@ -29,8 +29,8 @@ public class SysDictclassServiceImpl implements ISysDictclassService
      * @return 字典类型集合
      */
     @Override
-    public List<SysDictclass> getAllRecords() {
-        return sysDictclassMapper.getAllRecords(GlobalConfig.getAppCode());
+    public List<SysDicttype> getAllRecords() {
+        return sysDicttypeMapper.getAllRecords(GlobalConfig.getAppCode());
     }
 
     /**
@@ -40,9 +40,9 @@ public class SysDictclassServiceImpl implements ISysDictclassService
      * @return 字典类型集合
      */
     @Override
-    public List<SysDictclass> getRecordsByClassNo(String classNo) {
+    public List<SysDicttype> getRecordsByClassNo(String classNo) {
         if (StringUtils.isNotEmpty(classNo)) {
-            return sysDictclassMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
+            return sysDicttypeMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
         }
         return null;
     }
@@ -54,10 +54,10 @@ public class SysDictclassServiceImpl implements ISysDictclassService
      * @return 字典类型集合
      */
     @Override
-    public List<SysDictclass> getRecordsByPaging(PagingModel model) {
+    public List<SysDicttype> getRecordsByPaging(PagingModel model) {
         if (StringUtils.isNotNull(model)) {
             model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
-            return sysDictclassMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+            return sysDicttypeMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
         }
         return null;
     }
@@ -73,7 +73,7 @@ public class SysDictclassServiceImpl implements ISysDictclassService
      * @param orderType 排序类型
      * @return 字典类型集合
      */
-    public List<SysDictclass> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
+    public List<SysDicttype> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();
         model.setPageIndex((pageIndex-1) * pageSize);
@@ -89,7 +89,7 @@ public class SysDictclassServiceImpl implements ISysDictclassService
         } else {
             model.setOrderType(orderType);
         }
-        return sysDictclassMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+        return sysDicttypeMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
     }
 
     /**
@@ -99,9 +99,9 @@ public class SysDictclassServiceImpl implements ISysDictclassService
      * @return 字典类型
      */
     @Override
-    public SysDictclass getRecordByNo(String no) {
+    public SysDicttype getRecordByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysDictclassMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
+            return sysDicttypeMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
         }
         return null;
     }
@@ -115,7 +115,7 @@ public class SysDictclassServiceImpl implements ISysDictclassService
     @Override
     public String getRecordNameByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysDictclassMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
+            return sysDicttypeMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
         }
         return null;
     }
@@ -128,7 +128,7 @@ public class SysDictclassServiceImpl implements ISysDictclassService
      */
     @Override
     public int getCountByCondition(String condition) {
-        return sysDictclassMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
+        return sysDicttypeMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
     }
 
     /**
@@ -138,12 +138,12 @@ public class SysDictclassServiceImpl implements ISysDictclassService
      * @return 结果
      */
     @Override
-    public int AddNewRecord(SysDictclass info) {
+    public int AddNewRecord(SysDicttype info) {
         info.setCreateTime(DateUtils.getNowDate());
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
         info.setVersion(1L);
-        return sysDictclassMapper.AddNewRecord(info);
+        return sysDicttypeMapper.AddNewRecord(info);
     }
 
     /**
@@ -153,10 +153,10 @@ public class SysDictclassServiceImpl implements ISysDictclassService
      * @return 结果
      */
     @Override
-    public int UpdateRecord(SysDictclass info) {
+    public int UpdateRecord(SysDicttype info) {
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
-        return sysDictclassMapper.UpdateRecord(info);
+        return sysDicttypeMapper.UpdateRecord(info);
     }
 
     /**
@@ -168,7 +168,7 @@ public class SysDictclassServiceImpl implements ISysDictclassService
     @Override
     public int HardDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysDictclassMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
+            return sysDicttypeMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }
@@ -182,7 +182,7 @@ public class SysDictclassServiceImpl implements ISysDictclassService
     @Override
     public int HardDeleteByNos(String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return sysDictclassMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return sysDicttypeMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
         }
         return 0;
     }
@@ -195,7 +195,7 @@ public class SysDictclassServiceImpl implements ISysDictclassService
      */
     @Override
     public int HardDeleteByCondition(String condition) {
-        return sysDictclassMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
+        return sysDicttypeMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
     }
 
     /**
@@ -207,7 +207,7 @@ public class SysDictclassServiceImpl implements ISysDictclassService
     @Override
     public int SoftDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysDictclassMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
+            return sysDicttypeMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }
@@ -221,7 +221,7 @@ public class SysDictclassServiceImpl implements ISysDictclassService
     @Override
     public int SoftDeleteByNos(String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return sysDictclassMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return sysDicttypeMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
         }
         return 0;
     }
@@ -234,6 +234,6 @@ public class SysDictclassServiceImpl implements ISysDictclassService
      */
     @Override
     public int SoftDeleteByCondition(String condition) {
-        return sysDictclassMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
+        return sysDicttypeMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
     }
 }

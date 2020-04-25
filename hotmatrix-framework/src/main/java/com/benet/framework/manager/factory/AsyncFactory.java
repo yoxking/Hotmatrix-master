@@ -86,7 +86,7 @@ public class AsyncFactory
                 SysLogininfo logininfor = new SysLogininfo();
                 logininfor.setLoginNo(UuidUtils.shortUUID());
                 logininfor.setLoginName(username);
-                logininfor.setIpaddr(ip);
+                logininfor.setIpAddress(ip);
                 logininfor.setLocation(address);
                 logininfor.setBrowser(browser);
                 logininfor.setOs(os);

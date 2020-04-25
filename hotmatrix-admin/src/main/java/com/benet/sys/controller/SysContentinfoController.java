@@ -1,11 +1,15 @@
 package com.benet.sys.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.benet.common.core.pager.PageRequest;
 import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
+import com.benet.sys.vmodel.ItemObjectVo;
+import com.benet.system.domain.SysContzclass;
+import com.benet.system.service.ISysContzclassService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,11 +45,14 @@ public class SysContentinfoController extends BaseController
     private MyJwtokenService tokenService;
 
     @Autowired
+    private ISysContzclassService sysContzclassService;
+
+    @Autowired
     private ISysContentinfoService sysContentinfoService;
     /**
      * 首页
      */
-    @PreAuthorize("@ps.hasPermit('system:contentinfo:index')")
+   // @PreAuthorize("@ps.hasPermit('system:contentinfo:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -56,7 +63,35 @@ public class SysContentinfoController extends BaseController
     /**
      * 查询内容信息列表
      */
-    @PreAuthorize("@ps.hasPermit('system:contentinfo:list')")
+    //@PreAuthorize("@ps.hasPermit('system:contentinfo:listall')")
+    @GetMapping(value = "/classlist")
+    public TableDataInfo classlist()
+    {
+        List<SysContzclass> list = sysContzclassService.getAllRecords();
+        return getDataTable(convertList(list), list.size());
+    }
+
+    private List<ItemObjectVo> convertList(List<SysContzclass> list){
+
+        List<ItemObjectVo> itemList=new ArrayList<>();
+        ItemObjectVo item=null;
+        if(list!=null&&list.size()>0){
+            for(SysContzclass info:list){
+                item=new ItemObjectVo();
+                item.setId(info.getClassNo());
+                item.setLabel(info.getClassName());
+                item.setChildren(null);
+
+                itemList.add(item);
+            }
+        }
+        return itemList;
+    }
+
+    /**
+     * 查询内容信息列表
+     */
+    //@PreAuthorize("@ps.hasPermit('system:contentinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -68,7 +103,7 @@ public class SysContentinfoController extends BaseController
     /**
      * 新增内容信息
      */
-    @PreAuthorize("@ps.hasPermit('system:contentinfo:insert')")
+    //@PreAuthorize("@ps.hasPermit('system:contentinfo:insert')")
     @Oplog(title = "内容信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysContentinfo sysContentinfo) {
@@ -82,7 +117,7 @@ public class SysContentinfoController extends BaseController
     /**
      * 编辑内容信息
      */
-    @PreAuthorize("@ps.hasPermit('system:contentinfo:update')")
+    //@PreAuthorize("@ps.hasPermit('system:contentinfo:update')")
     @Oplog(title = "内容信息", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysContentinfo sysContentinfo) {
@@ -94,7 +129,7 @@ public class SysContentinfoController extends BaseController
     /**
      * 保存内容信息
      */
-    @PreAuthorize("@ps.hasPermit('system:contentinfo:save')")
+    //@PreAuthorize("@ps.hasPermit('system:contentinfo:save')")
     @Oplog(title = "内容信息", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysContentinfo sysContentinfo) {
@@ -113,7 +148,7 @@ public class SysContentinfoController extends BaseController
     /**
      * 删除内容信息
      */
-    @PreAuthorize("@ps.hasPermit('system:contentinfo:delete')")
+    //@PreAuthorize("@ps.hasPermit('system:contentinfo:delete')")
     @Oplog(title = "内容信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -124,7 +159,7 @@ public class SysContentinfoController extends BaseController
     /**
      * 获取内容信息详细信息
      */
-    @PreAuthorize("@ps.hasPermit('system:contentinfo:detail')")
+    //@PreAuthorize("@ps.hasPermit('system:contentinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -134,7 +169,7 @@ public class SysContentinfoController extends BaseController
     /**
      * 导出内容信息列表
      */
-    @PreAuthorize("@ps.hasPermit('system:contentinfo:export')")
+    //@PreAuthorize("@ps.hasPermit('system:contentinfo:export')")
     @Oplog(title = "内容信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

@@ -2,20 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.benet.system.mapper.SysDictinfoMapper">
+<mapper namespace="com.benet.system.mapper.SysDicttypeMapper">
 
-    <resultMap type="SysDictinfo" id="SysDictinfoResult">
+    <resultMap type="SysDicttype" id="SysDicttypeResult">
         <result property="id" column="id"/>
         <result property="dictNo" column="dict_no"/>
-        <result property="dictCode" column="dict_code"/>
+        <result property="dictName" column="dict_name"/>
         <result property="dictType" column="dict_type"/>
-        <result property="classNo" column="class_no"/>
-        <result property="orderNo" column="order_no"/>
-        <result property="dictLabel" column="dict_label"/>
-        <result property="dictValue" column="dict_value"/>
-        <result property="cssClass" column="css_class"/>
-        <result property="listClass" column="list_class"/>
-        <result property="isDefault" column="is_default"/>
         <result property="checkState" column="check_state"/>
         <result property="branchNo" column="branch_no"/>
         <result property="createBy" column="create_by"/>
@@ -28,55 +21,48 @@
         <result property="version" column="version"/>
     </resultMap>
 
-    <sql id="selectSysDictinfoVo">
-        select id, dict_no, dict_code, dict_type, class_no, order_no, dict_label, dict_value, css_class, list_class, is_default, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_dictinfo
+    <sql id="selectSysDicttypeVo">
+        select id, dict_no, dict_name, dict_type, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_dicttype
     </sql>
 
-    <select id="getAllRecords" resultMap="SysDictinfoResult">
-        <include refid="selectSysDictinfoVo"/>
+    <select id="getAllRecords" resultMap="SysDicttypeResult">
+        <include refid="selectSysDicttypeVo"/>
         where delete_flag='1' and app_code=#{appCode}
     </select>
 
-    <select id="getRecordsByClassNo" resultMap="SysDictinfoResult">
-        <include refid="selectSysDictinfoVo"/>
+    <select id="getRecordsByClassNo" resultMap="SysDicttypeResult">
+        <include refid="selectSysDicttypeVo"/>
         where delete_flag='1' and app_code=#{appCode} and class_no=#{classNo}
     </select>
 
-    <select id="getRecordsByPaging" resultMap="SysDictinfoResult">
-        <include refid="selectSysDictinfoVo"/>
+    <select id="getRecordsByPaging" resultMap="SysDicttypeResult">
+        <include refid="selectSysDicttypeVo"/>
         where delete_flag='1' and app_code=#{appCode}
         <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
         order by #{model.orderField} #{model.orderType} limit #{model.pageIndex},#{model.pageSize}
     </select>
 
-    <select id="getRecordByNo" resultMap="SysDictinfoResult">
-        <include refid="selectSysDictinfoVo"/>
+    <select id="getRecordByNo" resultMap="SysDicttypeResult">
+        <include refid="selectSysDicttypeVo"/>
         where delete_flag='1' and app_code=#{appCode} and dict_no = #{no}
     </select>
 
     <select id="getRecordNameByNo" resultType="String">
-        select dict_label from sys_dictinfo
+        select dict_name from sys_dicttype
         where delete_flag='1' and app_code=#{appCode} and dict_no = #{no}
     </select>
 
     <select id="getCountByCondition" resultType="Integer">
-        select count(*) from sys_dictinfo
+        select count(*) from sys_dicttype
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </select>
 
-    <insert id="AddNewRecord" parameterType="SysDictinfo" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_dictinfo (
+    <insert id="AddNewRecord" parameterType="SysDicttype" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_dicttype (
         <if test="info.dictNo != null  and info.dictNo != ''">dict_no,</if>
-        <if test="info.dictCode != null  and info.dictCode != ''">dict_code,</if>
+        <if test="info.dictName != null  and info.dictName != ''">dict_name,</if>
         <if test="info.dictType != null  and info.dictType != ''">dict_type,</if>
-        <if test="info.classNo != null  and info.classNo != ''">class_no,</if>
-        <if test="info.orderNo != null ">order_no,</if>
-        <if test="info.dictLabel != null  and info.dictLabel != ''">dict_label,</if>
-        <if test="info.dictValue != null  and info.dictValue != ''">dict_value,</if>
-        <if test="info.cssClass != null  and info.cssClass != ''">css_class,</if>
-        <if test="info.listClass != null  and info.listClass != ''">list_class,</if>
-        <if test="info.isDefault != null  and info.isDefault != ''">is_default,</if>
         <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
         <if test="info.branchNo != null  and info.branchNo != ''">branch_no,</if>
         <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
@@ -89,15 +75,8 @@
         <if test="info.version != null ">version</if>
         )values(
         <if test="info.dictNo != null  and info.dictNo != ''">#{info.dictNo},</if>
-        <if test="info.dictCode != null  and info.dictCode != ''">#{info.dictCode},</if>
+        <if test="info.dictName != null  and info.dictName != ''">#{info.dictName},</if>
         <if test="info.dictType != null  and info.dictType != ''">#{info.dictType},</if>
-        <if test="info.classNo != null  and info.classNo != ''">#{info.classNo},</if>
-        <if test="info.orderNo != null ">#{info.orderNo},</if>
-        <if test="info.dictLabel != null  and info.dictLabel != ''">#{info.dictLabel},</if>
-        <if test="info.dictValue != null  and info.dictValue != ''">#{info.dictValue},</if>
-        <if test="info.cssClass != null  and info.cssClass != ''">#{info.cssClass},</if>
-        <if test="info.listClass != null  and info.listClass != ''">#{info.listClass},</if>
-        <if test="info.isDefault != null  and info.isDefault != ''">#{info.isDefault},</if>
         <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
         <if test="info.branchNo != null  and info.branchNo != ''">#{info.branchNo},</if>
         <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
@@ -111,19 +90,12 @@
         )
     </insert>
 
-    <update id="UpdateRecord" parameterType="SysDictinfo">
-        update sys_dictinfo
+    <update id="UpdateRecord" parameterType="SysDicttype">
+        update sys_dicttype
         <set>
             <if test="info.dictNo != null  and info.dictNo != ''">dict_no = #{info.dictNo},</if>
-            <if test="info.dictCode != null  and info.dictCode != ''">dict_code = #{info.dictCode},</if>
+            <if test="info.dictName != null  and info.dictName != ''">dict_name = #{info.dictName},</if>
             <if test="info.dictType != null  and info.dictType != ''">dict_type = #{info.dictType},</if>
-            <if test="info.classNo != null  and info.classNo != ''">class_no = #{info.classNo},</if>
-            <if test="info.orderNo != null ">order_no = #{info.orderNo},</if>
-            <if test="info.dictLabel != null  and info.dictLabel != ''">dict_label = #{info.dictLabel},</if>
-            <if test="info.dictValue != null  and info.dictValue != ''">dict_value = #{info.dictValue},</if>
-            <if test="info.cssClass != null  and info.cssClass != ''">css_class = #{info.cssClass},</if>
-            <if test="info.listClass != null  and info.listClass != ''">list_class = #{info.listClass},</if>
-            <if test="info.isDefault != null  and info.isDefault != ''">is_default = #{info.isDefault},</if>
             <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
             <if test="info.branchNo != null  and info.branchNo != ''">branch_no = #{info.branchNo},</if>
             <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
@@ -139,12 +111,12 @@
     </update>
 
     <delete id="HardDeleteByNo">
-        delete from sys_dictinfo
+        delete from sys_dicttype
         where delete_flag='1' and app_code=#{appCode} and dict_no = #{no}
     </delete>
 
     <delete id="HardDeleteByNos">
-        delete from sys_dictinfo
+        delete from sys_dicttype
         where delete_flag='1' and app_code=#{appCode} and dict_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
@@ -152,18 +124,18 @@
     </delete>
 
     <delete id="HardDeleteByCondition">
-        delete from sys_dictinfo
+        delete from sys_dicttype
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>
 
     <delete id="SoftDeleteByNo">
-        update sys_dictinfo set delete_flag='0'
+        update sys_dicttype set delete_flag='0'
         where delete_flag='1' and app_code=#{appCode} and dict_no = #{no}
     </delete>
 
     <delete id="SoftDeleteByNos">
-        update sys_dictinfo set delete_flag='0'
+        update sys_dicttype set delete_flag='0'
         where delete_flag='1' and app_code=#{appCode} and dict_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
@@ -171,7 +143,7 @@
     </delete>
 
     <delete id="SoftDeleteByCondition">
-        update sys_dictinfo set delete_flag='0'
+        update sys_dicttype set delete_flag='0'
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>

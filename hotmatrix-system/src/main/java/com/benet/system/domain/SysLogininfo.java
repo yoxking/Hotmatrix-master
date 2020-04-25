@@ -27,9 +27,13 @@ public class SysLogininfo extends BaseEntity
     @Excel(name = "登录账号")
     private String loginName;
 
+    /** 访问时间 */
+    @Excel(name = "访问时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date loginTime;
+
     /** 登录IP地址 */
     @Excel(name = "登录IP地址")
-    private String ipaddr;
+    private String ipAddress;
 
     /** 登录地点 */
     @Excel(name = "登录地点")
@@ -50,10 +54,6 @@ public class SysLogininfo extends BaseEntity
     /** 提示消息 */
     @Excel(name = "提示消息")
     private String message;
-
-    /** 访问时间 */
-    @Excel(name = "访问时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date loginTime;
 
     /** 分支编号 */
     @Excel(name = "分支编号")
@@ -102,16 +102,25 @@ public class SysLogininfo extends BaseEntity
     {
         return loginName;
     }
-    public void setIpaddr(String ipaddr) 
+    public void setLoginTime(Date loginTime)
     {
-        this.ipaddr = ipaddr;
+        this.loginTime = loginTime;
     }
 
-    public String getIpaddr() 
+    public Date getLoginTime()
     {
-        return ipaddr;
+        return loginTime;
     }
-    public void setLocation(String location) 
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
+    public void setLocation(String location)
     {
         this.location = location;
     }
@@ -155,15 +164,6 @@ public class SysLogininfo extends BaseEntity
     public String getMessage() 
     {
         return message;
-    }
-    public void setLoginTime(Date loginTime) 
-    {
-        this.loginTime = loginTime;
-    }
-
-    public Date getLoginTime() 
-    {
-        return loginTime;
     }
     public void setBranchNo(String branchNo) 
     {
@@ -217,13 +217,13 @@ public class SysLogininfo extends BaseEntity
             .append("id", getId())
             .append("loginNo", getLoginNo())
             .append("loginName", getLoginName())
-            .append("ipaddr", getIpaddr())
+                .append("loginTime", getLoginTime())
+            .append("ipaddr", getIpAddress())
             .append("location", getLocation())
             .append("browser", getBrowser())
             .append("os", getOs())
             .append("status", getStatus())
             .append("message", getMessage())
-            .append("loginTime", getLoginTime())
             .append("branchNo", getBranchNo())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())

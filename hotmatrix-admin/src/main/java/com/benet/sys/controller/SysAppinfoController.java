@@ -45,7 +45,7 @@ public class SysAppinfoController extends BaseController
     /**
      * 首页
      */
-    @PreAuthorize("@ps.hasPermit('system:appinfo:index')")
+    //@PreAuthorize("@ps.hasPermit('system:appinfo:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -56,7 +56,7 @@ public class SysAppinfoController extends BaseController
     /**
      * 查询应用信息列表
      */
-    @PreAuthorize("@ps.hasPermit('system:appinfo:list')")
+    //@PreAuthorize("@ps.hasPermit('system:appinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -68,7 +68,7 @@ public class SysAppinfoController extends BaseController
     /**
      * 新增应用信息
      */
-    @PreAuthorize("@ps.hasPermit('system:appinfo:insert')")
+    //@PreAuthorize("@ps.hasPermit('system:appinfo:insert')")
     @Oplog(title = "应用信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysAppinfo sysAppinfo) {
@@ -82,7 +82,7 @@ public class SysAppinfoController extends BaseController
     /**
      * 编辑应用信息
      */
-    @PreAuthorize("@ps.hasPermit('system:appinfo:update')")
+    //@PreAuthorize("@ps.hasPermit('system:appinfo:update')")
     @Oplog(title = "应用信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult update(@RequestBody SysAppinfo sysAppinfo) {
@@ -94,7 +94,7 @@ public class SysAppinfoController extends BaseController
     /**
      * 保存应用信息
      */
-    @PreAuthorize("@ps.hasPermit('system:appinfo:save')")
+    //@PreAuthorize("@ps.hasPermit('system:appinfo:save')")
     @Oplog(title = "应用信息", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysAppinfo sysAppinfo) {
@@ -113,7 +113,7 @@ public class SysAppinfoController extends BaseController
     /**
      * 删除应用信息
      */
-    @PreAuthorize("@ps.hasPermit('system:appinfo:delete')")
+    //@PreAuthorize("@ps.hasPermit('system:appinfo:delete')")
     @Oplog(title = "应用信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -124,7 +124,7 @@ public class SysAppinfoController extends BaseController
     /**
      * 获取应用信息详细信息
      */
-    @PreAuthorize("@ps.hasPermit('system:appinfo:detail')")
+    //@PreAuthorize("@ps.hasPermit('system:appinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -134,7 +134,7 @@ public class SysAppinfoController extends BaseController
     /**
      * 导出应用信息列表
      */
-    @PreAuthorize("@ps.hasPermit('system:appinfo:export')")
+    //@PreAuthorize("@ps.hasPermit('system:appinfo:export')")
     @Oplog(title = "应用信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

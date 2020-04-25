@@ -2,22 +2,22 @@ package com.benet.system.service;
 
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
-import com.benet.system.domain.SysDictinfo;
+import com.benet.system.domain.SysDictdata;
 
 /**
  * 字典数据Service接口
  * 
  * @author yoxking
- * @date 2020-04-06
+ * @date 2020-04-23
  */
-public interface ISysDictinfoService 
+public interface ISysDictdataService 
 {
     /**
      * 查询所有字典数据列表
      *
      * @return 字典数据集合
      */
-    public List<SysDictinfo> getAllRecords();
+    public List<SysDictdata> getAllRecords();
 
     /**
      * 按分类查询字典数据列表
@@ -25,7 +25,7 @@ public interface ISysDictinfoService
      * @param classNo 分类编号
      * @return 字典数据集合
      */
-    public List<SysDictinfo> getRecordsByClassNo(String classNo);
+    public List<SysDictdata> getRecordsByClassNo(String classNo);
 
     /**
      * 分页查询字典数据列表
@@ -33,7 +33,7 @@ public interface ISysDictinfoService
      * @param model 分页模型
      * @return 字典数据集合
      */
-    public List<SysDictinfo> getRecordsByPaging(PagingModel model);
+    public List<SysDictdata> getRecordsByPaging(PagingModel model);
 
     /**
      * 分页查询字典数据列表
@@ -45,7 +45,7 @@ public interface ISysDictinfoService
      * @param orderType 排序类型
      * @return 字典数据集合
      */
-    public List<SysDictinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType);
+    public List<SysDictdata> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType);
 
     /**
      * 查询字典数据
@@ -53,7 +53,7 @@ public interface ISysDictinfoService
      * @param no 字典数据ID
      * @return 字典数据
      */
-    public SysDictinfo getRecordByNo(String no);
+    public SysDictdata getRecordByNo(String no);
 
     /**
      * 查询字典数据名称
@@ -77,7 +77,7 @@ public interface ISysDictinfoService
      * @param info 字典数据
      * @return 结果
      */
-    public int AddNewRecord(SysDictinfo info);
+    public int AddNewRecord(SysDictdata info);
 
     /**
      * 更新字典数据
@@ -85,7 +85,7 @@ public interface ISysDictinfoService
      * @param info 字典数据
      * @return 结果
      */
-    public int UpdateRecord(SysDictinfo info);
+    public int UpdateRecord(SysDictdata info);
 
     /**
      * 硬删除字典数据

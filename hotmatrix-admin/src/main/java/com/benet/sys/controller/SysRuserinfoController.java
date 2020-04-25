@@ -45,7 +45,7 @@ public class SysRuserinfoController extends BaseController
     /**
      * 首页
      */
-    @PreAuthorize("@ps.hasPermit('system:ruserinfo:index')")
+    //@PreAuthorize("@ps.hasPermit('system:ruserinfo:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -56,7 +56,7 @@ public class SysRuserinfoController extends BaseController
     /**
      * 查询注册用户信息列表
      */
-    @PreAuthorize("@ps.hasPermit('system:ruserinfo:list')")
+    //@PreAuthorize("@ps.hasPermit('system:ruserinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -68,7 +68,7 @@ public class SysRuserinfoController extends BaseController
     /**
      * 新增注册用户信息
      */
-    @PreAuthorize("@ps.hasPermit('system:ruserinfo:insert')")
+    //@PreAuthorize("@ps.hasPermit('system:ruserinfo:insert')")
     @Oplog(title = "注册用户信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysRuserinfo sysRuserinfo) {
@@ -82,7 +82,7 @@ public class SysRuserinfoController extends BaseController
     /**
      * 编辑注册用户信息
      */
-    @PreAuthorize("@ps.hasPermit('system:ruserinfo:update')")
+    //@PreAuthorize("@ps.hasPermit('system:ruserinfo:update')")
     @Oplog(title = "注册用户信息", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysRuserinfo sysRuserinfo) {
@@ -94,7 +94,7 @@ public class SysRuserinfoController extends BaseController
     /**
      * 保存注册用户信息
      */
-    @PreAuthorize("@ps.hasPermit('system:ruserinfo:save')")
+    //@PreAuthorize("@ps.hasPermit('system:ruserinfo:save')")
     @Oplog(title = "注册用户信息", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysRuserinfo sysRuserinfo) {
@@ -113,7 +113,7 @@ public class SysRuserinfoController extends BaseController
     /**
      * 删除注册用户信息
      */
-    @PreAuthorize("@ps.hasPermit('system:ruserinfo:delete')")
+    //@PreAuthorize("@ps.hasPermit('system:ruserinfo:delete')")
     @Oplog(title = "注册用户信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -124,7 +124,7 @@ public class SysRuserinfoController extends BaseController
     /**
      * 获取注册用户信息详细信息
      */
-    @PreAuthorize("@ps.hasPermit('system:ruserinfo:detail')")
+    //@PreAuthorize("@ps.hasPermit('system:ruserinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -134,7 +134,7 @@ public class SysRuserinfoController extends BaseController
     /**
      * 导出注册用户信息列表
      */
-    @PreAuthorize("@ps.hasPermit('system:ruserinfo:export')")
+    //@PreAuthorize("@ps.hasPermit('system:ruserinfo:export')")
     @Oplog(title = "注册用户信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

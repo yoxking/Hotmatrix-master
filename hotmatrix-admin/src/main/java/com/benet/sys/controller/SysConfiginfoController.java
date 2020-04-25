@@ -45,7 +45,7 @@ public class SysConfiginfoController extends BaseController
     /**
      * 首页
      */
-    @PreAuthorize("@ps.hasPermit('system:configinfo:index')")
+    //@PreAuthorize("@ps.hasPermit('system:configinfo:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -56,7 +56,7 @@ public class SysConfiginfoController extends BaseController
     /**
      * 查询参数配置列表
      */
-    @PreAuthorize("@ps.hasPermit('system:configinfo:list')")
+    //@PreAuthorize("@ps.hasPermit('system:configinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -68,7 +68,7 @@ public class SysConfiginfoController extends BaseController
     /**
      * 新增参数配置
      */
-    @PreAuthorize("@ps.hasPermit('system:configinfo:insert')")
+    //@PreAuthorize("@ps.hasPermit('system:configinfo:insert')")
     @Oplog(title = "参数配置", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysConfiginfo sysConfiginfo) {
@@ -82,7 +82,7 @@ public class SysConfiginfoController extends BaseController
     /**
      * 编辑参数配置
      */
-    @PreAuthorize("@ps.hasPermit('system:configinfo:update')")
+    //@PreAuthorize("@ps.hasPermit('system:configinfo:update')")
     @Oplog(title = "参数配置", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysConfiginfo sysConfiginfo) {
@@ -94,7 +94,7 @@ public class SysConfiginfoController extends BaseController
     /**
      * 保存参数配置
      */
-    @PreAuthorize("@ps.hasPermit('system:configinfo:save')")
+    //@PreAuthorize("@ps.hasPermit('system:configinfo:save')")
     @Oplog(title = "参数配置", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysConfiginfo sysConfiginfo) {
@@ -113,7 +113,7 @@ public class SysConfiginfoController extends BaseController
     /**
      * 删除参数配置
      */
-    @PreAuthorize("@ps.hasPermit('system:configinfo:delete')")
+    //@PreAuthorize("@ps.hasPermit('system:configinfo:delete')")
     @Oplog(title = "参数配置", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -124,7 +124,7 @@ public class SysConfiginfoController extends BaseController
     /**
      * 获取参数配置详细信息
      */
-    @PreAuthorize("@ps.hasPermit('system:configinfo:detail')")
+    //@PreAuthorize("@ps.hasPermit('system:configinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -134,7 +134,7 @@ public class SysConfiginfoController extends BaseController
     /**
      * 导出参数配置列表
      */
-    @PreAuthorize("@ps.hasPermit('system:configinfo:export')")
+    //@PreAuthorize("@ps.hasPermit('system:configinfo:export')")
     @Oplog(title = "参数配置", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

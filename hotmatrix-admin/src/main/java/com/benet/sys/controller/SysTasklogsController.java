@@ -45,7 +45,7 @@ public class SysTasklogsController extends BaseController
     /**
      * 首页
      */
-    @PreAuthorize("@ps.hasPermit('system:tasklogs:index')")
+    //@PreAuthorize("@ps.hasPermit('system:tasklogs:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -56,7 +56,7 @@ public class SysTasklogsController extends BaseController
     /**
      * 查询定时任务调度日志列表
      */
-    @PreAuthorize("@ps.hasPermit('system:tasklogs:list')")
+    //@PreAuthorize("@ps.hasPermit('system:tasklogs:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -68,7 +68,7 @@ public class SysTasklogsController extends BaseController
     /**
      * 新增定时任务调度日志
      */
-    @PreAuthorize("@ps.hasPermit('system:tasklogs:insert')")
+    //@PreAuthorize("@ps.hasPermit('system:tasklogs:insert')")
     @Oplog(title = "定时任务调度日志", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysTasklogs sysTasklogs) {
@@ -82,7 +82,7 @@ public class SysTasklogsController extends BaseController
     /**
      * 编辑定时任务调度日志
      */
-    @PreAuthorize("@ps.hasPermit('system:tasklogs:update')")
+    //@PreAuthorize("@ps.hasPermit('system:tasklogs:update')")
     @Oplog(title = "定时任务调度日志", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysTasklogs sysTasklogs) {
@@ -94,7 +94,7 @@ public class SysTasklogsController extends BaseController
     /**
      * 保存定时任务调度日志
      */
-    @PreAuthorize("@ps.hasPermit('system:tasklogs:save')")
+    //@PreAuthorize("@ps.hasPermit('system:tasklogs:save')")
     @Oplog(title = "定时任务调度日志", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysTasklogs sysTasklogs) {
@@ -113,18 +113,18 @@ public class SysTasklogsController extends BaseController
     /**
      * 删除定时任务调度日志
      */
-    @PreAuthorize("@ps.hasPermit('system:tasklogs:delete')")
+    //@PreAuthorize("@ps.hasPermit('system:tasklogs:delete')")
     @Oplog(title = "定时任务调度日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(sysTasklogsService.SoftDeleteByNos(ids));
+        return toAjax(sysTasklogsService.HardDeleteByNos(ids));
     }
 
     /**
      * 获取定时任务调度日志详细信息
      */
-    @PreAuthorize("@ps.hasPermit('system:tasklogs:detail')")
+    //@PreAuthorize("@ps.hasPermit('system:tasklogs:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -134,7 +134,7 @@ public class SysTasklogsController extends BaseController
     /**
      * 导出定时任务调度日志列表
      */
-    @PreAuthorize("@ps.hasPermit('system:tasklogs:export')")
+    //@PreAuthorize("@ps.hasPermit('system:tasklogs:export')")
     @Oplog(title = "定时任务调度日志", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

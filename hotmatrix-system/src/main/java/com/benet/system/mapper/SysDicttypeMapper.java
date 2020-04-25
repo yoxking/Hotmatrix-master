@@ -2,7 +2,7 @@ package com.benet.system.mapper;
 
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
-import com.benet.system.domain.SysDictclass;
+import com.benet.system.domain.SysDicttype;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,10 +10,10 @@ import org.apache.ibatis.annotations.Param;
  * 字典类型Mapper接口
  * 
  * @author yoxking
- * @date 2020-04-06
+ * @date 2020-04-23
  */
 @Mapper
-public interface SysDictclassMapper 
+public interface SysDicttypeMapper 
 {
     /**
      * 查询所有字典类型列表
@@ -21,7 +21,7 @@ public interface SysDictclassMapper
      * @param appCode 应用编号
      * @return 字典类型集合
      */
-    public List<SysDictclass> getAllRecords(@Param("appCode") String appCode);
+    public List<SysDicttype> getAllRecords(@Param("appCode") String appCode);
 
     /**
      * 按分类查询字典类型列表
@@ -30,7 +30,7 @@ public interface SysDictclassMapper
      * @param classNo 分类编号
      * @return 字典类型集合
      */
-    public List<SysDictclass> getRecordsByClassNo(@Param("appCode") String appCode,@Param("classNo") String classNo);
+    public List<SysDicttype> getRecordsByClassNo(@Param("appCode") String appCode,@Param("classNo") String classNo);
 
     /**
      * 分页查询字典类型列表
@@ -39,7 +39,7 @@ public interface SysDictclassMapper
      * @param model 分页模型
      * @return 字典类型集合
      */
-    public List<SysDictclass> getRecordsByPaging(@Param("appCode") String appCode,@Param("model") PagingModel model);
+    public List<SysDicttype> getRecordsByPaging(@Param("appCode") String appCode,@Param("model") PagingModel model);
 
     /**
      * 查询字典类型
@@ -48,7 +48,7 @@ public interface SysDictclassMapper
      * @param no 字典类型ID
      * @return 字典类型
      */
-    public SysDictclass getRecordByNo(@Param("appCode") String appCode,@Param("no") String no);
+    public SysDicttype getRecordByNo(@Param("appCode") String appCode,@Param("no") String no);
 
     /**
      * 查询字典类型名称
@@ -74,7 +74,7 @@ public interface SysDictclassMapper
      * @param info 字典类型
      * @return 结果
      */
-    public int AddNewRecord(@Param("info") SysDictclass info);
+    public int AddNewRecord(@Param("info") SysDicttype info);
 
     /**
      * 更新字典类型
@@ -82,7 +82,7 @@ public interface SysDictclassMapper
      * @param info 字典类型
      * @return 结果
      */
-    public int UpdateRecord(@Param("info") SysDictclass info);
+    public int UpdateRecord(@Param("info") SysDicttype info);
 
     /**
      * 硬删除字典类型

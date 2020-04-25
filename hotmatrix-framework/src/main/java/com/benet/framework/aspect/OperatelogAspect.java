@@ -137,7 +137,7 @@ public class OperatelogAspect
         // 设置action动作
         opertLog.setOpertType(oplog.businessType().ordinal()+"");
         // 设置标题
-        opertLog.setTitle(oplog.title());
+        opertLog.setOplogTitle(oplog.title());
         // 设置操作人类别
         opertLog.setOpertType(oplog.operatorType().ordinal()+"");
         // 是否需要保存request，参数和值

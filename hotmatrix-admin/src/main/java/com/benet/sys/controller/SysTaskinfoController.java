@@ -45,7 +45,7 @@ public class SysTaskinfoController extends BaseController
     /**
      * 首页
      */
-    @PreAuthorize("@ps.hasPermit('system:taskinfo:index')")
+    //@PreAuthorize("@ps.hasPermit('system:taskinfo:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -56,7 +56,7 @@ public class SysTaskinfoController extends BaseController
     /**
      * 查询定时任务调度列表
      */
-    @PreAuthorize("@ps.hasPermit('system:taskinfo:list')")
+    //@PreAuthorize("@ps.hasPermit('system:taskinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -68,7 +68,7 @@ public class SysTaskinfoController extends BaseController
     /**
      * 新增定时任务调度
      */
-    @PreAuthorize("@ps.hasPermit('system:taskinfo:insert')")
+    //@PreAuthorize("@ps.hasPermit('system:taskinfo:insert')")
     @Oplog(title = "定时任务调度", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysTaskinfo sysTaskinfo) {
@@ -82,7 +82,7 @@ public class SysTaskinfoController extends BaseController
     /**
      * 编辑定时任务调度
      */
-    @PreAuthorize("@ps.hasPermit('system:taskinfo:update')")
+    //@PreAuthorize("@ps.hasPermit('system:taskinfo:update')")
     @Oplog(title = "定时任务调度", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysTaskinfo sysTaskinfo) {
@@ -94,7 +94,7 @@ public class SysTaskinfoController extends BaseController
     /**
      * 保存定时任务调度
      */
-    @PreAuthorize("@ps.hasPermit('system:taskinfo:save')")
+    //@PreAuthorize("@ps.hasPermit('system:taskinfo:save')")
     @Oplog(title = "定时任务调度", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysTaskinfo sysTaskinfo) {
@@ -113,7 +113,7 @@ public class SysTaskinfoController extends BaseController
     /**
      * 删除定时任务调度
      */
-    @PreAuthorize("@ps.hasPermit('system:taskinfo:delete')")
+    //@PreAuthorize("@ps.hasPermit('system:taskinfo:delete')")
     @Oplog(title = "定时任务调度", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -124,7 +124,7 @@ public class SysTaskinfoController extends BaseController
     /**
      * 获取定时任务调度详细信息
      */
-    @PreAuthorize("@ps.hasPermit('system:taskinfo:detail')")
+    //@PreAuthorize("@ps.hasPermit('system:taskinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -134,7 +134,7 @@ public class SysTaskinfoController extends BaseController
     /**
      * 导出定时任务调度列表
      */
-    @PreAuthorize("@ps.hasPermit('system:taskinfo:export')")
+    //@PreAuthorize("@ps.hasPermit('system:taskinfo:export')")
     @Oplog(title = "定时任务调度", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

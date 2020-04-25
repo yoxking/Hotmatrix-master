@@ -45,7 +45,7 @@ public class SysOperatelogsController extends BaseController
     /**
      * 首页
      */
-    @PreAuthorize("@ps.hasPermit('system:operatelogs:index')")
+    //@PreAuthorize("@ps.hasPermit('system:operatelogs:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -56,7 +56,7 @@ public class SysOperatelogsController extends BaseController
     /**
      * 查询操作日志记录列表
      */
-    @PreAuthorize("@ps.hasPermit('system:operatelogs:list')")
+    //@PreAuthorize("@ps.hasPermit('system:operatelogs:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -68,7 +68,7 @@ public class SysOperatelogsController extends BaseController
     /**
      * 新增操作日志记录
      */
-    @PreAuthorize("@ps.hasPermit('system:operatelogs:insert')")
+    //@PreAuthorize("@ps.hasPermit('system:operatelogs:insert')")
     @Oplog(title = "操作日志记录", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysOperatelogs sysOperatelogs) {
@@ -82,7 +82,7 @@ public class SysOperatelogsController extends BaseController
     /**
      * 编辑操作日志记录
      */
-    @PreAuthorize("@ps.hasPermit('system:operatelogs:update')")
+    //@PreAuthorize("@ps.hasPermit('system:operatelogs:update')")
     @Oplog(title = "操作日志记录", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysOperatelogs sysOperatelogs) {
@@ -94,7 +94,7 @@ public class SysOperatelogsController extends BaseController
     /**
      * 保存操作日志记录
      */
-    @PreAuthorize("@ps.hasPermit('system:operatelogs:save')")
+    //@PreAuthorize("@ps.hasPermit('system:operatelogs:save')")
     @Oplog(title = "操作日志记录", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysOperatelogs sysOperatelogs) {
@@ -113,18 +113,18 @@ public class SysOperatelogsController extends BaseController
     /**
      * 删除操作日志记录
      */
-    @PreAuthorize("@ps.hasPermit('system:operatelogs:delete')")
+    //@PreAuthorize("@ps.hasPermit('system:operatelogs:delete')")
     @Oplog(title = "操作日志记录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(sysOperatelogsService.SoftDeleteByNos(ids));
+        return toAjax(sysOperatelogsService.HardDeleteByNos(ids));
     }
 
     /**
      * 获取操作日志记录详细信息
      */
-    @PreAuthorize("@ps.hasPermit('system:operatelogs:detail')")
+    //@PreAuthorize("@ps.hasPermit('system:operatelogs:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -134,7 +134,7 @@ public class SysOperatelogsController extends BaseController
     /**
      * 导出操作日志记录列表
      */
-    @PreAuthorize("@ps.hasPermit('system:operatelogs:export')")
+    //@PreAuthorize("@ps.hasPermit('system:operatelogs:export')")
     @Oplog(title = "操作日志记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

@@ -7,8 +7,8 @@
     <resultMap type="SysOperatelogs" id="SysOperatelogsResult">
         <result property="id" column="id"/>
         <result property="oplogNo" column="oplog_no"/>
+        <result property="oplogTitle" column="oplog_title"/>
         <result property="oplogType" column="oplog_type"/>
-        <result property="title" column="title"/>
         <result property="methodName" column="method_name"/>
         <result property="requestType" column="request_type"/>
         <result property="opertType" column="opert_type"/>
@@ -35,7 +35,7 @@
     </resultMap>
 
     <sql id="selectSysOperatelogsVo">
-        select id, oplog_no, oplog_type, title, method_name, request_type, opert_type, opert_name, dept_name, opert_url, opert_ip, opert_location, opert_params, json_result, opert_status, error_msg, opert_time, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_operatelogs
+        select id, oplog_no, oplog_title, oplog_type, method_name, request_type, opert_type, opert_name, dept_name, opert_url, opert_ip, opert_location, opert_params, json_result, opert_status, error_msg, opert_time, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_operatelogs
     </sql>
 
     <select id="getAllRecords" resultMap="SysOperatelogsResult">
@@ -74,8 +74,8 @@
     <insert id="AddNewRecord" parameterType="SysOperatelogs" useGeneratedKeys="true" keyProperty="id">
         insert into sys_operatelogs (
         <if test="info.oplogNo != null  and info.oplogNo != ''">oplog_no,</if>
+        <if test="info.oplogTitle != null  and info.oplogTitle != ''">oplog_title,</if>
         <if test="info.oplogType != null  and info.oplogType != ''">oplog_type,</if>
-        <if test="info.title != null  and info.title != ''">title,</if>
         <if test="info.methodName != null  and info.methodName != ''">method_name,</if>
         <if test="info.requestType != null  and info.requestType != ''">request_type,</if>
         <if test="info.opertType != null  and info.opertType != ''">opert_type,</if>
@@ -101,8 +101,8 @@
         <if test="info.version != null ">version</if>
         )values(
         <if test="info.oplogNo != null  and info.oplogNo != ''">#{info.oplogNo},</if>
+        <if test="info.oplogTitle != null  and info.oplogTitle != ''">#{info.oplogTitle},</if>
         <if test="info.oplogType != null  and info.oplogType != ''">#{info.oplogType},</if>
-        <if test="info.title != null  and info.title != ''">#{info.title},</if>
         <if test="info.methodName != null  and info.methodName != ''">#{info.methodName},</if>
         <if test="info.requestType != null  and info.requestType != ''">#{info.requestType},</if>
         <if test="info.opertType != null  and info.opertType != ''">#{info.opertType},</if>
@@ -133,8 +133,8 @@
         update sys_operatelogs
         <set>
             <if test="info.oplogNo != null  and info.oplogNo != ''">oplog_no = #{info.oplogNo},</if>
+            <if test="info.oplogTitle != null  and info.oplogTitle != ''">oplog_title = #{info.oplogTitle},</if>
             <if test="info.oplogType != null  and info.oplogType != ''">oplog_type = #{info.oplogType},</if>
-            <if test="info.title != null  and info.title != ''">title = #{info.title},</if>
             <if test="info.methodName != null  and info.methodName != ''">method_name = #{info.methodName},</if>
             <if test="info.requestType != null  and info.requestType != ''">request_type = #{info.requestType},</if>
             <if test="info.opertType != null  and info.opertType != ''">opert_type = #{info.opertType},</if>

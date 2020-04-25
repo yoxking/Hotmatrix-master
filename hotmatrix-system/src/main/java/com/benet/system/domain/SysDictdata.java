@@ -5,13 +5,15 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.benet.common.annotation.Excel;
 import com.benet.common.core.domain.BaseEntity;
 
+import java.util.Date;
+
 /**
- * 字典数据对象 sys_dictinfo
+ * 字典数据对象 sys_dictdata
  * 
  * @author yoxking
- * @date 2020-04-06
+ * @date 2020-04-23
  */
-public class SysDictinfo extends BaseEntity
+public class SysDictdata extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
@@ -20,31 +22,27 @@ public class SysDictinfo extends BaseEntity
 
     /** 字典主键 */
     @Excel(name = "字典主键")
-    private String dictNo;
-
-    /** 字典编码 */
-    @Excel(name = "字典编码")
-    private String dictCode;
+    private String dataNo;
 
     /** 字典类别 */
     @Excel(name = "字典类别")
     private String dictType;
 
-    /** 字典类型 */
-    @Excel(name = "字典类型")
-    private String classNo;
-
-    /** 字典排序 */
-    @Excel(name = "字典排序")
-    private Integer orderNo;
+    /** 字典编码 */
+    @Excel(name = "字典编码")
+    private String dictCode;
 
     /** 字典标签 */
     @Excel(name = "字典标签")
-    private String dictLabel;
+    private String dictKey;
 
     /** 字典键值 */
     @Excel(name = "字典键值")
     private String dictValue;
+
+    /** 字典排序 */
+    @Excel(name = "字典排序")
+    private Integer orderNo;
 
     /** 样式属性（其他样式扩展） */
     @Excel(name = "样式属性", readConverterExp = "其=他样式扩展")
@@ -65,6 +63,18 @@ public class SysDictinfo extends BaseEntity
     /** 分支编号 */
     @Excel(name = "分支编号")
     private String branchNo;
+
+    /** 创建者 */
+    private String createBy;
+
+    /** 创建时间 */
+    private Date createTime;
+
+    /** 更新者 */
+    private String updateBy;
+
+    /** 更新时间 */
+    private Date updateTime;
 
     /** 删除标志（1代表存在 0代表删除） */
     @Excel(name = "删除标志", readConverterExp = "1=代表存在,0=代表删除")
@@ -91,23 +101,14 @@ public class SysDictinfo extends BaseEntity
     {
         return id;
     }
-    public void setDictNo(String dictNo) 
+    public void setDataNo(String dataNo) 
     {
-        this.dictNo = dictNo;
+        this.dataNo = dataNo;
     }
 
-    public String getDictNo() 
+    public String getDataNo() 
     {
-        return dictNo;
-    }
-    public void setDictCode(String dictCode) 
-    {
-        this.dictCode = dictCode;
-    }
-
-    public String getDictCode() 
-    {
-        return dictCode;
+        return dataNo;
     }
     public void setDictType(String dictType) 
     {
@@ -118,32 +119,23 @@ public class SysDictinfo extends BaseEntity
     {
         return dictType;
     }
-    public void setClassNo(String classNo) 
+    public void setDictCode(String dictCode) 
     {
-        this.classNo = classNo;
+        this.dictCode = dictCode;
     }
 
-    public String getClassNo() 
+    public String getDictCode() 
     {
-        return classNo;
+        return dictCode;
     }
-    public void setOrderNo(Integer orderNo) 
+    public void setDictKey(String dictKey) 
     {
-        this.orderNo = orderNo;
-    }
-
-    public Integer getOrderNo() 
-    {
-        return orderNo;
-    }
-    public void setDictLabel(String dictLabel) 
-    {
-        this.dictLabel = dictLabel;
+        this.dictKey = dictKey;
     }
 
-    public String getDictLabel() 
+    public String getDictKey() 
     {
-        return dictLabel;
+        return dictKey;
     }
     public void setDictValue(String dictValue) 
     {
@@ -153,6 +145,15 @@ public class SysDictinfo extends BaseEntity
     public String getDictValue() 
     {
         return dictValue;
+    }
+    public void setOrderNo(Integer orderNo) 
+    {
+        this.orderNo = orderNo;
+    }
+
+    public Integer getOrderNo() 
+    {
+        return orderNo;
     }
     public void setCssClass(String cssClass) 
     {
@@ -199,6 +200,42 @@ public class SysDictinfo extends BaseEntity
     {
         return branchNo;
     }
+    public void setCreateBy(String createBy) 
+    {
+        this.createBy = createBy;
+    }
+
+    public String getCreateBy() 
+    {
+        return createBy;
+    }
+    public void setCreateTime(Date createTime) 
+    {
+        this.createTime = createTime;
+    }
+
+    public Date getCreateTime() 
+    {
+        return createTime;
+    }
+    public void setUpdateBy(String updateBy) 
+    {
+        this.updateBy = updateBy;
+    }
+
+    public String getUpdateBy() 
+    {
+        return updateBy;
+    }
+    public void setUpdateTime(Date updateTime) 
+    {
+        this.updateTime = updateTime;
+    }
+
+    public Date getUpdateTime() 
+    {
+        return updateTime;
+    }
     public void setDeleteFlag(String deleteFlag) 
     {
         this.deleteFlag = deleteFlag;
@@ -240,13 +277,12 @@ public class SysDictinfo extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("dictNo", getDictNo())
-            .append("dictCode", getDictCode())
+            .append("dataNo", getDataNo())
             .append("dictType", getDictType())
-            .append("classNo", getClassNo())
-            .append("orderNo", getOrderNo())
-            .append("dictLabel", getDictLabel())
+            .append("dictCode", getDictCode())
+            .append("dictKey", getDictKey())
             .append("dictValue", getDictValue())
+            .append("orderNo", getOrderNo())
             .append("cssClass", getCssClass())
             .append("listClass", getListClass())
             .append("isDefault", getIsDefault())

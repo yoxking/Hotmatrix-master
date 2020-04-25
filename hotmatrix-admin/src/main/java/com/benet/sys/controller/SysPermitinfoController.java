@@ -76,11 +76,11 @@ public class SysPermitinfoController extends BaseController
     @GetMapping(value = "/tree")
     public TableDataInfo tree() {
         int count = sysPermitinfoService.getCountByCondition("");
-        List<PermitInfoVo> list = buildDeptTree("0");
+        List<PermitInfoVo> list = buildPermitTree("0");
         return getDataTable(list, count);
     }
 
-    private List<PermitInfoVo> buildDeptTree(String parentNo) {
+    private List<PermitInfoVo> buildPermitTree(String parentNo) {
 
         List<PermitInfoVo> permitTree = null;
         PermitInfoVo permit = null;
@@ -97,7 +97,7 @@ public class SysPermitinfoController extends BaseController
                 permit.setParentNo(info.getParentNo());
                 permit.setOrderNo(info.getOrderNo());
                 permit.setComments(info.getComments());
-                permit.setChildren(buildDeptTree(info.getPermitNo()));
+                permit.setChildren(buildPermitTree(info.getPermitNo()));
                 permitTree.add(permit);
             }
         }

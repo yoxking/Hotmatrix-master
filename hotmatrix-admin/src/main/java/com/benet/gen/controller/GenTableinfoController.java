@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.benet.common.annotation.Oplog;
 import com.benet.common.core.controller.BaseController;
 import com.benet.common.core.domain.AjaxResult;
+import com.benet.common.core.pager.PageRequest;
 import com.benet.common.core.pager.TableDataInfo;
 import com.benet.common.core.text.ConvertHelper;
 import com.benet.common.enums.BusinessType;
@@ -16,6 +17,7 @@ import com.benet.gen.domain.SysTabcolumn;
 import com.benet.gen.domain.SysTableinfo;
 import com.benet.gen.service.ISysTabcolumnService;
 import com.benet.gen.service.ISysTableinfoService;
+import com.benet.system.domain.SysDictdata;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -34,8 +36,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author yoxking
  */
 @RestController
-@RequestMapping("/gen")
-public class GenController extends BaseController
+@RequestMapping("/gen/tableinfo")
+public class GenTableinfoController extends BaseController
 {
     @Autowired
     private ISysTableinfoService tableInfoService;
@@ -46,11 +48,12 @@ public class GenController extends BaseController
     /**
      * 查询代码生成列表
      */
-    @GetMapping("/list")
-    public TableDataInfo list()
+    @PostMapping(value = "/list")
+    public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        List<SysTableinfo> list = tableInfoService.getRecordsByPaging(1,10,"","id","Asc");
-        return getDataTable(list);
+        int count = tableInfoService.getCountByCondition(pRequest.getCondition());
+        List<SysTableinfo> list = tableInfoService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        return getDataTable(list, count);
     }
 
     /**

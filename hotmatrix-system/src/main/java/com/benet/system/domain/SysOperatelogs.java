@@ -23,13 +23,13 @@ public class SysOperatelogs extends BaseEntity
     @Excel(name = "日志主键")
     private String oplogNo;
 
+    /** 模块标题 */
+    @Excel(name = "模块标题")
+    private String oplogTitle;
+
     /** 业务类型（0其它 1新增 2修改 3删除） */
     @Excel(name = "业务类型", readConverterExp = "0=其它,1=新增,2=修改,3=删除")
     private String oplogType;
-
-    /** 模块标题 */
-    @Excel(name = "模块标题")
-    private String title;
 
     /** 方法名称 */
     @Excel(name = "方法名称")
@@ -134,16 +134,16 @@ public class SysOperatelogs extends BaseEntity
     {
         return oplogType;
     }
-    public void setTitle(String title) 
-    {
-        this.title = title;
+
+    public String getOplogTitle() {
+        return oplogTitle;
     }
 
-    public String getTitle() 
-    {
-        return title;
+    public void setOplogTitle(String oplogTitle) {
+        this.oplogTitle = oplogTitle;
     }
-    public void setMethodName(String methodName) 
+
+    public void setMethodName(String methodName)
     {
         this.methodName = methodName;
     }
@@ -321,7 +321,7 @@ public class SysOperatelogs extends BaseEntity
             .append("id", getId())
             .append("oplogNo", getOplogNo())
             .append("oplogType", getOplogType())
-            .append("title", getTitle())
+            .append("title", getOplogTitle())
             .append("methodName", getMethodName())
             .append("requestType", getRequestType())
             .append("opertType", getOpertType())

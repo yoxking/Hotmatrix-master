@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import com.benet.system.domain.SysDictclass;
-import com.benet.system.service.ISysDictclassService;
+import com.benet.system.domain.SysDicttype;
+import com.benet.system.service.ISysDicttypeService;
 import com.benet.common.annotation.Oplog;
 import com.benet.common.core.controller.BaseController;
 import com.benet.common.core.domain.AjaxResult;
@@ -31,21 +31,21 @@ import com.benet.common.core.pager.TableDataInfo;
  * 字典类型Controller
  * 
  * @author yoxking
- * @date 2020-04-20
+ * @date 2020-04-23
  */
 @RestController
-@RequestMapping("/sys/dictclass")
-public class SysDictclassController extends BaseController
+@RequestMapping("/sys/dicttype")
+public class SysDicttypeController extends BaseController
 {
     @Autowired
     private MyJwtokenService tokenService;
 
     @Autowired
-    private ISysDictclassService sysDictclassService;
+    private ISysDicttypeService sysDicttypeService;
     /**
      * 首页
      */
-    @PreAuthorize("@ps.hasPermit('system:dictclass:index')")
+    //@PreAuthorize("@ps.hasPermit('system:dicttype:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -56,94 +56,94 @@ public class SysDictclassController extends BaseController
     /**
      * 查询字典类型列表
      */
-    @PreAuthorize("@ps.hasPermit('system:dictclass:list')")
+    //@PreAuthorize("@ps.hasPermit('system:dicttype:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = sysDictclassService.getCountByCondition(pRequest.getCondition());
-        List<SysDictclass> list = sysDictclassService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        int count = sysDicttypeService.getCountByCondition(pRequest.getCondition());
+        List<SysDicttype> list = sysDicttypeService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
     /**
      * 新增字典类型
      */
-    @PreAuthorize("@ps.hasPermit('system:dictclass:insert')")
+    //@PreAuthorize("@ps.hasPermit('system:dicttype:insert')")
     @Oplog(title = "字典类型", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult insert(@RequestBody SysDictclass sysDictclass) {
+    public AjaxResult insert(@RequestBody SysDicttype sysDicttype) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        sysDictclass.setClassNo(UuidUtils.shortUUID());
-        sysDictclass.setCreateBy(loginUser.getUser().getUserNo());
-        sysDictclass.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysDictclassService.AddNewRecord(sysDictclass));
+        sysDicttype.setDictNo(UuidUtils.shortUUID());
+        sysDicttype.setCreateBy(loginUser.getUser().getUserNo());
+        sysDicttype.setUpdateBy(loginUser.getUser().getUserNo());
+        return toAjax(sysDicttypeService.AddNewRecord(sysDicttype));
     }
 
     /**
      * 编辑字典类型
      */
-    @PreAuthorize("@ps.hasPermit('system:dictclass:update')")
+    //@PreAuthorize("@ps.hasPermit('system:dicttype:update')")
     @Oplog(title = "字典类型", businessType = BusinessType.UPDATE)
     @PutMapping
-        public AjaxResult update(@RequestBody SysDictclass sysDictclass) {
+        public AjaxResult update(@RequestBody SysDicttype sysDicttype) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        sysDictclass.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysDictclassService.UpdateRecord(sysDictclass));
+        sysDicttype.setUpdateBy(loginUser.getUser().getUserNo());
+            return toAjax(sysDicttypeService.UpdateRecord(sysDicttype));
         }
 
     /**
      * 保存字典类型
      */
-    @PreAuthorize("@ps.hasPermit('system:dictclass:save')")
+    //@PreAuthorize("@ps.hasPermit('system:dicttype:save')")
     @Oplog(title = "字典类型", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
-    public AjaxResult save(@RequestBody SysDictclass sysDictclass) {
+    public AjaxResult save(@RequestBody SysDicttype sysDicttype) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(sysDictclassService.getRecordByNo(sysDictclass.getClassNo()))) {
-            sysDictclass.setClassNo(UuidUtils.shortUUID());
-            sysDictclass.setCreateBy(loginUser.getUser().getUserNo());
-            sysDictclass.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysDictclassService.AddNewRecord(sysDictclass));
+        if (StringUtils.isNull(sysDicttypeService.getRecordByNo(sysDicttype.getDictNo()))) {
+            sysDicttype.setDictNo(UuidUtils.shortUUID());
+            sysDicttype.setCreateBy(loginUser.getUser().getUserNo());
+            sysDicttype.setUpdateBy(loginUser.getUser().getUserNo());
+            return toAjax(sysDicttypeService.AddNewRecord(sysDicttype));
         } else {
-            sysDictclass.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysDictclassService.UpdateRecord(sysDictclass));
+            sysDicttype.setUpdateBy(loginUser.getUser().getUserNo());
+            return toAjax(sysDicttypeService.UpdateRecord(sysDicttype));
         }
     }
 
     /**
      * 删除字典类型
      */
-    @PreAuthorize("@ps.hasPermit('system:dictclass:delete')")
+    //@PreAuthorize("@ps.hasPermit('system:dicttype:delete')")
     @Oplog(title = "字典类型", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(sysDictclassService.SoftDeleteByNos(ids));
+        return toAjax(sysDicttypeService.SoftDeleteByNos(ids));
     }
 
     /**
      * 获取字典类型详细信息
      */
-    @PreAuthorize("@ps.hasPermit('system:dictclass:detail')")
+    //@PreAuthorize("@ps.hasPermit('system:dicttype:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(sysDictclassService.getRecordByNo(id));
+        return AjaxResult.success(sysDicttypeService.getRecordByNo(id));
     }
 
     /**
      * 导出字典类型列表
      */
-    @PreAuthorize("@ps.hasPermit('system:dictclass:export')")
+    //@PreAuthorize("@ps.hasPermit('system:dicttype:export')")
     @Oplog(title = "字典类型", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = sysDictclassService.getCountByCondition(pRequest.getCondition());
+        int count = sysDicttypeService.getCountByCondition(pRequest.getCondition());
 
-        List<SysDictclass> list = sysDictclassService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
-        ExcelUtils<SysDictclass> util = new ExcelUtils<SysDictclass>(SysDictclass.class);
-        return util.exportExcel(list, "SysDictclass");
+        List<SysDicttype> list = sysDicttypeService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        ExcelUtils<SysDicttype> util = new ExcelUtils<SysDicttype>(SysDicttype.class);
+        return util.exportExcel(list, "SysDicttype");
     }
 
 }
