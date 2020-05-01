@@ -22,6 +22,7 @@ public class LoginUser implements UserDetails
      */
     private String token;
 
+
     /**
      * 登陆时间
      */
@@ -89,10 +90,15 @@ public class LoginUser implements UserDetails
         return user.getPassword();
     }
 
+    public String getUserno()
+    {
+        return user.getUserNo();
+    }
+
     @Override
     public String getUsername()
     {
-        return user.getUserCnname();
+        return user.getLoginName();
     }
 
     /**

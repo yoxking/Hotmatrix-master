@@ -55,6 +55,15 @@ public interface ISysConfiginfoService
      */
     public SysConfiginfo getRecordByNo(String no);
 
+
+    /**
+     * 查询参数配置
+     *
+     * @param configKey 参数配置ID
+     * @return 参数配置
+     */
+    public SysConfiginfo getRecordByConfigKey(String configKey);
+
     /**
      * 查询参数配置名称
      *
@@ -134,4 +143,31 @@ public interface ISysConfiginfoService
      * @return 结果
      */
     public int SoftDeleteByCondition(String condition);
+
+
+    /**
+     * 校验参数键名是否唯一
+     *
+     * @param configKey 参数键名
+     * @return 结果
+     */
+    public int checkConfigKeyUnique(String configKey);
+
+    /**
+     * 根据键名返回键值
+     *
+     * @param configKey 参数键名
+     * @return 参数键值
+     */
+    public String getConfigValueByKey(String configKey);
+
+    /**
+     * 保存参数配置
+     *
+     * @param configKey 参数配置
+     * @param configValue 参数配置
+     * @param configType 参数配置
+     * @return 结果
+     */
+    public int saveConfigValueByKey(String configKey,String configValue,String configType);
 }

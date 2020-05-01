@@ -49,9 +49,10 @@
         where delete_flag='1' and app_code=#{appCode} and config_no = #{no}
     </select>
 
-    <select id="getRecordByKey" resultMap="SysConfiginfoResult">
+
+    <select id="getRecordByConfigKey" resultMap="SysConfiginfoResult">
         <include refid="selectSysConfiginfoVo"/>
-        where delete_flag='1' and app_code=#{appCode} and config_key = #{key}
+        where delete_flag='1' and app_code=#{appCode} and config_key = #{configKey}
     </select>
 
     <select id="getRecordNameByNo" resultType="String">
@@ -160,5 +161,15 @@
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>
+
+    <select id="checkConfigKeyUnique" resultType="Integer">
+        select count(*) from sys_configinfo
+        where delete_flag='1' and app_code=#{appCode} and config_key = #{configKey}
+    </select>
+
+    <select id="getConfigValueByKey" resultType="String">
+        select config_value from sys_configinfo
+        where delete_flag='1' and app_code=#{appCode} and config_key = #{configKey}
+    </select>
 
 </mapper>

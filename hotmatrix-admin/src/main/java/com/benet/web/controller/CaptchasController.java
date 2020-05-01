@@ -1,4 +1,4 @@
-package com.benet.sys.controller;
+package com.benet.web.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author yoxking
  */
 @RestController
-@RequestMapping("/sys")
-public class PubCaptchaController
+@RequestMapping("/web")
+public class CaptchasController
 {
     @Autowired
     private RedisUtils redisUtils;

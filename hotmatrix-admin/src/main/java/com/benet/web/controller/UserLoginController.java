@@ -1,4 +1,4 @@
-package com.benet.sys.controller;
+package com.benet.web.controller;
 
 import com.benet.common.constant.JwtConstants;
 import com.benet.common.core.domain.AjaxResult;
@@ -26,8 +26,8 @@ import java.util.Set;
  */
 @Api(tags = "SysLogin")
 @RestController
-@RequestMapping("/sys")
-public class SysUserLoginController
+@RequestMapping("/web")
+public class UserLoginController
 {
     @Autowired
     private SysLoginService loginService;

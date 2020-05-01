@@ -21,9 +21,6 @@ public class GlobalConfig
     /** 版权年份 */
     private static String copyrightYear;
 
-    /** 实例演示开关 */
-    private static boolean demoEnabled;
-
     /** 上传路径 */
     private static String profile;
 
@@ -64,16 +61,6 @@ public class GlobalConfig
     public void setCopyrightYear(String copyrightYear)
     {
         GlobalConfig.copyrightYear = copyrightYear;
-    }
-
-    public static boolean isDemoEnabled()
-    {
-        return demoEnabled;
-    }
-
-    public void setDemoEnabled(boolean demoEnabled)
-    {
-        GlobalConfig.demoEnabled = demoEnabled;
     }
 
     public static String getProfile()

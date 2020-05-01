@@ -92,7 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 // 过滤请求
                 .authorizeRequests()
                 // 对于登录login 验证码captchaImage 允许匿名访问
-                .antMatchers("/sys/login", "/sys/codeImage").anonymous()
+                .antMatchers("/web/login", "/web/codeImage").anonymous()
                 .antMatchers(
                         HttpMethod.GET,
                         "/*.html",
@@ -102,8 +102,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 ).permitAll()
                 //.antMatchers("/web/appclass/**").anonymous()
                 .antMatchers("/profile/**").anonymous()
-                .antMatchers("/common/download**").anonymous()
-                .antMatchers("/common/download/resource**").anonymous()
+                .antMatchers("/web/download**").anonymous()
+                .antMatchers("/web/download/resource**").anonymous()
                 .antMatchers("/swagger-ui.html").anonymous()
                 .antMatchers("/swagger-resources/**").anonymous()
                 .antMatchers("/webjars/**").anonymous()
@@ -113,7 +113,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .anyRequest().authenticated()
                 .and()
                 .headers().frameOptions().disable();
-        httpSecurity.logout().logoutUrl("/sys/logout").logoutSuccessHandler(sylogoutSuccessHandler);
+        httpSecurity.logout().logoutUrl("/web/logout").logoutSuccessHandler(sylogoutSuccessHandler);
         // 添加JWT filter
         httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }

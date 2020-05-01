@@ -5,6 +5,7 @@ import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
+import com.benet.common.utils.uuid.UuidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.benet.system.mapper.SysConfiginfoMapper;
@@ -102,6 +103,20 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
     public SysConfiginfo getRecordByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
             return sysConfiginfoMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
+        }
+        return null;
+    }
+
+    /**
+     * 查询参数配置
+     *
+     * @param configKey 参数配置Key
+     * @return 参数配置
+     */
+    @Override
+    public SysConfiginfo getRecordByConfigKey(String configKey) {
+        if (StringUtils.isNotEmpty(configKey)) {
+            return sysConfiginfoMapper.getRecordByConfigKey(GlobalConfig.getAppCode(),configKey);
         }
         return null;
     }
@@ -235,5 +250,65 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
     @Override
     public int SoftDeleteByCondition(String condition) {
         return sysConfiginfoMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
+    }
+
+
+    /**
+     * 校验参数键名是否唯一
+     *
+     * @param configKey 参数键名
+     * @return 结果
+     */
+    @Override
+    public int checkConfigKeyUnique(String configKey){
+        return sysConfiginfoMapper.checkConfigKeyUnique(GlobalConfig.getAppCode(),configKey);
+    }
+
+    /**
+     * 根据键名返回键值
+     *
+     * @param configKey 参数键名
+     * @return 参数键值
+     */
+    @Override
+    public String getConfigValueByKey(String configKey){
+        return sysConfiginfoMapper.getConfigValueByKey(GlobalConfig.getAppCode(),configKey);
+    }
+
+
+    /**
+     * 保存参数配置
+     *
+     * @param configKey 参数配置
+     * @param configValue 参数配置
+     * @param configType 参数配置
+     * @return 结果
+     */
+    public int saveConfigValueByKey(String configKey,String configValue,String configType){
+        SysConfiginfo info=sysConfiginfoMapper.getRecordByConfigKey(GlobalConfig.getAppCode(),configKey);
+        if(info==null) {
+            info=new SysConfiginfo();
+            info.setConfigNo(UuidUtils.shortUUID());
+            info.setConfigName(configKey);
+            info.setConfigKey(configKey);
+            info.setConfigValue(configValue);
+            info.setConfigType(configType);
+            info.setCheckState("1");
+            info.setBranchNo(GlobalConfig.getBranchNo());
+            info.setCreateBy("admin");
+            info.setCreateTime(DateUtils.getNowDate());
+            info.setUpdateBy("admin");
+            info.setUpdateTime(DateUtils.getNowDate());
+            info.setDeleteFlag("1");
+            info.setComments("");
+            info.setAppCode(GlobalConfig.getAppCode());
+            info.setVersion(1L);
+
+            return sysConfiginfoMapper.AddNewRecord(info);
+        }else{
+            info.setConfigValue(configValue);
+            info.setUpdateTime(DateUtils.getNowDate());
+            return sysConfiginfoMapper.UpdateRecord(info);
+        }
     }
 }
