@@ -1,11 +1,17 @@
 package com.benet.sys.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.benet.common.core.pager.PageRequest;
 import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
+import com.benet.sys.vmodel.ItemObjectVo;
+import com.benet.system.domain.SysAppclass;
+import com.benet.system.domain.SysDicttype;
+import com.benet.system.service.ISysAppclassService;
+import com.benet.system.service.ISysDicttypeService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +47,9 @@ public class SysAppinfoController extends BaseController
     private MyJwtokenService tokenService;
 
     @Autowired
+    private ISysAppclassService sysAppclassService;
+
+    @Autowired
     private ISysAppinfoService sysAppinfoService;
     /**
      * 首页
@@ -63,6 +72,34 @@ public class SysAppinfoController extends BaseController
         int count = sysAppinfoService.getCountByCondition(pRequest.getCondition());
         List<SysAppinfo> list = sysAppinfoService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
+    }
+
+    /**
+     * 查询内容信息列表
+     */
+    //@PreAuthorize("@ps.hasPermit('system:contentinfo:listall')")
+    @GetMapping(value = "/classlist")
+    public TableDataInfo classlist()
+    {
+        List<SysAppclass> list = sysAppclassService.getAllRecords();
+        return getDataTable(convertList(list), list.size());
+    }
+
+    private List<ItemObjectVo> convertList(List<SysAppclass> list){
+
+        List<ItemObjectVo> itemList=new ArrayList<>();
+        ItemObjectVo item=null;
+        if(list!=null&&list.size()>0){
+            for(SysAppclass info:list){
+                item=new ItemObjectVo();
+                item.setId(info.getClassNo());
+                item.setLabel(info.getClassName());
+                item.setChildren(null);
+
+                itemList.add(item);
+            }
+        }
+        return itemList;
     }
 
     /**

@@ -1,10 +1,13 @@
 package com.benet.sys.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
+import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PageRequest;
 import com.benet.common.utils.date.DateUtils;
+import com.benet.common.utils.file.FileUploadUtils;
 import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
@@ -12,14 +15,8 @@ import com.benet.framework.security.service.MyJwtokenService;
 import com.benet.framework.utils.SecurityUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.benet.system.domain.SysSuserinfo;
 import com.benet.system.service.ISysSuserinfoService;
@@ -94,37 +91,6 @@ public class SysSuserinfoController extends BaseController {
     }
 
     /**
-     * 编辑系统用户信息
-     */
-    //@PreAuthorize("@ps.hasPermit('system:suserinfo:update')")
-    @Oplog(title = "修改密码", businessType = BusinessType.OTHER)
-    @PutMapping(value = "/password")
-    public AjaxResult password(String oldPswd, String newPswd) {
-        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        String userNo = loginUser.getUserno();
-        String password = loginUser.getPassword();
-        if (!SecurityUtils.matchesPassword(oldPswd, password)) {
-            return AjaxResult.error("修改密码失败，旧密码错误");
-        }
-        if (SecurityUtils.matchesPassword(newPswd, password)) {
-            return AjaxResult.error("新密码不能与旧密码相同");
-        }
-
-        SysSuserinfo info = sysSuserinfoService.getRecordByNo(userNo);
-        info.setPassword(SecurityUtils.encryptPassword(newPswd));
-        info.setUpdateBy(loginUser.getUsername());
-        info.setUpdateTime(DateUtils.getNowDate());
-
-        if (sysSuserinfoService.UpdateRecord(info) > 0) {
-            // 更新缓存用户密码
-            loginUser.getUser().setPassword(SecurityUtils.encryptPassword(newPswd));
-            tokenService.setLoginUser(loginUser);
-            return AjaxResult.success();
-        }
-        return AjaxResult.error("修改密码异常，请联系管理员");
-    }
-
-    /**
      * 保存系统用户信息
      */
     //@PreAuthorize("@ps.hasPermit('system:suserinfo:save')")
@@ -163,17 +129,6 @@ public class SysSuserinfoController extends BaseController {
     }
 
     /**
-     * 获取系统用户信息详细信息
-     */
-    //@PreAuthorize("@ps.hasPermit('system:suserinfo:profile')")
-    @GetMapping(value = "/profile")
-    public AjaxResult profile() {
-        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        SysSuserinfo userInfo = loginUser.getUser();
-        return AjaxResult.success(userInfo);
-    }
-
-    /**
      * 导出系统用户信息列表
      */
     //@PreAuthorize("@ps.hasPermit('system:suserinfo:export')")
@@ -185,6 +140,75 @@ public class SysSuserinfoController extends BaseController {
         List<SysSuserinfo> list = sysSuserinfoService.getRecordsByPaging(1, count, pRequest.getCondition(), "id", "Asc");
         ExcelUtils<SysSuserinfo> util = new ExcelUtils<SysSuserinfo>(SysSuserinfo.class);
         return util.exportExcel(list, "SysSuserinfo");
+    }
+
+    /**
+     * 获取系统用户信息详细信息
+     */
+    //@PreAuthorize("@ps.hasPermit('system:suserinfo:profile')")
+    @GetMapping(value = "/profile")
+    public AjaxResult profile() {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        SysSuserinfo userInfo = loginUser.getUser();
+        return AjaxResult.success(userInfo);
+    }
+
+    /**
+     * 修改用户密码
+     */
+    //@PreAuthorize("@ps.hasPermit('system:suserinfo:update')")
+    @Oplog(title = "修改用户密码", businessType = BusinessType.UPDATE)
+    @PutMapping(value = "/password")
+    public AjaxResult password(String oldPswd, String newPswd) {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        String userNo = loginUser.getUserno();
+        String password = loginUser.getPassword();
+        if (!SecurityUtils.matchesPassword(oldPswd, password)) {
+            return AjaxResult.error("修改密码失败，旧密码错误");
+        }
+        if (SecurityUtils.matchesPassword(newPswd, password)) {
+            return AjaxResult.error("新密码不能与旧密码相同");
+        }
+
+        SysSuserinfo userInfo = sysSuserinfoService.getRecordByNo(userNo);
+        userInfo.setPassword(SecurityUtils.encryptPassword(newPswd));
+        userInfo.setUpdateBy(loginUser.getUsername());
+        userInfo.setUpdateTime(DateUtils.getNowDate());
+
+        if (sysSuserinfoService.UpdateRecord(userInfo) > 0) {
+            // 更新缓存用户密码
+            loginUser.getUser().setPassword(SecurityUtils.encryptPassword(newPswd));
+            tokenService.setLoginUser(loginUser);
+            return AjaxResult.success();
+        }
+        return AjaxResult.error("修改密码异常，请联系管理员");
+    }
+
+    /**
+     * 头像上传
+     */
+    @Oplog(title = "更新用户头像", businessType = BusinessType.UPDATE)
+    @PostMapping("/uploadAvatar")
+    public AjaxResult uploadAvatar(@RequestParam("avatarfile") MultipartFile avatarfile) throws IOException
+    {
+        if (!avatarfile.isEmpty())
+        {
+            LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+            SysSuserinfo userInfo = sysSuserinfoService.getRecordByNo(loginUser.getUserno());
+            if(userInfo!=null) {
+                String avatar = FileUploadUtils.upload(GlobalConfig.getAvatarPath(), avatarfile);
+                userInfo.setAvatar(avatar);
+                if (sysSuserinfoService.UpdateRecord(userInfo)>0) {
+                    AjaxResult ajax = AjaxResult.success();
+                    ajax.put("imgUrl", avatar);
+                    // 更新缓存用户头像
+                    loginUser.getUser().setAvatar(avatar);
+                    tokenService.setLoginUser(loginUser);
+                    return ajax;
+                }
+            }
+        }
+        return AjaxResult.error("上传图片异常，请联系管理员");
     }
 
 }
