@@ -36,6 +36,7 @@ import com.benet.common.core.pager.TableDataInfo;
  * @author ${author}
  * @date ${datetime}
  */
+@Api(value = "${moduleName}/${businessName}", tags = "${functionName}控制器")
 @RestController
 @RequestMapping("/${moduleName}/${businessName}")
 public class ${ClassName}Controller extends BaseController

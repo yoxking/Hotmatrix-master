@@ -24,7 +24,6 @@ import java.util.Set;
  * 
  * @author yoxking
  */
-@Api(tags = "SysLogin")
 @RestController
 @RequestMapping("/web")
 public class UserLoginController

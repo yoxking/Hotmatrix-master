@@ -176,6 +176,16 @@
 		where r.delete_flag='1' and r.app_code=#{appCode} and ur.user_no = #{userNo}
 	</select>
 
+    <select id="getSuserNosByRoleNo" resultType="String">
+		select user_no from sys_suserrole
+		where delete_flag='1' and app_code=#{appCode} and role_no = #{roleNo}
+	</select>
+
+    <select id="getPermitNosByRoleNo" resultType="String">
+		select permit_no from sys_rolepermit
+		where delete_flag='1' and app_code=#{appCode} and role_no = #{roleNo}
+	</select>
+
     <select id="checkRoleNameUnique" resultType="Integer">
         select count(*) from sys_roleinfo
         where delete_flag='1' and app_code=#{appCode} and  role_name=#{roleName}

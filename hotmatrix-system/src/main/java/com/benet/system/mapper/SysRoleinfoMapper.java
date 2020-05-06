@@ -156,6 +156,23 @@ public interface SysRoleinfoMapper
     public List<String> getRoleCodesByUserNo(@Param("appCode") String appCode,@Param("userNo") String userNo);
 
     /**
+     * 根据用户ID查询角色标识
+     *
+     * @param roleNo 角色ID
+     * @return 用户列表
+     */
+    public List<String> getSuserNosByRoleNo(@Param("appCode") String appCode,@Param("roleNo") String roleNo);
+
+
+    /**
+     * 根据用户ID查询角色标识
+     *
+     * @param roleNo 角色ID
+     * @return 权限列表
+     */
+    public List<String> getPermitNosByRoleNo(@Param("appCode") String appCode,@Param("roleNo") String roleNo);
+
+    /**
      * 校验角色名称是否唯一
      *
      * @param roleName 角色名称

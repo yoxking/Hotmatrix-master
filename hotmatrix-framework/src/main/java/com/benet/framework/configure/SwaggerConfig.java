@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.benet.common.configure.GlobalConfig;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig
 {
+    // 定义分隔符,配置Swagger多包
+    private static final String splitor = ";";
+
     /** 系统基础配置 */
     @Autowired
     private GlobalConfig globalConfig;
@@ -40,15 +44,16 @@ public class SwaggerConfig
     public Docket createRestApi()
     {
         return new Docket(DocumentationType.SWAGGER_2)
-                .pathMapping("/dev-api")
+                .pathMapping("/api")
                 // 用来创建该API的基本信息，展示在文档的页面中（自定义展示的信息）
                 .apiInfo(apiInfo())
                 // 设置哪些接口暴露给Swagger展示
                 .select()
                 // 扫描所有有注解的api，用这种方式更灵活
                 //.apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
                 // 扫描指定包中的swagger注解
-                .apis(RequestHandlerSelectors.basePackage("com.benet.web"))
+                //.apis(RequestHandlerSelectors.basePackage("com.benet.web"))
                 // 扫描所有 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build()
@@ -104,7 +109,7 @@ public class SwaggerConfig
                 // 设置标题
                 .title("标题：基云后台管理系统_接口文档")
                 // 描述
-                .description("描述：用于管理集团旗下公司的人员信息,具体包括XXX,XXX模块...")
+                .description("描述：通用后台管理平台")
                 // 版本
                 .version("版本号:" + globalConfig.getVersion())
                 .build();

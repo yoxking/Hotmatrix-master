@@ -12,6 +12,7 @@ import com.benet.system.domain.SysAppclass;
 import com.benet.system.domain.SysDicttype;
 import com.benet.system.service.ISysAppclassService;
 import com.benet.system.service.ISysDicttypeService;
+import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,7 @@ import com.benet.common.core.pager.TableDataInfo;
  * @author yoxking
  * @date 2020-04-20
  */
+@Api(value = "sys/appinfo", tags = "应用信息Controller")
 @RestController
 @RequestMapping("/sys/appinfo")
 public class SysAppinfoController extends BaseController

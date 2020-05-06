@@ -10,6 +10,7 @@ import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
 import com.benet.system.domain.SysRolepermit;
+import com.benet.system.domain.SysSuserrole;
 import com.benet.system.mapper.SysRolepermitMapper;
 import com.benet.system.mapper.SysSuserroleMapper;
 import org.apache.ibatis.annotations.Param;
@@ -30,6 +31,12 @@ public class SysRoleinfoServiceImpl implements ISysRoleinfoService
 {
     @Autowired
     private SysRoleinfoMapper sysRoleinfoMapper;
+
+    @Autowired
+    private SysRolepermitMapper sysRolepermitMapper;
+
+    @Autowired
+    private SysSuserroleMapper sysSuserroleMapper;
 
     /**
      * 查询所有角色信息列表
@@ -168,6 +175,68 @@ public class SysRoleinfoServiceImpl implements ISysRoleinfoService
     }
 
     /**
+     * 更新角色用户信息
+     *
+     * @param roleNo 角色编号
+     * @param suerNos 用户列表信息
+     * @return 结果
+     */
+    public int UpdateSusers(String roleNo,String[] suerNos){
+
+        int count=0;
+        sysSuserroleMapper.HardDeleteByRoleNo(GlobalConfig.getAppCode(),roleNo);
+        SysSuserrole sr=null;
+        for (String suerNo:suerNos) {
+            sr=new SysSuserrole();
+            sr.setUserNo(suerNo);
+            sr.setRoleNo(roleNo);
+            sr.setBranchNo(GlobalConfig.getBranchNo());
+            sr.setCreateBy("");
+            sr.setCreateTime(DateUtils.getNowDate());
+            sr.setUpdateBy("");
+            sr.setUpdateTime(DateUtils.getNowDate());
+            sr.setDeleteFlag("1");
+            sr.setComments("");
+            sr.setAppCode(GlobalConfig.getAppCode());
+            sr.setVersion(1L);
+
+            count+=sysSuserroleMapper.AddNewRecord(sr);
+        }
+        return count;
+    }
+
+    /**
+     * 更新角色权限信息
+     *
+     * @param roleNo 角色编号
+     * @param permitNos 权限列表信息
+     * @return 结果
+     */
+    public int UpdatePermits(String roleNo,String[] permitNos){
+
+        int count=0;
+        sysRolepermitMapper.HardDeleteByRoleNo(GlobalConfig.getAppCode(),roleNo);
+        SysRolepermit rp=null;
+        for (String permitNo:permitNos) {
+            rp=new SysRolepermit();
+            rp.setPermitNo(permitNo);
+            rp.setRoleNo(roleNo);
+            rp.setBranchNo(GlobalConfig.getBranchNo());
+            rp.setCreateBy("");
+            rp.setCreateTime(DateUtils.getNowDate());
+            rp.setUpdateBy("");
+            rp.setUpdateTime(DateUtils.getNowDate());
+            rp.setDeleteFlag("1");
+            rp.setComments("");
+            rp.setAppCode(GlobalConfig.getAppCode());
+            rp.setVersion(1L);
+
+            count+=sysRolepermitMapper.AddNewRecord(rp);
+        }
+        return count;
+    }
+
+    /**
      * 硬删除角色信息
      *
      * @param no 角色信息ID
@@ -274,6 +343,30 @@ public class SysRoleinfoServiceImpl implements ISysRoleinfoService
             }
         }
         return rolesSet;
+    }
+
+
+    /**
+     * 根据用户ID查询角色标识
+     *
+     * @param roleNo 角色ID
+     * @return 用户列表
+     */
+    public List<String> getSuserNosByRoleNo(String roleNo){
+
+        return sysRoleinfoMapper.getSuserNosByRoleNo(GlobalConfig.getAppCode(),roleNo);
+    }
+
+
+    /**
+     * 根据用户ID查询角色标识
+     *
+     * @param roleNo 角色ID
+     * @return 权限列表
+     */
+    public List<String> getPermitNosByRoleNo(String roleNo){
+
+        return sysRoleinfoMapper.getPermitNosByRoleNo(GlobalConfig.getAppCode(),roleNo);
     }
 
     /**

@@ -90,6 +90,25 @@ public interface ISysRoleinfoService
      */
     public int UpdateRecord(SysRoleinfo info);
 
+
+    /**
+     * 更新角色用户信息
+     *
+     * @param roleNo 角色编号
+     * @param suerNos 用户列表信息
+     * @return 结果
+     */
+    public int UpdateSusers(String roleNo,String[] suerNos);
+
+    /**
+     * 更新角色权限信息
+     *
+     * @param roleNo 角色编号
+     * @param permitNos 权限列表信息
+     * @return 结果
+     */
+    public int UpdatePermits(String roleNo,String[] permitNos);
+
     /**
      * 硬删除角色信息
      *
@@ -155,6 +174,23 @@ public interface ISysRoleinfoService
      * @return 权限列表
      */
     public Set<String> getRoleCodesByUserNo(String userNo);
+
+    /**
+     * 根据用户ID查询角色标识
+     *
+     * @param roleNo 角色ID
+     * @return 用户列表
+     */
+    public List<String> getSuserNosByRoleNo(String roleNo);
+
+
+    /**
+     * 根据用户ID查询角色标识
+     *
+     * @param roleNo 角色ID
+     * @return 权限列表
+     */
+    public List<String> getPermitNosByRoleNo(String roleNo);
 
 
     /**

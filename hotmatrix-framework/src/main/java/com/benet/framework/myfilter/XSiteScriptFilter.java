@@ -1,27 +1,22 @@
-package com.benet.common.xss;
+package com.benet.framework.myfilter;
 
 import com.benet.common.utils.string.StringUtils;
 
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * 防止XSS攻击的过滤器
- * 
+ *
  * @author yoxking
  */
-public class XssFilter implements Filter
+public class XSiteScriptFilter implements Filter
 {
     /**
      * 排除链接
@@ -63,7 +58,7 @@ public class XssFilter implements Filter
             chain.doFilter(request, response);
             return;
         }
-        XssWrapper xssRequest = new XssWrapper((HttpServletRequest) request);
+        XScriptRequestWrapper xssRequest = new XScriptRequestWrapper((HttpServletRequest) request);
         chain.doFilter(xssRequest, response);
     }
 
