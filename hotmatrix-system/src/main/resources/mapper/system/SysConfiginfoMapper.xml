@@ -39,9 +39,9 @@
 
     <select id="getRecordsByPaging" resultMap="SysConfiginfoResult">
         <include refid="selectSysConfiginfoVo"/>
-        where delete_flag='1' and app_code=#{appCode}
+        where delete_flag='1' and app_code=${appCode}
         <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
-        order by #{model.orderField} #{model.orderType} limit #{model.pageIndex},#{model.pageSize}
+        order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
     </select>
 
     <select id="getRecordByNo" resultMap="SysConfiginfoResult">

@@ -73,6 +73,7 @@ public class SysOperatelogsServiceImpl implements ISysOperatelogsService
      * @param orderType 排序类型
      * @return 操作日志记录集合
      */
+    @Override
     public List<SysOperatelogs> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();

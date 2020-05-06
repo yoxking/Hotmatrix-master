@@ -42,9 +42,9 @@
 
     <select id="getRecordsByPaging" resultMap="SysDepartmentResult">
         <include refid="selectSysDepartmentVo"/>
-        where delete_flag='1' and app_code=#{appCode}
-        <if test="model.condition != null  and model.condition != ''"> and ${model.condition}</if>
-        order by #{model.orderField} #{model.orderType} limit #{model.pageIndex},#{model.pageSize}
+        where delete_flag='1' and app_code=${appCode}
+        <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
+        order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
     </select>
 
     <select id="getRecordByNo" resultMap="SysDepartmentResult">

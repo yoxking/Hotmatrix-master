@@ -73,6 +73,7 @@ public class SysContentinfoServiceImpl implements ISysContentinfoService
      * @param orderType 排序类型
      * @return 内容信息集合
      */
+    @Override
     public List<SysContentinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();

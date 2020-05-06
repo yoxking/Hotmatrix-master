@@ -73,6 +73,7 @@ public class SysOrganizinfoServiceImpl implements ISysOrganizinfoService
      * @param orderType 排序类型
      * @return 机构信息集合
      */
+    @Override
     public List<SysOrganizinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();

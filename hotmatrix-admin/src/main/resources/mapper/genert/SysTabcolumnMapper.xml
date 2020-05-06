@@ -50,9 +50,9 @@
 
     <select id="getRecordsByPaging" resultMap="SysTabcolumnResult">
         <include refid="selectSysTabcolumnVo"/>
-        where delete_flag='1' 
+        where delete_flag='1'
         <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
-        order by #{model.ordercolumn} #{model.orderType} limit #{model.pageIndex},#{model.pageSize}
+        order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
     </select>
 
     <select id="getRecordByNo" resultMap="SysTabcolumnResult">

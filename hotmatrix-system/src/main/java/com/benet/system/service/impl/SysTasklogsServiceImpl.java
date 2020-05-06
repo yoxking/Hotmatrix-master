@@ -73,6 +73,7 @@ public class SysTasklogsServiceImpl implements ISysTasklogsService
      * @param orderType 排序类型
      * @return 定时任务调度日志集合
      */
+    @Override
     public List<SysTasklogs> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();

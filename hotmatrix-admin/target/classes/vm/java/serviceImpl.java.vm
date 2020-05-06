@@ -78,6 +78,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
      * @param orderType 排序类型
      * @return ${functionName}集合
      */
+    @Override
     public List<${ClassName}> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();

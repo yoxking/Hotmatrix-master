@@ -73,6 +73,7 @@ public class SysDepartmentServiceImpl implements ISysDepartmentService
      * @param orderType 排序类型
      * @return 部门信息集合
      */
+    @Override
     public List<SysDepartment> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();

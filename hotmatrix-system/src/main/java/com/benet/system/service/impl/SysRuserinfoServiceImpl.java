@@ -73,6 +73,7 @@ public class SysRuserinfoServiceImpl implements ISysRuserinfoService
      * @param orderType 排序类型
      * @return 注册用户信息集合
      */
+    @Override
     public List<SysRuserinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();

@@ -1,6 +1,7 @@
 package com.benet.system.service.impl;
 
 import java.util.List;
+
 import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
@@ -29,6 +30,7 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @return 应用类型集合
      */
     @Override
+    //@DataSource(value = DataSourceType.SLAVE)
     public List<SysAppclass> getAllRecords() {
         return sysAppclassMapper.getAllRecords(GlobalConfig.getAppCode());
     }
@@ -40,6 +42,7 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @return 应用类型集合
      */
     @Override
+    //@DataSource(value = DataSourceType.SLAVE)
     public List<SysAppclass> getRecordsByClassNo(String classNo) {
         if (StringUtils.isNotEmpty(classNo)) {
             return sysAppclassMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
@@ -54,6 +57,7 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @return 应用类型集合
      */
     @Override
+    //@DataSource(value = DataSourceType.SLAVE)
     public List<SysAppclass> getRecordsByPaging(PagingModel model) {
         if (StringUtils.isNotNull(model)) {
             model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
@@ -73,6 +77,8 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @param orderType 排序类型
      * @return 应用类型集合
      */
+    @Override
+    //@DataSource(value = DataSourceType.SLAVE)
     public List<SysAppclass> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();
@@ -99,6 +105,7 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @return 应用类型
      */
     @Override
+    //@DataSource(value = DataSourceType.SLAVE)
     public SysAppclass getRecordByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
             return sysAppclassMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
@@ -113,6 +120,7 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @return 名称
      */
     @Override
+    //@DataSource(value = DataSourceType.SLAVE)
     public String getRecordNameByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
             return sysAppclassMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
@@ -127,6 +135,7 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @return 结果
      */
     @Override
+    //@DataSource(value = DataSourceType.SLAVE)
     public int getCountByCondition(String condition) {
         return sysAppclassMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
     }
@@ -138,6 +147,7 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @return 结果
      */
     @Override
+    //@DataSource(value = DataSourceType.SLAVE)
     public int AddNewRecord(SysAppclass info) {
         info.setCreateTime(DateUtils.getNowDate());
         info.setUpdateTime(DateUtils.getNowDate());
@@ -153,6 +163,7 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @return 结果
      */
     @Override
+    //@DataSource(value = DataSourceType.SLAVE)
     public int UpdateRecord(SysAppclass info) {
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
@@ -166,6 +177,7 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @return 结果
      */
     @Override
+    //@DataSource(value = DataSourceType.SLAVE)
     public int HardDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
             return sysAppclassMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
@@ -180,6 +192,7 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @return 结果
      */
     @Override
+    //@DataSource(value = DataSourceType.SLAVE)
     public int HardDeleteByNos(String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
             return sysAppclassMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
@@ -194,6 +207,7 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @return 结果
      */
     @Override
+    //@DataSource(value = DataSourceType.SLAVE)
     public int HardDeleteByCondition(String condition) {
         return sysAppclassMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
     }
@@ -205,6 +219,7 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @return 结果
      */
     @Override
+    //@DataSource(value = DataSourceType.SLAVE)
     public int SoftDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
             return sysAppclassMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
@@ -219,6 +234,7 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @return 结果
      */
     @Override
+    //@DataSource(value = DataSourceType.SLAVE)
     public int SoftDeleteByNos(String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
             return sysAppclassMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
@@ -233,6 +249,7 @@ public class SysAppclassServiceImpl implements ISysAppclassService
      * @return 结果
      */
     @Override
+    //@DataSource(value = DataSourceType.SLAVE)
     public int SoftDeleteByCondition(String condition) {
         return sysAppclassMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
     }

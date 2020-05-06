@@ -1,7 +1,7 @@
 package com.benet.framework.aspect;
 
 import com.benet.common.annotation.DataSource;
-import com.benet.common.configure.DataSourceConfig;
+import com.benet.common.configure.DataSourceHolder;
 import com.benet.common.utils.string.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -41,7 +41,7 @@ public class DataSourceAspect
 
         if (StringUtils.isNotNull(dataSource))
         {
-            DataSourceConfig.setDataSourceType(dataSource.value().name());
+            DataSourceHolder.setDataSourceType(dataSource.value().name());
         }
 
         try
@@ -51,7 +51,7 @@ public class DataSourceAspect
         finally
         {
             // 销毁数据源 在执行方法之后
-            DataSourceConfig.clearDataSourceType();
+            DataSourceHolder.clearDataSourceType();
         }
     }
 

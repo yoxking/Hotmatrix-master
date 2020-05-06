@@ -73,6 +73,7 @@ public class SysBranchinfoServiceImpl implements ISysBranchinfoService
      * @param orderType 排序类型
      * @return 分支信息集合
      */
+    @Override
     public List<SysBranchinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();

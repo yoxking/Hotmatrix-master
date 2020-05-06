@@ -105,6 +105,7 @@ public class SysTableinfoServiceImpl implements ISysTableinfoService
      * @param orderType 排序类型
      * @return 代码生成业务集合
      */
+    @Override
     public List<SysTableinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();

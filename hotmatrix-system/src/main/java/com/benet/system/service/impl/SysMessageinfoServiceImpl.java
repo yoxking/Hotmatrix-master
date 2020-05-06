@@ -73,6 +73,7 @@ public class SysMessageinfoServiceImpl implements ISysMessageinfoService
      * @param orderType 排序类型
      * @return 消息信息集合
      */
+    @Override
     public List<SysMessageinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();

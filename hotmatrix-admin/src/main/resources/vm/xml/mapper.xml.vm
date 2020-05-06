@@ -26,9 +26,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getRecordsByPaging" resultMap="${ClassName}Result">
         <include refid="select${ClassName}Vo"/>
-        where delete_flag='1' and app_code=#{appCode}
+        where delete_flag='1' and app_code=${appCode}
         <if test="model.condition != null  and model.condition != ''"> and ${model.condition}</if>
-        order by #{model.orderField} #{model.orderType} limit #{model.pageIndex},#{model.pageSize}
+        order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
     </select>
 
     <select id="getRecordByNo" resultMap="${ClassName}Result">

@@ -88,6 +88,7 @@ public class SysRoleinfoServiceImpl implements ISysRoleinfoService
      * @param orderType 排序类型
      * @return 角色信息集合
      */
+    @Override
     public List<SysRoleinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();

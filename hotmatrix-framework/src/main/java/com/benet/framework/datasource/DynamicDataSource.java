@@ -3,7 +3,7 @@ package com.benet.framework.datasource;
 import java.util.Map;
 import javax.sql.DataSource;
 
-import com.benet.common.configure.DataSourceConfig;
+import com.benet.common.configure.DataSourceHolder;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 /**
@@ -23,6 +23,6 @@ public class DynamicDataSource extends AbstractRoutingDataSource
     @Override
     protected Object determineCurrentLookupKey()
     {
-        return DataSourceConfig.getDataSourceType();
+        return DataSourceHolder.getDataSourceType();
     }
 }

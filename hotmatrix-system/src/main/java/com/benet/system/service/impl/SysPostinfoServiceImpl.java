@@ -73,6 +73,7 @@ public class SysPostinfoServiceImpl implements ISysPostinfoService
      * @param orderType 排序类型
      * @return 岗位信息集合
      */
+    @Override
     public List<SysPostinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();

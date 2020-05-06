@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author yoxking
  */
-public class DataSourceConfig {
+public class DataSourceHolder {
 
-    public static final Logger log = LoggerFactory.getLogger(DataSourceConfig.class);
+    public static final Logger log = LoggerFactory.getLogger(DataSourceHolder.class);
 
     /**
      * 使用ThreadLocal维护变量，ThreadLocal为每个使用该变量的线程提供独立的变量副本，

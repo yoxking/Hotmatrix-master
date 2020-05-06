@@ -1,6 +1,7 @@
 package com.benet.system.service.impl;
 
 import java.util.List;
+
 import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
@@ -73,6 +74,7 @@ public class SysLogininfoServiceImpl implements ISysLogininfoService
      * @param orderType 排序类型
      * @return 系统访问记录集合
      */
+    @Override
     public List<SysLogininfo> getRecordsByPaging(int pageIndex, int pageSize, String condition, String orderField, String orderType) {
 
         PagingModel model = new PagingModel();

@@ -74,6 +74,7 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
      * @param orderType 排序类型
      * @return 参数配置集合
      */
+    @Override
     public List<SysConfiginfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();

@@ -1,65 +1,74 @@
 package com.benet.framework.configure;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.alibaba.druid.spring.boot.autoconfigure.properties.DruidStatProperties;
-import com.alibaba.druid.support.http.StatViewServlet;
-import com.alibaba.druid.support.http.WebStatFilter;
 
 import javax.servlet.*;
 
 import com.alibaba.druid.util.Utils;
+import com.benet.common.enums.DataSourceType;
+import com.benet.common.utils.spring.SpringUtils;
+import com.benet.framework.datasource.DynamicDataSource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
 public class MyDruidConfig {
 
-    @ConfigurationProperties(prefix = "spring.datasource")
     @Bean
-    public DataSource druid(){
-        return new DruidDataSource();
+    @ConfigurationProperties("spring.datasource.druid.master")
+    public DataSource masterDataSource(DruidProperties druidProperties)
+    {
+        DruidDataSource dataSource = DruidDataSourceBuilder.create().build();
+        return druidProperties.dataSource(dataSource);
     }
 
-    //配置Druid监控
-    //1.配置管理后台的Servlet
     @Bean
-    public ServletRegistrationBean statViewServlet(){
-        ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet(),"/druid/*");
-        Map<String,String> initParams = new HashMap<>();
-
-        initParams.put("loginUsernaem","root");
-        initParams.put("loginPassword","root");
-        initParams.put("allow","");//默认允许所有访问
-        initParams.put("deny","192.168.15.21");
-
-        bean.setInitParameters(initParams);
-        return bean;
+    @ConfigurationProperties("spring.datasource.druid.slave")
+    @ConditionalOnProperty(prefix = "spring.datasource.druid.slave", name = "enabled", havingValue = "true")
+    public DataSource slaveDataSource(DruidProperties druidProperties)
+    {
+        DruidDataSource dataSource = DruidDataSourceBuilder.create().build();
+        return druidProperties.dataSource(dataSource);
     }
 
-    //2.配置一个web监控的filter
-    @Bean
-    public FilterRegistrationBean webStatFilter(){
-        FilterRegistrationBean bean = new FilterRegistrationBean();
-        bean.setFilter(new WebStatFilter());
+    @Bean(name = "dynamicDataSource")
+    @Primary
+    public DynamicDataSource dataSource(DataSource masterDataSource)
+    {
+        Map<Object, Object> targetDataSources = new HashMap<>();
+        targetDataSources.put(DataSourceType.MASTER.name(), masterDataSource);
+        setDataSource(targetDataSources, DataSourceType.SLAVE.name(), "slaveDataSource");
+        return new DynamicDataSource(masterDataSource, targetDataSources);
+    }
 
-        Map<String,String> initParams = new HashMap<>();
-        initParams.put("exclusions","*.js,*.css,/druid/*");
-
-        bean.setInitParameters(initParams);
-
-        bean.setUrlPatterns(Arrays.asList("/*"));
-
-        return bean;
+    /**
+     * 设置数据源
+     *
+     * @param targetDataSources 备选数据源集合
+     * @param sourceName 数据源名称
+     * @param beanName bean名称
+     */
+    public void setDataSource(Map<Object, Object> targetDataSources, String sourceName, String beanName)
+    {
+        try
+        {
+            DataSource dataSource = SpringUtils.getBean(beanName);
+            targetDataSources.put(sourceName, dataSource);
+        }
+        catch (Exception e)
+        {
+        }
     }
 
     /**

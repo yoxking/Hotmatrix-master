@@ -73,6 +73,7 @@ public class SysDicttypeServiceImpl implements ISysDicttypeService
      * @param orderType 排序类型
      * @return 字典类型集合
      */
+    @Override
     public List<SysDicttype> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();
