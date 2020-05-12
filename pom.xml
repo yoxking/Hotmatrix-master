@@ -25,12 +25,12 @@
         <kaptcha.version>2.3.2</kaptcha.version>
         <bitwalker.version>1.21</bitwalker.version>
         <oshi.version>4.5.0</oshi.version>
-        <pagehelper.boot.version>1.2.13</pagehelper.boot.version>
         <velocity.version>1.7</velocity.version>
         <swagger.version>2.9.2</swagger.version>
         <fastjson.version>1.2.67</fastjson.version>
         <javajwt.version>0.9.0</javajwt.version>
         <commons.io.version>2.6</commons.io.version>
+        <pagehelper.boot.version>1.2.13</pagehelper.boot.version>
         <commons.fileupload.version>1.4</commons.fileupload.version>
         <poi.version>3.17</poi.version>
         <jedis.version>3.1.0</jedis.version>
@@ -161,7 +161,6 @@
         <module>hotmatrix-admin</module>
         <module>hotmatrix-common</module>
         <module>hotmatrix-framework</module>
-        <module>hotmatrix-quartz</module>
         <module>hotmatrix-system</module>
     </modules>
 

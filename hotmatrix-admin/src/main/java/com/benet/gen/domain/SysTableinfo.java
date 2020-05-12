@@ -41,7 +41,7 @@ public class SysTableinfo extends BaseEntity
 
     /** 使用的模板（crud单表操作 tree树表操作） */
     @Excel(name = "使用的模板", readConverterExp = "c=rud单表操作,t=ree树表操作")
-    private String tplCategory;
+    private String templCategory;
 
     /** 生成包路径 */
     @Excel(name = "生成包路径")
@@ -143,16 +143,16 @@ public class SysTableinfo extends BaseEntity
     {
         return className;
     }
-    public void setTplCategory(String tplCategory) 
-    {
-        this.tplCategory = tplCategory;
+
+    public String getTemplCategory() {
+        return templCategory;
     }
 
-    public String getTplCategory() 
-    {
-        return tplCategory;
+    public void setTemplCategory(String templCategory) {
+        this.templCategory = templCategory;
     }
-    public void setPackageName(String packageName) 
+
+    public void setPackageName(String packageName)
     {
         this.packageName = packageName;
     }
@@ -248,7 +248,7 @@ public class SysTableinfo extends BaseEntity
 
     public boolean isTree()
     {
-        return isTree(this.tplCategory);
+        return isTree(this.templCategory);
     }
 
     public static boolean isTree(String tplCategory)
@@ -258,7 +258,7 @@ public class SysTableinfo extends BaseEntity
 
     public boolean isCrud()
     {
-        return isCrud(this.tplCategory);
+        return isCrud(this.templCategory);
     }
 
     public static boolean isCrud(String tplCategory)
@@ -268,7 +268,7 @@ public class SysTableinfo extends BaseEntity
 
     public boolean isSuperField(String javaField)
     {
-        return isSuperField(this.tplCategory, javaField);
+        return isSuperField(this.templCategory, javaField);
     }
 
     public static boolean isSuperField(String tplCategory, String javaField)
@@ -326,7 +326,7 @@ public class SysTableinfo extends BaseEntity
             .append("tableName", getTableName())
             .append("tableComment", getTableComment())
             .append("className", getClassName())
-            .append("tplCategory", getTplCategory())
+            .append("tplCategory", getTemplCategory())
             .append("packageName", getPackageName())
             .append("moduleName", getModuleName())
             .append("businessName", getBusinessName())

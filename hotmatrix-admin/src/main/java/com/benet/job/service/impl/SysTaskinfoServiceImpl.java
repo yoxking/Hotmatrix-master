@@ -1,15 +1,24 @@
-package com.benet.system.service.impl;
+package com.benet.job.service.impl;
 
 import java.util.List;
 import com.benet.common.configure.GlobalConfig;
+import com.benet.common.constant.QutzConstants;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
+import com.benet.job.domain.SysTaskinfo;
+import com.benet.job.mapper.SysTaskinfoMapper;
+import com.benet.job.service.ISysTaskinfoService;
+import com.benet.job.utils.CronHelper;
+import com.benet.job.utils.SchdHelper;
+import org.quartz.JobDataMap;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.benet.system.mapper.SysTaskinfoMapper;
-import com.benet.system.domain.SysTaskinfo;
-import com.benet.system.service.ISysTaskinfoService;
+
+import javax.annotation.PostConstruct;
 
 /**
  * 定时任务调度Service业务层处理
@@ -18,10 +27,28 @@ import com.benet.system.service.ISysTaskinfoService;
  * @date 2020-04-06
  */
 @Service
-public class SysTaskinfoServiceImpl implements ISysTaskinfoService 
+public class SysTaskinfoServiceImpl implements ISysTaskinfoService
 {
     @Autowired
+    private Scheduler scheduler;
+
+    @Autowired
     private SysTaskinfoMapper sysTaskinfoMapper;
+
+    /**
+     * 项目启动时，初始化定时器
+     * 主要是防止手动修改数据库导致未同步到定时任务处理（注：不能手动修改数据库ID和任务组名，否则会导致脏数据）
+     */
+    @PostConstruct
+    public void init()
+    {
+        String s="78934433";
+        List<SysTaskinfo> taskList = sysTaskinfoMapper.getAllRecords(s);
+        for (SysTaskinfo taskInfo : taskList)
+        {
+            updateScheduler(taskInfo, taskInfo.getTaskGroup());
+        }
+    }
 
     /**
      * 查询所有定时任务调度列表
@@ -236,5 +263,124 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
     @Override
     public int SoftDeleteByCondition(String condition) {
         return sysTaskinfoMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
+    }
+
+
+    /**
+     * 立即运行任务
+     *
+     * @param taskNo 调度任务编号
+     * @return 结果
+     */
+    @Override
+    public void start(String taskNo){
+
+       SysTaskinfo taskInfo=sysTaskinfoMapper.getRecordByNo(GlobalConfig.getAppCode(),taskNo);
+        // 参数
+        JobDataMap dataMap = new JobDataMap();
+        dataMap.put(QutzConstants.TASK_PROPERTIES, taskInfo);
+        try {
+            scheduler.triggerJob(SchdHelper.getJobKey(taskNo, taskInfo.getTaskGroup()), dataMap);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 暂停任务
+     *
+     * @param taskNo 调度任务编号
+     * @return 结果
+     */
+    @Override
+    public int pause(String taskNo) {
+
+        try {
+            SysTaskinfo taskInfo = sysTaskinfoMapper.getRecordByNo(GlobalConfig.getAppCode(), taskNo);
+            String taskGroup = taskInfo.getTaskGroup();
+            taskInfo.setCheckState(QutzConstants.Status.PAUSE.getValue());
+            int rows = sysTaskinfoMapper.UpdateRecord(taskInfo);
+            if (rows > 0) {
+                scheduler.pauseJob(SchdHelper.getJobKey(taskNo, taskGroup));
+            }
+            return rows;
+        }
+        catch (Exception e){
+            return 0;
+        }
+    }
+
+    /**
+     * 恢复任务
+     *
+     * @param taskNo 调度任务编号
+     * @return 结果
+     */
+    @Override
+    public int resume(String taskNo){
+
+        try {
+            SysTaskinfo taskInfo = sysTaskinfoMapper.getRecordByNo(GlobalConfig.getAppCode(), taskNo);
+            String taskGroup = taskInfo.getTaskGroup();
+            taskInfo.setCheckState(QutzConstants.Status.NORMAL.getValue());
+            int rows = sysTaskinfoMapper.UpdateRecord(taskInfo);
+            if (rows > 0) {
+                scheduler.resumeJob(SchdHelper.getJobKey(taskNo, taskGroup));
+            }
+            return rows;
+        }
+        catch (Exception e){
+            return 0;
+        }
+    }
+    /**
+     * 任务调度状态修改
+     *
+     * @param taskNo 调度信息编号
+     * @param state 状态
+     * @return 结果
+     */
+    @Override
+    public int changeState(String taskNo,String state){
+
+        SysTaskinfo taskInfo = sysTaskinfoMapper.getRecordByNo(GlobalConfig.getAppCode(), taskNo);
+        taskInfo.setCheckState(state);
+        return sysTaskinfoMapper.UpdateRecord(taskInfo);
+    }
+
+    /**
+     * 更新任务
+     *
+     * @param taskInfo 任务对象
+     * @param taskGroup 任务组名
+     */
+    public void updateScheduler(SysTaskinfo taskInfo, String taskGroup)
+    {
+        try {
+            String taskNo = taskInfo.getTaskNo();
+            // 判断是否存在
+            JobKey jobKey = SchdHelper.getJobKey(taskNo, taskGroup);
+            if (scheduler.checkExists(jobKey)) {
+                // 防止创建时存在数据问题 先移除，然后在执行创建操作
+                scheduler.deleteJob(jobKey);
+            }
+            SchdHelper.createScheduleJob(scheduler, taskInfo);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 校验cron表达式是否有效
+     *
+     * @param expression 表达式
+     * @return 结果
+     */
+    @Override
+    public boolean checkExpression(String expression){
+        return CronHelper.isValid(expression);
     }
 }

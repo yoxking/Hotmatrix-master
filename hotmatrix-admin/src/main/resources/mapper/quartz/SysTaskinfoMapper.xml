@@ -2,17 +2,17 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.benet.system.mapper.SysTasklogsMapper">
+<mapper namespace="com.benet.job.mapper.SysTaskinfoMapper">
 
-    <resultMap type="SysTasklogs" id="SysTasklogsResult">
+    <resultMap type="SysTaskinfo" id="SysTaskinfoResult">
         <result property="id" column="id"/>
-        <result property="taskLogno" column="task_logno"/>
+        <result property="taskNo" column="task_no"/>
         <result property="taskName" column="task_name"/>
         <result property="taskGroup" column="task_group"/>
+        <result property="taskExpress" column="task_express"/>
         <result property="invokeTarget" column="invoke_target"/>
-        <result property="taskMessage" column="task_message"/>
-        <result property="resultStatus" column="result_status"/>
-        <result property="exceptionInfo" column="exception_info"/>
+        <result property="errorsPolicy" column="errors_policy"/>
+        <result property="concurrent" column="concurrent"/>
         <result property="checkState" column="check_state"/>
         <result property="branchNo" column="branch_no"/>
         <result property="createBy" column="create_by"/>
@@ -25,52 +25,52 @@
         <result property="version" column="version"/>
     </resultMap>
 
-    <sql id="selectSysTasklogsVo">
-        select id, task_logno, task_name, task_group, invoke_target, task_message, result_status, exception_info, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_tasklogs
+    <sql id="selectSysTaskinfoVo">
+        select id, task_no, task_name, task_group, task_express, invoke_target, errors_policy, concurrent, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_taskinfo
     </sql>
 
-    <select id="getAllRecords" resultMap="SysTasklogsResult">
-        <include refid="selectSysTasklogsVo"/>
+    <select id="getAllRecords" resultMap="SysTaskinfoResult">
+        <include refid="selectSysTaskinfoVo"/>
         where delete_flag='1' and app_code=#{appCode}
     </select>
 
-    <select id="getRecordsByClassNo" resultMap="SysTasklogsResult">
-        <include refid="selectSysTasklogsVo"/>
+    <select id="getRecordsByClassNo" resultMap="SysTaskinfoResult">
+        <include refid="selectSysTaskinfoVo"/>
         where delete_flag='1' and app_code=#{appCode} and task_group=#{classNo}
     </select>
 
-    <select id="getRecordsByPaging" resultMap="SysTasklogsResult">
-        <include refid="selectSysTasklogsVo"/>
+    <select id="getRecordsByPaging" resultMap="SysTaskinfoResult">
+        <include refid="selectSysTaskinfoVo"/>
         where delete_flag='1' and app_code=${appCode}
         <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
         order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
     </select>
 
-    <select id="getRecordByNo" resultMap="SysTasklogsResult">
-        <include refid="selectSysTasklogsVo"/>
-        where delete_flag='1' and app_code=#{appCode} and task_logno = #{no}
+    <select id="getRecordByNo" resultMap="SysTaskinfoResult">
+        <include refid="selectSysTaskinfoVo"/>
+        where delete_flag='1' and app_code=#{appCode} and task_no = #{no}
     </select>
 
     <select id="getRecordNameByNo" resultType="String">
-        select task_name from sys_tasklogs
-        where delete_flag='1' and app_code=#{appCode} and task_logno = #{no}
+        select task_name from sys_taskinfo
+        where delete_flag='1' and app_code=#{appCode} and task_no = #{no}
     </select>
 
     <select id="getCountByCondition" resultType="Integer">
-        select count(*) from sys_tasklogs
+        select count(*) from sys_taskinfo
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </select>
 
-    <insert id="AddNewRecord" parameterType="SysTasklogs" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_tasklogs (
-        <if test="info.taskLogno != null  and info.taskLogno != ''">task_logno,</if>
+    <insert id="AddNewRecord" parameterType="SysTaskinfo" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_taskinfo (
+        <if test="info.taskNo != null  and info.taskNo != ''">task_no,</if>
         <if test="info.taskName != null  and info.taskName != ''">task_name,</if>
         <if test="info.taskGroup != null  and info.taskGroup != ''">task_group,</if>
+        <if test="info.taskExpress != null  and info.taskExpress != ''">task_express,</if>
         <if test="info.invokeTarget != null  and info.invokeTarget != ''">invoke_target,</if>
-        <if test="info.taskMessage != null  and info.taskMessage != ''">task_message,</if>
-        <if test="info.resultStatus != null  and info.resultStatus != ''">result_status,</if>
-        <if test="info.exceptionInfo != null  and info.exceptionInfo != ''">exception_info,</if>
+        <if test="info.errorsPolicy != null  and info.errorsPolicy != ''">errors_policy,</if>
+        <if test="info.concurrent != null  and info.concurrent != ''">concurrent,</if>
         <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
         <if test="info.branchNo != null  and info.branchNo != ''">branch_no,</if>
         <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
@@ -82,13 +82,13 @@
         <if test="info.appCode != null  and info.appCode != ''">app_code,</if>
         <if test="info.version != null ">version</if>
         )values(
-        <if test="info.taskLogno != null  and info.taskLogno != ''">#{info.taskLogno},</if>
+        <if test="info.taskNo != null  and info.taskNo != ''">#{info.taskNo},</if>
         <if test="info.taskName != null  and info.taskName != ''">#{info.taskName},</if>
         <if test="info.taskGroup != null  and info.taskGroup != ''">#{info.taskGroup},</if>
+        <if test="info.taskExpress != null  and info.taskExpress != ''">#{info.taskExpress},</if>
         <if test="info.invokeTarget != null  and info.invokeTarget != ''">#{info.invokeTarget},</if>
-        <if test="info.taskMessage != null  and info.taskMessage != ''">#{info.taskMessage},</if>
-        <if test="info.resultStatus != null  and info.resultStatus != ''">#{info.resultStatus},</if>
-        <if test="info.exceptionInfo != null  and info.exceptionInfo != ''">#{info.exceptionInfo},</if>
+        <if test="info.errorsPolicy != null  and info.errorsPolicy != ''">#{info.errorsPolicy},</if>
+        <if test="info.concurrent != null  and info.concurrent != ''">#{info.concurrent},</if>
         <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
         <if test="info.branchNo != null  and info.branchNo != ''">#{info.branchNo},</if>
         <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
@@ -102,18 +102,16 @@
         )
     </insert>
 
-    <update id="UpdateRecord" parameterType="SysTasklogs">
-        update sys_tasklogs
+    <update id="UpdateRecord" parameterType="SysTaskinfo">
+        update sys_taskinfo
         <set>
-            <if test="info.taskLogno != null  and info.taskLogno != ''">task_logno = #{info.taskLogno},</if>
+            <if test="info.taskNo != null  and info.taskNo != ''">task_no = #{info.taskNo},</if>
             <if test="info.taskName != null  and info.taskName != ''">task_name = #{info.taskName},</if>
             <if test="info.taskGroup != null  and info.taskGroup != ''">task_group = #{info.taskGroup},</if>
+            <if test="info.taskExpress != null  and info.taskExpress != ''">task_express = #{info.taskExpress},</if>
             <if test="info.invokeTarget != null  and info.invokeTarget != ''">invoke_target = #{info.invokeTarget},</if>
-            <if test="info.taskMessage != null  and info.taskMessage != ''">task_message = #{info.taskMessage},</if>
-            <if test="info.resultStatus != null  and info.resultStatus != ''">result_status = #{info.resultStatus},</if>
-            <if test="info.exceptionInfo != null  and info.exceptionInfo != ''">exception_info =
-                #{info.exceptionInfo},
-            </if>
+            <if test="info.errorsPolicy != null  and info.errorsPolicy != ''">errors_policy = #{info.errorsPolicy},</if>
+            <if test="info.concurrent != null  and info.concurrent != ''">concurrent = #{info.concurrent},</if>
             <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
             <if test="info.branchNo != null  and info.branchNo != ''">branch_no = #{info.branchNo},</if>
             <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
@@ -125,43 +123,43 @@
             <if test="info.appCode != null  and info.appCode != ''">app_code = #{info.appCode},</if>
             <if test="info.version != null ">version = version+1</if>
         </set>
-        where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and task_logno = #{info.taskLogno}
+        where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and task_no = #{info.taskNo}
     </update>
 
     <delete id="HardDeleteByNo">
-        delete from sys_tasklogs
-        where delete_flag='1' and app_code=#{appCode} and task_logno = #{no}
+        delete from sys_taskinfo
+        where delete_flag='1' and app_code=#{appCode} and task_no = #{no}
     </delete>
 
     <delete id="HardDeleteByNos">
-        delete from sys_tasklogs
-        where delete_flag='1' and app_code=#{appCode} and task_logno in
+        delete from sys_taskinfo
+        where delete_flag='1' and app_code=#{appCode} and task_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
         </foreach>
     </delete>
 
     <delete id="HardDeleteByCondition">
-        delete from sys_tasklogs
+        delete from sys_taskinfo
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>
 
     <delete id="SoftDeleteByNo">
-        update sys_tasklogs set delete_flag='0'
-        where delete_flag='1' and app_code=#{appCode} and task_logno = #{no}
+        update sys_taskinfo set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and task_no = #{no}
     </delete>
 
     <delete id="SoftDeleteByNos">
-        update sys_tasklogs set delete_flag='0'
-        where delete_flag='1' and app_code=#{appCode} and task_logno in
+        update sys_taskinfo set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and task_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
         </foreach>
     </delete>
 
     <delete id="SoftDeleteByCondition">
-        update sys_tasklogs set delete_flag='0'
+        update sys_taskinfo set delete_flag='0'
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>

@@ -2,17 +2,19 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.benet.system.mapper.SysTasklogsMapper">
+<mapper namespace="com.benet.job.mapper.SysTasklogsMapper">
 
     <resultMap type="SysTasklogs" id="SysTasklogsResult">
         <result property="id" column="id"/>
         <result property="taskLogno" column="task_logno"/>
         <result property="taskName" column="task_name"/>
         <result property="taskGroup" column="task_group"/>
-        <result property="invokeTarget" column="invoke_target"/>
         <result property="taskMessage" column="task_message"/>
+        <result property="invokeTarget" column="invoke_target"/>
         <result property="resultStatus" column="result_status"/>
-        <result property="exceptionInfo" column="exception_info"/>
+        <result property="errorsMessage" column="errors_message"/>
+        <result property="startTime" column="start_time"/>
+        <result property="enditTime" column="endit_time"/>
         <result property="checkState" column="check_state"/>
         <result property="branchNo" column="branch_no"/>
         <result property="createBy" column="create_by"/>
@@ -26,7 +28,7 @@
     </resultMap>
 
     <sql id="selectSysTasklogsVo">
-        select id, task_logno, task_name, task_group, invoke_target, task_message, result_status, exception_info, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_tasklogs
+        select id, task_logno, task_name, task_group, task_message,invoke_target,  result_status, errors_message,start_time,endit_time, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_tasklogs
     </sql>
 
     <select id="getAllRecords" resultMap="SysTasklogsResult">
@@ -67,10 +69,12 @@
         <if test="info.taskLogno != null  and info.taskLogno != ''">task_logno,</if>
         <if test="info.taskName != null  and info.taskName != ''">task_name,</if>
         <if test="info.taskGroup != null  and info.taskGroup != ''">task_group,</if>
-        <if test="info.invokeTarget != null  and info.invokeTarget != ''">invoke_target,</if>
         <if test="info.taskMessage != null  and info.taskMessage != ''">task_message,</if>
+        <if test="info.invokeTarget != null  and info.invokeTarget != ''">invoke_target,</if>
         <if test="info.resultStatus != null  and info.resultStatus != ''">result_status,</if>
-        <if test="info.exceptionInfo != null  and info.exceptionInfo != ''">exception_info,</if>
+        <if test="info.errorsMessage != null  and info.errorsMessage != ''">errors_message,</if>
+        <if test="info.startTime != null  ">start_time,</if>
+        <if test="info.enditTime != null  ">endit_time,</if>
         <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
         <if test="info.branchNo != null  and info.branchNo != ''">branch_no,</if>
         <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
@@ -85,10 +89,12 @@
         <if test="info.taskLogno != null  and info.taskLogno != ''">#{info.taskLogno},</if>
         <if test="info.taskName != null  and info.taskName != ''">#{info.taskName},</if>
         <if test="info.taskGroup != null  and info.taskGroup != ''">#{info.taskGroup},</if>
-        <if test="info.invokeTarget != null  and info.invokeTarget != ''">#{info.invokeTarget},</if>
         <if test="info.taskMessage != null  and info.taskMessage != ''">#{info.taskMessage},</if>
+        <if test="info.invokeTarget != null  and info.invokeTarget != ''">#{info.invokeTarget},</if>
         <if test="info.resultStatus != null  and info.resultStatus != ''">#{info.resultStatus},</if>
-        <if test="info.exceptionInfo != null  and info.exceptionInfo != ''">#{info.exceptionInfo},</if>
+        <if test="info.errorsMessage != null  and info.errorsMessage != ''">#{info.errorsMessage},</if>
+        <if test="info.startTime != null ">#{info.startTime},</if>
+        <if test="info.enditTime != null ">#{info.enditTime},</if>
         <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
         <if test="info.branchNo != null  and info.branchNo != ''">#{info.branchNo},</if>
         <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
@@ -108,12 +114,14 @@
             <if test="info.taskLogno != null  and info.taskLogno != ''">task_logno = #{info.taskLogno},</if>
             <if test="info.taskName != null  and info.taskName != ''">task_name = #{info.taskName},</if>
             <if test="info.taskGroup != null  and info.taskGroup != ''">task_group = #{info.taskGroup},</if>
-            <if test="info.invokeTarget != null  and info.invokeTarget != ''">invoke_target = #{info.invokeTarget},</if>
             <if test="info.taskMessage != null  and info.taskMessage != ''">task_message = #{info.taskMessage},</if>
+            <if test="info.invokeTarget != null  and info.invokeTarget != ''">invoke_target = #{info.invokeTarget},</if>
             <if test="info.resultStatus != null  and info.resultStatus != ''">result_status = #{info.resultStatus},</if>
-            <if test="info.exceptionInfo != null  and info.exceptionInfo != ''">exception_info =
-                #{info.exceptionInfo},
+            <if test="info.errorsMessage != null  and info.errorsMessage != ''">errors_message =
+                #{info.errorsMessage},
             </if>
+            <if test="info.startTime != null ">start_time = #{info.startTime},</if>
+            <if test="info.enditTime != null ">endit_time = #{info.enditTime},</if>
             <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
             <if test="info.branchNo != null  and info.branchNo != ''">branch_no = #{info.branchNo},</if>
             <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>

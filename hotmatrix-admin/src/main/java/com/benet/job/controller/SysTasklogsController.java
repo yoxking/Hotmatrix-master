@@ -1,4 +1,4 @@
-package com.benet.sys.controller;
+package com.benet.job.controller;
 
 import java.util.List;
 import com.benet.common.core.pager.PageRequest;
@@ -6,6 +6,8 @@ import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
+import com.benet.job.domain.SysTasklogs;
+import com.benet.job.service.ISysTasklogsService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import com.benet.system.domain.SysTasklogs;
-import com.benet.system.service.ISysTasklogsService;
 import com.benet.common.annotation.Oplog;
 import com.benet.common.core.controller.BaseController;
 import com.benet.common.core.domain.AjaxResult;
@@ -34,7 +34,7 @@ import com.benet.common.core.pager.TableDataInfo;
  * @date 2020-04-20
  */
 @RestController
-@RequestMapping("/sys/tasklogs")
+@RequestMapping("/job/tasklogs")
 public class SysTasklogsController extends BaseController
 {
     @Autowired

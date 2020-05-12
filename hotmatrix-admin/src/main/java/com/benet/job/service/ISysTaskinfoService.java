@@ -1,8 +1,8 @@
-package com.benet.system.service;
+package com.benet.job.service;
 
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
-import com.benet.system.domain.SysTaskinfo;
+import com.benet.job.domain.SysTaskinfo;
 
 /**
  * 定时任务调度Service接口
@@ -45,7 +45,7 @@ public interface ISysTaskinfoService
      * @param orderType 排序类型
      * @return 定时任务调度集合
      */
-    public List<SysTaskinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType);
+    public List<SysTaskinfo> getRecordsByPaging(int pageIndex, int pageSize, String condition, String orderField, String orderType);
 
     /**
      * 查询定时任务调度
@@ -134,4 +134,46 @@ public interface ISysTaskinfoService
      * @return 结果
      */
     public int SoftDeleteByCondition(String condition);
+
+
+    /**
+     * 立即运行任务
+     *
+     * @param taskNo 调度信息
+     * @return 结果
+     */
+    public void start(String taskNo);
+
+    /**
+     * 暂停任务
+     *
+     * @param taskNo 调度信息
+     * @return 结果
+     */
+    public int pause(String taskNo) ;
+
+    /**
+     * 恢复任务
+     *
+     * @param taskNo 调度信息
+     * @return 结果
+     */
+    public int resume(String taskNo);
+    /**
+     * 任务调度状态修改
+     *
+     * @param taskNo 调度信息编号
+     * @param state 状态
+     * @return 结果
+     */
+    public int changeState(String taskNo,String state);
+
+
+    /**
+     * 校验cron表达式是否有效
+     *
+     * @param expression 表达式
+     * @return 结果
+     */
+    public boolean checkExpression(String expression);
 }

@@ -29,6 +29,18 @@
             <version>2.1.1</version>
         </dependency>
 
+        <!-- 定时任务 -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.mchange</groupId>
+                    <artifactId>c3p0</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!-- 阿里JSON解析器 -->
         <dependency>
             <groupId>com.alibaba</groupId>

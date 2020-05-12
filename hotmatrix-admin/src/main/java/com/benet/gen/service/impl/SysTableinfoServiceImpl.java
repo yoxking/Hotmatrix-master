@@ -376,7 +376,7 @@ public class SysTableinfoServiceImpl implements ISysTableinfoService
         VelocityContext context = VelocityUtils.prepareContext(table);
 
         // 获取模板列表
-        List<String> templates = VelocityUtils.getTemplateList(table.getTplCategory());
+        List<String> templates = VelocityUtils.getTemplateList(table.getTemplCategory());
         for (String template : templates)
         {
             // 渲染模板
@@ -439,7 +439,7 @@ public class SysTableinfoServiceImpl implements ISysTableinfoService
         VelocityContext context = VelocityUtils.prepareContext(table);
 
         // 获取模板列表
-        List<String> templates = VelocityUtils.getTemplateList(table.getTplCategory());
+        List<String> templates = VelocityUtils.getTemplateList(table.getTemplCategory());
         for (String template : templates)
         {
             // 渲染模板
@@ -470,7 +470,7 @@ public class SysTableinfoServiceImpl implements ISysTableinfoService
     @Override
     public void validateEdit(SysTableinfo table)
     {
-        if (GenConstants.TPL_TREE.equals(table.getTplCategory()))
+        if (GenConstants.TPL_TREE.equals(table.getTemplCategory()))
         {
             String options = JSON.toJSONString(table.getParams());
             JSONObject paramsObj = JSONObject.parseObject(options);

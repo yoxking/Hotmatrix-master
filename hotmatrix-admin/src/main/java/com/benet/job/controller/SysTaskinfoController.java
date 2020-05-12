@@ -1,4 +1,4 @@
-package com.benet.sys.controller;
+package com.benet.job.controller;
 
 import java.util.List;
 import com.benet.common.core.pager.PageRequest;
@@ -6,6 +6,8 @@ import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
+import com.benet.job.domain.SysTaskinfo;
+import com.benet.job.service.ISysTaskinfoService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import com.benet.system.domain.SysTaskinfo;
-import com.benet.system.service.ISysTaskinfoService;
 import com.benet.common.annotation.Oplog;
 import com.benet.common.core.controller.BaseController;
 import com.benet.common.core.domain.AjaxResult;
@@ -34,7 +34,7 @@ import com.benet.common.core.pager.TableDataInfo;
  * @date 2020-04-20
  */
 @RestController
-@RequestMapping("/sys/taskinfo")
+@RequestMapping("/job/taskinfo")
 public class SysTaskinfoController extends BaseController
 {
     @Autowired
@@ -144,6 +144,40 @@ public class SysTaskinfoController extends BaseController
         List<SysTaskinfo> list = sysTaskinfoService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysTaskinfo> util = new ExcelUtils<SysTaskinfo>(SysTaskinfo.class);
         return util.exportExcel(list, "SysTaskinfo");
+    }
+
+
+    /**
+     * 任务调度立即执行一次
+     */
+    //@PreAuthorize("@ps.hasPermit('system:taskinfo:export')")
+    @Oplog(title = "定时任务调度", businessType = BusinessType.UPDATE)
+    @PostMapping("/startTask")
+    public AjaxResult startTask(String taskNo)
+    {
+        sysTaskinfoService.start(taskNo);
+        return success();
+    }
+
+    /**
+     * 任务调度状态修改
+     */
+    //@PreAuthorize("@ps.hasPermit('system:taskinfo:export')")
+    @Oplog(title = "定时任务调度", businessType = BusinessType.UPDATE)
+    @PostMapping("/changeStatus")
+    public AjaxResult changeState(String taskNo,String state)
+    {
+        return toAjax(sysTaskinfoService.changeState(taskNo,state));
+    }
+
+
+    /**
+     * 校验cron表达式是否有效
+     */
+    @PostMapping("/checkexpress")
+    public boolean checkExpress(String express)
+    {
+        return sysTaskinfoService.checkExpression(express);
     }
 
 }

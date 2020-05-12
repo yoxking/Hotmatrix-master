@@ -30,11 +30,11 @@ public class VelocityUtils
         String moduleName = tableInfo.getModuleName();
         String businessName = tableInfo.getBusinessName();
         String packageName = tableInfo.getPackageName();
-        String tplCategory = tableInfo.getTplCategory();
+        String tplCategory = tableInfo.getTemplCategory();
         String functionName = tableInfo.getFunctionName();
 
         VelocityContext velocityContext = new VelocityContext();
-        velocityContext.put("tplCategory", tableInfo.getTplCategory());
+        velocityContext.put("tplCategory", tableInfo.getTemplCategory());
         velocityContext.put("tableName", tableInfo.getTableName());
         velocityContext.put("functionName", StringUtils.isNotEmpty(functionName) ? functionName : "【请填写功能名称】");
         velocityContext.put("ClassName", tableInfo.getClassName());

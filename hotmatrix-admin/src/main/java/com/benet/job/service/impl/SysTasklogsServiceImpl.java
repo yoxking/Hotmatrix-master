@@ -1,15 +1,15 @@
-package com.benet.system.service.impl;
+package com.benet.job.service.impl;
 
 import java.util.List;
 import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
+import com.benet.job.domain.SysTasklogs;
+import com.benet.job.mapper.SysTasklogsMapper;
+import com.benet.job.service.ISysTasklogsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.benet.system.mapper.SysTasklogsMapper;
-import com.benet.system.domain.SysTasklogs;
-import com.benet.system.service.ISysTasklogsService;
 
 /**
  * 定时任务调度日志Service业务层处理
@@ -18,7 +18,7 @@ import com.benet.system.service.ISysTasklogsService;
  * @date 2020-04-06
  */
 @Service
-public class SysTasklogsServiceImpl implements ISysTasklogsService 
+public class SysTasklogsServiceImpl implements ISysTasklogsService
 {
     @Autowired
     private SysTasklogsMapper sysTasklogsMapper;
