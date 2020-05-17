@@ -1,21 +1,12 @@
 package com.benet.web.controller;
 
 import com.benet.common.annotation.Oplog;
-import com.benet.common.configure.ServerConfig;
 import com.benet.common.core.domain.AjaxResult;
 import com.benet.common.enums.BusinessType;
-import com.benet.common.utils.uuid.UuidUtils;
-import com.benet.common.utils.web.ServletUtils;
-import com.benet.framework.security.LoginUser;
-import com.benet.system.domain.SysContentinfo;
 import com.benet.system.service.ISysConfiginfoService;
-import com.benet.system.service.ISysContzclassService;
 import com.benet.web.vmodel.ConfigInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * 配置请求处理

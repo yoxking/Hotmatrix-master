@@ -53,12 +53,12 @@ public class SysLoginService
 
         if (captcha == null)
         {
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, PubConstants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire")));
+            AsyncManager.me().execute(AsyncFactory.recordLogininfo(username, PubConstants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire")));
             throw new CaptchaException();
         }
         if (!code.equalsIgnoreCase(captcha))
         {
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, PubConstants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error")));
+            AsyncManager.me().execute(AsyncFactory.recordLogininfo(username, PubConstants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error")));
             throw new CaptchaException();
         }
         // 用户验证
@@ -73,16 +73,16 @@ public class SysLoginService
         {
             if (e instanceof BadCredentialsException)
             {
-                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, PubConstants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
+                AsyncManager.me().execute(AsyncFactory.recordLogininfo(username, PubConstants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
                 throw new UserPasswordNotMatchException();
             }
             else
             {
-                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, PubConstants.LOGIN_FAIL, e.getMessage()));
+                AsyncManager.me().execute(AsyncFactory.recordLogininfo(username, PubConstants.LOGIN_FAIL, e.getMessage()));
                 throw new BaseException(e.getMessage());
             }
         }
-        AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, PubConstants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
+        AsyncManager.me().execute(AsyncFactory.recordLogininfo(username, PubConstants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         // 生成token
         return tokenService.createToken(loginUser);

@@ -10,8 +10,8 @@ import com.benet.common.utils.spring.SpringUtils;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.job.domain.SysTaskinfo;
-import com.benet.job.domain.SysTasklogs;
-import com.benet.job.service.ISysTasklogsService;
+import com.benet.job.domain.SysTaskelog;
+import com.benet.job.service.ISysTaskelogService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -75,29 +75,29 @@ public abstract class AbstractJob implements Job
         Date startTime = threadLocal.get();
         threadLocal.remove();
 
-        final SysTasklogs sysTaskLog = new SysTasklogs();
-        sysTaskLog.setTaskLogno(UuidUtils.shortUUID());
-        sysTaskLog.setTaskName(taskInfo.getTaskName());
-        sysTaskLog.setTaskGroup(taskInfo.getTaskGroup());
-        sysTaskLog.setInvokeTarget(taskInfo.getInvokeTarget());
-        sysTaskLog.setStartTime(startTime);
-        sysTaskLog.setEnditTime(new Date());
-        long runMs = sysTaskLog.getEnditTime().getTime() - sysTaskLog.getStartTime().getTime();
-        sysTaskLog.setTaskMessage(sysTaskLog.getTaskName() + " 总共耗时：" + runMs + "毫秒");
+        final SysTaskelog sysTaskeLog = new SysTaskelog();
+        sysTaskeLog.setTaskLogno(UuidUtils.shortUUID());
+        sysTaskeLog.setTaskName(taskInfo.getTaskName());
+        sysTaskeLog.setTaskGroup(taskInfo.getTaskGroup());
+        sysTaskeLog.setInvokeTarget(taskInfo.getInvokeTarget());
+        sysTaskeLog.setStartTime(startTime);
+        sysTaskeLog.setEnditTime(new Date());
+        long runMs = sysTaskeLog.getEnditTime().getTime() - sysTaskeLog.getStartTime().getTime();
+        sysTaskeLog.setTaskMessage(sysTaskeLog.getTaskName() + " 总共耗时：" + runMs + "毫秒");
         if (e != null)
         {
-            sysTaskLog.setResultStatus(PubConstants.FAIL);
+            sysTaskeLog.setResultStatus(PubConstants.FAIL);
             String errorMsg = StringUtils.substring(ExceptionUtils.getExceptionMessage(e), 0, 2000);
-            sysTaskLog.setErrorsMessage(errorMsg);
+            sysTaskeLog.setErrorsMessage(errorMsg);
         }
         else
         {
-            sysTaskLog.setResultStatus((PubConstants.SUCCESS));
+            sysTaskeLog.setResultStatus((PubConstants.SUCCESS));
         }
-        sysTaskLog.setCheckState("1");
+        sysTaskeLog.setCheckState("1");
 
         // 写入数据库当中
-        SpringUtils.getBean(ISysTasklogsService.class).AddNewRecord(sysTaskLog);
+        SpringUtils.getBean(ISysTaskelogService.class).AddNewRecord(sysTaskeLog);
     }
 
     /**

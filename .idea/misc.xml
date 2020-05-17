@@ -8,7 +8,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/hotmatrix-test/pom.xml" />
+        <option value="$PROJECT_DIR$/hotmatrix-workflow/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

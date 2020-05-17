@@ -8,9 +8,8 @@ import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
 import com.benet.sys.vmodel.ItemObjectVo;
-import com.benet.system.domain.SysContzclass;
-import com.benet.system.service.ISysContzclassService;
-import org.springframework.security.access.prepost.PreAuthorize;
+import com.benet.system.domain.SysConteeclass;
+import com.benet.system.service.ISysConteeclassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +44,7 @@ public class SysContentinfoController extends BaseController
     private MyJwtokenService tokenService;
 
     @Autowired
-    private ISysContzclassService sysContzclassService;
+    private ISysConteeclassService sysContzclassService;
 
     @Autowired
     private ISysContentinfoService sysContentinfoService;
@@ -67,16 +66,16 @@ public class SysContentinfoController extends BaseController
     @GetMapping(value = "/classlist")
     public TableDataInfo classlist()
     {
-        List<SysContzclass> list = sysContzclassService.getAllRecords();
+        List<SysConteeclass> list = sysContzclassService.getAllRecords();
         return getDataTable(convertList(list), list.size());
     }
 
-    private List<ItemObjectVo> convertList(List<SysContzclass> list){
+    private List<ItemObjectVo> convertList(List<SysConteeclass> list){
 
         List<ItemObjectVo> itemList=new ArrayList<>();
         ItemObjectVo item=null;
         if(list!=null&&list.size()>0){
-            for(SysContzclass info:list){
+            for(SysConteeclass info:list){
                 item=new ItemObjectVo();
                 item.setId(info.getClassNo());
                 item.setLabel(info.getClassName());

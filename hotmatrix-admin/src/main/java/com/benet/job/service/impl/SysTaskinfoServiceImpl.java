@@ -42,8 +42,7 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
     @PostConstruct
     public void init()
     {
-        String s="78934433";
-        List<SysTaskinfo> taskList = sysTaskinfoMapper.getAllRecords(s);
+        List<SysTaskinfo> taskList = sysTaskinfoMapper.getAllRecords("");
         for (SysTaskinfo taskInfo : taskList)
         {
             updateScheduler(taskInfo, taskInfo.getTaskGroup());

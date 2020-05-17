@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.benet.workflow.mapper.FlwFlowtaskeMapper">
+
+    <resultMap type="FlwFlowtaske" id="FlwFlowtaskeResult">
+        <result property="id" column="id"/>
+        <result property="taskNo" column="task_no"/>
+        <result property="taskType" column="task_type"/>
+        <result property="taskTitle" column="task_title"/>
+        <result property="flowNo" column="flow_no"/>
+        <result property="flowName" column="flow_name"/>
+        <result property="prevNo" column="prev_no"/>
+        <result property="prevStepno" column="prev_stepno"/>
+        <result property="stepNo" column="step_no"/>
+        <result property="stepName" column="step_name"/>
+        <result property="stepSort" column="step_sort"/>
+        <result property="instanceNo" column="instance_no"/>
+        <result property="groupNo" column="group_no"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="sendBy" column="send_by"/>
+        <result property="senderName" column="sender_name"/>
+        <result property="receiveBy" column="receive_by"/>
+        <result property="receiveOrgzno" column="receive_orgzno"/>
+        <result property="receiverName" column="receiver_name"/>
+        <result property="receiveTime" column="receive_time"/>
+        <result property="openingTime" column="opening_time"/>
+        <result property="completedTime1" column="completed_time1"/>
+        <result property="completedTime2" column="completed_time2"/>
+        <result property="operateNote" column="operate_note"/>
+        <result property="subflowGroupno" column="subflow_groupno"/>
+        <result property="isSign" column="is_sign"/>
+        <result property="isAutosubmit" column="is_autosubmit"/>
+        <result property="attachFiles" column="attach_files"/>
+        <result property="executeType" column="execute_type"/>
+        <result property="entrustUserno" column="entrust_userno"/>
+        <result property="otherType" column="other_type"/>
+        <result property="checkState" column="check_state"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteFlag" column="delete_flag"/>
+        <result property="comments" column="comments"/>
+        <result property="appCode" column="app_code"/>
+        <result property="version" column="version"/>
+    </resultMap>
+
+    <sql id="selectFlwFlowtaskeVo">
+        select id, task_no, task_type, task_title, flow_no, flow_name, prev_no, prev_stepno, step_no, step_name, step_sort, instance_no, group_no, order_no, send_by, sender_name, receive_by, receive_orgzno, receiver_name, receive_time, opening_time, completed_time1, completed_time2, operate_note, subflow_groupno, is_sign, is_autosubmit, attach_files, execute_type, entrust_userno, other_type, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from flw_flowtaske
+    </sql>
+
+    <select id="getAllRecords" resultMap="FlwFlowtaskeResult">
+        <include refid="selectFlwFlowtaskeVo"/>
+        where delete_flag='1' and app_code=#{appCode}
+    </select>
+
+    <select id="getRecordsByClassNo" resultMap="FlwFlowtaskeResult">
+        <include refid="selectFlwFlowtaskeVo"/>
+        where delete_flag='1' and app_code=#{appCode} and class_no=#{classNo}
+    </select>
+
+    <select id="getRecordsByPaging" resultMap="FlwFlowtaskeResult">
+        <include refid="selectFlwFlowtaskeVo"/>
+        where delete_flag='1' and app_code=${appCode}
+        <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
+        order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
+    </select>
+
+    <select id="getRecordByNo" resultMap="FlwFlowtaskeResult">
+        <include refid="selectFlwFlowtaskeVo"/>
+        where delete_flag='1' and app_code=#{appCode} and task_no = #{no}
+    </select>
+
+    <select id="getRecordNameByNo" resultType="String">
+        select task_title from flw_flowtaske
+        where delete_flag='1' and app_code=#{appCode} and task_no = #{no}
+    </select>
+
+    <select id="getCountByCondition" resultType="Integer">
+        select count(*) from flw_flowtaske
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </select>
+
+    <insert id="AddNewRecord" parameterType="FlwFlowtaske" useGeneratedKeys="true" keyProperty="id">
+        insert into flw_flowtaske (
+        <if test="info.taskNo != null  and info.taskNo != ''">task_no,</if>
+        <if test="info.taskType != null ">task_type,</if>
+        <if test="info.taskTitle != null  and info.taskTitle != ''">task_title,</if>
+        <if test="info.flowNo != null  and info.flowNo != ''">flow_no,</if>
+        <if test="info.flowName != null  and info.flowName != ''">flow_name,</if>
+        <if test="info.prevNo != null  and info.prevNo != ''">prev_no,</if>
+        <if test="info.prevStepno != null  and info.prevStepno != ''">prev_stepno,</if>
+        <if test="info.stepNo != null  and info.stepNo != ''">step_no,</if>
+        <if test="info.stepName != null  and info.stepName != ''">step_name,</if>
+        <if test="info.stepSort != null ">step_sort,</if>
+        <if test="info.instanceNo != null  and info.instanceNo != ''">instance_no,</if>
+        <if test="info.groupNo != null  and info.groupNo != ''">group_no,</if>
+        <if test="info.orderNo != null ">order_no,</if>
+        <if test="info.sendBy != null  and info.sendBy != ''">send_by,</if>
+        <if test="info.senderName != null  and info.senderName != ''">sender_name,</if>
+        <if test="info.receiveBy != null  and info.receiveBy != ''">receive_by,</if>
+        <if test="info.receiveOrgzno != null  and info.receiveOrgzno != ''">receive_orgzno,</if>
+        <if test="info.receiverName != null  and info.receiverName != ''">receiver_name,</if>
+        <if test="info.receiveTime != null ">receive_time,</if>
+        <if test="info.openingTime != null ">opening_time,</if>
+        <if test="info.completedTime1 != null ">completed_time1,</if>
+        <if test="info.completedTime2 != null ">completed_time2,</if>
+        <if test="info.operateNote != null  and info.operateNote != ''">operate_note,</if>
+        <if test="info.subflowGroupno != null  and info.subflowGroupno != ''">subflow_groupno,</if>
+        <if test="info.isSign != null ">is_sign,</if>
+        <if test="info.isAutosubmit != null ">is_autosubmit,</if>
+        <if test="info.attachFiles != null  and info.attachFiles != ''">attach_files,</if>
+        <if test="info.executeType != null ">execute_type,</if>
+        <if test="info.entrustUserno != null  and info.entrustUserno != ''">entrust_userno,</if>
+        <if test="info.otherType != null ">other_type,</if>
+        <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
+        <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
+        <if test="info.createTime != null ">create_time,</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">update_by,</if>
+        <if test="info.updateTime != null ">update_time,</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag,</if>
+        <if test="info.comments != null  and info.comments != ''">comments,</if>
+        <if test="info.appCode != null  and info.appCode != ''">app_code,</if>
+        <if test="info.version != null ">version</if>
+        )values(
+        <if test="info.taskNo != null  and info.taskNo != ''">#{info.taskNo},</if>
+        <if test="info.taskType != null ">#{info.taskType},</if>
+        <if test="info.taskTitle != null  and info.taskTitle != ''">#{info.taskTitle},</if>
+        <if test="info.flowNo != null  and info.flowNo != ''">#{info.flowNo},</if>
+        <if test="info.flowName != null  and info.flowName != ''">#{info.flowName},</if>
+        <if test="info.prevNo != null  and info.prevNo != ''">#{info.prevNo},</if>
+        <if test="info.prevStepno != null  and info.prevStepno != ''">#{info.prevStepno},</if>
+        <if test="info.stepNo != null  and info.stepNo != ''">#{info.stepNo},</if>
+        <if test="info.stepName != null  and info.stepName != ''">#{info.stepName},</if>
+        <if test="info.stepSort != null ">#{info.stepSort},</if>
+        <if test="info.instanceNo != null  and info.instanceNo != ''">#{info.instanceNo},</if>
+        <if test="info.groupNo != null  and info.groupNo != ''">#{info.groupNo},</if>
+        <if test="info.orderNo != null ">#{info.orderNo},</if>
+        <if test="info.sendBy != null  and info.sendBy != ''">#{info.sendBy},</if>
+        <if test="info.senderName != null  and info.senderName != ''">#{info.senderName},</if>
+        <if test="info.receiveBy != null  and info.receiveBy != ''">#{info.receiveBy},</if>
+        <if test="info.receiveOrgzno != null  and info.receiveOrgzno != ''">#{info.receiveOrgzno},</if>
+        <if test="info.receiverName != null  and info.receiverName != ''">#{info.receiverName},</if>
+        <if test="info.receiveTime != null ">#{info.receiveTime},</if>
+        <if test="info.openingTime != null ">#{info.openingTime},</if>
+        <if test="info.completedTime1 != null ">#{info.completedTime1},</if>
+        <if test="info.completedTime2 != null ">#{info.completedTime2},</if>
+        <if test="info.operateNote != null  and info.operateNote != ''">#{info.operateNote},</if>
+        <if test="info.subflowGroupno != null  and info.subflowGroupno != ''">#{info.subflowGroupno},</if>
+        <if test="info.isSign != null ">#{info.isSign},</if>
+        <if test="info.isAutosubmit != null ">#{info.isAutosubmit},</if>
+        <if test="info.attachFiles != null  and info.attachFiles != ''">#{info.attachFiles},</if>
+        <if test="info.executeType != null ">#{info.executeType},</if>
+        <if test="info.entrustUserno != null  and info.entrustUserno != ''">#{info.entrustUserno},</if>
+        <if test="info.otherType != null ">#{info.otherType},</if>
+        <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
+        <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
+        <if test="info.createTime != null ">#{info.createTime},</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">#{info.updateBy},</if>
+        <if test="info.updateTime != null ">#{info.updateTime},</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">#{info.deleteFlag},</if>
+        <if test="info.comments != null  and info.comments != ''">#{info.comments},</if>
+        <if test="info.appCode != null  and info.appCode != ''">#{info.appCode},</if>
+        <if test="info.version != null ">#{info.version}</if>
+        )
+    </insert>
+
+    <update id="UpdateRecord" parameterType="FlwFlowtaske">
+        update flw_flowtaske
+        <set>
+            <if test="info.taskNo != null  and info.taskNo != ''">task_no = #{info.taskNo},</if>
+            <if test="info.taskType != null ">task_type = #{info.taskType},</if>
+            <if test="info.taskTitle != null  and info.taskTitle != ''">task_title = #{info.taskTitle},</if>
+            <if test="info.flowNo != null  and info.flowNo != ''">flow_no = #{info.flowNo},</if>
+            <if test="info.flowName != null  and info.flowName != ''">flow_name = #{info.flowName},</if>
+            <if test="info.prevNo != null  and info.prevNo != ''">prev_no = #{info.prevNo},</if>
+            <if test="info.prevStepno != null  and info.prevStepno != ''">prev_stepno = #{info.prevStepno},</if>
+            <if test="info.stepNo != null  and info.stepNo != ''">step_no = #{info.stepNo},</if>
+            <if test="info.stepName != null  and info.stepName != ''">step_name = #{info.stepName},</if>
+            <if test="info.stepSort != null ">step_sort = #{info.stepSort},</if>
+            <if test="info.instanceNo != null  and info.instanceNo != ''">instance_no = #{info.instanceNo},</if>
+            <if test="info.groupNo != null  and info.groupNo != ''">group_no = #{info.groupNo},</if>
+            <if test="info.orderNo != null ">order_no = #{info.orderNo},</if>
+            <if test="info.sendBy != null  and info.sendBy != ''">send_by = #{info.sendBy},</if>
+            <if test="info.senderName != null  and info.senderName != ''">sender_name = #{info.senderName},</if>
+            <if test="info.receiveBy != null  and info.receiveBy != ''">receive_by = #{info.receiveBy},</if>
+            <if test="info.receiveOrgzno != null  and info.receiveOrgzno != ''">receive_orgzno =
+                #{info.receiveOrgzno},
+            </if>
+            <if test="info.receiverName != null  and info.receiverName != ''">receiver_name = #{info.receiverName},</if>
+            <if test="info.receiveTime != null ">receive_time = #{info.receiveTime},</if>
+            <if test="info.openingTime != null ">opening_time = #{info.openingTime},</if>
+            <if test="info.completedTime1 != null ">completed_time1 = #{info.completedTime1},</if>
+            <if test="info.completedTime2 != null ">completed_time2 = #{info.completedTime2},</if>
+            <if test="info.operateNote != null  and info.operateNote != ''">operate_note = #{info.operateNote},</if>
+            <if test="info.subflowGroupno != null  and info.subflowGroupno != ''">subflow_groupno =
+                #{info.subflowGroupno},
+            </if>
+            <if test="info.isSign != null ">is_sign = #{info.isSign},</if>
+            <if test="info.isAutosubmit != null ">is_autosubmit = #{info.isAutosubmit},</if>
+            <if test="info.attachFiles != null  and info.attachFiles != ''">attach_files = #{info.attachFiles},</if>
+            <if test="info.executeType != null ">execute_type = #{info.executeType},</if>
+            <if test="info.entrustUserno != null  and info.entrustUserno != ''">entrust_userno =
+                #{info.entrustUserno},
+            </if>
+            <if test="info.otherType != null ">other_type = #{info.otherType},</if>
+            <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
+            <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
+            <if test="info.createTime != null ">create_time = #{info.createTime},</if>
+            <if test="info.updateBy != null  and info.updateBy != ''">update_by = #{info.updateBy},</if>
+            <if test="info.updateTime != null ">update_time = #{info.updateTime},</if>
+            <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag = #{info.deleteFlag},</if>
+            <if test="info.comments != null  and info.comments != ''">comments = #{info.comments},</if>
+            <if test="info.appCode != null  and info.appCode != ''">app_code = #{info.appCode},</if>
+            <if test="info.version != null ">version = version+1</if>
+        </set>
+        where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and task_no = #{info.taskNo}
+    </update>
+
+    <delete id="HardDeleteByNo">
+        delete from flw_flowtaske
+        where delete_flag='1' and app_code=#{appCode} and task_no = #{no}
+    </delete>
+
+    <delete id="HardDeleteByNos">
+        delete from flw_flowtaske
+        where delete_flag='1' and app_code=#{appCode} and task_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="HardDeleteByCondition">
+        delete from flw_flowtaske
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </delete>
+
+    <delete id="SoftDeleteByNo">
+        update flw_flowtaske set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and task_no = #{no}
+    </delete>
+
+    <delete id="SoftDeleteByNos">
+        update flw_flowtaske set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and task_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="SoftDeleteByCondition">
+        update flw_flowtaske set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </delete>
+
+</mapper>

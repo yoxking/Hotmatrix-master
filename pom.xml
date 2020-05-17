@@ -161,6 +161,7 @@
         <module>hotmatrix-admin</module>
         <module>hotmatrix-common</module>
         <module>hotmatrix-framework</module>
+        <module>hotmatrix-workflow</module>
         <module>hotmatrix-system</module>
     </modules>
 

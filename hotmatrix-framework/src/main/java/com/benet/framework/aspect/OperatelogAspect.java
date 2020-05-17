@@ -11,7 +11,7 @@ import com.benet.framework.manager.AsyncManager;
 import com.benet.framework.manager.factory.AsyncFactory;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
-import com.benet.system.domain.SysOperatelogs;
+import com.benet.system.domain.SysOperatelog;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -86,7 +86,7 @@ public class OperatelogAspect
             LoginUser loginUser = SpringUtils.getBean(MyJwtokenService.class).getLoginUser(ServletUtils.getRequest());
 
             // *========数据库日志=========*//
-            SysOperatelogs opertLog = new SysOperatelogs();
+            SysOperatelog opertLog = new SysOperatelog();
             opertLog.setOpertStatus(BusinessStatus.SUCCESS.ordinal()+"");
             // 请求的地址
             String ip = IpnetUtils.getIpAddr(ServletUtils.getRequest());
@@ -132,7 +132,7 @@ public class OperatelogAspect
      * @param opertLog 操作日志
      * @throws Exception
      */
-    public void getControllerMethodDescription(JoinPoint joinPoint, Oplog oplog, SysOperatelogs opertLog) throws Exception
+    public void getControllerMethodDescription(JoinPoint joinPoint, Oplog oplog, SysOperatelog opertLog) throws Exception
     {
         // 设置action动作
         opertLog.setOpertType(oplog.businessType().ordinal()+"");
@@ -154,7 +154,7 @@ public class OperatelogAspect
      * @param opertLog 操作日志
      * @throws Exception 异常
      */
-    private void setRequestValue(JoinPoint joinPoint, SysOperatelogs opertLog) throws Exception
+    private void setRequestValue(JoinPoint joinPoint, SysOperatelog opertLog) throws Exception
     {
         String requestMethod = opertLog.getMethodName();
         if (HttpMethod.PUT.name().equals(requestMethod) || HttpMethod.POST.name().equals(requestMethod))

@@ -47,7 +47,7 @@ public class SylogoutSuccessHandler implements LogoutSuccessHandler
             // 删除用户缓存记录
             jwtokenService.delLoginUser(loginUser.getToken());
             // 记录用户退出日志
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(userName, PubConstants.LOGOUT, "退出成功"));
+            AsyncManager.me().execute(AsyncFactory.recordLogininfo(userName, PubConstants.LOGOUT, "退出成功"));
         }
         ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.success(HttpStatus.SUCCESS+"", "退出成功")));
     }

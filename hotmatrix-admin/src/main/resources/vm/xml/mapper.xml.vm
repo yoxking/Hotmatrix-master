@@ -72,7 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 #end
             #end
         </set>
-        where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and xxxxxxxxx_no = #{xxxxxxxno}
+        where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and xxxxxxxxx_no = #{info.xxxxxxxno}
     </update>
 
     <delete id="HardDeleteByNo">
@@ -82,7 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <delete id="HardDeleteByNos">
         delete from ${tableName}
-        where delete_flag='1' and app_code=#{appCode} and app_no in
+        where delete_flag='1' and app_code=#{appCode} and xxxxxxxxx_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
         </foreach>
@@ -101,7 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <delete id="SoftDeleteByNos">
         update ${tableName} set delete_flag='0'
-        where delete_flag='1' and app_code=#{appCode} and app_no in
+        where delete_flag='1' and app_code=#{appCode} and xxxxxxxxx_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
         </foreach>

@@ -12,9 +12,9 @@ import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.utils.OplogUtils;
 import com.benet.system.domain.SysLogininfo;
-import com.benet.system.domain.SysOperatelogs;
+import com.benet.system.domain.SysOperatelog;
 import com.benet.system.service.ISysLogininfoService;
-import com.benet.system.service.ISysOperatelogsService;
+import com.benet.system.service.ISysOperatelogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -35,7 +35,7 @@ public class AsyncFactory
      * @param opertLog 操作日志信息
      * @return 任务task
      */
-    public static TimerTask recordOperate(final SysOperatelogs opertLog)
+    public static TimerTask recordOperate(final SysOperatelog opertLog)
     {
         return new TimerTask()
         {
@@ -45,7 +45,7 @@ public class AsyncFactory
                 // 远程查询操作地点
                 opertLog.setOplogNo(UuidUtils.shortUUID());
                 opertLog.setOpertLocation(AddressUtils.getRealAddressByIP(opertLog.getOpertIp()));
-                SpringUtils.getBean(ISysOperatelogsService.class).AddNewRecord(opertLog);
+                SpringUtils.getBean(ISysOperatelogService.class).AddNewRecord(opertLog);
             }
         };
     }
@@ -59,7 +59,7 @@ public class AsyncFactory
      * @param args 列表
      * @return 任务task
      */
-    public static TimerTask recordLogininfor(final String username, final String status, final String message, final Object... args)
+    public static TimerTask recordLogininfo(final String username, final String status, final String message, final Object... args)
     {
         final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
         final String ip = IpnetUtils.getHostIp();
@@ -83,28 +83,28 @@ public class AsyncFactory
                 String browser = userAgent.getBrowser().getName();
 
                 // 封装对象
-                SysLogininfo logininfor = new SysLogininfo();
-                logininfor.setLoginNo(UuidUtils.shortUUID());
-                logininfor.setLoginName(username);
-                logininfor.setIpAddress(ip);
-                logininfor.setLocation(address);
-                logininfor.setBrowser(browser);
-                logininfor.setOs(os);
-                logininfor.setMessage(message);
+                SysLogininfo logininfo = new SysLogininfo();
+                logininfo.setLoginNo(UuidUtils.shortUUID());
+                logininfo.setLoginName(username);
+                logininfo.setIpAddress(ip);
+                logininfo.setLocation(address);
+                logininfo.setBrowser(browser);
+                logininfo.setOs(os);
+                logininfo.setMessage(message);
                 // 日志状态
                 if (PubConstants.LOGIN_SUCCESS.equals(status) || PubConstants.LOGOUT.equals(status))
                 {
-                    logininfor.setStatus(PubConstants.SUCCESS);
+                    logininfo.setStatus(PubConstants.SUCCESS);
                 }
                 else if (PubConstants.LOGIN_FAIL.equals(status))
                 {
-                    logininfor.setStatus(PubConstants.FAIL);
+                    logininfo.setStatus(PubConstants.FAIL);
                 }
-                logininfor.setLoginTime(DateUtils.getNowDate());
-                logininfor.setBranchNo(GlobalConfig.getBranchNo());
+                logininfo.setLoginTime(DateUtils.getNowDate());
+                logininfo.setBranchNo(GlobalConfig.getBranchNo());
 
                 // 插入数据
-                SpringUtils.getBean(ISysLogininfoService.class).AddNewRecord(logininfor);
+                SpringUtils.getBean(ISysLogininfoService.class).AddNewRecord(logininfo);
             }
         };
     }
