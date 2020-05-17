@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.benet.workflow.mapper.FlwFlowarchivesMapper">
+<mapper namespace="com.benet.workflow.mapper.FlwFlowarchivsMapper">
 
-    <resultMap type="FlwFlowarchives" id="FlwFlowarchivesResult">
+    <resultMap type="FlwFlowarchivs" id="FlwFlowarchivsResult">
         <result property="id" column="id"/>
         <result property="archvNo" column="archv_no"/>
         <result property="flowNo" column="flow_no"/>
@@ -33,45 +33,45 @@
         <result property="version" column="version"/>
     </resultMap>
 
-    <sql id="selectFlwFlowarchivesVo">
-        select id, archv_no, flow_no, flow_name, flow_title, step_no, step_name, task_no, group_no, instance_no, contents, write_time, write_note, rar_files, pdf_files, user_no, user_name, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from flw_flowarchives
+    <sql id="selectFlwFlowarchivsVo">
+        select id, archv_no, flow_no, flow_name, flow_title, step_no, step_name, task_no, group_no, instance_no, contents, write_time, write_note, rar_files, pdf_files, user_no, user_name, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from flw_flowarchivs
     </sql>
 
-    <select id="getAllRecords" resultMap="FlwFlowarchivesResult">
-        <include refid="selectFlwFlowarchivesVo"/>
+    <select id="getAllRecords" resultMap="FlwFlowarchivsResult">
+        <include refid="selectFlwFlowarchivsVo"/>
         where delete_flag='1' and app_code=#{appCode}
     </select>
 
-    <select id="getRecordsByClassNo" resultMap="FlwFlowarchivesResult">
-        <include refid="selectFlwFlowarchivesVo"/>
+    <select id="getRecordsByClassNo" resultMap="FlwFlowarchivsResult">
+        <include refid="selectFlwFlowarchivsVo"/>
         where delete_flag='1' and app_code=#{appCode} and flow_no=#{classNo}
     </select>
 
-    <select id="getRecordsByPaging" resultMap="FlwFlowarchivesResult">
-        <include refid="selectFlwFlowarchivesVo"/>
+    <select id="getRecordsByPaging" resultMap="FlwFlowarchivsResult">
+        <include refid="selectFlwFlowarchivsVo"/>
         where delete_flag='1' and app_code=${appCode}
         <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
         order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
     </select>
 
-    <select id="getRecordByNo" resultMap="FlwFlowarchivesResult">
-        <include refid="selectFlwFlowarchivesVo"/>
+    <select id="getRecordByNo" resultMap="FlwFlowarchivsResult">
+        <include refid="selectFlwFlowarchivsVo"/>
         where delete_flag='1' and app_code=#{appCode} and archv_no = #{no}
     </select>
 
     <select id="getRecordNameByNo" resultType="String">
-        select flow_name from flw_flowarchives
+        select flow_name from flw_flowarchivs
         where delete_flag='1' and app_code=#{appCode} and archv_no = #{no}
     </select>
 
     <select id="getCountByCondition" resultType="Integer">
-        select count(*) from flw_flowarchives
+        select count(*) from flw_flowarchivs
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </select>
 
-    <insert id="AddNewRecord" parameterType="FlwFlowarchives" useGeneratedKeys="true" keyProperty="id">
-        insert into flw_flowarchives (
+    <insert id="AddNewRecord" parameterType="FlwFlowarchivs" useGeneratedKeys="true" keyProperty="id">
+        insert into flw_flowarchivs (
         <if test="info.archvNo != null  and info.archvNo != ''">archv_no,</if>
         <if test="info.flowNo != null  and info.flowNo != ''">flow_no,</if>
         <if test="info.flowName != null  and info.flowName != ''">flow_name,</if>
@@ -126,8 +126,8 @@
         )
     </insert>
 
-    <update id="UpdateRecord" parameterType="FlwFlowarchives">
-        update flw_flowarchives
+    <update id="UpdateRecord" parameterType="FlwFlowarchivs">
+        update flw_flowarchivs
         <set>
             <if test="info.archvNo != null  and info.archvNo != ''">archv_no = #{info.archvNo},</if>
             <if test="info.flowNo != null  and info.flowNo != ''">flow_no = #{info.flowNo},</if>
@@ -159,12 +159,12 @@
     </update>
 
     <delete id="HardDeleteByNo">
-        delete from flw_flowarchives
+        delete from flw_flowarchivs
         where delete_flag='1' and app_code=#{appCode} and archv_no = #{no}
     </delete>
 
     <delete id="HardDeleteByNos">
-        delete from flw_flowarchives
+        delete from flw_flowarchivs
         where delete_flag='1' and app_code=#{appCode} and archv_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
@@ -172,18 +172,18 @@
     </delete>
 
     <delete id="HardDeleteByCondition">
-        delete from flw_flowarchives
+        delete from flw_flowarchivs
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>
 
     <delete id="SoftDeleteByNo">
-        update flw_flowarchives set delete_flag='0'
+        update flw_flowarchivs set delete_flag='0'
         where delete_flag='1' and app_code=#{appCode} and archv_no = #{no}
     </delete>
 
     <delete id="SoftDeleteByNos">
-        update flw_flowarchives set delete_flag='0'
+        update flw_flowarchivs set delete_flag='0'
         where delete_flag='1' and app_code=#{appCode} and archv_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
@@ -191,7 +191,7 @@
     </delete>
 
     <delete id="SoftDeleteByCondition">
-        update flw_flowarchives set delete_flag='0'
+        update flw_flowarchivs set delete_flag='0'
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>

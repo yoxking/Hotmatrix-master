@@ -10,7 +10,6 @@
         <result property="btnTitle" column="btn_title"/>
         <result property="btnIcon" column="btn_icon"/>
         <result property="btnScript" column="btn_script"/>
-        <result property="btnRemark" column="btn_remark"/>
         <result property="orderNo" column="order_no"/>
         <result property="checkState" column="check_state"/>
         <result property="createBy" column="create_by"/>
@@ -24,7 +23,7 @@
     </resultMap>
 
     <sql id="selectFlwFlowbuttonVo">
-        select id, btn_no, btn_title, btn_icon, btn_script, btn_remark, order_no, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from flw_flowbutton
+        select id, btn_no, btn_title, btn_icon, btn_script, order_no, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from flw_flowbutton
     </sql>
 
     <select id="getAllRecords" resultMap="FlwFlowbuttonResult">
@@ -66,7 +65,6 @@
         <if test="info.btnTitle != null  and info.btnTitle != ''">btn_title,</if>
         <if test="info.btnIcon != null  and info.btnIcon != ''">btn_icon,</if>
         <if test="info.btnScript != null  and info.btnScript != ''">btn_script,</if>
-        <if test="info.btnRemark != null  and info.btnRemark != ''">btn_remark,</if>
         <if test="info.orderNo != null ">order_no,</if>
         <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
         <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
@@ -82,7 +80,6 @@
         <if test="info.btnTitle != null  and info.btnTitle != ''">#{info.btnTitle},</if>
         <if test="info.btnIcon != null  and info.btnIcon != ''">#{info.btnIcon},</if>
         <if test="info.btnScript != null  and info.btnScript != ''">#{info.btnScript},</if>
-        <if test="info.btnRemark != null  and info.btnRemark != ''">#{info.btnRemark},</if>
         <if test="info.orderNo != null ">#{info.orderNo},</if>
         <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
         <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
@@ -103,7 +100,6 @@
             <if test="info.btnTitle != null  and info.btnTitle != ''">btn_title = #{info.btnTitle},</if>
             <if test="info.btnIcon != null  and info.btnIcon != ''">btn_icon = #{info.btnIcon},</if>
             <if test="info.btnScript != null  and info.btnScript != ''">btn_script = #{info.btnScript},</if>
-            <if test="info.btnRemark != null  and info.btnRemark != ''">btn_remark = #{info.btnRemark},</if>
             <if test="info.orderNo != null ">order_no = #{info.orderNo},</if>
             <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
             <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>

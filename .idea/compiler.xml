@@ -7,10 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="hotmatrix-framework" />
-        <module name="hotmatrix-workflow" />
-        <module name="hotmatrix-admin" />
-        <module name="hotmatrix-common" />
         <module name="hotmatrix-system" />
+        <module name="hotmatrix-workflow" />
+        <module name="hotmatrix-common" />
+        <module name="hotmatrix-admin" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

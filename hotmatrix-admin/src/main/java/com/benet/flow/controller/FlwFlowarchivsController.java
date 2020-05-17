@@ -8,7 +8,6 @@ import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
 import io.swagger.annotations.Api;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import com.benet.workflow.domain.FlwFlowarchives;
-import com.benet.workflow.service.IFlwFlowarchivesService;
+import com.benet.workflow.domain.FlwFlowarchivs;
+import com.benet.workflow.service.IFlwFlowarchivsService;
 import com.benet.common.annotation.Oplog;
 import com.benet.common.core.controller.BaseController;
 import com.benet.common.core.domain.AjaxResult;
@@ -34,16 +33,16 @@ import com.benet.common.utils.string.StringUtils;
  * @author yoxking
  * @date 2020-05-17
  */
-@Api(value = "flow/flowarchives", tags = "流程归档控制器")
+@Api(value = "flow/flowarchivs", tags = "流程归档控制器")
 @RestController
-@RequestMapping("/flow/flowarchives")
-public class FlwFlowarchivesController extends BaseController
+@RequestMapping("/flow/flowarchivs")
+public class FlwFlowarchivsController extends BaseController
 {
     @Autowired
     private MyJwtokenService tokenService;
 
     @Autowired
-    private IFlwFlowarchivesService flwFlowarchivesService;
+    private IFlwFlowarchivsService flwFlowarchivsService;
     /**
      * 首页
      */
@@ -62,8 +61,8 @@ public class FlwFlowarchivesController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = flwFlowarchivesService.getCountByCondition(pRequest.getCondition());
-        List<FlwFlowarchives> list = flwFlowarchivesService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        int count = flwFlowarchivsService.getCountByCondition(pRequest.getCondition());
+        List<FlwFlowarchivs> list = flwFlowarchivsService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -73,12 +72,12 @@ public class FlwFlowarchivesController extends BaseController
     //@PreAuthorize("@ps.hasPermit('system:flowarchives:insert')")
     @Oplog(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult insert(@RequestBody FlwFlowarchives flwFlowarchives) {
+    public AjaxResult insert(@RequestBody FlwFlowarchivs flwFlowarchives) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         flwFlowarchives.setArchvNo(UuidUtils.shortUUID());
         flwFlowarchives.setCreateBy(loginUser.getUser().getUserNo());
         flwFlowarchives.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(flwFlowarchivesService.AddNewRecord(flwFlowarchives));
+        return toAjax(flwFlowarchivsService.AddNewRecord(flwFlowarchives));
     }
 
     /**
@@ -87,10 +86,10 @@ public class FlwFlowarchivesController extends BaseController
     //@PreAuthorize("@ps.hasPermit('system:flowarchives:update')")
     @Oplog(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @PutMapping
-        public AjaxResult update(@RequestBody FlwFlowarchives flwFlowarchives) {
+        public AjaxResult update(@RequestBody FlwFlowarchivs flwFlowarchives) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         flwFlowarchives.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwFlowarchivesService.UpdateRecord(flwFlowarchives));
+            return toAjax(flwFlowarchivsService.UpdateRecord(flwFlowarchives));
         }
 
     /**
@@ -99,16 +98,16 @@ public class FlwFlowarchivesController extends BaseController
     //@PreAuthorize("@ps.hasPermit('system:flowarchives:save')")
     @Oplog(title = "【请填写功能名称】", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
-    public AjaxResult save(@RequestBody FlwFlowarchives flwFlowarchives) {
+    public AjaxResult save(@RequestBody FlwFlowarchivs flwFlowarchives) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(flwFlowarchivesService.getRecordByNo(flwFlowarchives.getArchvNo()))) {
+        if (StringUtils.isNull(flwFlowarchivsService.getRecordByNo(flwFlowarchives.getArchvNo()))) {
             flwFlowarchives.setArchvNo(UuidUtils.shortUUID());
             flwFlowarchives.setCreateBy(loginUser.getUser().getUserNo());
             flwFlowarchives.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwFlowarchivesService.AddNewRecord(flwFlowarchives));
+            return toAjax(flwFlowarchivsService.AddNewRecord(flwFlowarchives));
         } else {
             flwFlowarchives.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwFlowarchivesService.UpdateRecord(flwFlowarchives));
+            return toAjax(flwFlowarchivsService.UpdateRecord(flwFlowarchives));
         }
     }
 
@@ -120,7 +119,7 @@ public class FlwFlowarchivesController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(flwFlowarchivesService.SoftDeleteByNos(ids));
+        return toAjax(flwFlowarchivsService.SoftDeleteByNos(ids));
     }
 
     /**
@@ -130,7 +129,7 @@ public class FlwFlowarchivesController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(flwFlowarchivesService.getRecordByNo(id));
+        return AjaxResult.success(flwFlowarchivsService.getRecordByNo(id));
     }
 
     /**
@@ -141,10 +140,10 @@ public class FlwFlowarchivesController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = flwFlowarchivesService.getCountByCondition(pRequest.getCondition());
+        int count = flwFlowarchivsService.getCountByCondition(pRequest.getCondition());
 
-        List<FlwFlowarchives> list = flwFlowarchivesService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
-        ExcelUtils<FlwFlowarchives> util = new ExcelUtils<FlwFlowarchives>(FlwFlowarchives.class);
+        List<FlwFlowarchivs> list = flwFlowarchivsService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        ExcelUtils<FlwFlowarchivs> util = new ExcelUtils<FlwFlowarchivs>(FlwFlowarchivs.class);
         return util.exportExcel(list, "FlwFlowarchives");
     }
 

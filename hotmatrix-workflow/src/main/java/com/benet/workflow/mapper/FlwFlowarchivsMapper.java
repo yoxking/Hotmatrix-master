@@ -2,7 +2,7 @@ package com.benet.workflow.mapper;
 
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
-import com.benet.workflow.domain.FlwFlowarchives;
+import com.benet.workflow.domain.FlwFlowarchivs;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Param;
  * @date 2020-05-17
  */
 @Mapper
-public interface FlwFlowarchivesMapper 
+public interface FlwFlowarchivsMapper
 {
     /**
      * 查询所有【请填写功能名称】列表
@@ -21,7 +21,7 @@ public interface FlwFlowarchivesMapper
      * @param appCode 应用编号
      * @return 【请填写功能名称】集合
      */
-    public List<FlwFlowarchives> getAllRecords(@Param("appCode") String appCode);
+    public List<FlwFlowarchivs> getAllRecords(@Param("appCode") String appCode);
 
     /**
      * 按分类查询【请填写功能名称】列表
@@ -30,7 +30,7 @@ public interface FlwFlowarchivesMapper
      * @param classNo 分类编号
      * @return 【请填写功能名称】集合
      */
-    public List<FlwFlowarchives> getRecordsByClassNo(@Param("appCode") String appCode, @Param("classNo") String classNo);
+    public List<FlwFlowarchivs> getRecordsByClassNo(@Param("appCode") String appCode, @Param("classNo") String classNo);
 
     /**
      * 分页查询【请填写功能名称】列表
@@ -39,7 +39,7 @@ public interface FlwFlowarchivesMapper
      * @param model 分页模型
      * @return 【请填写功能名称】集合
      */
-    public List<FlwFlowarchives> getRecordsByPaging(@Param("appCode") String appCode, @Param("model") PagingModel model);
+    public List<FlwFlowarchivs> getRecordsByPaging(@Param("appCode") String appCode, @Param("model") PagingModel model);
 
     /**
      * 查询【请填写功能名称】
@@ -48,7 +48,7 @@ public interface FlwFlowarchivesMapper
      * @param no 【请填写功能名称】ID
      * @return 【请填写功能名称】
      */
-    public FlwFlowarchives getRecordByNo(@Param("appCode") String appCode, @Param("no") String no);
+    public FlwFlowarchivs getRecordByNo(@Param("appCode") String appCode, @Param("no") String no);
 
     /**
      * 查询【请填写功能名称】名称
@@ -74,7 +74,7 @@ public interface FlwFlowarchivesMapper
      * @param info 【请填写功能名称】
      * @return 结果
      */
-    public int AddNewRecord(@Param("info") FlwFlowarchives info);
+    public int AddNewRecord(@Param("info") FlwFlowarchivs info);
 
     /**
      * 更新【请填写功能名称】
@@ -82,7 +82,7 @@ public interface FlwFlowarchivesMapper
      * @param info 【请填写功能名称】
      * @return 结果
      */
-    public int UpdateRecord(@Param("info") FlwFlowarchives info);
+    public int UpdateRecord(@Param("info") FlwFlowarchivs info);
 
     /**
      * 硬删除【请填写功能名称】

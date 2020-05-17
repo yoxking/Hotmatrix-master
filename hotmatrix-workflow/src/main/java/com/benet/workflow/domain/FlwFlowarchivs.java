@@ -12,7 +12,7 @@ import java.util.Date;
  * @author yoxking
  * @date 2020-05-17
  */
-public class FlwFlowarchives extends BaseEntity
+public class FlwFlowarchivs extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 

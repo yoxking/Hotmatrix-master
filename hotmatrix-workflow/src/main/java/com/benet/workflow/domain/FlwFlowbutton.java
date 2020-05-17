@@ -36,10 +36,6 @@ public class FlwFlowbutton extends BaseEntity
     @Excel(name = "按钮脚本")
     private String btnScript;
 
-    /** 备注说明 */
-    @Excel(name = "备注说明")
-    private String btnRemark;
-
     /** 排序 */
     @Excel(name = "排序")
     private Integer orderNo;
@@ -120,15 +116,6 @@ public class FlwFlowbutton extends BaseEntity
     public String getBtnScript() 
     {
         return btnScript;
-    }
-    public void setBtnRemark(String btnRemark) 
-    {
-        this.btnRemark = btnRemark;
-    }
-
-    public String getBtnRemark() 
-    {
-        return btnRemark;
     }
     public void setOrderNo(Integer orderNo) 
     {
@@ -229,7 +216,6 @@ public class FlwFlowbutton extends BaseEntity
             .append("btnTitle", getBtnTitle())
             .append("btnIcon", getBtnIcon())
             .append("btnScript", getBtnScript())
-            .append("btnRemark", getBtnRemark())
             .append("orderNo", getOrderNo())
             .append("checkState", getCheckState())
             .append("createBy", getCreateBy())

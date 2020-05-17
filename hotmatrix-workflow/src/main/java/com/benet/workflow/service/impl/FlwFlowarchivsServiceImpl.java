@@ -7,9 +7,9 @@ import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.benet.workflow.mapper.FlwFlowarchivesMapper;
-import com.benet.workflow.domain.FlwFlowarchives;
-import com.benet.workflow.service.IFlwFlowarchivesService;
+import com.benet.workflow.mapper.FlwFlowarchivsMapper;
+import com.benet.workflow.domain.FlwFlowarchivs;
+import com.benet.workflow.service.IFlwFlowarchivsService;
 
 /**
  * 流程归档Service业务层处理
@@ -18,10 +18,10 @@ import com.benet.workflow.service.IFlwFlowarchivesService;
  * @date 2020-05-17
  */
 @Service
-public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService 
+public class FlwFlowarchivsServiceImpl implements IFlwFlowarchivsService 
 {
     @Autowired
-    private FlwFlowarchivesMapper flwFlowarchivesMapper;
+    private FlwFlowarchivsMapper flwFlowarchivsMapper;
 
     /**
      * 查询所有【请填写功能名称】列表
@@ -29,8 +29,8 @@ public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService
      * @return 【请填写功能名称】集合
      */
     @Override
-    public List<FlwFlowarchives> getAllRecords() {
-        return flwFlowarchivesMapper.getAllRecords(GlobalConfig.getAppCode());
+    public List<FlwFlowarchivs> getAllRecords() {
+        return flwFlowarchivsMapper.getAllRecords(GlobalConfig.getAppCode());
     }
 
     /**
@@ -40,9 +40,9 @@ public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService
      * @return 【请填写功能名称】集合
      */
     @Override
-    public List<FlwFlowarchives> getRecordsByClassNo(String classNo) {
+    public List<FlwFlowarchivs> getRecordsByClassNo(String classNo) {
         if (StringUtils.isNotEmpty(classNo)) {
-            return flwFlowarchivesMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
+            return flwFlowarchivsMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
         }
         return null;
     }
@@ -54,10 +54,10 @@ public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService
      * @return 【请填写功能名称】集合
      */
     @Override
-    public List<FlwFlowarchives> getRecordsByPaging(PagingModel model) {
+    public List<FlwFlowarchivs> getRecordsByPaging(PagingModel model) {
         if (StringUtils.isNotNull(model)) {
             model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
-            return flwFlowarchivesMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+            return flwFlowarchivsMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
         }
         return null;
     }
@@ -74,7 +74,7 @@ public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService
      * @return 【请填写功能名称】集合
      */
     @Override
-    public List<FlwFlowarchives> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
+    public List<FlwFlowarchivs> getRecordsByPaging(int pageIndex, int pageSize, String condition, String orderField, String orderType) {
 
         PagingModel model = new PagingModel();
         model.setPageIndex((pageIndex-1) * pageSize);
@@ -90,7 +90,7 @@ public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService
         } else {
             model.setOrderType(orderType);
         }
-        return flwFlowarchivesMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+        return flwFlowarchivsMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
     }
 
     /**
@@ -100,9 +100,9 @@ public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService
      * @return 【请填写功能名称】
      */
     @Override
-    public FlwFlowarchives getRecordByNo(String no) {
+    public FlwFlowarchivs getRecordByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return flwFlowarchivesMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
+            return flwFlowarchivsMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
         }
         return null;
     }
@@ -116,7 +116,7 @@ public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService
     @Override
     public String getRecordNameByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return flwFlowarchivesMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
+            return flwFlowarchivsMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
         }
         return null;
     }
@@ -129,7 +129,7 @@ public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService
      */
     @Override
     public int getCountByCondition(String condition) {
-        return flwFlowarchivesMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
+        return flwFlowarchivsMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
     }
 
     /**
@@ -139,12 +139,12 @@ public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService
      * @return 结果
      */
     @Override
-    public int AddNewRecord(FlwFlowarchives info) {
+    public int AddNewRecord(FlwFlowarchivs info) {
         info.setCreateTime(DateUtils.getNowDate());
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
         info.setVersion(1L);
-        return flwFlowarchivesMapper.AddNewRecord(info);
+        return flwFlowarchivsMapper.AddNewRecord(info);
     }
 
     /**
@@ -154,10 +154,10 @@ public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService
      * @return 结果
      */
     @Override
-    public int UpdateRecord(FlwFlowarchives info) {
+    public int UpdateRecord(FlwFlowarchivs info) {
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
-        return flwFlowarchivesMapper.UpdateRecord(info);
+        return flwFlowarchivsMapper.UpdateRecord(info);
     }
 
     /**
@@ -169,7 +169,7 @@ public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService
     @Override
     public int HardDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return flwFlowarchivesMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
+            return flwFlowarchivsMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }
@@ -183,7 +183,7 @@ public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService
     @Override
     public int HardDeleteByNos(String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return flwFlowarchivesMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return flwFlowarchivsMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
         }
         return 0;
     }
@@ -196,7 +196,7 @@ public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService
      */
     @Override
     public int HardDeleteByCondition(String condition) {
-        return flwFlowarchivesMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
+        return flwFlowarchivsMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
     }
 
     /**
@@ -208,7 +208,7 @@ public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService
     @Override
     public int SoftDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return flwFlowarchivesMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
+            return flwFlowarchivsMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
         }
         return 0;
     }
@@ -222,7 +222,7 @@ public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService
     @Override
     public int SoftDeleteByNos(String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return flwFlowarchivesMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return flwFlowarchivsMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
         }
         return 0;
     }
@@ -235,6 +235,6 @@ public class FlwFlowarchivesServiceImpl implements IFlwFlowarchivesService
      */
     @Override
     public int SoftDeleteByCondition(String condition) {
-        return flwFlowarchivesMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
+        return flwFlowarchivsMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
     }
 }

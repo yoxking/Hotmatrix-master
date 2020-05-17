@@ -2,7 +2,7 @@ package com.benet.workflow.service;
 
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
-import com.benet.workflow.domain.FlwFlowarchives;
+import com.benet.workflow.domain.FlwFlowarchivs;
 
 /**
  * 流程归档Service接口
@@ -10,14 +10,14 @@ import com.benet.workflow.domain.FlwFlowarchives;
  * @author yoxking
  * @date 2020-05-17
  */
-public interface IFlwFlowarchivesService 
+public interface IFlwFlowarchivsService
 {
     /**
      * 查询所有【请填写功能名称】列表
      *
      * @return 【请填写功能名称】集合
      */
-    public List<FlwFlowarchives> getAllRecords();
+    public List<FlwFlowarchivs> getAllRecords();
 
     /**
      * 按分类查询【请填写功能名称】列表
@@ -25,7 +25,7 @@ public interface IFlwFlowarchivesService
      * @param classNo 分类编号
      * @return 【请填写功能名称】集合
      */
-    public List<FlwFlowarchives> getRecordsByClassNo(String classNo);
+    public List<FlwFlowarchivs> getRecordsByClassNo(String classNo);
 
     /**
      * 分页查询【请填写功能名称】列表
@@ -33,7 +33,7 @@ public interface IFlwFlowarchivesService
      * @param model 分页模型
      * @return 【请填写功能名称】集合
      */
-    public List<FlwFlowarchives> getRecordsByPaging(PagingModel model);
+    public List<FlwFlowarchivs> getRecordsByPaging(PagingModel model);
 
     /**
      * 分页查询【请填写功能名称】列表
@@ -45,7 +45,7 @@ public interface IFlwFlowarchivesService
      * @param orderType 排序类型
      * @return 【请填写功能名称】集合
      */
-    public List<FlwFlowarchives> getRecordsByPaging(int pageIndex, int pageSize, String condition, String orderField, String orderType);
+    public List<FlwFlowarchivs> getRecordsByPaging(int pageIndex, int pageSize, String condition, String orderField, String orderType);
 
     /**
      * 查询【请填写功能名称】
@@ -53,7 +53,7 @@ public interface IFlwFlowarchivesService
      * @param no 【请填写功能名称】ID
      * @return 【请填写功能名称】
      */
-    public FlwFlowarchives getRecordByNo(String no);
+    public FlwFlowarchivs getRecordByNo(String no);
 
     /**
      * 查询【请填写功能名称】名称
@@ -77,7 +77,7 @@ public interface IFlwFlowarchivesService
      * @param info 【请填写功能名称】
      * @return 结果
      */
-    public int AddNewRecord(FlwFlowarchives info);
+    public int AddNewRecord(FlwFlowarchivs info);
 
     /**
      * 更新【请填写功能名称】
@@ -85,7 +85,7 @@ public interface IFlwFlowarchivesService
      * @param info 【请填写功能名称】
      * @return 结果
      */
-    public int UpdateRecord(FlwFlowarchives info);
+    public int UpdateRecord(FlwFlowarchivs info);
 
     /**
      * 硬删除【请填写功能名称】
