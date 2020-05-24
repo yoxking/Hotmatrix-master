@@ -32,9 +32,9 @@ import com.benet.common.utils.string.StringUtils;
  * 单设计Controller
  * 
  * @author yoxking
- * @date 2020-05-17
+ * @date 2020-05-23
  */
-@Api(value = "flow/tableform", tags = "单设计控制器")
+@Api(value = "flow/tableform", tags = "表单设计控制器")
 @RestController
 @RequestMapping("/flow/tableform")
 public class FlwTableformController extends BaseController
@@ -56,7 +56,7 @@ public class FlwTableformController extends BaseController
     }
 
     /**
-     * 查询单设计列表
+     * 查询表单设计列表
      */
     //@PreAuthorize("@ps.hasPermit('system:tableform:list')")
     @PostMapping(value = "/list")
@@ -68,10 +68,10 @@ public class FlwTableformController extends BaseController
     }
 
     /**
-     * 新增单设计
+     * 新增表单设计
      */
     //@PreAuthorize("@ps.hasPermit('system:tableform:insert')")
-    @Oplog(title = "单设计", businessType = BusinessType.INSERT)
+    @Oplog(title = "表单设计", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody FlwTableform flwTableform) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
@@ -82,7 +82,7 @@ public class FlwTableformController extends BaseController
     }
 
     /**
-     * 编辑单设计
+     * 编辑表单设计
      */
     //@PreAuthorize("@ps.hasPermit('system:tableform:update')")
     @Oplog(title = "单设计", businessType = BusinessType.UPDATE)
@@ -94,10 +94,10 @@ public class FlwTableformController extends BaseController
         }
 
     /**
-     * 保存单设计
+     * 保存表单设计
      */
     //@PreAuthorize("@ps.hasPermit('system:tableform:save')")
-    @Oplog(title = "单设计", businessType = BusinessType.SAVE)
+    @Oplog(title = "表单设计", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwTableform flwTableform) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
@@ -113,10 +113,10 @@ public class FlwTableformController extends BaseController
     }
 
     /**
-     * 删除单设计
+     * 删除表单设计
      */
     //@PreAuthorize("@ps.hasPermit('system:tableform:delete')")
-    @Oplog(title = "单设计", businessType = BusinessType.DELETE)
+    @Oplog(title = "表单设计", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
@@ -124,7 +124,7 @@ public class FlwTableformController extends BaseController
     }
 
     /**
-     * 获取单设计详细信息
+     * 获取表单设计详细信息
      */
     //@PreAuthorize("@ps.hasPermit('system:tableform:detail')")
     @GetMapping(value = "/{id}")
@@ -134,10 +134,10 @@ public class FlwTableformController extends BaseController
     }
 
     /**
-     * 导出单设计列表
+     * 导出表单设计列表
      */
     //@PreAuthorize("@ps.hasPermit('system:tableform:export')")
-    @Oplog(title = "单设计", businessType = BusinessType.EXPORT)
+    @Oplog(title = "表单设计", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {

@@ -8,60 +8,52 @@ import com.benet.common.annotation.Excel;
 import java.util.Date;
 
 /**
- * 单设计对象 flw_tableform
+ * 数据源信息对象 flw_datasource
  * 
  * @author yoxking
  * @date 2020-05-23
  */
-public class FlwTableform extends BaseEntity
+public class FlwDatasource extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** id */
+    /** ID */
     private Long id;
 
-    /** 表单id */
-    @Excel(name = "表单id")
-    private String formNo;
-
-    /** 表单名称 */
-    @Excel(name = "表单名称")
-    private String formName;
-
-    /** 表单分类 */
-    @Excel(name = "表单分类")
-    private String formType;
-
-    /** 表单HTML */
-    @Excel(name = "表单HTML")
-    private String formHtml;
-
-    /** 数据源id */
-    @Excel(name = "数据源id")
+    /** 数据源编号 */
+    @Excel(name = "数据源编号")
     private String dtsrcNo;
 
-    /** 数据表名称 */
-    @Excel(name = "数据表名称")
-    private String tableName;
+    /** 数据源名称 */
+    @Excel(name = "数据源名称")
+    private String dtsrcName;
 
-    /** 子表json */
-    @Excel(name = "子表json")
-    private String subtbJson;
+    /** 数据源类型 */
+    @Excel(name = "数据源类型")
+    private String dtsrcType;
 
-    /** 事件json */
-    @Excel(name = "事件json")
-    private String eventJson;
+    /** 数据源URL */
+    @Excel(name = "数据源URL")
+    private String dtsrcUrl;
 
-    /** 属性json */
-    @Excel(name = "属性json")
-    private String attribute;
+    /** 数据库名称 */
+    @Excel(name = "数据库名称")
+    private String dbaseName;
 
-    /** 验证提示方式 */
-    @Excel(name = "验证提示方式")
-    private String validTip;
+    /** 用户名 */
+    @Excel(name = "用户名")
+    private String username;
 
-    /** 状态：0 保存 1 编译 2作废 */
-    @Excel(name = "状态：0 保存 1 编译 2作废")
+    /** 密码 */
+    @Excel(name = "密码")
+    private String password;
+
+    /** 排序 */
+    @Excel(name = "排序")
+    private Integer orderNo;
+
+    /** 状态（1正常 0停用） */
+    @Excel(name = "状态", readConverterExp = "1=正常,0=停用")
     private String checkState;
 
     /** 创建者 */
@@ -101,42 +93,6 @@ public class FlwTableform extends BaseEntity
     {
         return id;
     }
-    public void setFormNo(String formNo) 
-    {
-        this.formNo = formNo;
-    }
-
-    public String getFormNo() 
-    {
-        return formNo;
-    }
-    public void setFormName(String formName) 
-    {
-        this.formName = formName;
-    }
-
-    public String getFormName() 
-    {
-        return formName;
-    }
-    public void setFormType(String formType) 
-    {
-        this.formType = formType;
-    }
-
-    public String getFormType() 
-    {
-        return formType;
-    }
-    public void setFormHtml(String formHtml) 
-    {
-        this.formHtml = formHtml;
-    }
-
-    public String getFormHtml() 
-    {
-        return formHtml;
-    }
     public void setDtsrcNo(String dtsrcNo) 
     {
         this.dtsrcNo = dtsrcNo;
@@ -146,50 +102,68 @@ public class FlwTableform extends BaseEntity
     {
         return dtsrcNo;
     }
-    public void setTableName(String tableName) 
+    public void setDtsrcName(String dtsrcName) 
     {
-        this.tableName = tableName;
+        this.dtsrcName = dtsrcName;
     }
 
-    public String getTableName() 
+    public String getDtsrcName() 
     {
-        return tableName;
+        return dtsrcName;
     }
-    public void setSubtbJson(String subtbJson) 
+    public void setDtsrcType(String dtsrcType) 
     {
-        this.subtbJson = subtbJson;
-    }
-
-    public String getSubtbJson() 
-    {
-        return subtbJson;
-    }
-    public void setEventJson(String eventJson) 
-    {
-        this.eventJson = eventJson;
+        this.dtsrcType = dtsrcType;
     }
 
-    public String getEventJson() 
+    public String getDtsrcType() 
     {
-        return eventJson;
+        return dtsrcType;
     }
-    public void setAttribute(String attribute) 
+    public void setDtsrcUrl(String dtsrcUrl) 
     {
-        this.attribute = attribute;
-    }
-
-    public String getAttribute() 
-    {
-        return attribute;
-    }
-    public void setValidTip(String validTip) 
-    {
-        this.validTip = validTip;
+        this.dtsrcUrl = dtsrcUrl;
     }
 
-    public String getValidTip() 
+    public String getDtsrcUrl() 
     {
-        return validTip;
+        return dtsrcUrl;
+    }
+    public void setDbaseName(String dbaseName) 
+    {
+        this.dbaseName = dbaseName;
+    }
+
+    public String getDbaseName() 
+    {
+        return dbaseName;
+    }
+    public void setUsername(String username) 
+    {
+        this.username = username;
+    }
+
+    public String getUsername() 
+    {
+        return username;
+    }
+    public void setPassword(String password) 
+    {
+        this.password = password;
+    }
+
+    public String getPassword() 
+    {
+        return password;
+    }
+    public void setOrderNo(Integer orderNo) 
+    {
+        this.orderNo = orderNo;
+    }
+
+    public Integer getOrderNo() 
+    {
+        return orderNo;
     }
     public void setCheckState(String checkState) 
     {
@@ -277,16 +251,14 @@ public class FlwTableform extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("formNo", getFormNo())
-            .append("formName", getFormName())
-            .append("formType", getFormType())
-            .append("formHtml", getFormHtml())
             .append("dtsrcNo", getDtsrcNo())
-            .append("tableName", getTableName())
-            .append("subtbJson", getSubtbJson())
-            .append("eventJson", getEventJson())
-            .append("attribute", getAttribute())
-            .append("validTip", getValidTip())
+            .append("dtsrcName", getDtsrcName())
+            .append("dtsrcType", getDtsrcType())
+            .append("dtsrcUrl", getDtsrcUrl())
+            .append("dbaseName", getDbaseName())
+            .append("username", getUsername())
+            .append("password", getPassword())
+            .append("orderNo", getOrderNo())
             .append("checkState", getCheckState())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())

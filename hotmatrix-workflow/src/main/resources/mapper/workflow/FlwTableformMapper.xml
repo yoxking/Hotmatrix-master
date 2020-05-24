@@ -10,9 +10,12 @@
         <result property="formName" column="form_name"/>
         <result property="formType" column="form_type"/>
         <result property="formHtml" column="form_html"/>
+        <result property="dtsrcNo" column="dtsrc_no"/>
+        <result property="tableName" column="table_name"/>
         <result property="subtbJson" column="subtb_json"/>
         <result property="eventJson" column="event_json"/>
         <result property="attribute" column="attribute"/>
+        <result property="validTip" column="valid_tip"/>
         <result property="checkState" column="check_state"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -25,7 +28,7 @@
     </resultMap>
 
     <sql id="selectFlwTableformVo">
-        select id, form_no, form_name, form_type, form_html, subtb_json, event_json, attribute, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from flw_tableform
+        select id, form_no, form_name, form_type, form_html, dtsrc_no, table_name, subtb_json, event_json, attribute, valid_tip, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from flw_tableform
     </sql>
 
     <select id="getAllRecords" resultMap="FlwTableformResult">
@@ -67,9 +70,12 @@
         <if test="info.formName != null  and info.formName != ''">form_name,</if>
         <if test="info.formType != null  and info.formType != ''">form_type,</if>
         <if test="info.formHtml != null  and info.formHtml != ''">form_html,</if>
+        <if test="info.dtsrcNo != null  and info.dtsrcNo != ''">dtsrc_no,</if>
+        <if test="info.tableName != null  and info.tableName != ''">table_name,</if>
         <if test="info.subtbJson != null  and info.subtbJson != ''">subtb_json,</if>
         <if test="info.eventJson != null  and info.eventJson != ''">event_json,</if>
         <if test="info.attribute != null  and info.attribute != ''">attribute,</if>
+        <if test="info.validTip != null  and info.validTip != ''">valid_tip,</if>
         <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
         <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
         <if test="info.createTime != null ">create_time,</if>
@@ -84,9 +90,12 @@
         <if test="info.formName != null  and info.formName != ''">#{info.formName},</if>
         <if test="info.formType != null  and info.formType != ''">#{info.formType},</if>
         <if test="info.formHtml != null  and info.formHtml != ''">#{info.formHtml},</if>
+        <if test="info.dtsrcNo != null  and info.dtsrcNo != ''">#{info.dtsrcNo},</if>
+        <if test="info.tableName != null  and info.tableName != ''">#{info.tableName},</if>
         <if test="info.subtbJson != null  and info.subtbJson != ''">#{info.subtbJson},</if>
         <if test="info.eventJson != null  and info.eventJson != ''">#{info.eventJson},</if>
         <if test="info.attribute != null  and info.attribute != ''">#{info.attribute},</if>
+        <if test="info.validTip != null  and info.validTip != ''">#{info.validTip},</if>
         <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
         <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
         <if test="info.createTime != null ">#{info.createTime},</if>
@@ -106,9 +115,12 @@
             <if test="info.formName != null  and info.formName != ''">form_name = #{info.formName},</if>
             <if test="info.formType != null  and info.formType != ''">form_type = #{info.formType},</if>
             <if test="info.formHtml != null  and info.formHtml != ''">form_html = #{info.formHtml},</if>
+            <if test="info.dtsrcNo != null  and info.dtsrcNo != ''">dtsrc_no = #{info.dtsrcNo},</if>
+            <if test="info.tableName != null  and info.tableName != ''">table_name = #{info.tableName},</if>
             <if test="info.subtbJson != null  and info.subtbJson != ''">subtb_json = #{info.subtbJson},</if>
             <if test="info.eventJson != null  and info.eventJson != ''">event_json = #{info.eventJson},</if>
             <if test="info.attribute != null  and info.attribute != ''">attribute = #{info.attribute},</if>
+            <if test="info.validTip != null  and info.validTip != ''">valid_tip = #{info.validTip},</if>
             <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
             <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
             <if test="info.createTime != null ">create_time = #{info.createTime},</if>
