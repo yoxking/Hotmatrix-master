@@ -90,7 +90,9 @@ public class SysDictdataController extends BaseController
             for(SysDicttype info:list){
                 item=new ItemObjectVo();
                 item.setId(info.getDictType());
-                item.setLabel(info.getDictName());
+                item.setKey(info.getDictType());
+                item.setTitle(info.getDictName());
+                item.setValue(info.getDictType());
                 item.setChildren(null);
 
                 itemList.add(item);

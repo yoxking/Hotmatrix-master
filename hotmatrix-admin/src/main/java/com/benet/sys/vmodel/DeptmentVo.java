@@ -8,9 +8,9 @@ public class DeptmentVo {
 
     /** id */
     private String id;
-
-    /** 标准 */
-    private String label;
+    private String key;
+    private String title;
+    private String value;
 
     /** 部门id */
     private String deptNo;
@@ -46,12 +46,28 @@ public class DeptmentVo {
         this.id = id;
     }
 
-    public String getLabel() {
-        return label;
+    public String getKey() {
+        return key;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public String getDeptNo() {

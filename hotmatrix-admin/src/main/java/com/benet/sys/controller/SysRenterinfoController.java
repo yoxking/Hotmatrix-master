@@ -92,7 +92,9 @@ public class SysRenterinfoController extends BaseController
             for(SysRenteclass info:list){
                 item=new ItemObjectVo();
                 item.setId(info.getClassNo());
-                item.setLabel(info.getClassName());
+                item.setKey(info.getClassNo());
+                item.setTitle(info.getClassName());
+                item.setValue(info.getClassNo());
                 item.setChildren(null);
 
                 itemList.add(item);
