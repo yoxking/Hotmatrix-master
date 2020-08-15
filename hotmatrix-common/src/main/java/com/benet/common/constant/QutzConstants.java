@@ -27,13 +27,13 @@ public class QutzConstants {
     public enum Status
     {
         /**
-         * 正常
+         * 暂停、停用
          */
-        NORMAL("0"),
+        PAUSE("0"),
         /**
-         * 暂停
+         * 正常、运行
          */
-        PAUSE("1");
+        NORMAL("1");
 
         private String value;
 

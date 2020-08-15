@@ -1,11 +1,14 @@
 package com.benet.sys.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.benet.common.core.pager.PageRequest;
+import com.benet.common.utils.date.DateUtils;
 import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
+import com.benet.sys.vmodel.MsgObjectVo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -144,6 +147,31 @@ public class SysMessageinfoController extends BaseController
         List<SysMessageinfo> list = sysMessageinfoService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysMessageinfo> util = new ExcelUtils<SysMessageinfo>(SysMessageinfo.class);
         return util.exportExcel(list, "SysMessageinfo");
+    }
+
+    /**
+     * 查询消息信息列表
+     */
+    //@PreAuthorize("@ps.hasPermit('system:messageinfo:list')")
+    @GetMapping(value="/getMessages")
+    public TableDataInfo getMessages()
+    {
+        List<SysMessageinfo> list = sysMessageinfoService.getRecordsByPaging(1, 10, " read_state='0'", "id", "Desc");
+        if(list!=null&&list.size()>0){
+            List<MsgObjectVo> msgList=new ArrayList<>();
+            MsgObjectVo msg=null;
+            for(SysMessageinfo info : list){
+                msg=new MsgObjectVo();
+                msg.setId(info.getMssgNo());
+                msg.setTitle(info.getMtitle());
+                msg.setDate(DateUtils.dateTime(info.getSendTime()));
+                msg.setDesc(DateUtils.getShortTime(info.getSendTime()));
+
+                msgList.add(msg);
+            }
+            return getDataTable(msgList, msgList.size());
+        }
+        return getDataTable(null,0);
     }
 
 }

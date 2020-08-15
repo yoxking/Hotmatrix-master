@@ -98,6 +98,9 @@ public class SysPermitinfoController extends BaseController
                 permit.setPermitName(info.getPermitName());
                 permit.setParentNo(info.getParentNo());
                 permit.setOrderNo(info.getOrderNo());
+                permit.setMenuIcon(info.getMenuIcon());
+                permit.setPermitCode(info.getPermitCode());
+                permit.setComponent(info.getComponent());
                 permit.setComments(info.getComments());
                 permit.setChildren(buildPermitTree(info.getPermitNo()));
                 permitTree.add(permit);

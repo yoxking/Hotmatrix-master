@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.benet.job.mapper.SysTaskinfoMapper">
+<mapper namespace="com.benet.task.mapper.SysTaskinfoMapper">
 
     <resultMap type="SysTaskinfo" id="SysTaskinfoResult">
         <result property="id" column="id"/>
@@ -13,6 +13,7 @@
         <result property="invokeTarget" column="invoke_target"/>
         <result property="errorsPolicy" column="errors_policy"/>
         <result property="concurrent" column="concurrent"/>
+        <result property="taskStatus" column="task_status"/>
         <result property="checkState" column="check_state"/>
         <result property="branchNo" column="branch_no"/>
         <result property="createBy" column="create_by"/>
@@ -26,7 +27,7 @@
     </resultMap>
 
     <sql id="selectSysTaskinfoVo">
-        select id, task_no, task_name, task_group, task_express, invoke_target, errors_policy, concurrent, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_taskinfo
+        select id, task_no, task_name, task_group, task_express, invoke_target, errors_policy, concurrent, task_status,check_state,  branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_taskinfo
     </sql>
 
     <select id="getAllRecords" resultMap="SysTaskinfoResult">
@@ -71,6 +72,7 @@
         <if test="info.invokeTarget != null  and info.invokeTarget != ''">invoke_target,</if>
         <if test="info.errorsPolicy != null  and info.errorsPolicy != ''">errors_policy,</if>
         <if test="info.concurrent != null  and info.concurrent != ''">concurrent,</if>
+        <if test="info.taskStatus != null  and info.taskStatus != ''">task_status,</if>
         <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
         <if test="info.branchNo != null  and info.branchNo != ''">branch_no,</if>
         <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
@@ -89,6 +91,7 @@
         <if test="info.invokeTarget != null  and info.invokeTarget != ''">#{info.invokeTarget},</if>
         <if test="info.errorsPolicy != null  and info.errorsPolicy != ''">#{info.errorsPolicy},</if>
         <if test="info.concurrent != null  and info.concurrent != ''">#{info.concurrent},</if>
+        <if test="info.taskStatus != null  and info.taskStatus != ''">#{info.taskStatus},</if>
         <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
         <if test="info.branchNo != null  and info.branchNo != ''">#{info.branchNo},</if>
         <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
@@ -112,6 +115,7 @@
             <if test="info.invokeTarget != null  and info.invokeTarget != ''">invoke_target = #{info.invokeTarget},</if>
             <if test="info.errorsPolicy != null  and info.errorsPolicy != ''">errors_policy = #{info.errorsPolicy},</if>
             <if test="info.concurrent != null  and info.concurrent != ''">concurrent = #{info.concurrent},</if>
+            <if test="info.taskStatus != null  and info.taskStatus != ''">task_status = #{info.taskStatus},</if>
             <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
             <if test="info.branchNo != null  and info.branchNo != ''">branch_no = #{info.branchNo},</if>
             <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>

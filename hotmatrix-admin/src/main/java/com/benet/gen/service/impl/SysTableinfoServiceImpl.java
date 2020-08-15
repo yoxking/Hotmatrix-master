@@ -213,8 +213,10 @@ public class SysTableinfoServiceImpl implements ISysTableinfoService
      * @return 结果
      */
     @Override
+    @Transactional
     public int HardDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
+            sysTabcolumnService.HardDeleteByCondition(" table_no='"+no+"'");
             return sysTableinfoMapper.HardDeleteByNo(no);
         }
         return 0;
@@ -227,8 +229,12 @@ public class SysTableinfoServiceImpl implements ISysTableinfoService
      * @return 结果
      */
     @Override
+    @Transactional
     public int HardDeleteByNos(String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
+            for(String no:nos) {
+                sysTabcolumnService.HardDeleteByCondition(" table_no='" + no + "'");
+            }
             return sysTableinfoMapper.HardDeleteByNos(nos);
         }
         return 0;
@@ -241,7 +247,14 @@ public class SysTableinfoServiceImpl implements ISysTableinfoService
      * @return 结果
      */
     @Override
+    @Transactional
     public int HardDeleteByCondition(String condition) {
+        List<SysTableinfo> infoList=getRecordsByPaging(1,10000,condition,"id","asc");
+        if(infoList!=null&&infoList.size()>0) {
+            for(SysTableinfo info:infoList) {
+                sysTabcolumnService.HardDeleteByCondition(" table_no='" + info.getTableNo() + "'");
+            }
+        }
         return sysTableinfoMapper.HardDeleteByCondition(condition);
     }
 
@@ -252,8 +265,10 @@ public class SysTableinfoServiceImpl implements ISysTableinfoService
      * @return 结果
      */
     @Override
+    @Transactional
     public int SoftDeleteByNo(String no) {
         if (StringUtils.isNotEmpty(no)) {
+            sysTabcolumnService.SoftDeleteByCondition(" table_no='"+no+"'");
             return sysTableinfoMapper.SoftDeleteByNo(no);
         }
         return 0;
@@ -266,8 +281,12 @@ public class SysTableinfoServiceImpl implements ISysTableinfoService
      * @return 结果
      */
     @Override
+    @Transactional
     public int SoftDeleteByNos(String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
+            for(String no:nos) {
+                sysTabcolumnService.SoftDeleteByCondition(" table_no='" + no + "'");
+            }
             return sysTableinfoMapper.SoftDeleteByNos(nos);
         }
         return 0;
@@ -280,7 +299,14 @@ public class SysTableinfoServiceImpl implements ISysTableinfoService
      * @return 结果
      */
     @Override
+    @Transactional
     public int SoftDeleteByCondition(String condition) {
+        List<SysTableinfo> infoList=getRecordsByPaging(1,10000,condition,"id","asc");
+        if(infoList!=null&&infoList.size()>0) {
+            for(SysTableinfo info:infoList) {
+                sysTabcolumnService.SoftDeleteByCondition(" table_no='" + info.getTableNo() + "'");
+            }
+        }
         return sysTableinfoMapper.SoftDeleteByCondition(condition);
     }
 

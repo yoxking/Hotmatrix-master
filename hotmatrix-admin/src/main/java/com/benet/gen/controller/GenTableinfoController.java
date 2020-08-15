@@ -13,13 +13,21 @@ import com.benet.common.core.pager.PageRequest;
 import com.benet.common.core.pager.TableDataInfo;
 import com.benet.common.core.text.ConvertHelper;
 import com.benet.common.enums.BusinessType;
+import com.benet.common.utils.poi.ExcelUtils;
+import com.benet.common.utils.string.StringUtils;
+import com.benet.common.utils.uuid.UuidUtils;
+import com.benet.common.utils.web.ServletUtils;
+import com.benet.framework.security.LoginUser;
+import com.benet.framework.security.service.MyJwtokenService;
 import com.benet.gen.domain.SysTabcolumn;
 import com.benet.gen.domain.SysTableinfo;
 import com.benet.gen.service.ISysTabcolumnService;
 import com.benet.gen.service.ISysTableinfoService;
+import com.benet.system.domain.SysBranchinfo;
 import com.benet.system.domain.SysDictdata;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +37,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 代码生成 操作处理
@@ -40,14 +49,29 @@ import org.springframework.web.bind.annotation.RestController;
 public class GenTableinfoController extends BaseController
 {
     @Autowired
+    private MyJwtokenService tokenService;
+
+    @Autowired
     private ISysTableinfoService tableInfoService;
 
     @Autowired
     private ISysTabcolumnService tabColumnService;
 
     /**
+     * 首页
+     */
+    @PreAuthorize("@ps.hasPermit('generate:tableinfo:index')")
+    @GetMapping(value="/index")
+    public ModelAndView index()
+    {
+        ModelAndView mv=new ModelAndView("index");
+        return mv;
+    }
+
+    /**
      * 查询代码生成列表
      */
+    //@PreAuthorize("@ps.hasPermit('generate:tableinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -57,27 +81,20 @@ public class GenTableinfoController extends BaseController
     }
 
     /**
-     * 修改代码生成业务
-     */
-    @GetMapping(value = "/{tableNo}")
-    public AjaxResult detail(@PathVariable String tableNo)
-    {
-        SysTableinfo tableInfo = tableInfoService.getRecordByNo(tableNo);
-        List<SysTabcolumn> list = tabColumnService.getRecordsByClassNo(tableNo);
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("info", tableInfo);
-        map.put("rows", list);
-        return AjaxResult.success(map);
-    }
-
-    /**
      * 查询数据库列表
      */
-    @GetMapping("/table/list")
-    public TableDataInfo tableList()
+    @GetMapping("/dbTableList")
+    public AjaxResult dbTableList()
     {
         List<SysTableinfo> list = tableInfoService.getDbTableList("");
-        return getDataTable(list);
+        String result="";
+        if(list!=null&&list.size()>0){
+            for(SysTableinfo table :list){
+                result+=table.getTableName()+",";
+            }
+            result=result.substring(0, result.length()-1);
+        }
+        return AjaxResult.success(result);
     }
 
     /**
@@ -98,7 +115,7 @@ public class GenTableinfoController extends BaseController
      */
     @Oplog(title = "代码生成", businessType = BusinessType.IMPORT)
     @PostMapping("/importTable")
-    public AjaxResult importTable(String tables)
+    public AjaxResult importTable(@RequestBody String tables)
     {
         String[] tableNames = ConvertHelper.toStrArray(tables);
         // 查询表信息
@@ -108,24 +125,58 @@ public class GenTableinfoController extends BaseController
     }
 
     /**
-     * 修改保存代码生成业务
+     * 保存代码生成业务
      */
-    @Oplog(title = "代码生成", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public AjaxResult save(@Validated @RequestBody SysTableinfo tableInfo)
-    {
-        System.out.println(tableInfo.getParams().size());
-        tableInfoService.validateEdit(tableInfo);
-        tableInfoService.UpdateRecord(tableInfo);
-        return AjaxResult.success();
+    @PreAuthorize("@ps.hasPermit('generate:tableinfo:save')")
+    @Oplog(title = "代码生成", businessType = BusinessType.SAVE)
+    @PostMapping(value = "/save")
+    public AjaxResult save(@RequestBody SysTableinfo sysTableInfo) {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        if (StringUtils.isNull(tableInfoService.getRecordByNo(sysTableInfo.getTableNo()))) {
+            sysTableInfo.setTableNo(UuidUtils.shortUUID());
+            sysTableInfo.setCreateBy(loginUser.getUser().getUserNo());
+            sysTableInfo.setUpdateBy(loginUser.getUser().getUserNo());
+            return toAjax(tableInfoService.AddNewRecord(sysTableInfo));
+        } else {
+            sysTableInfo.setUpdateBy(loginUser.getUser().getUserNo());
+            return toAjax(tableInfoService.UpdateRecord(sysTableInfo));
+        }
     }
 
+    /**
+     * 删除表格信息
+     */
+    //@PreAuthorize("@ps.hasPermit('generate:tableinfo:delete')")
     @Oplog(title = "代码生成", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{tableNos}")
-    public AjaxResult delete(@PathVariable String[] tableNos)
+    @DeleteMapping("/{ids}")
+    public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        tableInfoService.HardDeleteByNos(tableNos);
-        return AjaxResult.success();
+        return toAjax(tableInfoService.HardDeleteByNos(ids));
+    }
+
+    /**
+     * 代码生成信息详细信息
+     */
+    //@PreAuthorize("@ps.hasPermit('generate:tableinfo:detail')")
+    @GetMapping(value = "/{id}")
+    public AjaxResult detail(@PathVariable("id") String id)
+    {
+        return AjaxResult.success(tableInfoService.getRecordByNo(id));
+    }
+
+    /**
+     * 导出表格信息列表
+     */
+    //@PreAuthorize("@ps.hasPermit('generate:tableinfo:export')")
+    @Oplog(title = "代码生成", businessType = BusinessType.EXPORT)
+    @PostMapping("/export")
+    public AjaxResult export(@RequestBody PageRequest pRequest)
+    {
+        int count = tableInfoService.getCountByCondition(pRequest.getCondition());
+
+        List<SysTableinfo> list = tableInfoService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        ExcelUtils<SysTableinfo> util = new ExcelUtils<SysTableinfo>(SysTableinfo.class);
+        return util.exportExcel(list, "SysTableinfo");
     }
 
     /**

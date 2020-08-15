@@ -1,8 +1,8 @@
-package com.benet.job.utils;
+package com.benet.task.utils;
 
 import com.benet.common.utils.spring.SpringUtils;
 import com.benet.common.utils.string.StringUtils;
-import com.benet.job.domain.SysTaskinfo;
+import com.benet.task.domain.SysTaskinfo;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

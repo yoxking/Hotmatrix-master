@@ -68,7 +68,7 @@ public class SysDicttypeController extends BaseController
     /**
      * 新增字典类型
      */
-    //@PreAuthorize("@ps.hasPermit('system:dicttype:insert')")
+    //@PreAuthorize("@ps.hasPermit('system:dicttype:addnew')")
     @Oplog(title = "字典类型", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysDicttype sysDicttype) {

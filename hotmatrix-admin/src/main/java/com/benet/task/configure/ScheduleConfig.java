@@ -1,4 +1,4 @@
-package com.benet.job.configure;
+package com.benet.task.configure;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

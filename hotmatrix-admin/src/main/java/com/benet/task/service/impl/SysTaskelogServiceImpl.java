@@ -1,13 +1,13 @@
-package com.benet.job.service.impl;
+package com.benet.task.service.impl;
 
 import java.util.List;
 import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
-import com.benet.job.domain.SysTaskelog;
-import com.benet.job.mapper.SysTaskelogMapper;
-import com.benet.job.service.ISysTaskelogService;
+import com.benet.task.domain.SysTaskelog;
+import com.benet.task.mapper.SysTaskelogMapper;
+import com.benet.task.service.ISysTaskelogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

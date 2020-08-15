@@ -1,4 +1,4 @@
-package com.benet.job.utils;
+package com.benet.task.utils;
 
 import java.text.ParseException;
 import java.util.Date;

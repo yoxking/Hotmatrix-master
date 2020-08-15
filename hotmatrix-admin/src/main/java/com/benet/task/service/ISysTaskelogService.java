@@ -1,8 +1,8 @@
-package com.benet.job.service;
+package com.benet.task.service;
 
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
-import com.benet.job.domain.SysTaskelog;
+import com.benet.task.domain.SysTaskelog;
 
 /**
  * 定时任务调度日志Service接口

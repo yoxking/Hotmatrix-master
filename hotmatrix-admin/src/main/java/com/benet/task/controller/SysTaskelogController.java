@@ -1,4 +1,4 @@
-package com.benet.job.controller;
+package com.benet.task.controller;
 
 import java.util.List;
 import com.benet.common.core.pager.PageRequest;
@@ -6,8 +6,8 @@ import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
-import com.benet.job.domain.SysTaskelog;
-import com.benet.job.service.ISysTaskelogService;
+import com.benet.task.domain.SysTaskelog;
+import com.benet.task.service.ISysTaskelogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +33,7 @@ import com.benet.common.core.pager.TableDataInfo;
  * @date 2020-04-20
  */
 @RestController
-@RequestMapping("/job/taskelog")
+@RequestMapping("/task/taskelog")
 public class SysTaskelogController extends BaseController
 {
     @Autowired

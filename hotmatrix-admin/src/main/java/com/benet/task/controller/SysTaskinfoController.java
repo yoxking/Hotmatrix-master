@@ -1,4 +1,4 @@
-package com.benet.job.controller;
+package com.benet.task.controller;
 
 import java.util.List;
 import com.benet.common.core.pager.PageRequest;
@@ -6,9 +6,9 @@ import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
-import com.benet.job.domain.SysTaskinfo;
-import com.benet.job.service.ISysTaskinfoService;
-import org.springframework.security.access.prepost.PreAuthorize;
+import com.benet.task.domain.SysTaskinfo;
+import com.benet.task.service.ISysTaskinfoService;
+import com.benet.task.vmodel.TaskObjectVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +34,7 @@ import com.benet.common.core.pager.TableDataInfo;
  * @date 2020-04-20
  */
 @RestController
-@RequestMapping("/job/taskinfo")
+@RequestMapping("/task/taskinfo")
 public class SysTaskinfoController extends BaseController
 {
     @Autowired
@@ -148,15 +148,14 @@ public class SysTaskinfoController extends BaseController
 
 
     /**
-     * 任务调度立即执行一次
+     * 任务调度启动执行
      */
     //@PreAuthorize("@ps.hasPermit('system:taskinfo:export')")
     @Oplog(title = "定时任务调度", businessType = BusinessType.UPDATE)
     @PostMapping("/startTask")
-    public AjaxResult startTask(String taskNo)
+    public AjaxResult startTask(@RequestBody TaskObjectVo taskObject)
     {
-        sysTaskinfoService.start(taskNo);
-        return success();
+        return toAjax(sysTaskinfoService.start(taskObject.getTaskNo()));
     }
 
     /**
@@ -165,17 +164,17 @@ public class SysTaskinfoController extends BaseController
     //@PreAuthorize("@ps.hasPermit('system:taskinfo:export')")
     @Oplog(title = "定时任务调度", businessType = BusinessType.UPDATE)
     @PostMapping("/changeStatus")
-    public AjaxResult changeState(String taskNo,String state)
+    public AjaxResult changeStatus(@RequestBody TaskObjectVo taskObject)
     {
-        return toAjax(sysTaskinfoService.changeState(taskNo,state));
+        return toAjax(sysTaskinfoService.changeStatus(taskObject.getTaskNo(),taskObject.getTaskStatus()));
     }
 
 
     /**
      * 校验cron表达式是否有效
      */
-    @PostMapping("/checkexpress")
-    public boolean checkExpress(String express)
+    @PostMapping("/checkExpress")
+    public boolean checkExpress(@RequestBody String express)
     {
         return sysTaskinfoService.checkExpression(express);
     }

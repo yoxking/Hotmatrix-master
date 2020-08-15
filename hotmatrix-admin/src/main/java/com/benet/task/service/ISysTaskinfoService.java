@@ -1,8 +1,8 @@
-package com.benet.job.service;
+package com.benet.task.service;
 
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
-import com.benet.job.domain.SysTaskinfo;
+import com.benet.task.domain.SysTaskinfo;
 
 /**
  * 定时任务调度Service接口
@@ -139,15 +139,15 @@ public interface ISysTaskinfoService
     /**
      * 立即运行任务
      *
-     * @param taskNo 调度信息
+     * @param taskNo 调度任务编号
      * @return 结果
      */
-    public void start(String taskNo);
+    public int start(String taskNo);
 
     /**
      * 暂停任务
      *
-     * @param taskNo 调度信息
+     * @param taskNo 调度任务编号
      * @return 结果
      */
     public int pause(String taskNo) ;
@@ -155,18 +155,27 @@ public interface ISysTaskinfoService
     /**
      * 恢复任务
      *
-     * @param taskNo 调度信息
+     * @param taskNo 调度任务编号
      * @return 结果
      */
     public int resume(String taskNo);
+
+    /**
+     * 删除任务
+     *
+     * @param taskNo 调度任务编号
+     * @return 结果
+     */
+    public int delete(String taskNo);
+
     /**
      * 任务调度状态修改
      *
      * @param taskNo 调度信息编号
-     * @param state 状态
+     * @param status 运行状态
      * @return 结果
      */
-    public int changeState(String taskNo,String state);
+    public int changeStatus(String taskNo,String status);
 
 
     /**

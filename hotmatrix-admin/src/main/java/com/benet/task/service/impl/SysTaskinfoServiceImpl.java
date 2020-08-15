@@ -1,4 +1,4 @@
-package com.benet.job.service.impl;
+package com.benet.task.service.impl;
 
 import java.util.List;
 import com.benet.common.configure.GlobalConfig;
@@ -6,17 +6,17 @@ import com.benet.common.constant.QutzConstants;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
-import com.benet.job.domain.SysTaskinfo;
-import com.benet.job.mapper.SysTaskinfoMapper;
-import com.benet.job.service.ISysTaskinfoService;
-import com.benet.job.utils.CronHelper;
-import com.benet.job.utils.SchdHelper;
+import com.benet.task.domain.SysTaskinfo;
+import com.benet.task.mapper.SysTaskinfoMapper;
+import com.benet.task.service.ISysTaskinfoService;
+import com.benet.task.utils.CronHelper;
+import com.benet.task.utils.SchdHelper;
 import org.quartz.JobDataMap;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 
@@ -43,8 +43,7 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
     public void init()
     {
         List<SysTaskinfo> taskList = sysTaskinfoMapper.getAllRecords("");
-        for (SysTaskinfo taskInfo : taskList)
-        {
+        for (SysTaskinfo taskInfo : taskList) {
             updateScheduler(taskInfo, taskInfo.getTaskGroup());
         }
     }
@@ -266,24 +265,26 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
 
 
     /**
-     * 立即运行任务
+     * 运行任务
      *
      * @param taskNo 调度任务编号
      * @return 结果
      */
     @Override
-    public void start(String taskNo){
+    @Transactional
+    public int start(String taskNo) {
 
-       SysTaskinfo taskInfo=sysTaskinfoMapper.getRecordByNo(GlobalConfig.getAppCode(),taskNo);
+        SysTaskinfo taskInfo = sysTaskinfoMapper.getRecordByNo(GlobalConfig.getAppCode(), taskNo);
+        String taskGroup = taskInfo.getTaskGroup();
         // 参数
         JobDataMap dataMap = new JobDataMap();
         dataMap.put(QutzConstants.TASK_PROPERTIES, taskInfo);
         try {
-            scheduler.triggerJob(SchdHelper.getJobKey(taskNo, taskInfo.getTaskGroup()), dataMap);
+            scheduler.triggerJob(SchdHelper.getJobKey(taskNo, taskGroup), dataMap);
+        } catch (Exception e) {
+            return 0;
         }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        return 1;
     }
 
     /**
@@ -293,12 +294,13 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
      * @return 结果
      */
     @Override
+    @Transactional
     public int pause(String taskNo) {
 
         try {
             SysTaskinfo taskInfo = sysTaskinfoMapper.getRecordByNo(GlobalConfig.getAppCode(), taskNo);
             String taskGroup = taskInfo.getTaskGroup();
-            taskInfo.setCheckState(QutzConstants.Status.PAUSE.getValue());
+            taskInfo.setTaskStatus(QutzConstants.Status.PAUSE.getValue());
             int rows = sysTaskinfoMapper.UpdateRecord(taskInfo);
             if (rows > 0) {
                 scheduler.pauseJob(SchdHelper.getJobKey(taskNo, taskGroup));
@@ -317,12 +319,13 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
      * @return 结果
      */
     @Override
+    @Transactional
     public int resume(String taskNo){
 
         try {
             SysTaskinfo taskInfo = sysTaskinfoMapper.getRecordByNo(GlobalConfig.getAppCode(), taskNo);
             String taskGroup = taskInfo.getTaskGroup();
-            taskInfo.setCheckState(QutzConstants.Status.NORMAL.getValue());
+            taskInfo.setTaskStatus(QutzConstants.Status.NORMAL.getValue());
             int rows = sysTaskinfoMapper.UpdateRecord(taskInfo);
             if (rows > 0) {
                 scheduler.resumeJob(SchdHelper.getJobKey(taskNo, taskGroup));
@@ -333,19 +336,53 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
             return 0;
         }
     }
+
+
     /**
-     * 任务调度状态修改
+     * 删除任务后，所对应的trigger也将被删除
+     *
+     * @param taskNo 调度任务编号
+     */
+    @Override
+    @Transactional
+    public int delete(String taskNo)
+    {
+        try {
+            SysTaskinfo taskInfo = sysTaskinfoMapper.getRecordByNo(GlobalConfig.getAppCode(), taskNo);
+            String taskGroup = taskInfo.getTaskGroup();
+
+            scheduler.deleteJob(SchdHelper.getJobKey(taskNo, taskGroup));
+
+            return 1;
+        }
+        catch (Exception e){
+            return 0;
+        }
+    }
+
+    /**
+     * 任务调度运行状态修改
      *
      * @param taskNo 调度信息编号
-     * @param state 状态
+     * @param status 状态
      * @return 结果
      */
     @Override
-    public int changeState(String taskNo,String state){
+    @Transactional
+    public int changeStatus(String taskNo,String status){
 
-        SysTaskinfo taskInfo = sysTaskinfoMapper.getRecordByNo(GlobalConfig.getAppCode(), taskNo);
-        taskInfo.setCheckState(state);
-        return sysTaskinfoMapper.UpdateRecord(taskInfo);
+        try {
+            int rows = 0;
+            if (QutzConstants.Status.NORMAL.getValue().equals(status)) {
+                rows = resume(taskNo);
+            } else if (QutzConstants.Status.PAUSE.getValue().equals(status)) {
+                rows = pause(taskNo);
+            }
+            return rows;
+        }
+        catch (Exception e){
+            return 0;
+        }
     }
 
     /**

@@ -19,6 +19,15 @@ public class PermitInfoVo {
     /** 父权限id */
     private String parentNo;
 
+    /** 图标 */
+    private String menuIcon;
+
+    /** 权限标识 */
+    private String permitCode;
+
+    /** 组件路径 */
+    private String component;
+
     /** 显示顺序 */
     private Integer orderNo;
 
@@ -89,6 +98,30 @@ public class PermitInfoVo {
 
     public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
+    }
+
+    public String getMenuIcon() {
+        return menuIcon;
+    }
+
+    public void setMenuIcon(String menuIcon) {
+        this.menuIcon = menuIcon;
+    }
+
+    public String getPermitCode() {
+        return permitCode;
+    }
+
+    public void setPermitCode(String permitCode) {
+        this.permitCode = permitCode;
+    }
+
+    public String getComponent() {
+        return component;
+    }
+
+    public void setComponent(String component) {
+        this.component = component;
     }
 
     public String getComments() {

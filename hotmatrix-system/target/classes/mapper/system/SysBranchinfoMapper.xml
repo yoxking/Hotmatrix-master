@@ -167,5 +167,4 @@
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>
-
 </mapper>

@@ -1,4 +1,4 @@
-package com.benet.job.utils;
+package com.benet.task.utils;
 
 import java.util.Date;
 
@@ -9,9 +9,9 @@ import com.benet.common.utils.exception.ExceptionUtils;
 import com.benet.common.utils.spring.SpringUtils;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.uuid.UuidUtils;
-import com.benet.job.domain.SysTaskinfo;
-import com.benet.job.domain.SysTaskelog;
-import com.benet.job.service.ISysTaskelogService;
+import com.benet.task.domain.SysTaskinfo;
+import com.benet.task.domain.SysTaskelog;
+import com.benet.task.service.ISysTaskelogService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;

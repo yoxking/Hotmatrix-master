@@ -42,6 +42,7 @@ public class SysBranchinfoController extends BaseController
 
     @Autowired
     private ISysBranchinfoService sysBranchinfoService;
+
     /**
      * 首页
      */
@@ -68,7 +69,7 @@ public class SysBranchinfoController extends BaseController
     /**
      * 新增分支信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:branchinfo:add')")
+    //@PreAuthorize("@ps.hasPermit('system:branchinfo:addnew')")
     @Oplog(title = "分支信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysBranchinfo sysBranchinfo) {
@@ -82,7 +83,7 @@ public class SysBranchinfoController extends BaseController
     /**
      * 编辑分支信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:branchinfo:edit')")
+    //@PreAuthorize("@ps.hasPermit('system:branchinfo:update')")
     @Oplog(title = "分支信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult update(@RequestBody SysBranchinfo sysBranchinfo) {

@@ -3,6 +3,7 @@ package com.benet.common.utils.date;
 import java.lang.management.ManagementFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
@@ -151,5 +152,27 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
         // 计算差多少秒//输出结果
         // long sec = diff % nd % nh % nm / ns;
         return day + "天" + hour + "小时" + min + "分钟";
+    }
+
+    public static String getShortTime(Date date) {
+        String shortStr = null;
+        if(date == null) return shortStr;
+
+        long now = Calendar.getInstance().getTimeInMillis();
+        long deltime = (now - date.getTime())/1000;
+        if(deltime > 365*24*60*60) {
+            shortStr = (int)(deltime/(365*24*60*60)) + "年前";
+        } else if(deltime > 24*60*60) {
+            shortStr = (int)(deltime/(24*60*60)) + "天前";
+        } else if(deltime > 60*60) {
+            shortStr = (int)(deltime/(60*60)) + "小时前";
+        } else if(deltime > 60) {
+            shortStr = (int)(deltime/(60)) + "分前";
+        } else if(deltime > 1) {
+            shortStr = deltime + "秒前";
+        } else {
+            shortStr = "1秒前";
+        }
+        return shortStr;
     }
 }

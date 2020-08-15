@@ -137,5 +137,4 @@ public interface SysBranchinfoMapper
      * @return 结果
      */
     public int SoftDeleteByCondition(@Param("appCode") String appCode,@Param("condition") String condition);
-
 }

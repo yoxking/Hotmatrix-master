@@ -67,7 +67,7 @@ public class SysOperatelogController extends BaseController
     /**
      * 新增操作日志记录
      */
-    //@PreAuthorize("@ps.hasPermit('system:operatelogs:insert')")
+    //@PreAuthorize("@ps.hasPermit('system:operatelogs:addnew')")
     @Oplog(title = "操作日志记录", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysOperatelog sysOperatelogs) {

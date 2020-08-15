@@ -32,8 +32,8 @@ import java.util.List;
  * @date 2020-03-29
  */
 @RestController
-@RequestMapping("/sys/deptment")
-public class SysDeptmentController extends BaseController {
+@RequestMapping("/sys/department")
+public class SysDepartmentController extends BaseController {
 
     @Autowired
     private MyJwtokenService tokenService;

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import com.benet.system.mapper.SysRoleinfoMapper;
 import com.benet.system.domain.SysRoleinfo;
 import com.benet.system.service.ISysRoleinfoService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 角色信息Service业务层处理
@@ -182,6 +183,8 @@ public class SysRoleinfoServiceImpl implements ISysRoleinfoService
      * @param suerNos 用户列表信息
      * @return 结果
      */
+    @Override
+    @Transactional
     public int UpdateSusers(String roleNo,String[] suerNos){
 
         int count=0;
@@ -213,6 +216,8 @@ public class SysRoleinfoServiceImpl implements ISysRoleinfoService
      * @param permitNos 权限列表信息
      * @return 结果
      */
+    @Override
+    @Transactional
     public int UpdatePermits(String roleNo,String[] permitNos){
 
         int count=0;
@@ -332,6 +337,7 @@ public class SysRoleinfoServiceImpl implements ISysRoleinfoService
      * @param userNo 用户ID
      * @return 权限列表
      */
+    @Override
     public Set<String> getRoleCodesByUserNo(String userNo){
 
         List<String> roles = sysRoleinfoMapper.getRoleCodesByUserNo(GlobalConfig.getAppCode(),userNo);
@@ -353,6 +359,7 @@ public class SysRoleinfoServiceImpl implements ISysRoleinfoService
      * @param roleNo 角色ID
      * @return 用户列表
      */
+    @Override
     public List<String> getSuserNosByRoleNo(String roleNo){
 
         return sysRoleinfoMapper.getSuserNosByRoleNo(GlobalConfig.getAppCode(),roleNo);
@@ -365,6 +372,7 @@ public class SysRoleinfoServiceImpl implements ISysRoleinfoService
      * @param roleNo 角色ID
      * @return 权限列表
      */
+    @Override
     public List<String> getPermitNosByRoleNo(String roleNo){
 
         return sysRoleinfoMapper.getPermitNosByRoleNo(GlobalConfig.getAppCode(),roleNo);

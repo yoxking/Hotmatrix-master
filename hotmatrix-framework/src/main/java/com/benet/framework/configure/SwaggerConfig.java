@@ -107,9 +107,9 @@ public class SwaggerConfig
         // 用ApiInfoBuilder进行定制
         return new ApiInfoBuilder()
                 // 设置标题
-                .title("标题：基云后台管理系统_接口文档")
+                .title("标题：热度空间管理系统_接口文档")
                 // 描述
-                .description("描述：通用后台管理平台")
+                .description("描述：提供多租户的后台管理平台")
                 // 版本
                 .version("版本号:" + globalConfig.getVersion())
                 .build();

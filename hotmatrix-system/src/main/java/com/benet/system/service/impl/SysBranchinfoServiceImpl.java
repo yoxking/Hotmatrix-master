@@ -140,11 +140,11 @@ public class SysBranchinfoServiceImpl implements ISysBranchinfoService
      */
     @Override
     public int AddNewRecord(SysBranchinfo info) {
-        info.setCreateTime(DateUtils.getNowDate());
-        info.setUpdateTime(DateUtils.getNowDate());
-        info.setAppCode(GlobalConfig.getAppCode());
-        info.setVersion(1L);
-        return sysBranchinfoMapper.AddNewRecord(info);
+            info.setCreateTime(DateUtils.getNowDate());
+            info.setUpdateTime(DateUtils.getNowDate());
+            info.setAppCode(GlobalConfig.getAppCode());
+            info.setVersion(1L);
+            return sysBranchinfoMapper.AddNewRecord(info);
     }
 
     /**

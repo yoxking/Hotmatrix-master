@@ -1,8 +1,8 @@
-package com.benet.job.utils;
+package com.benet.task.utils;
 
 import com.benet.common.constant.QutzConstants;
 import com.benet.common.exception.job.TaskException;
-import com.benet.job.domain.SysTaskinfo;
+import com.benet.task.domain.SysTaskinfo;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.Job;
@@ -82,7 +82,7 @@ public class SchdHelper
         scheduler.scheduleJob(jobDetail, trigger);
 
         // 暂停任务
-        if (taskInfo.getCheckState().equals(QutzConstants.Status.PAUSE.getValue()))
+        if (taskInfo.getTaskStatus().equals(QutzConstants.Status.PAUSE.getValue()))
         {
             scheduler.pauseJob(SchdHelper.getJobKey(jobId, jobGroup));
         }

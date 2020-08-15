@@ -74,7 +74,7 @@ public class ${ClassName}Controller extends BaseController
     /**
      * 新增${functionName}
      */
-    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:insert')")
+    @PreAuthorize("@ps.hasPermit('${permissionPrefix}:addnew')")
     @Oplog(title = "${functionName}", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody ${ClassName} ${className}) {

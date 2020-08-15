@@ -1,4 +1,4 @@
-package com.benet.job.mytask;
+package com.benet.task.mytask;
 
 import com.benet.common.utils.string.StringUtils;
 import org.springframework.stereotype.Component;
