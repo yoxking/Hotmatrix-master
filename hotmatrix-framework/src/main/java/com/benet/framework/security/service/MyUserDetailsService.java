@@ -1,5 +1,6 @@
 package com.benet.framework.security.service;
 
+import com.benet.common.configure.GlobalConfig;
 import com.benet.common.enums.UserStatus;
 import com.benet.common.exception.base.BaseException;
 import com.benet.common.utils.string.StringUtils;
@@ -56,6 +57,6 @@ public class MyUserDetailsService implements UserDetailsService
 
     public UserDetails createLoginUser(SysSuserinfo user)
     {
-        return new LoginUser(user, permitService.getPermitCodesByUserNo(user.getUserNo()));
+        return new LoginUser(user, permitService.getPermitCodesByUserNo(GlobalConfig.getAppCode(),user.getUserNo()));
     }
 }

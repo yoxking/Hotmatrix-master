@@ -59,8 +59,9 @@ public class SysSuserinfoController extends BaseController {
     //@PreAuthorize("@ps.hasPermit('system:suserinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest) {
-        int count = sysSuserinfoService.getCountByCondition(pRequest.getCondition());
-        List<SysSuserinfo> list = sysSuserinfoService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysSuserinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<SysSuserinfo> list = sysSuserinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -75,7 +76,7 @@ public class SysSuserinfoController extends BaseController {
         sysSuserinfo.setUserNo(UuidUtils.shortUUID());
         sysSuserinfo.setCreateBy(loginUser.getUser().getUserNo());
         sysSuserinfo.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysSuserinfoService.AddNewRecord(sysSuserinfo));
+        return toAjax(sysSuserinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysSuserinfo));
     }
 
     /**
@@ -87,7 +88,7 @@ public class SysSuserinfoController extends BaseController {
     public AjaxResult update(@RequestBody SysSuserinfo sysSuserinfo) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysSuserinfo.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysSuserinfoService.UpdateRecord(sysSuserinfo));
+        return toAjax(sysSuserinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysSuserinfo));
     }
 
     /**
@@ -98,14 +99,14 @@ public class SysSuserinfoController extends BaseController {
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysSuserinfo sysSuserinfo) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(sysSuserinfoService.getRecordByNo(sysSuserinfo.getUserNo()))) {
+        if (StringUtils.isNull(sysSuserinfoService.getRecordByNo(loginUser.getUser().getAppCode(),sysSuserinfo.getUserNo()))) {
             sysSuserinfo.setUserNo(UuidUtils.shortUUID());
             sysSuserinfo.setCreateBy(loginUser.getUser().getUserNo());
             sysSuserinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysSuserinfoService.AddNewRecord(sysSuserinfo));
+            return toAjax(sysSuserinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysSuserinfo));
         } else {
             sysSuserinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysSuserinfoService.UpdateRecord(sysSuserinfo));
+            return toAjax(sysSuserinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysSuserinfo));
         }
     }
 
@@ -116,7 +117,8 @@ public class SysSuserinfoController extends BaseController {
     @Oplog(title = "系统用户信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids) {
-        return toAjax(sysSuserinfoService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysSuserinfoService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -125,7 +127,8 @@ public class SysSuserinfoController extends BaseController {
     //@PreAuthorize("@ps.hasPermit('system:suserinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id) {
-        return AjaxResult.success(sysSuserinfoService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(sysSuserinfoService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -135,9 +138,10 @@ public class SysSuserinfoController extends BaseController {
     @Oplog(title = "系统用户信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest) {
-        int count = sysSuserinfoService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysSuserinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<SysSuserinfo> list = sysSuserinfoService.getRecordsByPaging(1, count, pRequest.getCondition(), "id", "Asc");
+        List<SysSuserinfo> list = sysSuserinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),1, count, pRequest.getCondition(), "id", "Asc");
         ExcelUtils<SysSuserinfo> util = new ExcelUtils<SysSuserinfo>(SysSuserinfo.class);
         return util.exportExcel(list, "SysSuserinfo");
     }
@@ -170,12 +174,12 @@ public class SysSuserinfoController extends BaseController {
             return AjaxResult.error("新密码不能与旧密码相同");
         }
 
-        SysSuserinfo userInfo = sysSuserinfoService.getRecordByNo(userNo);
+        SysSuserinfo userInfo = sysSuserinfoService.getRecordByNo(loginUser.getUser().getAppCode(),userNo);
         userInfo.setPassword(SecurityUtils.encryptPassword(newPswd));
         userInfo.setUpdateBy(loginUser.getUsername());
         userInfo.setUpdateTime(DateUtils.getNowDate());
 
-        if (sysSuserinfoService.UpdateRecord(userInfo) > 0) {
+        if (sysSuserinfoService.UpdateRecord(loginUser.getUser().getAppCode(),userInfo) > 0) {
             // 更新缓存用户密码
             loginUser.getUser().setPassword(SecurityUtils.encryptPassword(newPswd));
             tokenService.setLoginUser(loginUser);
@@ -194,11 +198,11 @@ public class SysSuserinfoController extends BaseController {
         if (!avatarfile.isEmpty())
         {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-            SysSuserinfo userInfo = sysSuserinfoService.getRecordByNo(loginUser.getUserno());
+            SysSuserinfo userInfo = sysSuserinfoService.getRecordByNo(loginUser.getUser().getAppCode(),loginUser.getUserno());
             if(userInfo!=null) {
                 String avatar = FileUploadUtils.upload(GlobalConfig.getAvatarPath(), avatarfile);
                 userInfo.setAvatar(avatar);
-                if (sysSuserinfoService.UpdateRecord(userInfo)>0) {
+                if (sysSuserinfoService.UpdateRecord(loginUser.getUser().getAppCode(),userInfo)>0) {
                     AjaxResult ajax = AjaxResult.success();
                     ajax.put("imgUrl", avatar);
                     // 更新缓存用户头像
@@ -209,6 +213,14 @@ public class SysSuserinfoController extends BaseController {
             }
         }
         return AjaxResult.error("上传图片异常，请联系管理员");
+    }
+
+    /**
+     * 校验用户名是否重复
+     */
+    @GetMapping(value = "checkLoginName/{name}")
+    public AjaxResult checkLoginName(@PathVariable("name") String name) {
+        return AjaxResult.success(sysSuserinfoService.checkLoginNameUnique(name));
     }
 
 }

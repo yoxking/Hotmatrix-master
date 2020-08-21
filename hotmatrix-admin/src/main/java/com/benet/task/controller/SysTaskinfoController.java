@@ -60,8 +60,9 @@ public class SysTaskinfoController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = sysTaskinfoService.getCountByCondition(pRequest.getCondition());
-        List<SysTaskinfo> list = sysTaskinfoService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysTaskinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<SysTaskinfo> list = sysTaskinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -76,7 +77,7 @@ public class SysTaskinfoController extends BaseController
         sysTaskinfo.setTaskNo(UuidUtils.shortUUID());
         sysTaskinfo.setCreateBy(loginUser.getUser().getUserNo());
         sysTaskinfo.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysTaskinfoService.AddNewRecord(sysTaskinfo));
+        return toAjax(sysTaskinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysTaskinfo));
     }
 
     /**
@@ -88,7 +89,7 @@ public class SysTaskinfoController extends BaseController
         public AjaxResult update(@RequestBody SysTaskinfo sysTaskinfo) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysTaskinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysTaskinfoService.UpdateRecord(sysTaskinfo));
+            return toAjax(sysTaskinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysTaskinfo));
         }
 
     /**
@@ -99,14 +100,14 @@ public class SysTaskinfoController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysTaskinfo sysTaskinfo) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(sysTaskinfoService.getRecordByNo(sysTaskinfo.getTaskNo()))) {
+        if (StringUtils.isNull(sysTaskinfoService.getRecordByNo(loginUser.getUser().getAppCode(),sysTaskinfo.getTaskNo()))) {
             sysTaskinfo.setTaskNo(UuidUtils.shortUUID());
             sysTaskinfo.setCreateBy(loginUser.getUser().getUserNo());
             sysTaskinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysTaskinfoService.AddNewRecord(sysTaskinfo));
+            return toAjax(sysTaskinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysTaskinfo));
         } else {
             sysTaskinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysTaskinfoService.UpdateRecord(sysTaskinfo));
+            return toAjax(sysTaskinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysTaskinfo));
         }
     }
 
@@ -118,7 +119,8 @@ public class SysTaskinfoController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(sysTaskinfoService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysTaskinfoService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -128,7 +130,8 @@ public class SysTaskinfoController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(sysTaskinfoService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(sysTaskinfoService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -139,9 +142,10 @@ public class SysTaskinfoController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = sysTaskinfoService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysTaskinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<SysTaskinfo> list = sysTaskinfoService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<SysTaskinfo> list = sysTaskinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysTaskinfo> util = new ExcelUtils<SysTaskinfo>(SysTaskinfo.class);
         return util.exportExcel(list, "SysTaskinfo");
     }

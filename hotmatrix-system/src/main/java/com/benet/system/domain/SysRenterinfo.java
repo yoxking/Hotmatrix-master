@@ -39,10 +39,6 @@ public class SysRenterinfo extends BaseEntity
     @Excel(name = "显示顺序")
     private Integer orderNo;
 
-    /** 服务编码 */
-    @Excel(name = "服务编码")
-    private String appCode;
-
     /** 服务Url */
     @Excel(name = "服务Url")
     private String appUrl;
@@ -99,6 +95,10 @@ public class SysRenterinfo extends BaseEntity
     @Excel(name = "更新者")
     private String comments;
 
+    /** 应用编号 */
+    @Excel(name = "应用编号")
+    private String appCode;
+
     /** 版本号 */
     @Excel(name = "版本号")
     private Long version;
@@ -154,15 +154,6 @@ public class SysRenterinfo extends BaseEntity
     public Integer getOrderNo() 
     {
         return orderNo;
-    }
-    public void setAppCode(String appCode)
-    {
-        this.appCode = appCode;
-    }
-
-    public String getAppCode()
-    {
-        return appCode;
     }
     public void setAppUrl(String appUrl) 
     {
@@ -290,6 +281,15 @@ public class SysRenterinfo extends BaseEntity
     {
         return comments;
     }
+    public void setAppCode(String appCode)
+    {
+        this.appCode = appCode;
+    }
+
+    public String getAppCode()
+    {
+        return appCode;
+    }
     public void setVersion(Long version) 
     {
         this.version = version;
@@ -309,7 +309,6 @@ public class SysRenterinfo extends BaseEntity
             .append("renname", getRenname())
             .append("classNo", getClassNo())
             .append("orderNo", getOrderNo())
-                .append("appCode", getAppCode())
             .append("appUrl", getAppUrl())
             .append("appVer", getAppVer())
                 .append("telephone", getTelephone())
@@ -328,6 +327,7 @@ public class SysRenterinfo extends BaseEntity
             .append("updateTime", getUpdateTime())
             .append("deleteFlag", getDeleteFlag())
             .append("comments", getComments())
+                .append("appCode", getAppCode())
             .append("version", getVersion())
             .toString();
     }

@@ -26,23 +26,25 @@ public class SysRenterinfoServiceImpl implements ISysRenterinfoService
     /**
      * 查询所有租户信息列表
      *
+     * @param appCode 应用编号
      * @return 租户信息集合
      */
     @Override
-    public List<SysRenterinfo> getAllRecords() {
-        return sysRenterinfoMapper.getAllRecords();
+    public List<SysRenterinfo> getAllRecords(String appCode) {
+        return sysRenterinfoMapper.getAllRecords(appCode);
     }
 
     /**
      * 按分类查询租户信息列表
      *
+     * @param appCode 应用编号
      * @param classNo 分类编号
      * @return 租户信息集合
      */
     @Override
-    public List<SysRenterinfo> getRecordsByClassNo(String classNo) {
+    public List<SysRenterinfo> getRecordsByClassNo(String appCode,String classNo) {
         if (StringUtils.isNotEmpty(classNo)) {
-            return sysRenterinfoMapper.getRecordsByClassNo(classNo);
+            return sysRenterinfoMapper.getRecordsByClassNo(appCode,classNo);
         }
         return null;
     }
@@ -50,14 +52,15 @@ public class SysRenterinfoServiceImpl implements ISysRenterinfoService
     /**
      * 分页查询租户信息列表
      *
+     * @param appCode 应用编号
      * @param model 分页模型
      * @return 租户信息集合
      */
     @Override
-    public List<SysRenterinfo> getRecordsByPaging(PagingModel model) {
+    public List<SysRenterinfo> getRecordsByPaging(String appCode,PagingModel model) {
         if (StringUtils.isNotNull(model)) {
             model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
-            return sysRenterinfoMapper.getRecordsByPaging(model);
+            return sysRenterinfoMapper.getRecordsByPaging(appCode,model);
         }
         return null;
     }
@@ -66,6 +69,7 @@ public class SysRenterinfoServiceImpl implements ISysRenterinfoService
     /**
      * 分页查询租户信息列表
      *
+     * @param appCode 应用编号
      * @param pageIndex 当前页起始索引
      * @param pageSize 页面大小
      * @param condition 条件
@@ -74,7 +78,7 @@ public class SysRenterinfoServiceImpl implements ISysRenterinfoService
      * @return 租户信息集合
      */
     @Override
-    public List<SysRenterinfo> getRecordsByPaging(int pageIndex, int pageSize, String condition, String orderField, String orderType) {
+    public List<SysRenterinfo> getRecordsByPaging(String appCode,int pageIndex, int pageSize, String condition, String orderField, String orderType) {
 
         PagingModel model = new PagingModel();
         model.setPageIndex((pageIndex-1) * pageSize);
@@ -90,19 +94,20 @@ public class SysRenterinfoServiceImpl implements ISysRenterinfoService
         } else {
             model.setOrderType(orderType);
         }
-        return sysRenterinfoMapper.getRecordsByPaging(model);
+        return sysRenterinfoMapper.getRecordsByPaging(appCode,model);
     }
 
     /**
      * 查询租户信息
      *
+     * @param appCode 应用编号
      * @param no 租户信息ID
      * @return 租户信息
      */
     @Override
-    public SysRenterinfo getRecordByNo(String no) {
+    public SysRenterinfo getRecordByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysRenterinfoMapper.getRecordByNo(no);
+            return sysRenterinfoMapper.getRecordByNo(appCode,no);
         }
         return null;
     }
@@ -110,13 +115,14 @@ public class SysRenterinfoServiceImpl implements ISysRenterinfoService
     /**
      * 查询租户信息名称
      *
+     * @param appCode 应用编号
      * @param no 租户信息ID
      * @return 名称
      */
     @Override
-    public String getRecordNameByNo(String no) {
+    public String getRecordNameByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysRenterinfoMapper.getRecordNameByNo(no);
+            return sysRenterinfoMapper.getRecordNameByNo(appCode,no);
         }
         return null;
     }
@@ -124,25 +130,27 @@ public class SysRenterinfoServiceImpl implements ISysRenterinfoService
     /**
      * 查询租户信息计数
      *
+     * @param appCode 应用编号
      * @param condition 查询条件
      * @return 结果
      */
     @Override
-    public int getCountByCondition(String condition) {
-        return sysRenterinfoMapper.getCountByCondition(condition);
+    public int getCountByCondition(String appCode,String condition) {
+        return sysRenterinfoMapper.getCountByCondition(appCode,condition);
     }
 
     /**
      * 新增租户信息
      *
+     * @param appCode 应用编号
      * @param info 租户信息
      * @return 结果
      */
     @Override
-    public int AddNewRecord(SysRenterinfo info) {
+    public int AddNewRecord(String appCode,SysRenterinfo info) {
         info.setCreateTime(DateUtils.getNowDate());
         info.setUpdateTime(DateUtils.getNowDate());
-        info.setAppCode(GlobalConfig.getAppCode());
+        info.setAppCode(appCode);
         info.setVersion(1L);
         return sysRenterinfoMapper.AddNewRecord(info);
     }
@@ -150,26 +158,28 @@ public class SysRenterinfoServiceImpl implements ISysRenterinfoService
     /**
      * 更新租户信息
      *
+     * @param appCode 应用编号
      * @param info 租户信息
      * @return 结果
      */
     @Override
-    public int UpdateRecord(SysRenterinfo info) {
+    public int UpdateRecord(String appCode,SysRenterinfo info) {
         info.setUpdateTime(DateUtils.getNowDate());
-        info.setAppCode(GlobalConfig.getAppCode());
+        info.setAppCode(appCode);
         return sysRenterinfoMapper.UpdateRecord(info);
     }
 
     /**
      * 硬删除租户信息
      *
+     * @param appCode 应用编号
      * @param no 租户信息ID
      * @return 结果
      */
     @Override
-    public int HardDeleteByNo(String no) {
+    public int HardDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysRenterinfoMapper.HardDeleteByNo(no);
+            return sysRenterinfoMapper.HardDeleteByNo(appCode,no);
         }
         return 0;
     }
@@ -177,13 +187,14 @@ public class SysRenterinfoServiceImpl implements ISysRenterinfoService
     /**
      * 批量硬删除租户信息
      *
+     * @param appCode 应用编号
      * @param nos 租户信息IDs
      * @return 结果
      */
     @Override
-    public int HardDeleteByNos(String[] nos) {
+    public int HardDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return sysRenterinfoMapper.HardDeleteByNos(nos);
+            return sysRenterinfoMapper.HardDeleteByNos(appCode,nos);
         }
         return 0;
     }
@@ -191,24 +202,26 @@ public class SysRenterinfoServiceImpl implements ISysRenterinfoService
     /**
      * 按条件硬删除租户信息
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
     @Override
-    public int HardDeleteByCondition(String condition) {
-        return sysRenterinfoMapper.HardDeleteByCondition(condition);
+    public int HardDeleteByCondition(String appCode,String condition) {
+        return sysRenterinfoMapper.HardDeleteByCondition(appCode,condition);
     }
 
     /**
      * 软删除租户信息
      *
+     * @param appCode 应用编号
      * @param no 租户信息ID
      * @return 结果
      */
     @Override
-    public int SoftDeleteByNo(String no) {
+    public int SoftDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysRenterinfoMapper.SoftDeleteByNo(no);
+            return sysRenterinfoMapper.SoftDeleteByNo(appCode,no);
         }
         return 0;
     }
@@ -216,13 +229,14 @@ public class SysRenterinfoServiceImpl implements ISysRenterinfoService
     /**
      * 批量软删除租户信息
      *
+     * @param appCode 应用编号
      * @param nos 租户信息IDs
      * @return 结果
      */
     @Override
-    public int SoftDeleteByNos(String[] nos) {
+    public int SoftDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return sysRenterinfoMapper.SoftDeleteByNos(nos);
+            return sysRenterinfoMapper.SoftDeleteByNos(appCode,nos);
         }
         return 0;
     }
@@ -230,11 +244,12 @@ public class SysRenterinfoServiceImpl implements ISysRenterinfoService
     /**
      * 按条件软删除租户信息
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
     @Override
-    public int SoftDeleteByCondition(String condition) {
-        return sysRenterinfoMapper.SoftDeleteByCondition(condition);
+    public int SoftDeleteByCondition(String appCode,String condition) {
+        return sysRenterinfoMapper.SoftDeleteByCondition(appCode,condition);
     }
 }

@@ -26,23 +26,25 @@ public class FlwFlowentrustServiceImpl implements IFlwFlowentrustService
     /**
      * 查询所有流程委托列表
      *
+     * @param appCode 应用编号
      * @return 流程委托集合
      */
     @Override
-    public List<FlwFlowentrust> getAllRecords() {
-        return flwFlowentrustMapper.getAllRecords(GlobalConfig.getAppCode());
+    public List<FlwFlowentrust> getAllRecords(String appCode) {
+        return flwFlowentrustMapper.getAllRecords(appCode);
     }
 
     /**
      * 按分类查询流程委托列表
      *
+     * @param appCode 应用编号
      * @param classNo 分类编号
      * @return 流程委托集合
      */
     @Override
-    public List<FlwFlowentrust> getRecordsByClassNo(String classNo) {
+    public List<FlwFlowentrust> getRecordsByClassNo(String appCode,String classNo) {
         if (StringUtils.isNotEmpty(classNo)) {
-            return flwFlowentrustMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
+            return flwFlowentrustMapper.getRecordsByClassNo(appCode,classNo);
         }
         return null;
     }
@@ -50,14 +52,15 @@ public class FlwFlowentrustServiceImpl implements IFlwFlowentrustService
     /**
      * 分页查询流程委托列表
      *
+     * @param appCode 应用编号
      * @param model 分页模型
      * @return 流程委托集合
      */
     @Override
-    public List<FlwFlowentrust> getRecordsByPaging(PagingModel model) {
+    public List<FlwFlowentrust> getRecordsByPaging(String appCode,PagingModel model) {
         if (StringUtils.isNotNull(model)) {
             model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
-            return flwFlowentrustMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+            return flwFlowentrustMapper.getRecordsByPaging(appCode,model);
         }
         return null;
     }
@@ -66,6 +69,7 @@ public class FlwFlowentrustServiceImpl implements IFlwFlowentrustService
     /**
      * 分页查询流程委托列表
      *
+     * @param appCode 应用编号
      * @param pageIndex 当前页起始索引
      * @param pageSize 页面大小
      * @param condition 条件
@@ -74,7 +78,7 @@ public class FlwFlowentrustServiceImpl implements IFlwFlowentrustService
      * @return 流程委托集合
      */
     @Override
-    public List<FlwFlowentrust> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
+    public List<FlwFlowentrust> getRecordsByPaging(String appCode,int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();
         model.setPageIndex((pageIndex-1) * pageSize);
@@ -90,19 +94,20 @@ public class FlwFlowentrustServiceImpl implements IFlwFlowentrustService
         } else {
             model.setOrderType(orderType);
         }
-        return flwFlowentrustMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+        return flwFlowentrustMapper.getRecordsByPaging(appCode,model);
     }
 
     /**
      * 查询流程委托
      *
+     * @param appCode 应用编号
      * @param no 流程委托ID
      * @return 流程委托
      */
     @Override
-    public FlwFlowentrust getRecordByNo(String no) {
+    public FlwFlowentrust getRecordByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return flwFlowentrustMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
+            return flwFlowentrustMapper.getRecordByNo(appCode,no);
         }
         return null;
     }
@@ -110,13 +115,14 @@ public class FlwFlowentrustServiceImpl implements IFlwFlowentrustService
     /**
      * 查询流程委托名称
      *
+     * @param appCode 应用编号
      * @param no 流程委托ID
      * @return 名称
      */
     @Override
-    public String getRecordNameByNo(String no) {
+    public String getRecordNameByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return flwFlowentrustMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
+            return flwFlowentrustMapper.getRecordNameByNo(appCode,no);
         }
         return null;
     }
@@ -124,25 +130,27 @@ public class FlwFlowentrustServiceImpl implements IFlwFlowentrustService
     /**
      * 查询流程委托计数
      *
+     * @param appCode 应用编号
      * @param condition 查询条件
      * @return 结果
      */
     @Override
-    public int getCountByCondition(String condition) {
-        return flwFlowentrustMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
+    public int getCountByCondition(String appCode,String condition) {
+        return flwFlowentrustMapper.getCountByCondition(appCode,condition);
     }
 
     /**
      * 新增流程委托
      *
+     * @param appCode 应用编号
      * @param info 流程委托
      * @return 结果
      */
     @Override
-    public int AddNewRecord(FlwFlowentrust info) {
+    public int AddNewRecord(String appCode,FlwFlowentrust info) {
         info.setCreateTime(DateUtils.getNowDate());
         info.setUpdateTime(DateUtils.getNowDate());
-        info.setAppCode(GlobalConfig.getAppCode());
+        info.setAppCode(appCode);
         info.setVersion(1L);
         return flwFlowentrustMapper.AddNewRecord(info);
     }
@@ -150,26 +158,28 @@ public class FlwFlowentrustServiceImpl implements IFlwFlowentrustService
     /**
      * 更新流程委托
      *
+     * @param appCode 应用编号
      * @param info 流程委托
      * @return 结果
      */
     @Override
-    public int UpdateRecord(FlwFlowentrust info) {
+    public int UpdateRecord(String appCode,FlwFlowentrust info) {
         info.setUpdateTime(DateUtils.getNowDate());
-        info.setAppCode(GlobalConfig.getAppCode());
+        info.setAppCode(appCode);
         return flwFlowentrustMapper.UpdateRecord(info);
     }
 
     /**
      * 硬删除流程委托
      *
+     * @param appCode 应用编号
      * @param no 流程委托ID
      * @return 结果
      */
     @Override
-    public int HardDeleteByNo(String no) {
+    public int HardDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return flwFlowentrustMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
+            return flwFlowentrustMapper.HardDeleteByNo(appCode,no);
         }
         return 0;
     }
@@ -177,13 +187,14 @@ public class FlwFlowentrustServiceImpl implements IFlwFlowentrustService
     /**
      * 批量硬删除流程委托
      *
+     * @param appCode 应用编号
      * @param nos 流程委托IDs
      * @return 结果
      */
     @Override
-    public int HardDeleteByNos(String[] nos) {
+    public int HardDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return flwFlowentrustMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return flwFlowentrustMapper.HardDeleteByNos(appCode,nos);
         }
         return 0;
     }
@@ -191,24 +202,26 @@ public class FlwFlowentrustServiceImpl implements IFlwFlowentrustService
     /**
      * 按条件硬删除流程委托
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
     @Override
-    public int HardDeleteByCondition(String condition) {
-        return flwFlowentrustMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
+    public int HardDeleteByCondition(String appCode,String condition) {
+        return flwFlowentrustMapper.HardDeleteByCondition(appCode,condition);
     }
 
     /**
      * 软删除流程委托
      *
+     * @param appCode 应用编号
      * @param no 流程委托ID
      * @return 结果
      */
     @Override
-    public int SoftDeleteByNo(String no) {
+    public int SoftDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return flwFlowentrustMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
+            return flwFlowentrustMapper.SoftDeleteByNo(appCode,no);
         }
         return 0;
     }
@@ -216,13 +229,14 @@ public class FlwFlowentrustServiceImpl implements IFlwFlowentrustService
     /**
      * 批量软删除流程委托
      *
+     * @param appCode 应用编号
      * @param nos 流程委托IDs
      * @return 结果
      */
     @Override
-    public int SoftDeleteByNos(String[] nos) {
+    public int SoftDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return flwFlowentrustMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return flwFlowentrustMapper.SoftDeleteByNos(appCode,nos);
         }
         return 0;
     }
@@ -230,11 +244,12 @@ public class FlwFlowentrustServiceImpl implements IFlwFlowentrustService
     /**
      * 按条件软删除流程委托
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
     @Override
-    public int SoftDeleteByCondition(String condition) {
-        return flwFlowentrustMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
+    public int SoftDeleteByCondition(String appCode,String condition) {
+        return flwFlowentrustMapper.SoftDeleteByCondition(appCode,condition);
     }
 }

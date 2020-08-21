@@ -26,21 +26,23 @@ public class SysTaskelogServiceImpl implements ISysTaskelogService
     /**
      * 查询所有定时任务调度日志列表
      *
+     * @param appCode 应用编号
      * @return 定时任务调度日志集合
      */
     @Override
-    public List<SysTaskelog> getAllRecords() {
+    public List<SysTaskelog> getAllRecords(String appCode) {
         return sysTaskelogMapper.getAllRecords(GlobalConfig.getAppCode());
     }
 
     /**
      * 按分类查询定时任务调度日志列表
      *
+     * @param appCode 应用编号
      * @param classNo 分类编号
      * @return 定时任务调度日志集合
      */
     @Override
-    public List<SysTaskelog> getRecordsByClassNo(String classNo) {
+    public List<SysTaskelog> getRecordsByClassNo(String appCode,String classNo) {
         if (StringUtils.isNotEmpty(classNo)) {
             return sysTaskelogMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
         }
@@ -50,11 +52,12 @@ public class SysTaskelogServiceImpl implements ISysTaskelogService
     /**
      * 分页查询定时任务调度日志列表
      *
+     * @param appCode 应用编号
      * @param model 分页模型
      * @return 定时任务调度日志集合
      */
     @Override
-    public List<SysTaskelog> getRecordsByPaging(PagingModel model) {
+    public List<SysTaskelog> getRecordsByPaging(String appCode,PagingModel model) {
         if (StringUtils.isNotNull(model)) {
             model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
             return sysTaskelogMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
@@ -66,6 +69,7 @@ public class SysTaskelogServiceImpl implements ISysTaskelogService
     /**
      * 分页查询定时任务调度日志列表
      *
+     * @param appCode 应用编号
      * @param pageIndex 当前页起始索引
      * @param pageSize 页面大小
      * @param condition 条件
@@ -74,7 +78,7 @@ public class SysTaskelogServiceImpl implements ISysTaskelogService
      * @return 定时任务调度日志集合
      */
     @Override
-    public List<SysTaskelog> getRecordsByPaging(int pageIndex, int pageSize, String condition, String orderField, String orderType) {
+    public List<SysTaskelog> getRecordsByPaging(String appCode,int pageIndex, int pageSize, String condition, String orderField, String orderType) {
 
         PagingModel model = new PagingModel();
         model.setPageIndex((pageIndex-1) * pageSize);
@@ -96,11 +100,12 @@ public class SysTaskelogServiceImpl implements ISysTaskelogService
     /**
      * 查询定时任务调度日志
      *
+     * @param appCode 应用编号
      * @param no 定时任务调度日志ID
      * @return 定时任务调度日志
      */
     @Override
-    public SysTaskelog getRecordByNo(String no) {
+    public SysTaskelog getRecordByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
             return sysTaskelogMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
         }
@@ -110,11 +115,12 @@ public class SysTaskelogServiceImpl implements ISysTaskelogService
     /**
      * 查询定时任务调度日志名称
      *
+     * @param appCode 应用编号
      * @param no 定时任务调度日志ID
      * @return 名称
      */
     @Override
-    public String getRecordNameByNo(String no) {
+    public String getRecordNameByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
             return sysTaskelogMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
         }
@@ -124,22 +130,24 @@ public class SysTaskelogServiceImpl implements ISysTaskelogService
     /**
      * 查询定时任务调度日志计数
      *
+     * @param appCode 应用编号
      * @param condition 查询条件
      * @return 结果
      */
     @Override
-    public int getCountByCondition(String condition) {
+    public int getCountByCondition(String appCode,String condition) {
         return sysTaskelogMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
     }
 
     /**
      * 新增定时任务调度日志
      *
+     * @param appCode 应用编号
      * @param info 定时任务调度日志
      * @return 结果
      */
     @Override
-    public int AddNewRecord(SysTaskelog info) {
+    public int AddNewRecord(String appCode,SysTaskelog info) {
         info.setCreateTime(DateUtils.getNowDate());
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
@@ -150,11 +158,12 @@ public class SysTaskelogServiceImpl implements ISysTaskelogService
     /**
      * 更新定时任务调度日志
      *
+     * @param appCode 应用编号
      * @param info 定时任务调度日志
      * @return 结果
      */
     @Override
-    public int UpdateRecord(SysTaskelog info) {
+    public int UpdateRecord(String appCode,SysTaskelog info) {
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
         return sysTaskelogMapper.UpdateRecord(info);
@@ -163,11 +172,12 @@ public class SysTaskelogServiceImpl implements ISysTaskelogService
     /**
      * 硬删除定时任务调度日志
      *
+     * @param appCode 应用编号
      * @param no 定时任务调度日志ID
      * @return 结果
      */
     @Override
-    public int HardDeleteByNo(String no) {
+    public int HardDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
             return sysTaskelogMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
         }
@@ -177,11 +187,12 @@ public class SysTaskelogServiceImpl implements ISysTaskelogService
     /**
      * 批量硬删除定时任务调度日志
      *
+     * @param appCode 应用编号
      * @param nos 定时任务调度日志IDs
      * @return 结果
      */
     @Override
-    public int HardDeleteByNos(String[] nos) {
+    public int HardDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
             return sysTaskelogMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
         }
@@ -191,22 +202,24 @@ public class SysTaskelogServiceImpl implements ISysTaskelogService
     /**
      * 按条件硬删除定时任务调度日志
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
     @Override
-    public int HardDeleteByCondition(String condition) {
+    public int HardDeleteByCondition(String appCode,String condition) {
         return sysTaskelogMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
     }
 
     /**
      * 软删除定时任务调度日志
      *
+     * @param appCode 应用编号
      * @param no 定时任务调度日志ID
      * @return 结果
      */
     @Override
-    public int SoftDeleteByNo(String no) {
+    public int SoftDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
             return sysTaskelogMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
         }
@@ -216,11 +229,12 @@ public class SysTaskelogServiceImpl implements ISysTaskelogService
     /**
      * 批量软删除定时任务调度日志
      *
+     * @param appCode 应用编号
      * @param nos 定时任务调度日志IDs
      * @return 结果
      */
     @Override
-    public int SoftDeleteByNos(String[] nos) {
+    public int SoftDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
             return sysTaskelogMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
         }
@@ -230,11 +244,12 @@ public class SysTaskelogServiceImpl implements ISysTaskelogService
     /**
      * 按条件软删除定时任务调度日志
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
     @Override
-    public int SoftDeleteByCondition(String condition) {
+    public int SoftDeleteByCondition(String appCode,String condition) {
         return sysTaskelogMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
     }
 }

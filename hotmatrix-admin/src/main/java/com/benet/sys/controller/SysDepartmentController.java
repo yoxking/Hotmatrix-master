@@ -57,8 +57,9 @@ public class SysDepartmentController extends BaseController {
     //@PreAuthorize("@ps.hasPermit('system:department:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest) {
-        int count = sysDepartmentService.getCountByCondition(pRequest.getCondition());
-        List<SysDepartment> list = sysDepartmentService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysDepartmentService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<SysDepartment> list = sysDepartmentService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -68,16 +69,17 @@ public class SysDepartmentController extends BaseController {
     //@PreAuthorize("@ps.hasPermit('system:department:tree')")
     @GetMapping(value = "/tree")
     public TableDataInfo tree() {
-        int count = sysDepartmentService.getCountByCondition("");
-        List<DeptmentVo> list = buildDeptTree("0");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysDepartmentService.getCountByCondition(loginUser.getUser().getAppCode(),"");
+        List<DeptmentVo> list = buildDeptTree(loginUser.getUser().getAppCode(),"0");
         return getDataTable(list, count);
     }
 
-    private List<DeptmentVo> buildDeptTree(String parentNo) {
+    private List<DeptmentVo> buildDeptTree(String appCode,String parentNo) {
 
         List<DeptmentVo> deptTree = null;
         DeptmentVo dept = null;
-        List<SysDepartment> infoList = sysDepartmentService.getRecordsByClassNo(parentNo);
+        List<SysDepartment> infoList = sysDepartmentService.getRecordsByClassNo(appCode,parentNo);
 
         if (infoList != null && infoList.size() > 0) {
             deptTree = new ArrayList<>();
@@ -95,7 +97,7 @@ public class SysDepartmentController extends BaseController {
                 dept.setTelephone(info.getTelephone());
                 dept.setEmail(info.getEmail());
                 dept.setComments(info.getComments());
-                dept.setChildren(buildDeptTree(info.getDeptNo()));
+                dept.setChildren(buildDeptTree(appCode,info.getDeptNo()));
                 deptTree.add(dept);
             }
         }
@@ -113,7 +115,7 @@ public class SysDepartmentController extends BaseController {
         sysDepartment.setDeptNo(UuidUtils.shortUUID());
         sysDepartment.setCreateBy(loginUser.getUser().getUserNo());
         sysDepartment.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysDepartmentService.AddNewRecord(sysDepartment));
+        return toAjax(sysDepartmentService.AddNewRecord(loginUser.getUser().getAppCode(),sysDepartment));
     }
 
     /**
@@ -125,7 +127,7 @@ public class SysDepartmentController extends BaseController {
     public AjaxResult update(@RequestBody SysDepartment sysDepartment) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysDepartment.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysDepartmentService.UpdateRecord(sysDepartment));
+        return toAjax(sysDepartmentService.UpdateRecord(loginUser.getUser().getAppCode(),sysDepartment));
     }
 
     /**
@@ -136,14 +138,14 @@ public class SysDepartmentController extends BaseController {
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysDepartment sysDepartment) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(sysDepartmentService.getRecordByNo(sysDepartment.getDeptNo()))) {
+        if (StringUtils.isNull(sysDepartmentService.getRecordByNo(loginUser.getUser().getAppCode(),sysDepartment.getDeptNo()))) {
             sysDepartment.setDeptNo(UuidUtils.shortUUID());
             sysDepartment.setCreateBy(loginUser.getUser().getUserNo());
             sysDepartment.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysDepartmentService.AddNewRecord(sysDepartment));
+            return toAjax(sysDepartmentService.AddNewRecord(loginUser.getUser().getAppCode(),sysDepartment));
         } else {
             sysDepartment.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysDepartmentService.UpdateRecord(sysDepartment));
+            return toAjax(sysDepartmentService.UpdateRecord(loginUser.getUser().getAppCode(),sysDepartment));
         }
     }
 
@@ -154,7 +156,8 @@ public class SysDepartmentController extends BaseController {
     //@Oplog(title = "部门信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids) {
-        return toAjax(sysDepartmentService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysDepartmentService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -163,7 +166,8 @@ public class SysDepartmentController extends BaseController {
     //@PreAuthorize("@ps.hasPermit('system:department:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id) {
-        return AjaxResult.success(sysDepartmentService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(sysDepartmentService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -174,9 +178,10 @@ public class SysDepartmentController extends BaseController {
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest) {
 
-        int count = sysDepartmentService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysDepartmentService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<SysDepartment> list = sysDepartmentService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<SysDepartment> list = sysDepartmentService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysDepartment> util = new ExcelUtils<SysDepartment>(SysDepartment.class);
         return util.exportExcel(list, "department");
     }

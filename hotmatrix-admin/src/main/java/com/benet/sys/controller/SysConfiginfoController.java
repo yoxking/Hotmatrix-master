@@ -60,8 +60,9 @@ public class SysConfiginfoController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = sysConfiginfoService.getCountByCondition(pRequest.getCondition());
-        List<SysConfiginfo> list = sysConfiginfoService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysConfiginfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<SysConfiginfo> list = sysConfiginfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -76,7 +77,7 @@ public class SysConfiginfoController extends BaseController
         sysConfiginfo.setConfigNo(UuidUtils.shortUUID());
         sysConfiginfo.setCreateBy(loginUser.getUser().getUserNo());
         sysConfiginfo.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysConfiginfoService.AddNewRecord(sysConfiginfo));
+        return toAjax(sysConfiginfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysConfiginfo));
     }
 
     /**
@@ -88,7 +89,7 @@ public class SysConfiginfoController extends BaseController
         public AjaxResult update(@RequestBody SysConfiginfo sysConfiginfo) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysConfiginfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysConfiginfoService.UpdateRecord(sysConfiginfo));
+            return toAjax(sysConfiginfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysConfiginfo));
         }
 
     /**
@@ -99,14 +100,14 @@ public class SysConfiginfoController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysConfiginfo sysConfiginfo) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(sysConfiginfoService.getRecordByNo(sysConfiginfo.getConfigNo()))) {
+        if (StringUtils.isNull(sysConfiginfoService.getRecordByNo(loginUser.getUser().getAppCode(),sysConfiginfo.getConfigNo()))) {
             sysConfiginfo.setConfigNo(UuidUtils.shortUUID());
             sysConfiginfo.setCreateBy(loginUser.getUser().getUserNo());
             sysConfiginfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysConfiginfoService.AddNewRecord(sysConfiginfo));
+            return toAjax(sysConfiginfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysConfiginfo));
         } else {
             sysConfiginfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysConfiginfoService.UpdateRecord(sysConfiginfo));
+            return toAjax(sysConfiginfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysConfiginfo));
         }
     }
 
@@ -118,7 +119,8 @@ public class SysConfiginfoController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(sysConfiginfoService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysConfiginfoService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -128,7 +130,8 @@ public class SysConfiginfoController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(sysConfiginfoService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(sysConfiginfoService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -139,9 +142,10 @@ public class SysConfiginfoController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = sysConfiginfoService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysConfiginfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<SysConfiginfo> list = sysConfiginfoService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<SysConfiginfo> list = sysConfiginfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysConfiginfo> util = new ExcelUtils<SysConfiginfo>(SysConfiginfo.class);
         return util.exportExcel(list, "SysConfiginfo");
     }

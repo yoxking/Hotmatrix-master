@@ -26,23 +26,25 @@ public class FlwTableformServiceImpl implements IFlwTableformService
     /**
      * 查询所有单设计列表
      *
+     * @param appCode 应用编号
      * @return 单设计集合
      */
     @Override
-    public List<FlwTableform> getAllRecords() {
-        return flwTableformMapper.getAllRecords(GlobalConfig.getAppCode());
+    public List<FlwTableform> getAllRecords(String appCode) {
+        return flwTableformMapper.getAllRecords(appCode);
     }
 
     /**
      * 按分类查询单设计列表
      *
+     * @param appCode 应用编号
      * @param classNo 分类编号
      * @return 单设计集合
      */
     @Override
-    public List<FlwTableform> getRecordsByClassNo(String classNo) {
+    public List<FlwTableform> getRecordsByClassNo(String appCode,String classNo) {
         if (StringUtils.isNotEmpty(classNo)) {
-            return flwTableformMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
+            return flwTableformMapper.getRecordsByClassNo(appCode,classNo);
         }
         return null;
     }
@@ -50,14 +52,15 @@ public class FlwTableformServiceImpl implements IFlwTableformService
     /**
      * 分页查询单设计列表
      *
+     * @param appCode 应用编号
      * @param model 分页模型
      * @return 单设计集合
      */
     @Override
-    public List<FlwTableform> getRecordsByPaging(PagingModel model) {
+    public List<FlwTableform> getRecordsByPaging(String appCode,PagingModel model) {
         if (StringUtils.isNotNull(model)) {
             model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
-            return flwTableformMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+            return flwTableformMapper.getRecordsByPaging(appCode,model);
         }
         return null;
     }
@@ -66,6 +69,7 @@ public class FlwTableformServiceImpl implements IFlwTableformService
     /**
      * 分页查询单设计列表
      *
+     * @param appCode 应用编号
      * @param pageIndex 当前页起始索引
      * @param pageSize 页面大小
      * @param condition 条件
@@ -74,7 +78,7 @@ public class FlwTableformServiceImpl implements IFlwTableformService
      * @return 单设计集合
      */
     @Override
-    public List<FlwTableform> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
+    public List<FlwTableform> getRecordsByPaging(String appCode,int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();
         model.setPageIndex((pageIndex-1) * pageSize);
@@ -90,19 +94,20 @@ public class FlwTableformServiceImpl implements IFlwTableformService
         } else {
             model.setOrderType(orderType);
         }
-        return flwTableformMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+        return flwTableformMapper.getRecordsByPaging(appCode,model);
     }
 
     /**
      * 查询单设计
      *
+     * @param appCode 应用编号
      * @param no 单设计ID
      * @return 单设计
      */
     @Override
-    public FlwTableform getRecordByNo(String no) {
+    public FlwTableform getRecordByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return flwTableformMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
+            return flwTableformMapper.getRecordByNo(appCode,no);
         }
         return null;
     }
@@ -110,13 +115,14 @@ public class FlwTableformServiceImpl implements IFlwTableformService
     /**
      * 查询单设计名称
      *
+     * @param appCode 应用编号
      * @param no 单设计ID
      * @return 名称
      */
     @Override
-    public String getRecordNameByNo(String no) {
+    public String getRecordNameByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return flwTableformMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
+            return flwTableformMapper.getRecordNameByNo(appCode,no);
         }
         return null;
     }
@@ -124,25 +130,27 @@ public class FlwTableformServiceImpl implements IFlwTableformService
     /**
      * 查询单设计计数
      *
+     * @param appCode 应用编号
      * @param condition 查询条件
      * @return 结果
      */
     @Override
-    public int getCountByCondition(String condition) {
-        return flwTableformMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
+    public int getCountByCondition(String appCode,String condition) {
+        return flwTableformMapper.getCountByCondition(appCode,condition);
     }
 
     /**
      * 新增单设计
      *
+     * @param appCode 应用编号
      * @param info 单设计
      * @return 结果
      */
     @Override
-    public int AddNewRecord(FlwTableform info) {
+    public int AddNewRecord(String appCode,FlwTableform info) {
         info.setCreateTime(DateUtils.getNowDate());
         info.setUpdateTime(DateUtils.getNowDate());
-        info.setAppCode(GlobalConfig.getAppCode());
+        info.setAppCode(appCode);
         info.setVersion(1L);
         return flwTableformMapper.AddNewRecord(info);
     }
@@ -150,26 +158,28 @@ public class FlwTableformServiceImpl implements IFlwTableformService
     /**
      * 更新单设计
      *
+     * @param appCode 应用编号
      * @param info 单设计
      * @return 结果
      */
     @Override
-    public int UpdateRecord(FlwTableform info) {
+    public int UpdateRecord(String appCode,FlwTableform info) {
         info.setUpdateTime(DateUtils.getNowDate());
-        info.setAppCode(GlobalConfig.getAppCode());
+        info.setAppCode(appCode);
         return flwTableformMapper.UpdateRecord(info);
     }
 
     /**
      * 硬删除单设计
      *
+     * @param appCode 应用编号
      * @param no 单设计ID
      * @return 结果
      */
     @Override
-    public int HardDeleteByNo(String no) {
+    public int HardDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return flwTableformMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
+            return flwTableformMapper.HardDeleteByNo(appCode,no);
         }
         return 0;
     }
@@ -177,13 +187,14 @@ public class FlwTableformServiceImpl implements IFlwTableformService
     /**
      * 批量硬删除单设计
      *
+     * @param appCode 应用编号
      * @param nos 单设计IDs
      * @return 结果
      */
     @Override
-    public int HardDeleteByNos(String[] nos) {
+    public int HardDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return flwTableformMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return flwTableformMapper.HardDeleteByNos(appCode,nos);
         }
         return 0;
     }
@@ -191,24 +202,26 @@ public class FlwTableformServiceImpl implements IFlwTableformService
     /**
      * 按条件硬删除单设计
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
     @Override
-    public int HardDeleteByCondition(String condition) {
-        return flwTableformMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
+    public int HardDeleteByCondition(String appCode,String condition) {
+        return flwTableformMapper.HardDeleteByCondition(appCode,condition);
     }
 
     /**
      * 软删除单设计
      *
+     * @param appCode 应用编号
      * @param no 单设计ID
      * @return 结果
      */
     @Override
-    public int SoftDeleteByNo(String no) {
+    public int SoftDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return flwTableformMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
+            return flwTableformMapper.SoftDeleteByNo(appCode,no);
         }
         return 0;
     }
@@ -216,13 +229,14 @@ public class FlwTableformServiceImpl implements IFlwTableformService
     /**
      * 批量软删除单设计
      *
+     * @param appCode 应用编号
      * @param nos 单设计IDs
      * @return 结果
      */
     @Override
-    public int SoftDeleteByNos(String[] nos) {
+    public int SoftDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return flwTableformMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return flwTableformMapper.SoftDeleteByNos(appCode,nos);
         }
         return 0;
     }
@@ -230,11 +244,12 @@ public class FlwTableformServiceImpl implements IFlwTableformService
     /**
      * 按条件软删除单设计
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
     @Override
-    public int SoftDeleteByCondition(String condition) {
-        return flwTableformMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
+    public int SoftDeleteByCondition(String appCode,String condition) {
+        return flwTableformMapper.SoftDeleteByCondition(appCode,condition);
     }
 }

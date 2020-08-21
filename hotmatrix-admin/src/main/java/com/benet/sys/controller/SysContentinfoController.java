@@ -66,7 +66,8 @@ public class SysContentinfoController extends BaseController
     @GetMapping(value = "/classlist")
     public TableDataInfo classlist()
     {
-        List<SysConteeclass> list = sysContzclassService.getAllRecords();
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        List<SysConteeclass> list = sysContzclassService.getAllRecords(loginUser.getUser().getAppCode());
         return getDataTable(convertList(list), list.size());
     }
 
@@ -96,8 +97,9 @@ public class SysContentinfoController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = sysContentinfoService.getCountByCondition(pRequest.getCondition());
-        List<SysContentinfo> list = sysContentinfoService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysContentinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<SysContentinfo> list = sysContentinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -112,7 +114,7 @@ public class SysContentinfoController extends BaseController
         sysContentinfo.setContzNo(UuidUtils.shortUUID());
         sysContentinfo.setCreateBy(loginUser.getUser().getUserNo());
         sysContentinfo.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysContentinfoService.AddNewRecord(sysContentinfo));
+        return toAjax(sysContentinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysContentinfo));
     }
 
     /**
@@ -124,7 +126,7 @@ public class SysContentinfoController extends BaseController
         public AjaxResult update(@RequestBody SysContentinfo sysContentinfo) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysContentinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysContentinfoService.UpdateRecord(sysContentinfo));
+            return toAjax(sysContentinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysContentinfo));
         }
 
     /**
@@ -135,14 +137,14 @@ public class SysContentinfoController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysContentinfo sysContentinfo) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(sysContentinfoService.getRecordByNo(sysContentinfo.getContzNo()))) {
+        if (StringUtils.isNull(sysContentinfoService.getRecordByNo(loginUser.getUser().getAppCode(),sysContentinfo.getContzNo()))) {
             sysContentinfo.setContzNo(UuidUtils.shortUUID());
             sysContentinfo.setCreateBy(loginUser.getUser().getUserNo());
             sysContentinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysContentinfoService.AddNewRecord(sysContentinfo));
+            return toAjax(sysContentinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysContentinfo));
         } else {
             sysContentinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysContentinfoService.UpdateRecord(sysContentinfo));
+            return toAjax(sysContentinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysContentinfo));
         }
     }
 
@@ -154,7 +156,8 @@ public class SysContentinfoController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(sysContentinfoService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysContentinfoService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -164,7 +167,8 @@ public class SysContentinfoController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(sysContentinfoService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(sysContentinfoService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -175,9 +179,10 @@ public class SysContentinfoController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = sysContentinfoService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysContentinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<SysContentinfo> list = sysContentinfoService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<SysContentinfo> list = sysContentinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysContentinfo> util = new ExcelUtils<SysContentinfo>(SysContentinfo.class);
         return util.exportExcel(list, "SysContentinfo");
     }

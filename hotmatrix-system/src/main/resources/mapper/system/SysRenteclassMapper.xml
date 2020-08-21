@@ -14,43 +14,44 @@
         <result property="updateTime" column="update_time"/>
         <result property="deleteFlag" column="delete_flag"/>
         <result property="comments" column="comments"/>
+        <result property="appCode" column="app_code"/>
         <result property="version" column="version"/>
     </resultMap>
 
     <sql id="selectSysRenteclassVo">
-        select id, class_no, class_name, create_by, create_time, update_by, update_time, delete_flag, comments,  version from sys_renteclass
+        select id, class_no, class_name, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_renteclass
     </sql>
 
     <select id="getAllRecords" resultMap="SysRenteclassResult">
         <include refid="selectSysRenteclassVo"/>
-        where delete_flag='1'
+        where delete_flag='1' and app_code=#{appCode}
     </select>
 
     <select id="getRecordsByClassNo" resultMap="SysRenteclassResult">
         <include refid="selectSysRenteclassVo"/>
-        where delete_flag='1' and class_no=#{classNo}
+        where delete_flag='1' and app_code=#{appCode} and class_no=#{classNo}
     </select>
 
     <select id="getRecordsByPaging" resultMap="SysRenteclassResult">
         <include refid="selectSysRenteclassVo"/>
-        where delete_flag='1'
+        where delete_flag='1' and app_code=${appCode}
         <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
         order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
     </select>
 
     <select id="getRecordByNo" resultMap="SysRenteclassResult">
         <include refid="selectSysRenteclassVo"/>
-        where delete_flag='1'  and class_no=#{no}
+        where delete_flag='1'  and app_code=#{appCode} and class_no=#{no}
     </select>
 
     <select id="getRecordNameByNo" resultType="String">
         select className from sys_renteclass
-        where delete_flag='1'  and class_no=#{no}
+        where delete_flag='1'  and app_code=#{appCode} and class_no=#{no}
     </select>
 
     <select id="getCountByCondition" resultType="Integer">
         select count(*) from sys_renteclass
-        where delete_flag='1'
+        where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </select>
 
@@ -64,6 +65,7 @@
         <if test="info.updateTime != null ">update_time,</if>
         <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag,</if>
         <if test="info.comments != null  and info.comments != ''">comments,</if>
+        <if test="info.appCode != null  and info.appCode != ''">app_code,</if>
         <if test="info.version != null ">version</if>
         )values(
         <if test="info.classNo != null  and info.classNo != ''">#{info.classNo},</if>
@@ -74,6 +76,7 @@
         <if test="info.updateTime != null ">#{info.updateTime},</if>
         <if test="info.deleteFlag != null  and info.deleteFlag != ''">#{info.deleteFlag},</if>
         <if test="info.comments != null  and info.comments != ''">#{info.comments},</if>
+        <if test="info.appCode != null  and info.appCode != ''">#{info.appCode},</if>
         <if test="info.version != null ">#{info.version}</if>
         )
     </insert>
@@ -89,19 +92,20 @@
             <if test="info.updateTime != null ">update_time = #{info.updateTime},</if>
             <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag = #{info.deleteFlag},</if>
             <if test="info.comments != null  and info.comments != ''">comments = #{info.comments},</if>
+            <if test="info.appCode != null  and info.appCode != ''">app_code = #{info.appCode},</if>
             <if test="info.version != null ">version = version+1</if>
         </set>
-        where delete_flag='1'  and version=#{info.version} and class_no=#{info.classNo}
+        where delete_flag='1'  and app_code=#{info.appCode} and version=#{info.version} and class_no=#{info.classNo}
     </update>
 
     <delete id="HardDeleteByNo">
         delete from sys_renteclass
-        where delete_flag='1'  and class_no=#{no}
+        where delete_flag='1'  and app_code=#{info.appCode} and class_no=#{no}
     </delete>
 
     <delete id="HardDeleteByNos">
         delete from sys_renteclass
-        where delete_flag='1'  and class_no in
+        where delete_flag='1'  and app_code=#{info.appCode} and class_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
         </foreach>
@@ -109,18 +113,18 @@
 
     <delete id="HardDeleteByCondition">
         delete from sys_renteclass
-        where delete_flag='1'
+        where delete_flag='1' and app_code=#{info.appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>
 
     <delete id="SoftDeleteByNo">
         update sys_renteclass set delete_flag='0'
-        where delete_flag='1' and class_no=#{no}
+        where delete_flag='1' and app_code=#{info.appCode} and class_no=#{no}
     </delete>
 
     <delete id="SoftDeleteByNos">
         update sys_renteclass set delete_flag='0'
-        where delete_flag='1' and class_no in
+        where delete_flag='1' and app_code=#{info.appCode} and class_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
         </foreach>
@@ -128,7 +132,7 @@
 
     <delete id="SoftDeleteByCondition">
         update sys_renteclass set delete_flag='0'
-        where delete_flag='1'
+        where delete_flag='1' and app_code=#{info.appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>
 

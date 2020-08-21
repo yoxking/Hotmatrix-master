@@ -63,8 +63,9 @@ public class SysMessageinfoController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = sysMessageinfoService.getCountByCondition(pRequest.getCondition());
-        List<SysMessageinfo> list = sysMessageinfoService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysMessageinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<SysMessageinfo> list = sysMessageinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -79,7 +80,7 @@ public class SysMessageinfoController extends BaseController
         sysMessageinfo.setMssgNo(UuidUtils.shortUUID());
         sysMessageinfo.setCreateBy(loginUser.getUser().getUserNo());
         sysMessageinfo.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysMessageinfoService.AddNewRecord(sysMessageinfo));
+        return toAjax(sysMessageinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysMessageinfo));
     }
 
     /**
@@ -91,7 +92,7 @@ public class SysMessageinfoController extends BaseController
         public AjaxResult update(@RequestBody SysMessageinfo sysMessageinfo) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysMessageinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysMessageinfoService.UpdateRecord(sysMessageinfo));
+            return toAjax(sysMessageinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysMessageinfo));
         }
 
     /**
@@ -102,14 +103,14 @@ public class SysMessageinfoController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysMessageinfo sysMessageinfo) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(sysMessageinfoService.getRecordByNo(sysMessageinfo.getMssgNo()))) {
+        if (StringUtils.isNull(sysMessageinfoService.getRecordByNo(loginUser.getUser().getAppCode(),sysMessageinfo.getMssgNo()))) {
             sysMessageinfo.setMssgNo(UuidUtils.shortUUID());
             sysMessageinfo.setCreateBy(loginUser.getUser().getUserNo());
             sysMessageinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysMessageinfoService.AddNewRecord(sysMessageinfo));
+            return toAjax(sysMessageinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysMessageinfo));
         } else {
             sysMessageinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysMessageinfoService.UpdateRecord(sysMessageinfo));
+            return toAjax(sysMessageinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysMessageinfo));
         }
     }
 
@@ -121,7 +122,8 @@ public class SysMessageinfoController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(sysMessageinfoService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysMessageinfoService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -131,7 +133,8 @@ public class SysMessageinfoController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(sysMessageinfoService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(sysMessageinfoService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -142,9 +145,10 @@ public class SysMessageinfoController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = sysMessageinfoService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysMessageinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<SysMessageinfo> list = sysMessageinfoService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<SysMessageinfo> list = sysMessageinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysMessageinfo> util = new ExcelUtils<SysMessageinfo>(SysMessageinfo.class);
         return util.exportExcel(list, "SysMessageinfo");
     }
@@ -156,7 +160,8 @@ public class SysMessageinfoController extends BaseController
     @GetMapping(value="/getMessages")
     public TableDataInfo getMessages()
     {
-        List<SysMessageinfo> list = sysMessageinfoService.getRecordsByPaging(1, 10, " read_state='0'", "id", "Desc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        List<SysMessageinfo> list = sysMessageinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),1, 10, " read_state='0'", "id", "Desc");
         if(list!=null&&list.size()>0){
             List<MsgObjectVo> msgList=new ArrayList<>();
             MsgObjectVo msg=null;

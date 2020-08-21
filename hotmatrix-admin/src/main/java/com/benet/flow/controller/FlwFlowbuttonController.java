@@ -62,8 +62,9 @@ public class FlwFlowbuttonController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = flwFlowbuttonService.getCountByCondition(pRequest.getCondition());
-        List<FlwFlowbutton> list = flwFlowbuttonService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwFlowbuttonService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<FlwFlowbutton> list = flwFlowbuttonService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -78,7 +79,7 @@ public class FlwFlowbuttonController extends BaseController
         flwFlowbutton.setBtnNo(UuidUtils.shortUUID());
         flwFlowbutton.setCreateBy(loginUser.getUser().getUserNo());
         flwFlowbutton.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(flwFlowbuttonService.AddNewRecord(flwFlowbutton));
+        return toAjax(flwFlowbuttonService.AddNewRecord(loginUser.getUser().getAppCode(),flwFlowbutton));
     }
 
     /**
@@ -90,7 +91,7 @@ public class FlwFlowbuttonController extends BaseController
         public AjaxResult update(@RequestBody FlwFlowbutton flwFlowbutton) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         flwFlowbutton.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwFlowbuttonService.UpdateRecord(flwFlowbutton));
+            return toAjax(flwFlowbuttonService.UpdateRecord(loginUser.getUser().getAppCode(),flwFlowbutton));
         }
 
     /**
@@ -101,14 +102,14 @@ public class FlwFlowbuttonController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwFlowbutton flwFlowbutton) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(flwFlowbuttonService.getRecordByNo(flwFlowbutton.getBtnNo()))) {
+        if (StringUtils.isNull(flwFlowbuttonService.getRecordByNo(loginUser.getUser().getAppCode(),flwFlowbutton.getBtnNo()))) {
             flwFlowbutton.setBtnNo(UuidUtils.shortUUID());
             flwFlowbutton.setCreateBy(loginUser.getUser().getUserNo());
             flwFlowbutton.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwFlowbuttonService.AddNewRecord(flwFlowbutton));
+            return toAjax(flwFlowbuttonService.AddNewRecord(loginUser.getUser().getAppCode(),flwFlowbutton));
         } else {
             flwFlowbutton.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwFlowbuttonService.UpdateRecord(flwFlowbutton));
+            return toAjax(flwFlowbuttonService.UpdateRecord(loginUser.getUser().getAppCode(),flwFlowbutton));
         }
     }
 
@@ -120,7 +121,8 @@ public class FlwFlowbuttonController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(flwFlowbuttonService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(flwFlowbuttonService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -130,7 +132,8 @@ public class FlwFlowbuttonController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(flwFlowbuttonService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(flwFlowbuttonService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -141,9 +144,10 @@ public class FlwFlowbuttonController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = flwFlowbuttonService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwFlowbuttonService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<FlwFlowbutton> list = flwFlowbuttonService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<FlwFlowbutton> list = flwFlowbuttonService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<FlwFlowbutton> util = new ExcelUtils<FlwFlowbutton>(FlwFlowbutton.class);
         return util.exportExcel(list, "FlwFlowbutton");
     }

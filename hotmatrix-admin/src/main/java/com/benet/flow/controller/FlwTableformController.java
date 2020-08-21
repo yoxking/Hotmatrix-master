@@ -62,8 +62,9 @@ public class FlwTableformController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = flwTableformService.getCountByCondition(pRequest.getCondition());
-        List<FlwTableform> list = flwTableformService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwTableformService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<FlwTableform> list = flwTableformService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -78,7 +79,7 @@ public class FlwTableformController extends BaseController
         flwTableform.setFormNo(UuidUtils.shortUUID());
         flwTableform.setCreateBy(loginUser.getUser().getUserNo());
         flwTableform.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(flwTableformService.AddNewRecord(flwTableform));
+        return toAjax(flwTableformService.AddNewRecord(loginUser.getUser().getAppCode(),flwTableform));
     }
 
     /**
@@ -90,7 +91,7 @@ public class FlwTableformController extends BaseController
         public AjaxResult update(@RequestBody FlwTableform flwTableform) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         flwTableform.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwTableformService.UpdateRecord(flwTableform));
+            return toAjax(flwTableformService.UpdateRecord(loginUser.getUser().getAppCode(),flwTableform));
         }
 
     /**
@@ -101,14 +102,14 @@ public class FlwTableformController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwTableform flwTableform) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(flwTableformService.getRecordByNo(flwTableform.getFormNo()))) {
+        if (StringUtils.isNull(flwTableformService.getRecordByNo(loginUser.getUser().getAppCode(),flwTableform.getFormNo()))) {
             flwTableform.setFormNo(UuidUtils.shortUUID());
             flwTableform.setCreateBy(loginUser.getUser().getUserNo());
             flwTableform.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwTableformService.AddNewRecord(flwTableform));
+            return toAjax(flwTableformService.AddNewRecord(loginUser.getUser().getAppCode(),flwTableform));
         } else {
             flwTableform.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwTableformService.UpdateRecord(flwTableform));
+            return toAjax(flwTableformService.UpdateRecord(loginUser.getUser().getAppCode(),flwTableform));
         }
     }
 
@@ -120,7 +121,8 @@ public class FlwTableformController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(flwTableformService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(flwTableformService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -130,7 +132,8 @@ public class FlwTableformController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(flwTableformService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(flwTableformService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -141,9 +144,10 @@ public class FlwTableformController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = flwTableformService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwTableformService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<FlwTableform> list = flwTableformService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<FlwTableform> list = flwTableformService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<FlwTableform> util = new ExcelUtils<FlwTableform>(FlwTableform.class);
         return util.exportExcel(list, "FlwTableform");
     }

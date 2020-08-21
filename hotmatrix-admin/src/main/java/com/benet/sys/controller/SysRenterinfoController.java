@@ -2,14 +2,23 @@ package com.benet.sys.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.benet.common.core.pager.PageRequest;
+import com.benet.common.utils.date.DateUtils;
 import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
+import com.benet.framework.utils.SecurityUtils;
 import com.benet.sys.vmodel.ItemObjectVo;
-import com.benet.system.domain.SysRenteclass;
-import com.benet.system.service.ISysRenteclassService;
+import com.benet.sys.vmodel.PermitTempl;
+import com.benet.sys.vmodel.RentObjectVo;
+import com.benet.sys.vmodel.RenterInfoVo;
+import com.benet.system.domain.*;
+import com.benet.system.service.*;
+import com.google.code.kaptcha.util.ConfigHelper;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +30,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import com.benet.system.domain.SysRenterinfo;
-import com.benet.system.service.ISysRenterinfoService;
 import com.benet.common.annotation.Oplog;
 import com.benet.common.core.controller.BaseController;
 import com.benet.common.core.domain.AjaxResult;
@@ -50,6 +57,23 @@ public class SysRenterinfoController extends BaseController
 
     @Autowired
     private ISysRenterinfoService sysRenterinfoService;
+
+    @Autowired
+    private ISysDepartmentService departmentService;
+    @Autowired
+    private ISysOrganizinfoService organizinfoService;
+    @Autowired
+    private ISysSuserinfoService suserinfoService;
+    @Autowired
+    private ISysRoleinfoService roleinfoService;
+    @Autowired
+    private ISysPermitinfoService permitinfoService;
+    @Autowired
+    private ISysConfiginfoService configinfoService;
+    @Autowired
+    private ISysBranchinfoService branchinfoService;
+    @Autowired
+    private ISysMessageinfoService messageinfoService;
     /**
      * 首页
      */
@@ -68,8 +92,9 @@ public class SysRenterinfoController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = sysRenterinfoService.getCountByCondition(pRequest.getCondition());
-        List<SysRenterinfo> list = sysRenterinfoService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysRenterinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<SysRenterinfo> list = sysRenterinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -78,9 +103,10 @@ public class SysRenterinfoController extends BaseController
      */
     //@PreAuthorize("@ps.hasPermit('system:contentinfo:listall')")
     @GetMapping(value = "/classlist")
-    public TableDataInfo classlist()
+    public TableDataInfo classList()
     {
-        List<SysRenteclass> list = sysRenteclassService.getAllRecords();
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        List<SysRenteclass> list = sysRenteclassService.getAllRecords(loginUser.getUser().getAppCode());
         return getDataTable(convertList(list), list.size());
     }
 
@@ -114,7 +140,7 @@ public class SysRenterinfoController extends BaseController
         sysAppinfo.setRentNo(UuidUtils.shortUUID());
         sysAppinfo.setCreateBy(loginUser.getUser().getUserNo());
         sysAppinfo.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysRenterinfoService.AddNewRecord(sysAppinfo));
+        return toAjax(sysRenterinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysAppinfo));
     }
 
     /**
@@ -126,7 +152,7 @@ public class SysRenterinfoController extends BaseController
     public AjaxResult update(@RequestBody SysRenterinfo sysAppinfo) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysAppinfo.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysRenterinfoService.UpdateRecord(sysAppinfo));
+        return toAjax(sysRenterinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysAppinfo));
     }
 
     /**
@@ -137,14 +163,14 @@ public class SysRenterinfoController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysRenterinfo sysAppinfo) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(sysRenterinfoService.getRecordByNo(sysAppinfo.getRentNo()))) {
+        if (StringUtils.isNull(sysRenterinfoService.getRecordByNo(loginUser.getUser().getAppCode(),sysAppinfo.getRentNo()))) {
             sysAppinfo.setRentNo(UuidUtils.shortUUID());
             sysAppinfo.setCreateBy(loginUser.getUser().getUserNo());
             sysAppinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysRenterinfoService.AddNewRecord(sysAppinfo));
+            return toAjax(sysRenterinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysAppinfo));
         } else {
             sysAppinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysRenterinfoService.UpdateRecord(sysAppinfo));
+            return toAjax(sysRenterinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysAppinfo));
         }
     }
 
@@ -156,7 +182,8 @@ public class SysRenterinfoController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(sysRenterinfoService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysRenterinfoService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -166,7 +193,8 @@ public class SysRenterinfoController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(sysRenterinfoService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(sysRenterinfoService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -177,11 +205,296 @@ public class SysRenterinfoController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = sysRenterinfoService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysRenterinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<SysRenterinfo> list = sysRenterinfoService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<SysRenterinfo> list = sysRenterinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysRenterinfo> util = new ExcelUtils<SysRenterinfo>(SysRenterinfo.class);
         return util.exportExcel(list, "SysAppinfo");
+    }
+
+    /**
+     * 新增租户信息
+     */
+    //@PreAuthorize("@ps.hasPermit('system:appinfo:insert')")
+    @Oplog(title = "租户信息", businessType = BusinessType.INSERT)
+    @PostMapping("/initialize")
+    public AjaxResult initialize(@RequestBody RentObjectVo rentObject) {
+
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+
+        String appCode=UuidUtils.shortUUID();
+        SysRenterinfo sysAppinfo=new SysRenterinfo();
+
+        sysAppinfo.setRentNo(appCode);
+        sysAppinfo.setRcnname(rentObject.getRcnname());
+        sysAppinfo.setRenname(rentObject.getRenname());
+        sysAppinfo.setClassNo(rentObject.getClassNo());
+        sysAppinfo.setOrderNo(1);
+        sysAppinfo.setAppUrl(rentObject.getAppUrl());
+        sysAppinfo.setAppVer(rentObject.getAppVer());
+        sysAppinfo.setTelephone(rentObject.getTelephone());
+        sysAppinfo.setEmail(rentObject.getEmail());
+        sysAppinfo.setSummary(rentObject.getSummary());
+        sysAppinfo.setEdogNo(rentObject.getEdogNo());
+        sysAppinfo.setEdogType(rentObject.getEdogType());
+        sysAppinfo.setRegistDate(rentObject.getRegistDate());
+        sysAppinfo.setActiveDate(rentObject.getActiveDate());
+        sysAppinfo.setActiveCount(rentObject.getActiveCount());
+        sysAppinfo.setActiveCode(rentObject.getActiveCode());
+        sysAppinfo.setCheckState(rentObject.getCheckState());
+        sysAppinfo.setComments(rentObject.getComments());
+        sysAppinfo.setAppCode(appCode);
+
+        sysAppinfo.setCreateBy(loginUser.getUser().getUserNo());
+        sysAppinfo.setUpdateBy(loginUser.getUser().getUserNo());
+        if(sysRenterinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysAppinfo)>0) {
+
+            String branchNo=initBranchInfo(appCode,rentObject.getRcnname(),rentObject.getTelephone(),rentObject.getEmail());
+            String deptNo=initDepartment(appCode,branchNo,rentObject.getRcnname(),rentObject.getTelephone(),rentObject.getEmail());
+            String orgzNo=initOrganizInfo(appCode,branchNo,rentObject.getRcnname());
+            String suserNo=initSuserInfo(appCode,branchNo,rentObject.getUsername(),rentObject.getPassword(),deptNo,orgzNo,rentObject.getTelephone(),rentObject.getEmail());
+            String roleNo=initRoleInfo(appCode,branchNo,suserNo);
+            initPermitInfo(appCode,branchNo,roleNo);
+            //initConfigInfo(appCode,branchNo);
+            initMessageInfo(appCode,branchNo,suserNo);
+
+            return toAjax(1);
+        }
+        return AjaxResult.error();
+    }
+
+    private String initBranchInfo(String appCode,String branchName,String tel,String email){
+
+        SysBranchinfo info=new SysBranchinfo();
+        String uuid=UuidUtils.shortUUID();
+        info.setBranchNo(uuid);
+        info.setBranchName("单位");
+        info.setBranchCode(uuid);
+        info.setBranchType("1");
+        info.setOrderNo(1);
+        info.setMaster("");
+        info.setTelephone(tel);
+        info.setEmail(email);
+        info.setSummary("");
+        info.setCheckState("1");
+        info.setCreateBy("");
+        info.setUpdateBy("");
+        info.setDeleteFlag("1");
+        info.setComments("");
+        info.setAppCode(appCode);
+
+        if(branchinfoService.AddNewRecord(appCode,info)>0){
+            return uuid;
+        }
+        return "";
+    }
+    private String initDepartment(String appCode,String branchNo,String deptName,String tel,String email){
+
+        SysDepartment info=new SysDepartment();
+        String uuid=UuidUtils.shortUUID();
+        info.setDeptNo(uuid);
+        info.setDeptName(deptName);
+        info.setParentNo("0");
+        info.setOrderNo(1);
+        info.setAncestors("");
+        info.setLeader("");
+        info.setTelephone(tel);
+        info.setEmail(email);
+        info.setCheckState("1");
+
+        info.setBranchNo(branchNo);
+        info.setCreateBy("");
+        info.setUpdateBy("");
+        info.setDeleteFlag("1");
+        info.setComments("");
+        info.setAppCode(appCode);
+
+        if(departmentService.AddNewRecord(appCode,info)>0){
+            return uuid;
+        }
+        return "";
+    }
+    private String initOrganizInfo(String appCode,String branchNo,String orgzName){
+
+        SysOrganizinfo info=new SysOrganizinfo();
+        String uuid=UuidUtils.shortUUID();
+        info.setOrganizNo(uuid);
+        info.setOrganizName(orgzName);
+        info.setParentNo("0");
+        info.setOrderNo(1);
+        info.setCheckState("1");
+
+        info.setBranchNo(branchNo);
+        info.setCreateBy("");
+        info.setUpdateBy("");
+        info.setDeleteFlag("1");
+        info.setComments("");
+        info.setAppCode(appCode);
+
+        if(organizinfoService.AddNewRecord(appCode,info)>0){
+            return uuid;
+        }
+        return "";
+    }
+    private String initSuserInfo(String appCode,String branchNo,String userName,String password,String departNo,String organizNo,String tel,String email){
+
+        SysSuserinfo info=new SysSuserinfo();
+        String uuid=UuidUtils.shortUUID();
+        info.setUserNo(uuid);
+        info.setDeptNo(departNo);
+        info.setOrgzNo(organizNo);
+        info.setLoginName(userName);
+        info.setPassword(SecurityUtils.encryptPassword(password));
+        info.setUserCnname(userName);
+        info.setUserEnname(userName);
+        info.setUserType("00");
+        info.setSex("1");
+        info.setTelephone(tel);
+        info.setEmail(email);
+        info.setAvatar("/profile/avatar/2020/08/15/8cb17ab286568fa8dcf12c8fc398c421.jpeg");
+        info.setSalt("");
+        info.setLoginIp("");
+        info.setLoginDate(DateUtils.getNowDate());
+        info.setCheckState("1");
+
+        info.setBranchNo(branchNo);
+        info.setCreateBy("");
+        info.setUpdateBy("");
+        info.setDeleteFlag("1");
+        info.setComments("");
+        info.setAppCode(appCode);
+
+        if(suserinfoService.AddNewRecord(appCode,info)>0){
+            return uuid;
+        }
+        return "";
+    }
+    private String initRoleInfo(String appCode,String branchNo,String suserNo){
+
+        SysRoleinfo info=new SysRoleinfo();
+        String uuid=UuidUtils.shortUUID();
+        info.setRoleNo(uuid);
+        info.setRoleName("系统管理员");
+        info.setRoleCode("admin");
+        info.setOrderNo(1);
+        info.setDataScope("1");
+        info.setCheckState("1");
+
+        info.setBranchNo(branchNo);
+        info.setCreateBy("");
+        info.setUpdateBy("");
+        info.setDeleteFlag("1");
+        info.setComments("");
+        info.setAppCode(appCode);
+
+        if(roleinfoService.AddNewRecord(appCode,info)>0){
+            roleinfoService.UpdateSusers(appCode,uuid,new String[]{suserNo});
+            return uuid;
+        }
+        return "";
+    }
+    private String initPermitInfo(String appCode,String branchNo,String roleNo){
+
+        List<String> permitNos=new ArrayList<>();
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        String pmtTmpl=configinfoService.getConfigValueByKey(loginUser.getUser().getAppCode(),"PmtTempl");
+
+        List<PermitTempl> tmplList= JSONArray.parseArray(pmtTmpl,PermitTempl.class);
+
+        if(tmplList!=null&&tmplList.size()>0){
+            for(PermitTempl tmpl :tmplList){
+                loadPermit(appCode,branchNo,"0",tmpl,permitNos);
+            }
+            roleinfoService.UpdatePermits(appCode,roleNo,permitNos.toArray(new String[permitNos.size()]));
+        }
+        return "";
+    }
+    private void loadPermit(String appCode,String branchNo,String parentNo,PermitTempl tmpl,List<String> permitNos){
+
+        SysPermitinfo info=new SysPermitinfo();
+        String uuid=UuidUtils.shortUUID();
+        info.setPermitNo(uuid);
+        info.setPermitName(tmpl.getPermitName());
+        info.setPermitCode(tmpl.getPermitCode());
+        info.setPermitType(tmpl.getPermitType());
+        info.setParentNo(parentNo);
+        info.setOrderNo(tmpl.getOrderNo());
+        info.setLinkType(tmpl.getLinkType());
+        info.setMenuIcon(tmpl.getMenuIcon());
+        info.setPathUrl(tmpl.getPathUrl());
+        info.setComponent(tmpl.getComponent());
+        info.setRedirect(tmpl.getRedirect());
+        info.setTarget(tmpl.getTarget());
+        info.setVisible(tmpl.getVisible());
+        info.setCheckState("1");
+
+        info.setBranchNo(branchNo);
+        info.setCreateBy("");
+        info.setUpdateBy("");
+        info.setDeleteFlag("1");
+        info.setComments("");
+        info.setAppCode(appCode);
+
+        if(permitinfoService.AddNewRecord(appCode,info)>0){
+            if(tmpl.getChildren()!=null&&tmpl.getChildren().size()>0){
+                for(PermitTempl temp :tmpl.getChildren()){
+                    loadPermit(appCode,branchNo,uuid,temp,permitNos);
+                }
+            }
+            permitNos.add(uuid);
+        }
+    }
+    private String initConfigInfo(String appCode,String branchNo){
+
+        SysConfiginfo info=new SysConfiginfo();
+        String uuid=UuidUtils.shortUUID();
+        info.setConfigNo(uuid);
+        info.setConfigName("");
+        info.setConfigKey("");
+        info.setConfigValue("");
+        info.setConfigType("Y");
+        info.setCheckState("1");
+
+        info.setBranchNo(branchNo);
+        info.setCreateBy("");
+        info.setUpdateBy("");
+        info.setDeleteFlag("1");
+        info.setComments("");
+        info.setAppCode(appCode);
+
+        if(configinfoService.AddNewRecord(appCode,info)>0){
+            return uuid;
+        }
+        return "";
+    }
+    private String initMessageInfo(String appCode,String branchNo,String suserNo){
+
+        SysMessageinfo info=new SysMessageinfo();
+        String uuid=UuidUtils.shortUUID();
+        info.setMssgNo(uuid);
+        info.setMssgType("1");
+        info.setMreceiver(suserNo);
+        info.setMsender("system");
+        info.setMtitle("欢迎使用热度空间");
+        info.setMcontent("欢迎使用热度空间");
+        info.setAttachfile("");
+        info.setReadState("0");
+        info.setReceiveTime(DateUtils.getNowDate());
+        info.setSendTime(DateUtils.getNowDate());
+        info.setCheckState("1");
+
+        info.setBranchNo(branchNo);
+        info.setCreateBy("");
+        info.setUpdateBy("");
+        info.setDeleteFlag("1");
+        info.setComments("");
+        info.setAppCode(appCode);
+
+        if(messageinfoService.AddNewRecord(appCode,info)>0){
+            return uuid;
+        }
+        return "";
     }
 
 }

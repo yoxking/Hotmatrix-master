@@ -2,6 +2,8 @@ package com.benet.sys.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.alibaba.fastjson.JSON;
 import com.benet.common.core.pager.PageRequest;
 import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
@@ -9,6 +11,7 @@ import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
 import com.benet.sys.vmodel.DeptmentVo;
 import com.benet.sys.vmodel.PermitInfoVo;
+import com.benet.sys.vmodel.PermitTempl;
 import com.benet.system.domain.SysDepartment;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,8 +67,9 @@ public class SysPermitinfoController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = sysPermitinfoService.getCountByCondition(pRequest.getCondition());
-        List<SysPermitinfo> list = sysPermitinfoService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysPermitinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<SysPermitinfo> list = sysPermitinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -75,16 +79,48 @@ public class SysPermitinfoController extends BaseController
     //@PreAuthorize("@ps.hasPermit('system:permitinfo:tree')")
     @GetMapping(value = "/tree")
     public TableDataInfo tree() {
-        int count = sysPermitinfoService.getCountByCondition("");
-        List<PermitInfoVo> list = buildPermitTree("0");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysPermitinfoService.getCountByCondition(loginUser.getUser().getAppCode(),"");
+        List<PermitInfoVo> list = buildPermitTree(loginUser.getUser().getAppCode(),"0");
+        //List<PermitTempl> list = buildPermitTree2(loginUser.getUser().getAppCode(),"0");
+        //String temp=JSON.toJSONString(list);
         return getDataTable(list, count);
     }
+    //临时方法
+    private List<PermitTempl> buildPermitTree2(String appCode,String parentNo) {
 
-    private List<PermitInfoVo> buildPermitTree(String parentNo) {
+        List<PermitTempl> permitTree = null;
+        PermitTempl permit = null;
+        List<SysPermitinfo> infoList = sysPermitinfoService.getRecordsByClassNo(appCode,parentNo);
+
+        if (infoList != null && infoList.size() > 0) {
+            permitTree = new ArrayList<>();
+            for (SysPermitinfo info : infoList) {
+                permit = new PermitTempl();
+                permit.setPermitName(info.getPermitName());
+                permit.setPermitCode(info.getPermitCode());
+                permit.setPermitType(info.getPermitType());
+                permit.setOrderNo(info.getOrderNo());
+                permit.setLinkType(info.getLinkType());
+                permit.setMenuIcon(info.getMenuIcon());
+                permit.setPathUrl(info.getPathUrl());
+                permit.setComponent(info.getComponent());
+                permit.setRedirect(info.getRedirect());
+                permit.setTarget(info.getTarget());
+                permit.setVisible(info.getVisible());
+                permit.setChildren(buildPermitTree2(appCode,info.getPermitNo()));
+                permitTree.add(permit);
+            }
+        }
+        return permitTree;
+    }
+
+
+    private List<PermitInfoVo> buildPermitTree(String appCode,String parentNo) {
 
         List<PermitInfoVo> permitTree = null;
         PermitInfoVo permit = null;
-        List<SysPermitinfo> infoList = sysPermitinfoService.getRecordsByClassNo(parentNo);
+        List<SysPermitinfo> infoList = sysPermitinfoService.getRecordsByClassNo(appCode,parentNo);
 
         if (infoList != null && infoList.size() > 0) {
             permitTree = new ArrayList<>();
@@ -102,7 +138,7 @@ public class SysPermitinfoController extends BaseController
                 permit.setPermitCode(info.getPermitCode());
                 permit.setComponent(info.getComponent());
                 permit.setComments(info.getComments());
-                permit.setChildren(buildPermitTree(info.getPermitNo()));
+                permit.setChildren(buildPermitTree(appCode,info.getPermitNo()));
                 permitTree.add(permit);
             }
         }
@@ -121,7 +157,7 @@ public class SysPermitinfoController extends BaseController
         sysPermitinfo.setPermitNo(UuidUtils.shortUUID());
         sysPermitinfo.setCreateBy(loginUser.getUser().getUserNo());
         sysPermitinfo.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysPermitinfoService.AddNewRecord(sysPermitinfo));
+        return toAjax(sysPermitinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysPermitinfo));
     }
 
     /**
@@ -133,7 +169,7 @@ public class SysPermitinfoController extends BaseController
         public AjaxResult update(@RequestBody SysPermitinfo sysPermitinfo) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysPermitinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysPermitinfoService.UpdateRecord(sysPermitinfo));
+            return toAjax(sysPermitinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysPermitinfo));
         }
 
     /**
@@ -144,14 +180,14 @@ public class SysPermitinfoController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysPermitinfo sysPermitinfo) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(sysPermitinfoService.getRecordByNo(sysPermitinfo.getPermitNo()))) {
+        if (StringUtils.isNull(sysPermitinfoService.getRecordByNo(loginUser.getUser().getAppCode(),sysPermitinfo.getPermitNo()))) {
             sysPermitinfo.setPermitNo(UuidUtils.shortUUID());
             sysPermitinfo.setCreateBy(loginUser.getUser().getUserNo());
             sysPermitinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysPermitinfoService.AddNewRecord(sysPermitinfo));
+            return toAjax(sysPermitinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysPermitinfo));
         } else {
             sysPermitinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysPermitinfoService.UpdateRecord(sysPermitinfo));
+            return toAjax(sysPermitinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysPermitinfo));
         }
     }
 
@@ -163,7 +199,8 @@ public class SysPermitinfoController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(sysPermitinfoService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysPermitinfoService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -173,7 +210,8 @@ public class SysPermitinfoController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(sysPermitinfoService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(sysPermitinfoService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -184,9 +222,10 @@ public class SysPermitinfoController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = sysPermitinfoService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysPermitinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<SysPermitinfo> list = sysPermitinfoService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<SysPermitinfo> list = sysPermitinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysPermitinfo> util = new ExcelUtils<SysPermitinfo>(SysPermitinfo.class);
         return util.exportExcel(list, "SysPermitinfo");
     }

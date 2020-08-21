@@ -61,8 +61,9 @@ public class FlwFlowarchivsController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = flwFlowarchivsService.getCountByCondition(pRequest.getCondition());
-        List<FlwFlowarchivs> list = flwFlowarchivsService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwFlowarchivsService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<FlwFlowarchivs> list = flwFlowarchivsService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -77,7 +78,7 @@ public class FlwFlowarchivsController extends BaseController
         flwFlowarchives.setArchvNo(UuidUtils.shortUUID());
         flwFlowarchives.setCreateBy(loginUser.getUser().getUserNo());
         flwFlowarchives.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(flwFlowarchivsService.AddNewRecord(flwFlowarchives));
+        return toAjax(flwFlowarchivsService.AddNewRecord(loginUser.getUser().getAppCode(),flwFlowarchives));
     }
 
     /**
@@ -89,7 +90,7 @@ public class FlwFlowarchivsController extends BaseController
         public AjaxResult update(@RequestBody FlwFlowarchivs flwFlowarchives) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         flwFlowarchives.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwFlowarchivsService.UpdateRecord(flwFlowarchives));
+            return toAjax(flwFlowarchivsService.UpdateRecord(loginUser.getUser().getAppCode(),flwFlowarchives));
         }
 
     /**
@@ -100,14 +101,14 @@ public class FlwFlowarchivsController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwFlowarchivs flwFlowarchives) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(flwFlowarchivsService.getRecordByNo(flwFlowarchives.getArchvNo()))) {
+        if (StringUtils.isNull(flwFlowarchivsService.getRecordByNo(loginUser.getUser().getAppCode(),flwFlowarchives.getArchvNo()))) {
             flwFlowarchives.setArchvNo(UuidUtils.shortUUID());
             flwFlowarchives.setCreateBy(loginUser.getUser().getUserNo());
             flwFlowarchives.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwFlowarchivsService.AddNewRecord(flwFlowarchives));
+            return toAjax(flwFlowarchivsService.AddNewRecord(loginUser.getUser().getAppCode(),flwFlowarchives));
         } else {
             flwFlowarchives.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwFlowarchivsService.UpdateRecord(flwFlowarchives));
+            return toAjax(flwFlowarchivsService.UpdateRecord(loginUser.getUser().getAppCode(),flwFlowarchives));
         }
     }
 
@@ -119,7 +120,8 @@ public class FlwFlowarchivsController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(flwFlowarchivsService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(flwFlowarchivsService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -129,7 +131,8 @@ public class FlwFlowarchivsController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(flwFlowarchivsService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(flwFlowarchivsService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -140,9 +143,10 @@ public class FlwFlowarchivsController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = flwFlowarchivsService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwFlowarchivsService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<FlwFlowarchivs> list = flwFlowarchivsService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<FlwFlowarchivs> list = flwFlowarchivsService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<FlwFlowarchivs> util = new ExcelUtils<FlwFlowarchivs>(FlwFlowarchivs.class);
         return util.exportExcel(list, "FlwFlowarchives");
     }

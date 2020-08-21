@@ -61,8 +61,9 @@ public class FlwWorkflowsController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = flwWorkflowsService.getCountByCondition(pRequest.getCondition());
-        List<FlwWorkflows> list = flwWorkflowsService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwWorkflowsService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<FlwWorkflows> list = flwWorkflowsService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -77,7 +78,7 @@ public class FlwWorkflowsController extends BaseController
         flwWorkflow.setFlowNo(UuidUtils.shortUUID());
         flwWorkflow.setCreateBy(loginUser.getUser().getUserNo());
         flwWorkflow.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(flwWorkflowsService.AddNewRecord(flwWorkflow));
+        return toAjax(flwWorkflowsService.AddNewRecord(loginUser.getUser().getAppCode(),flwWorkflow));
     }
 
     /**
@@ -89,7 +90,7 @@ public class FlwWorkflowsController extends BaseController
         public AjaxResult update(@RequestBody FlwWorkflows flwWorkflow) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         flwWorkflow.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwWorkflowsService.UpdateRecord(flwWorkflow));
+            return toAjax(flwWorkflowsService.UpdateRecord(loginUser.getUser().getAppCode(),flwWorkflow));
         }
 
     /**
@@ -100,14 +101,14 @@ public class FlwWorkflowsController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwWorkflows flwWorkflow) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(flwWorkflowsService.getRecordByNo(flwWorkflow.getFlowNo()))) {
+        if (StringUtils.isNull(flwWorkflowsService.getRecordByNo(loginUser.getUser().getAppCode(),flwWorkflow.getFlowNo()))) {
             flwWorkflow.setFlowNo(UuidUtils.shortUUID());
             flwWorkflow.setCreateBy(loginUser.getUser().getUserNo());
             flwWorkflow.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwWorkflowsService.AddNewRecord(flwWorkflow));
+            return toAjax(flwWorkflowsService.AddNewRecord(loginUser.getUser().getAppCode(),flwWorkflow));
         } else {
             flwWorkflow.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwWorkflowsService.UpdateRecord(flwWorkflow));
+            return toAjax(flwWorkflowsService.UpdateRecord(loginUser.getUser().getAppCode(),flwWorkflow));
         }
     }
 
@@ -119,7 +120,8 @@ public class FlwWorkflowsController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(flwWorkflowsService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(flwWorkflowsService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -129,7 +131,8 @@ public class FlwWorkflowsController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(flwWorkflowsService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(flwWorkflowsService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -140,9 +143,10 @@ public class FlwWorkflowsController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = flwWorkflowsService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwWorkflowsService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<FlwWorkflows> list = flwWorkflowsService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<FlwWorkflows> list = flwWorkflowsService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<FlwWorkflows> util = new ExcelUtils<FlwWorkflows>(FlwWorkflows.class);
         return util.exportExcel(list, "FlwWorkflow");
     }

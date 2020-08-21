@@ -40,34 +40,34 @@
 
     <select id="getAllRecords" resultMap="SysTabcolumnResult">
         <include refid="selectSysTabcolumnVo"/>
-        where delete_flag='1' 
+        where delete_flag='1' and app_code=#{appCode}
     </select>
 
     <select id="getRecordsByClassNo" resultMap="SysTabcolumnResult">
         <include refid="selectSysTabcolumnVo"/>
-        where delete_flag='1'  and table_no=#{classNo}
+        where delete_flag='1'  and app_code=#{appCode} and table_no=#{classNo}
     </select>
 
     <select id="getRecordsByPaging" resultMap="SysTabcolumnResult">
         <include refid="selectSysTabcolumnVo"/>
-        where delete_flag='1'
+        where delete_flag='1' and app_code=${appCode}
         <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
         order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
     </select>
 
     <select id="getRecordByNo" resultMap="SysTabcolumnResult">
         <include refid="selectSysTabcolumnVo"/>
-        where delete_flag='1'  and column_no = #{no}
+        where delete_flag='1'  and app_code=#{appCode} and column_no = #{no}
     </select>
 
     <select id="getRecordNameByNo" resultType="String">
         select column_name from sys_tabcolumn
-        where delete_flag='1'  and column_no = #{no}
+        where delete_flag='1'  and app_code=#{appCode} and column_no = #{no}
     </select>
 
     <select id="getCountByCondition" resultType="Integer">
         select count(*) from sys_tabcolumn
-        where delete_flag='1' 
+        where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </select>
 
@@ -159,17 +159,17 @@
             <if test="info.appCode != null  and info.appCode != ''">app_code = #{info.appCode},</if>
             <if test="info.version != null ">version = version+1</if>
         </set>
-        where delete_flag='1' and version=#{info.version} and column_no = #{info.columnNo}
+        where delete_flag='1' and app_code=#{appCode} and version=#{info.version} and column_no = #{info.columnNo}
     </update>
 
     <delete id="HardDeleteByNo">
         delete from sys_tabcolumn
-        where delete_flag='1'  and column_no = #{no}
+        where delete_flag='1'  and app_code=#{appCode} and column_no = #{no}
     </delete>
 
     <delete id="HardDeleteByNos">
         delete from sys_tabcolumn
-        where delete_flag='1'  and column_no in
+        where delete_flag='1'  and app_code=#{appCode} and column_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
         </foreach>
@@ -177,18 +177,18 @@
 
     <delete id="HardDeleteByCondition">
         delete from sys_tabcolumn
-        where delete_flag='1' 
+        where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>
 
     <delete id="SoftDeleteByNo">
         update sys_tabcolumn set delete_flag='0'
-        where delete_flag='1'  and column_no = #{no}
+        where delete_flag='1'  and app_code=#{appCode} and column_no = #{no}
     </delete>
 
     <delete id="SoftDeleteByNos">
         update sys_tabcolumn set delete_flag='0'
-        where delete_flag='1'  and column_no in
+        where delete_flag='1'  and app_code=#{appCode} and column_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
         </foreach>
@@ -196,7 +196,7 @@
 
     <delete id="SoftDeleteByCondition">
         update sys_tabcolumn set delete_flag='0'
-        where delete_flag='1' 
+        where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>
 

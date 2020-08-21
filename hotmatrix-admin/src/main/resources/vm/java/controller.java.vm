@@ -66,8 +66,9 @@ public class ${ClassName}Controller extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = ${className}Service.getCountByCondition(pRequest.getCondition());
-        List<${ClassName}> list = ${className}Service.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = ${className}Service.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<${ClassName}> list = ${className}Service.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -82,7 +83,7 @@ public class ${ClassName}Controller extends BaseController
         ${className}.setDeptNo(UuidUtils.shortUUID());
         ${className}.setCreateBy(loginUser.getUser().getUserNo());
         ${className}.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(${className}Service.AddNewRecord(${className}));
+        return toAjax(${className}Service.AddNewRecord(loginUser.getUser().getAppCode(),${className}));
     }
 
     /**
@@ -94,7 +95,7 @@ public class ${ClassName}Controller extends BaseController
         public AjaxResult update(@RequestBody ${ClassName} ${className}) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         ${className}.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(${className}Service.UpdateRecord(${className}));
+            return toAjax(${className}Service.UpdateRecord(loginUser.getUser().getAppCode(),${className}));
         }
 
     /**
@@ -105,14 +106,14 @@ public class ${ClassName}Controller extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody ${ClassName} ${className}) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(${className}Service.getRecordByNo(${className}.getDeptNo()))) {
+        if (StringUtils.isNull(${className}Service.getRecordByNo(loginUser.getUser().getAppCode(),${className}.getDeptNo()))) {
             ${className}.setDeptNo(UuidUtils.shortUUID());
             ${className}.setCreateBy(loginUser.getUser().getUserNo());
             ${className}.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(${className}Service.AddNewRecord(${className}));
+            return toAjax(${className}Service.AddNewRecord(loginUser.getUser().getAppCode(),${className}));
         } else {
             ${className}.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(${className}Service.UpdateRecord(${className}));
+            return toAjax(${className}Service.UpdateRecord(loginUser.getUser().getAppCode(),${className}));
         }
     }
 
@@ -124,7 +125,8 @@ public class ${ClassName}Controller extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(${className}Service.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(${className}Service.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -134,7 +136,8 @@ public class ${ClassName}Controller extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(${className}Service.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(${className}Service.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -145,9 +148,10 @@ public class ${ClassName}Controller extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = ${className}Service.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = ${className}Service.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<${ClassName}> list = ${className}Service.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<${ClassName}> list = ${className}Service.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<${ClassName}> util = new ExcelUtils<${ClassName}>(${ClassName}.class);
         return util.exportExcel(list, "${ClassName}");
     }

@@ -67,8 +67,9 @@ public class SysRoleinfoController extends BaseController {
     //@PreAuthorize("@ps.hasPermit('system:roleinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest) {
-        int count = sysRoleinfoService.getCountByCondition(pRequest.getCondition());
-        List<SysRoleinfo> list = sysRoleinfoService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysRoleinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<SysRoleinfo> list = sysRoleinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -83,7 +84,7 @@ public class SysRoleinfoController extends BaseController {
         sysRoleinfo.setRoleNo(UuidUtils.shortUUID());
         sysRoleinfo.setCreateBy(loginUser.getUser().getUserNo());
         sysRoleinfo.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysRoleinfoService.AddNewRecord(sysRoleinfo));
+        return toAjax(sysRoleinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysRoleinfo));
     }
 
     /**
@@ -95,7 +96,7 @@ public class SysRoleinfoController extends BaseController {
     public AjaxResult update(@RequestBody SysRoleinfo sysRoleinfo) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysRoleinfo.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysRoleinfoService.UpdateRecord(sysRoleinfo));
+        return toAjax(sysRoleinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysRoleinfo));
     }
 
     /**
@@ -106,14 +107,14 @@ public class SysRoleinfoController extends BaseController {
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysRoleinfo sysRoleinfo) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(sysRoleinfoService.getRecordByNo(sysRoleinfo.getRoleNo()))) {
+        if (StringUtils.isNull(sysRoleinfoService.getRecordByNo(loginUser.getUser().getAppCode(),sysRoleinfo.getRoleNo()))) {
             sysRoleinfo.setRoleNo(UuidUtils.shortUUID());
             sysRoleinfo.setCreateBy(loginUser.getUser().getUserNo());
             sysRoleinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysRoleinfoService.AddNewRecord(sysRoleinfo));
+            return toAjax(sysRoleinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysRoleinfo));
         } else {
             sysRoleinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysRoleinfoService.UpdateRecord(sysRoleinfo));
+            return toAjax(sysRoleinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysRoleinfo));
         }
     }
 
@@ -124,7 +125,8 @@ public class SysRoleinfoController extends BaseController {
     @Oplog(title = "角色信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids) {
-        return toAjax(sysRoleinfoService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysRoleinfoService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -133,7 +135,8 @@ public class SysRoleinfoController extends BaseController {
     //@PreAuthorize("@ps.hasPermit('system:roleinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id) {
-        return AjaxResult.success(sysRoleinfoService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(sysRoleinfoService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -143,9 +146,10 @@ public class SysRoleinfoController extends BaseController {
     @Oplog(title = "角色信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest) {
-        int count = sysRoleinfoService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysRoleinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<SysRoleinfo> list = sysRoleinfoService.getRecordsByPaging(1, count, pRequest.getCondition(), "id", "Asc");
+        List<SysRoleinfo> list = sysRoleinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),1, count, pRequest.getCondition(), "id", "Asc");
         ExcelUtils<SysRoleinfo> util = new ExcelUtils<SysRoleinfo>(SysRoleinfo.class);
         return util.exportExcel(list, "SysRoleinfo");
     }
@@ -157,18 +161,19 @@ public class SysRoleinfoController extends BaseController {
     @GetMapping(value = "/permittree/{roleNo}")
     public AjaxResult permittree(@PathVariable("roleNo") String roleNo) {
 
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         AjaxResult result=AjaxResult.success();
-        result.put("pmttreeData",buildPermitTree("0"));
+        result.put("pmttreeData",buildPermitTree(loginUser.getUser().getAppCode(),"0"));
         result.put("checkedKeys",getPermitKeys(roleNo));
 
         return AjaxResult.success(result);
     }
 
-    private List<RolePermitVo> buildPermitTree(String parentNo) {
+    private List<RolePermitVo> buildPermitTree(String appCode,String parentNo) {
 
         List<RolePermitVo> permitTree = null;
         RolePermitVo permit = null;
-        List<SysPermitinfo> infoList = sysPermitinfoService.getRecordsByClassNo(parentNo);
+        List<SysPermitinfo> infoList = sysPermitinfoService.getRecordsByClassNo(appCode,parentNo);
 
         if (infoList != null && infoList.size() > 0) {
             permitTree = new ArrayList<>();
@@ -177,7 +182,7 @@ public class SysRoleinfoController extends BaseController {
                 permit.setKey(info.getPermitNo());
                 permit.setTitle(info.getPermitName());
                 permit.setDesc(info.getComments());
-                permit.setChildren(buildPermitTree(info.getPermitNo()));
+                permit.setChildren(buildPermitTree(appCode,info.getPermitNo()));
                 permitTree.add(permit);
             }
         }
@@ -186,7 +191,8 @@ public class SysRoleinfoController extends BaseController {
 
     private List<String> getPermitKeys(String roleNo) {
 
-        return sysRoleinfoService.getPermitNosByRoleNo(roleNo);
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return sysRoleinfoService.getPermitNosByRoleNo(loginUser.getUser().getAppCode(),roleNo);
     }
 
 
@@ -197,18 +203,19 @@ public class SysRoleinfoController extends BaseController {
     @GetMapping(value = "/suersource/{roleNo}")
     public AjaxResult suersource(@PathVariable("roleNo") String roleNo) {
 
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         AjaxResult result=AjaxResult.success();
-        result.put("sourceData",buildSuersData());
-        result.put("targetKeys",getSuserKeys(roleNo));
+        result.put("sourceData",buildSuersData(loginUser.getUser().getAppCode()));
+        result.put("targetKeys",getSuserKeys(loginUser.getUser().getAppCode(),roleNo));
 
         return AjaxResult.success(result);
     }
 
-    private List<RoleSusersVo> buildSuersData() {
+    private List<RoleSusersVo> buildSuersData(String appCode) {
 
         List<RoleSusersVo> susersData = null;
         RoleSusersVo ssuer = null;
-        List<SysSuserinfo> infoList = sysSuserinfoService.getAllRecords();
+        List<SysSuserinfo> infoList = sysSuserinfoService.getAllRecords(appCode);
 
         if (infoList != null && infoList.size() > 0) {
             susersData = new ArrayList<>();
@@ -224,9 +231,9 @@ public class SysRoleinfoController extends BaseController {
         return susersData;
     }
 
-    private List<String> getSuserKeys(String roleNo) {
+    private List<String> getSuserKeys(String appCode,String roleNo) {
 
-        return sysRoleinfoService.getSuserNosByRoleNo(roleNo);
+        return sysRoleinfoService.getSuserNosByRoleNo(appCode,roleNo);
     }
 
     /**
@@ -236,7 +243,9 @@ public class SysRoleinfoController extends BaseController {
     @Oplog(title = "更新角色用户信息", businessType = BusinessType.UPDATE)
     @PostMapping(value = "/updateSusers")
     public AjaxResult updateSusers(@RequestParam("roleNo") String roleNo,@RequestParam("suserNos") String[] suserNos) {
-        return toAjax(sysRoleinfoService.UpdateSusers(roleNo,suserNos));
+
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysRoleinfoService.UpdateSusers(loginUser.getUser().getAppCode(),roleNo,suserNos));
     }
 
     /**
@@ -246,7 +255,9 @@ public class SysRoleinfoController extends BaseController {
     @Oplog(title = "更新角色权限信息", businessType = BusinessType.UPDATE)
     @PostMapping(value = "/updatePermits")
     public AjaxResult updatePermits(@RequestParam("roleNo") String roleNo,@RequestParam("permitNos") String[] permitNos) {
-        return toAjax(sysRoleinfoService.UpdatePermits(roleNo,permitNos));
+
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysRoleinfoService.UpdatePermits(loginUser.getUser().getAppCode(),roleNo,permitNos));
     }
 
 }

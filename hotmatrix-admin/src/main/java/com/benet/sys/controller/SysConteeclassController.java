@@ -59,8 +59,9 @@ public class SysConteeclassController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = sysConteeclassService.getCountByCondition(pRequest.getCondition());
-        List<SysConteeclass> list = sysConteeclassService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysConteeclassService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<SysConteeclass> list = sysConteeclassService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -75,7 +76,7 @@ public class SysConteeclassController extends BaseController
         sysContzclass.setClassNo(UuidUtils.shortUUID());
         sysContzclass.setCreateBy(loginUser.getUser().getUserNo());
         sysContzclass.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysConteeclassService.AddNewRecord(sysContzclass));
+        return toAjax(sysConteeclassService.AddNewRecord(loginUser.getUser().getAppCode(),sysContzclass));
     }
 
     /**
@@ -87,7 +88,7 @@ public class SysConteeclassController extends BaseController
         public AjaxResult update(@RequestBody SysConteeclass sysContzclass) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysContzclass.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysConteeclassService.UpdateRecord(sysContzclass));
+            return toAjax(sysConteeclassService.UpdateRecord(loginUser.getUser().getAppCode(),sysContzclass));
         }
 
     /**
@@ -98,14 +99,14 @@ public class SysConteeclassController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysConteeclass sysContzclass) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(sysConteeclassService.getRecordByNo(sysContzclass.getClassNo()))) {
+        if (StringUtils.isNull(sysConteeclassService.getRecordByNo(loginUser.getUser().getAppCode(),sysContzclass.getClassNo()))) {
             sysContzclass.setClassNo(UuidUtils.shortUUID());
             sysContzclass.setCreateBy(loginUser.getUser().getUserNo());
             sysContzclass.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysConteeclassService.AddNewRecord(sysContzclass));
+            return toAjax(sysConteeclassService.AddNewRecord(loginUser.getUser().getAppCode(),sysContzclass));
         } else {
             sysContzclass.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysConteeclassService.UpdateRecord(sysContzclass));
+            return toAjax(sysConteeclassService.UpdateRecord(loginUser.getUser().getAppCode(),sysContzclass));
         }
     }
 
@@ -117,7 +118,8 @@ public class SysConteeclassController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(sysConteeclassService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysConteeclassService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -127,7 +129,8 @@ public class SysConteeclassController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(sysConteeclassService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(sysConteeclassService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -138,9 +141,10 @@ public class SysConteeclassController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = sysConteeclassService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysConteeclassService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<SysConteeclass> list = sysConteeclassService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<SysConteeclass> list = sysConteeclassService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysConteeclass> util = new ExcelUtils<SysConteeclass>(SysConteeclass.class);
         return util.exportExcel(list, "SysContzclass");
     }

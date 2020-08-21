@@ -65,24 +65,24 @@
 
     <select id="getAllRecords" resultMap="SysTableinfoResult">
         <include refid="selectSysTableinfoVo"/>
-        where delete_flag='1' 
+        where delete_flag='1' and app_code=#{appCode}
     </select>
 
     <select id="getRecordsByClassNo" resultMap="SysTableinfoResult">
         <include refid="selectSysTableinfoVo"/>
-        where delete_flag='1'  and class_no=#{classNo}
+        where delete_flag='1'  and app_code=#{appCode} and class_no=#{classNo}
     </select>
 
     <select id="getRecordsByPaging" resultMap="SysTableinfoResult">
         <include refid="selectSysTableinfoVo"/>
-        where delete_flag='1'
+        where delete_flag='1' and app_code=${appCode}
         <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
         order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
     </select>
 
     <select id="getRecordByNo" resultMap="SysTableinfoResult">
         <include refid="selectSysTableinfoVo"/>
-        where delete_flag='1'  and table_no = #{no}
+        where delete_flag='1'  and app_code=#{appCode} and table_no = #{no}
     </select>
 
     <select id="getRecordByName" parameterType="String" resultMap="SysTableinfoResult">
@@ -90,17 +90,17 @@
 			   c.column_no,  c.column_name, c.column_comment, c.column_type, c.java_type, c.java_field, c.is_pk, c.is_increment, c.is_required, c.is_insert, c.is_edit, c.is_list, c.is_query, c.query_type, c.html_type, c.dict_type, c.order_no
 		FROM sys_tableinfo t
 			 LEFT JOIN sys_tabcolumn c ON t.table_no = c.table_no
-		where t.table_name = #{tableName}
+		where delete_flag='1'  and app_code=#{appCode} and  t.table_name = #{tableName}
 	</select>
 
     <select id="getRecordNameByNo" resultType="String">
         select table_name from sys_tableinfo
-        where delete_flag='1'  and table_no = #{no}
+        where delete_flag='1'  and app_code=#{appCode} and table_no = #{no}
     </select>
 
     <select id="getCountByCondition" resultType="Integer">
         select count(*) from sys_tableinfo
-        where delete_flag='1' 
+        where delete_flag='1'  and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </select>
 
@@ -173,17 +173,17 @@
             <if test="info.appCode != null  and info.appCode != ''">app_code = #{info.appCode},</if>
             <if test="info.version != null ">version = version+1</if>
         </set>
-        where delete_flag='1' and version=#{info.version} and table_no = #{info.tableNo}
+        where delete_flag='1' and app_code=#{appCode} and version=#{info.version} and table_no = #{info.tableNo}
     </update>
 
     <delete id="HardDeleteByNo">
         delete from sys_tableinfo
-        where delete_flag='1'  and table_no = #{no}
+        where delete_flag='1'  and app_code=#{appCode} and table_no = #{no}
     </delete>
 
     <delete id="HardDeleteByNos">
         delete from sys_tableinfo
-        where delete_flag='1'  and table_no in
+        where delete_flag='1'  and app_code=#{appCode} and table_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
         </foreach>
@@ -191,18 +191,18 @@
 
     <delete id="HardDeleteByCondition">
         delete from sys_tableinfo
-        where delete_flag='1' 
+        where delete_flag='1'  and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>
 
     <delete id="SoftDeleteByNo">
         update sys_tableinfo set delete_flag='0'
-        where delete_flag='1'  and table_no = #{no}
+        where delete_flag='1'  and app_code=#{appCode} and table_no = #{no}
     </delete>
 
     <delete id="SoftDeleteByNos">
         update sys_tableinfo set delete_flag='0'
-        where delete_flag='1'  and table_no in
+        where delete_flag='1'  and app_code=#{appCode} and table_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
         </foreach>
@@ -210,7 +210,7 @@
 
     <delete id="SoftDeleteByCondition">
         update sys_tableinfo set delete_flag='0'
-        where delete_flag='1' 
+        where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>
 

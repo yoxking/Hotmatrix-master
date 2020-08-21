@@ -20,7 +20,7 @@ public interface SysRenterinfoMapper
      * 
      * @return 租户信息集合
      */
-    public List<SysRenterinfo> getAllRecords();
+    public List<SysRenterinfo> getAllRecords(@Param("appCode") String appCode);
 
     /**
      * 按分类查询租户信息列表
@@ -28,7 +28,7 @@ public interface SysRenterinfoMapper
      * @param classNo 分类编号
      * @return 租户信息集合
      */
-    public List<SysRenterinfo> getRecordsByClassNo( @Param("classNo") String classNo);
+    public List<SysRenterinfo> getRecordsByClassNo(@Param("appCode") String appCode,@Param("classNo") String classNo);
 
     /**
      * 分页查询租户信息列表
@@ -36,7 +36,7 @@ public interface SysRenterinfoMapper
      * @param model 分页模型
      * @return 租户信息集合
      */
-    public List<SysRenterinfo> getRecordsByPaging( @Param("model") PagingModel model);
+    public List<SysRenterinfo> getRecordsByPaging(@Param("appCode") String appCode,@Param("model") PagingModel model);
 
     /**
      * 查询租户信息
@@ -44,7 +44,7 @@ public interface SysRenterinfoMapper
      * @param no 租户信息ID
      * @return 租户信息
      */
-    public SysRenterinfo getRecordByNo( @Param("no") String no);
+    public SysRenterinfo getRecordByNo(@Param("appCode") String appCode,@Param("no") String no);
 
     /**
      * 查询租户信息名称
@@ -52,7 +52,7 @@ public interface SysRenterinfoMapper
      * @param no 租户信息ID
      * @return 名称
      */
-    public String getRecordNameByNo(@Param("no") String no);
+    public String getRecordNameByNo(@Param("appCode") String appCode,@Param("no") String no);
 
     /**
      * 查询租户信息计数
@@ -60,7 +60,7 @@ public interface SysRenterinfoMapper
      * @param condition 查询条件
      * @return 结果
      */
-    public int getCountByCondition(@Param("condition") String condition);
+    public int getCountByCondition(@Param("appCode") String appCode,@Param("condition") String condition);
 
     /**
      * 新增租户信息
@@ -84,7 +84,7 @@ public interface SysRenterinfoMapper
      * @param no 租户信息ID
      * @return 结果
      */
-    public int HardDeleteByNo(@Param("no") String no);
+    public int HardDeleteByNo(@Param("appCode") String appCode,@Param("no") String no);
 
     /**
      * 批量硬删除租户信息
@@ -92,7 +92,7 @@ public interface SysRenterinfoMapper
      * @param nos 租户信息IDs
      * @return 结果
      */
-    public int HardDeleteByNos(@Param("nos") String[] nos);
+    public int HardDeleteByNos(@Param("appCode") String appCode,@Param("nos") String[] nos);
 
     /**
      * 按条件硬删除租户信息
@@ -100,7 +100,7 @@ public interface SysRenterinfoMapper
      * @param condition 条件
      * @return 结果
      */
-    public int HardDeleteByCondition(@Param("condition") String condition);
+    public int HardDeleteByCondition(@Param("appCode") String appCode,@Param("condition") String condition);
 
     /**
      * 软删除租户信息
@@ -108,7 +108,7 @@ public interface SysRenterinfoMapper
      * @param no 租户信息ID
      * @return 结果
      */
-    public int SoftDeleteByNo(@Param("no") String no);
+    public int SoftDeleteByNo(@Param("appCode") String appCode,@Param("no") String no);
 
     /**
      * 批量软删除租户信息
@@ -116,7 +116,7 @@ public interface SysRenterinfoMapper
      * @param nos 租户信息IDs
      * @return 结果
      */
-    public int SoftDeleteByNos(@Param("nos") String[] nos);
+    public int SoftDeleteByNos(@Param("appCode") String appCode,@Param("nos") String[] nos);
 
     /**
      * 按条件软删除租户信息
@@ -124,6 +124,6 @@ public interface SysRenterinfoMapper
      * @param condition 条件
      * @return 结果
      */
-    public int SoftDeleteByCondition(@Param("condition") String condition);
+    public int SoftDeleteByCondition(@Param("appCode") String appCode,@Param("condition") String condition);
 
 }

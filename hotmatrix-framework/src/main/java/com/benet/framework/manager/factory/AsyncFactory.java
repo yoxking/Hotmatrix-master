@@ -45,7 +45,7 @@ public class AsyncFactory
                 // 远程查询操作地点
                 opertLog.setOplogNo(UuidUtils.shortUUID());
                 opertLog.setOpertLocation(AddressUtils.getRealAddressByIP(opertLog.getOpertIp()));
-                SpringUtils.getBean(ISysOperatelogService.class).AddNewRecord(opertLog);
+                SpringUtils.getBean(ISysOperatelogService.class).AddNewRecord(GlobalConfig.getAppCode(),opertLog);
             }
         };
     }
@@ -104,7 +104,7 @@ public class AsyncFactory
                 logininfo.setBranchNo(GlobalConfig.getBranchNo());
 
                 // 插入数据
-                SpringUtils.getBean(ISysLogininfoService.class).AddNewRecord(logininfo);
+                SpringUtils.getBean(ISysLogininfoService.class).AddNewRecord(GlobalConfig.getAppCode(),logininfo);
             }
         };
     }

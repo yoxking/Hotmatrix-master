@@ -75,8 +75,9 @@ public class GenTableinfoController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = tableInfoService.getCountByCondition(pRequest.getCondition());
-        List<SysTableinfo> list = tableInfoService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = tableInfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<SysTableinfo> list = tableInfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -103,8 +104,9 @@ public class GenTableinfoController extends BaseController
     @GetMapping(value = "/column/{tableNo}")
     public TableDataInfo columnList(@PathVariable String tableNo)
     {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         TableDataInfo dataInfo = new TableDataInfo();
-        List<SysTabcolumn> list = tabColumnService.getRecordsByClassNo(tableNo);
+        List<SysTabcolumn> list = tabColumnService.getRecordsByClassNo(loginUser.getUser().getAppCode(),tableNo);
         dataInfo.setRows(list);
         dataInfo.setTotal(list.size());
         return dataInfo;
@@ -117,10 +119,11 @@ public class GenTableinfoController extends BaseController
     @PostMapping("/importTable")
     public AjaxResult importTable(@RequestBody String tables)
     {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         String[] tableNames = ConvertHelper.toStrArray(tables);
         // 查询表信息
         List<SysTableinfo> tableList = tableInfoService.getDbTableListByNames(tableNames);
-        tableInfoService.importTableInfo(tableList);
+        tableInfoService.importTableInfo(loginUser.getUser().getAppCode(),tableList);
         return AjaxResult.success();
     }
 
@@ -132,14 +135,14 @@ public class GenTableinfoController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysTableinfo sysTableInfo) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(tableInfoService.getRecordByNo(sysTableInfo.getTableNo()))) {
+        if (StringUtils.isNull(tableInfoService.getRecordByNo(loginUser.getUser().getAppCode(),sysTableInfo.getTableNo()))) {
             sysTableInfo.setTableNo(UuidUtils.shortUUID());
             sysTableInfo.setCreateBy(loginUser.getUser().getUserNo());
             sysTableInfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(tableInfoService.AddNewRecord(sysTableInfo));
+            return toAjax(tableInfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysTableInfo));
         } else {
             sysTableInfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(tableInfoService.UpdateRecord(sysTableInfo));
+            return toAjax(tableInfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysTableInfo));
         }
     }
 
@@ -151,7 +154,8 @@ public class GenTableinfoController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(tableInfoService.HardDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(tableInfoService.HardDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -161,7 +165,8 @@ public class GenTableinfoController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(tableInfoService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(tableInfoService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -172,9 +177,10 @@ public class GenTableinfoController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = tableInfoService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = tableInfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<SysTableinfo> list = tableInfoService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<SysTableinfo> list = tableInfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysTableinfo> util = new ExcelUtils<SysTableinfo>(SysTableinfo.class);
         return util.exportExcel(list, "SysTableinfo");
     }
@@ -185,7 +191,8 @@ public class GenTableinfoController extends BaseController
     @GetMapping("/preview/{tableNo}")
     public AjaxResult preview(@PathVariable("tableNo") String tableNo) throws IOException
     {
-        Map<String, String> dataMap = tableInfoService.previewCode(tableNo);
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        Map<String, String> dataMap = tableInfoService.previewCode(loginUser.getUser().getAppCode(),tableNo);
         return AjaxResult.success(dataMap);
     }
 
@@ -196,7 +203,8 @@ public class GenTableinfoController extends BaseController
     @GetMapping("/genCode/{tableName}")
     public void genCode(HttpServletResponse response, @PathVariable("tableName") String tableName) throws IOException
     {
-        byte[] data = tableInfoService.generateCode(tableName);
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        byte[] data = tableInfoService.generateCode(loginUser.getUser().getAppCode(),tableName);
         genCode(response, data);
     }
 
@@ -207,8 +215,9 @@ public class GenTableinfoController extends BaseController
     @GetMapping("/batchGenCode")
     public void batchGenCode(HttpServletResponse response, String tables) throws IOException
     {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         String[] tableNames = ConvertHelper.toStrArray(tables);
-        byte[] data = tableInfoService.generateCode(tableNames);
+        byte[] data = tableInfoService.generateCode(loginUser.getUser().getAppCode(),tableNames);
         genCode(response, data);
     }
 

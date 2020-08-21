@@ -64,8 +64,9 @@ public class SysOrganizinfoController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = sysOrganizinfoService.getCountByCondition(pRequest.getCondition());
-        List<SysOrganizinfo> list = sysOrganizinfoService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysOrganizinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<SysOrganizinfo> list = sysOrganizinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -75,16 +76,17 @@ public class SysOrganizinfoController extends BaseController
     //@PreAuthorize("@ps.hasPermit('system:organizinfo:tree')")
     @GetMapping(value = "/tree")
     public TableDataInfo tree() {
-        int count = sysOrganizinfoService.getCountByCondition("");
-        List<OrgnzInfoVo> list = buildOrgzTree("0");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysOrganizinfoService.getCountByCondition(loginUser.getUser().getAppCode(),"");
+        List<OrgnzInfoVo> list = buildOrgzTree(loginUser.getUser().getAppCode(),"0");
         return getDataTable(list, count);
     }
 
-    private List<OrgnzInfoVo> buildOrgzTree(String parentNo) {
+    private List<OrgnzInfoVo> buildOrgzTree(String appCode,String parentNo) {
 
         List<OrgnzInfoVo> orgzTree = null;
         OrgnzInfoVo orgnz = null;
-        List<SysOrganizinfo> infoList = sysOrganizinfoService.getRecordsByClassNo(parentNo);
+        List<SysOrganizinfo> infoList = sysOrganizinfoService.getRecordsByClassNo(appCode,parentNo);
 
         if (infoList != null && infoList.size() > 0) {
             orgzTree = new ArrayList<>();
@@ -99,7 +101,7 @@ public class SysOrganizinfoController extends BaseController
                 orgnz.setParentNo(info.getParentNo());
                 orgnz.setOrderNo(info.getOrderNo());
                 orgnz.setComments(info.getComments());
-                orgnz.setChildren(buildOrgzTree(info.getOrganizNo()));
+                orgnz.setChildren(buildOrgzTree(appCode,info.getOrganizNo()));
                 orgzTree.add(orgnz);
             }
         }
@@ -118,7 +120,7 @@ public class SysOrganizinfoController extends BaseController
         sysOrganizinfo.setOrganizNo(UuidUtils.shortUUID());
         sysOrganizinfo.setCreateBy(loginUser.getUser().getUserNo());
         sysOrganizinfo.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysOrganizinfoService.AddNewRecord(sysOrganizinfo));
+        return toAjax(sysOrganizinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysOrganizinfo));
     }
 
     /**
@@ -130,7 +132,7 @@ public class SysOrganizinfoController extends BaseController
         public AjaxResult update(@RequestBody SysOrganizinfo sysOrganizinfo) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysOrganizinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysOrganizinfoService.UpdateRecord(sysOrganizinfo));
+            return toAjax(sysOrganizinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysOrganizinfo));
         }
 
     /**
@@ -141,14 +143,14 @@ public class SysOrganizinfoController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysOrganizinfo sysOrganizinfo) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(sysOrganizinfoService.getRecordByNo(sysOrganizinfo.getOrganizNo()))) {
+        if (StringUtils.isNull(sysOrganizinfoService.getRecordByNo(loginUser.getUser().getAppCode(),sysOrganizinfo.getOrganizNo()))) {
             sysOrganizinfo.setOrganizNo(UuidUtils.shortUUID());
             sysOrganizinfo.setCreateBy(loginUser.getUser().getUserNo());
             sysOrganizinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysOrganizinfoService.AddNewRecord(sysOrganizinfo));
+            return toAjax(sysOrganizinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysOrganizinfo));
         } else {
             sysOrganizinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysOrganizinfoService.UpdateRecord(sysOrganizinfo));
+            return toAjax(sysOrganizinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysOrganizinfo));
         }
     }
 
@@ -160,7 +162,8 @@ public class SysOrganizinfoController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(sysOrganizinfoService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysOrganizinfoService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -170,7 +173,8 @@ public class SysOrganizinfoController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(sysOrganizinfoService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(sysOrganizinfoService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -181,9 +185,10 @@ public class SysOrganizinfoController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = sysOrganizinfoService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysOrganizinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<SysOrganizinfo> list = sysOrganizinfoService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<SysOrganizinfo> list = sysOrganizinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysOrganizinfo> util = new ExcelUtils<SysOrganizinfo>(SysOrganizinfo.class);
         return util.exportExcel(list, "SysOrganizinfo");
     }

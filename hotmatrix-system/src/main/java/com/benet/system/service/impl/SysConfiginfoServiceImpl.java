@@ -27,23 +27,25 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
     /**
      * 查询所有参数配置列表
      *
+     * @param appCode 应用编号
      * @return 参数配置集合
      */
     @Override
-    public List<SysConfiginfo> getAllRecords() {
-        return sysConfiginfoMapper.getAllRecords(GlobalConfig.getAppCode());
+    public List<SysConfiginfo> getAllRecords(String appCode) {
+        return sysConfiginfoMapper.getAllRecords(appCode);
     }
 
     /**
      * 按分类查询参数配置列表
      *
+     * @param appCode 应用编号
      * @param classNo 分类编号
      * @return 参数配置集合
      */
     @Override
-    public List<SysConfiginfo> getRecordsByClassNo(String classNo) {
+    public List<SysConfiginfo> getRecordsByClassNo(String appCode,String classNo) {
         if (StringUtils.isNotEmpty(classNo)) {
-            return sysConfiginfoMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
+            return sysConfiginfoMapper.getRecordsByClassNo(appCode,classNo);
         }
         return null;
     }
@@ -51,14 +53,15 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
     /**
      * 分页查询参数配置列表
      *
+     * @param appCode 应用编号
      * @param model 分页模型
      * @return 参数配置集合
      */
     @Override
-    public List<SysConfiginfo> getRecordsByPaging(PagingModel model) {
+    public List<SysConfiginfo> getRecordsByPaging(String appCode,PagingModel model) {
         if (StringUtils.isNotNull(model)) {
             model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
-            return sysConfiginfoMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+            return sysConfiginfoMapper.getRecordsByPaging(appCode,model);
         }
         return null;
     }
@@ -67,6 +70,7 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
     /**
      * 分页查询参数配置列表
      *
+     * @param appCode 应用编号
      * @param pageIndex 当前页起始索引
      * @param pageSize 页面大小
      * @param condition 条件
@@ -75,7 +79,7 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
      * @return 参数配置集合
      */
     @Override
-    public List<SysConfiginfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
+    public List<SysConfiginfo> getRecordsByPaging(String appCode,int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();
         model.setPageIndex((pageIndex-1) * pageSize);
@@ -91,19 +95,20 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
         } else {
             model.setOrderType(orderType);
         }
-        return sysConfiginfoMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+        return sysConfiginfoMapper.getRecordsByPaging(appCode,model);
     }
 
     /**
      * 查询参数配置
      *
+     * @param appCode 应用编号
      * @param no 参数配置ID
      * @return 参数配置
      */
     @Override
-    public SysConfiginfo getRecordByNo(String no) {
+    public SysConfiginfo getRecordByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysConfiginfoMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
+            return sysConfiginfoMapper.getRecordByNo(appCode,no);
         }
         return null;
     }
@@ -111,13 +116,14 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
     /**
      * 查询参数配置
      *
+     * @param appCode 应用编号
      * @param configKey 参数配置Key
      * @return 参数配置
      */
     @Override
-    public SysConfiginfo getRecordByConfigKey(String configKey) {
+    public SysConfiginfo getRecordByConfigKey(String appCode,String configKey) {
         if (StringUtils.isNotEmpty(configKey)) {
-            return sysConfiginfoMapper.getRecordByConfigKey(GlobalConfig.getAppCode(),configKey);
+            return sysConfiginfoMapper.getRecordByConfigKey(appCode,configKey);
         }
         return null;
     }
@@ -125,13 +131,14 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
     /**
      * 查询参数配置名称
      *
+     * @param appCode 应用编号
      * @param no 参数配置ID
      * @return 名称
      */
     @Override
-    public String getRecordNameByNo(String no) {
+    public String getRecordNameByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysConfiginfoMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
+            return sysConfiginfoMapper.getRecordNameByNo(appCode,no);
         }
         return null;
     }
@@ -139,25 +146,27 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
     /**
      * 查询参数配置计数
      *
+     * @param appCode 应用编号
      * @param condition 查询条件
      * @return 结果
      */
     @Override
-    public int getCountByCondition(String condition) {
-        return sysConfiginfoMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
+    public int getCountByCondition(String appCode,String condition) {
+        return sysConfiginfoMapper.getCountByCondition(appCode,condition);
     }
 
     /**
      * 新增参数配置
      *
+     * @param appCode 应用编号
      * @param info 参数配置
      * @return 结果
      */
     @Override
-    public int AddNewRecord(SysConfiginfo info) {
+    public int AddNewRecord(String appCode,SysConfiginfo info) {
         info.setCreateTime(DateUtils.getNowDate());
         info.setUpdateTime(DateUtils.getNowDate());
-        info.setAppCode(GlobalConfig.getAppCode());
+        info.setAppCode(appCode);
         info.setVersion(1L);
         return sysConfiginfoMapper.AddNewRecord(info);
     }
@@ -165,26 +174,28 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
     /**
      * 更新参数配置
      *
+     * @param appCode 应用编号
      * @param info 参数配置
      * @return 结果
      */
     @Override
-    public int UpdateRecord(SysConfiginfo info) {
+    public int UpdateRecord(String appCode,SysConfiginfo info) {
         info.setUpdateTime(DateUtils.getNowDate());
-        info.setAppCode(GlobalConfig.getAppCode());
+        info.setAppCode(appCode);
         return sysConfiginfoMapper.UpdateRecord(info);
     }
 
     /**
      * 硬删除参数配置
      *
+     * @param appCode 应用编号
      * @param no 参数配置ID
      * @return 结果
      */
     @Override
-    public int HardDeleteByNo(String no) {
+    public int HardDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysConfiginfoMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
+            return sysConfiginfoMapper.HardDeleteByNo(appCode,no);
         }
         return 0;
     }
@@ -192,13 +203,14 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
     /**
      * 批量硬删除参数配置
      *
+     * @param appCode 应用编号
      * @param nos 参数配置IDs
      * @return 结果
      */
     @Override
-    public int HardDeleteByNos(String[] nos) {
+    public int HardDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return sysConfiginfoMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return sysConfiginfoMapper.HardDeleteByNos(appCode,nos);
         }
         return 0;
     }
@@ -206,24 +218,26 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
     /**
      * 按条件硬删除参数配置
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
     @Override
-    public int HardDeleteByCondition(String condition) {
-        return sysConfiginfoMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
+    public int HardDeleteByCondition(String appCode,String condition) {
+        return sysConfiginfoMapper.HardDeleteByCondition(appCode,condition);
     }
 
     /**
      * 软删除参数配置
      *
+     * @param appCode 应用编号
      * @param no 参数配置ID
      * @return 结果
      */
     @Override
-    public int SoftDeleteByNo(String no) {
+    public int SoftDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysConfiginfoMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
+            return sysConfiginfoMapper.SoftDeleteByNo(appCode,no);
         }
         return 0;
     }
@@ -231,13 +245,14 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
     /**
      * 批量软删除参数配置
      *
+     * @param appCode 应用编号
      * @param nos 参数配置IDs
      * @return 结果
      */
     @Override
-    public int SoftDeleteByNos(String[] nos) {
+    public int SoftDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return sysConfiginfoMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return sysConfiginfoMapper.SoftDeleteByNos(appCode,nos);
         }
         return 0;
     }
@@ -245,48 +260,52 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
     /**
      * 按条件软删除参数配置
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
     @Override
-    public int SoftDeleteByCondition(String condition) {
-        return sysConfiginfoMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
+    public int SoftDeleteByCondition(String appCode,String condition) {
+        return sysConfiginfoMapper.SoftDeleteByCondition(appCode,condition);
     }
 
 
     /**
      * 校验参数键名是否唯一
      *
+     * @param appCode 应用编号
      * @param configKey 参数键名
      * @return 结果
      */
     @Override
-    public int checkConfigKeyUnique(String configKey){
-        return sysConfiginfoMapper.checkConfigKeyUnique(GlobalConfig.getAppCode(),configKey);
+    public int checkConfigKeyUnique(String appCode,String configKey){
+        return sysConfiginfoMapper.checkConfigKeyUnique(appCode,configKey);
     }
 
     /**
      * 根据键名返回键值
      *
+     * @param appCode 应用编号
      * @param configKey 参数键名
      * @return 参数键值
      */
     @Override
-    public String getConfigValueByKey(String configKey){
-        return sysConfiginfoMapper.getConfigValueByKey(GlobalConfig.getAppCode(),configKey);
+    public String getConfigValueByKey(String appCode,String configKey){
+        return sysConfiginfoMapper.getConfigValueByKey(appCode,configKey);
     }
 
 
     /**
      * 保存参数配置
      *
+     * @param appCode 应用编号
      * @param configKey 参数配置
      * @param configValue 参数配置
      * @param configType 参数配置
      * @return 结果
      */
-    public int saveConfigValueByKey(String configKey,String configValue,String configType){
-        SysConfiginfo info=sysConfiginfoMapper.getRecordByConfigKey(GlobalConfig.getAppCode(),configKey);
+    public int saveConfigValueByKey(String appCode,String configKey,String configValue,String configType){
+        SysConfiginfo info=sysConfiginfoMapper.getRecordByConfigKey(appCode,configKey);
         if(info==null) {
             info=new SysConfiginfo();
             info.setConfigNo(UuidUtils.shortUUID());
@@ -302,7 +321,7 @@ public class SysConfiginfoServiceImpl implements ISysConfiginfoService
             info.setUpdateTime(DateUtils.getNowDate());
             info.setDeleteFlag("1");
             info.setComments("");
-            info.setAppCode(GlobalConfig.getAppCode());
+            info.setAppCode(appCode);
             info.setVersion(1L);
 
             return sysConfiginfoMapper.AddNewRecord(info);

@@ -198,31 +198,31 @@
 
     <select id="getRecordByLoginName" resultMap="SysSuserinfoResult">
         <include refid="selectSysSuserinfoVo"/>
-        where delete_flag='1' and app_code=#{appCode} and login_name = #{loginName}
+        where delete_flag='1'  and login_name = #{loginName}
     </select>
 
     <select id="getRecordByTelephone" resultMap="SysSuserinfoResult">
         <include refid="selectSysSuserinfoVo"/>
-        where delete_flag='1' and app_code=#{appCode} and telephone = #{telephone}
+        where delete_flag='1' and telephone = #{telephone}
     </select>
 
     <select id="getRecordByEmail" resultMap="SysSuserinfoResult">
         <include refid="selectSysSuserinfoVo"/>
-        where delete_flag='1' and app_code=#{appCode} and email = #{email}
+        where delete_flag='1' and email = #{email}
     </select>
 
     <select id="checkLoginNameUnique" resultType="Integer">
         select count(*) from sys_suserinfo
-        where delete_flag='1' and app_code=#{appCode} and login_name = #{loginName}
+        where delete_flag='1'  and login_name = #{loginName}
     </select>
 
     <select id="checkTelephoneUnique" resultType="Integer">
         select count(*) from sys_suserinfo
-        where delete_flag='1' and app_code=#{appCode} and telephone = #{telephone}
+        where delete_flag='1'  and telephone = #{telephone}
     </select>
 
     <select id="checkEmailUnique" resultType="Integer">
         select count(*) from sys_suserinfo
-        where delete_flag='1' and app_code=#{appCode} and email = #{email}
+        where delete_flag='1'  and email = #{email}
     </select>
 </mapper>

@@ -62,8 +62,9 @@ public class FlwFlownotesController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = flwFlownotesService.getCountByCondition(pRequest.getCondition());
-        List<FlwFlownotes> list = flwFlownotesService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwFlownotesService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<FlwFlownotes> list = flwFlownotesService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -78,7 +79,7 @@ public class FlwFlownotesController extends BaseController
         flwFlownotes.setNoteNo(UuidUtils.shortUUID());
         flwFlownotes.setCreateBy(loginUser.getUser().getUserNo());
         flwFlownotes.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(flwFlownotesService.AddNewRecord(flwFlownotes));
+        return toAjax(flwFlownotesService.AddNewRecord(loginUser.getUser().getAppCode(),flwFlownotes));
     }
 
     /**
@@ -90,7 +91,7 @@ public class FlwFlownotesController extends BaseController
         public AjaxResult update(@RequestBody FlwFlownotes flwFlownotes) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         flwFlownotes.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwFlownotesService.UpdateRecord(flwFlownotes));
+            return toAjax(flwFlownotesService.UpdateRecord(loginUser.getUser().getAppCode(),flwFlownotes));
         }
 
     /**
@@ -101,14 +102,14 @@ public class FlwFlownotesController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwFlownotes flwFlownotes) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(flwFlownotesService.getRecordByNo(flwFlownotes.getNoteNo()))) {
+        if (StringUtils.isNull(flwFlownotesService.getRecordByNo(loginUser.getUser().getAppCode(),flwFlownotes.getNoteNo()))) {
             flwFlownotes.setNoteNo(UuidUtils.shortUUID());
             flwFlownotes.setCreateBy(loginUser.getUser().getUserNo());
             flwFlownotes.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwFlownotesService.AddNewRecord(flwFlownotes));
+            return toAjax(flwFlownotesService.AddNewRecord(loginUser.getUser().getAppCode(),flwFlownotes));
         } else {
             flwFlownotes.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwFlownotesService.UpdateRecord(flwFlownotes));
+            return toAjax(flwFlownotesService.UpdateRecord(loginUser.getUser().getAppCode(),flwFlownotes));
         }
     }
 
@@ -120,7 +121,8 @@ public class FlwFlownotesController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(flwFlownotesService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(flwFlownotesService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -130,7 +132,8 @@ public class FlwFlownotesController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(flwFlownotesService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(flwFlownotesService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -141,9 +144,10 @@ public class FlwFlownotesController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = flwFlownotesService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwFlownotesService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<FlwFlownotes> list = flwFlownotesService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<FlwFlownotes> list = flwFlownotesService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<FlwFlownotes> util = new ExcelUtils<FlwFlownotes>(FlwFlownotes.class);
         return util.exportExcel(list, "FlwFlownotes");
     }

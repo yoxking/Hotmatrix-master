@@ -63,8 +63,9 @@ public class SysRenteclassController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = sysRenteclassService.getCountByCondition(pRequest.getCondition());
-        List<SysRenteclass> list = sysRenteclassService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysRenteclassService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<SysRenteclass> list = sysRenteclassService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -79,7 +80,7 @@ public class SysRenteclassController extends BaseController
         sysAppclass.setClassNo(UuidUtils.shortUUID());
         sysAppclass.setCreateBy(loginUser.getUser().getUserNo());
         sysAppclass.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysRenteclassService.AddNewRecord(sysAppclass));
+        return toAjax(sysRenteclassService.AddNewRecord(loginUser.getUser().getAppCode(),sysAppclass));
     }
 
     /**
@@ -91,7 +92,7 @@ public class SysRenteclassController extends BaseController
     public AjaxResult update(@RequestBody SysRenteclass sysAppclass) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysAppclass.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysRenteclassService.UpdateRecord(sysAppclass));
+        return toAjax(sysRenteclassService.UpdateRecord(loginUser.getUser().getAppCode(),sysAppclass));
     }
 
     /**
@@ -102,14 +103,14 @@ public class SysRenteclassController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysRenteclass sysAppclass) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(sysRenteclassService.getRecordByNo(sysAppclass.getClassNo()))) {
+        if (StringUtils.isNull(sysRenteclassService.getRecordByNo(loginUser.getUser().getAppCode(),sysAppclass.getClassNo()))) {
             sysAppclass.setClassNo(UuidUtils.shortUUID());
             sysAppclass.setCreateBy(loginUser.getUser().getUserNo());
             sysAppclass.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysRenteclassService.AddNewRecord(sysAppclass));
+            return toAjax(sysRenteclassService.AddNewRecord(loginUser.getUser().getAppCode(),sysAppclass));
         } else {
             sysAppclass.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysRenteclassService.UpdateRecord(sysAppclass));
+            return toAjax(sysRenteclassService.UpdateRecord(loginUser.getUser().getAppCode(),sysAppclass));
         }
     }
 
@@ -121,7 +122,8 @@ public class SysRenteclassController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(sysRenteclassService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysRenteclassService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -131,7 +133,8 @@ public class SysRenteclassController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(sysRenteclassService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(sysRenteclassService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -142,9 +145,10 @@ public class SysRenteclassController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = sysRenteclassService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysRenteclassService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<SysRenteclass> list = sysRenteclassService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<SysRenteclass> list = sysRenteclassService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysRenteclass> util = new ExcelUtils<SysRenteclass>(SysRenteclass.class);
         return util.exportExcel(list, "SysRenteclass");
     }

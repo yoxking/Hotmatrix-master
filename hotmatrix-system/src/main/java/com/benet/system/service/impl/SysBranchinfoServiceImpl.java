@@ -26,23 +26,25 @@ public class SysBranchinfoServiceImpl implements ISysBranchinfoService
     /**
      * 查询所有分支信息列表
      *
+     * @param appCode 应用编号
      * @return 分支信息集合
      */
     @Override
-    public List<SysBranchinfo> getAllRecords() {
-        return sysBranchinfoMapper.getAllRecords(GlobalConfig.getAppCode());
+    public List<SysBranchinfo> getAllRecords(String appCode) {
+        return sysBranchinfoMapper.getAllRecords(appCode);
     }
 
     /**
      * 按分类查询分支信息列表
      *
+     * @param appCode 应用编号
      * @param classNo 分类编号
      * @return 分支信息集合
      */
     @Override
-    public List<SysBranchinfo> getRecordsByClassNo(String classNo) {
+    public List<SysBranchinfo> getRecordsByClassNo(String appCode,String classNo) {
         if (StringUtils.isNotEmpty(classNo)) {
-            return sysBranchinfoMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
+            return sysBranchinfoMapper.getRecordsByClassNo(appCode,classNo);
         }
         return null;
     }
@@ -50,14 +52,15 @@ public class SysBranchinfoServiceImpl implements ISysBranchinfoService
     /**
      * 分页查询分支信息列表
      *
+     * @param appCode 应用编号
      * @param model 分页模型
      * @return 分支信息集合
      */
     @Override
-    public List<SysBranchinfo> getRecordsByPaging(PagingModel model) {
+    public List<SysBranchinfo> getRecordsByPaging(String appCode,PagingModel model) {
         if (StringUtils.isNotNull(model)) {
             model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
-            return sysBranchinfoMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+            return sysBranchinfoMapper.getRecordsByPaging(appCode,model);
         }
         return null;
     }
@@ -66,6 +69,7 @@ public class SysBranchinfoServiceImpl implements ISysBranchinfoService
     /**
      * 分页查询分支信息列表
      *
+     * @param appCode 应用编号
      * @param pageIndex 当前页起始索引
      * @param pageSize 页面大小
      * @param condition 条件
@@ -74,7 +78,7 @@ public class SysBranchinfoServiceImpl implements ISysBranchinfoService
      * @return 分支信息集合
      */
     @Override
-    public List<SysBranchinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
+    public List<SysBranchinfo> getRecordsByPaging(String appCode,int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();
         model.setPageIndex((pageIndex-1) * pageSize);
@@ -90,19 +94,20 @@ public class SysBranchinfoServiceImpl implements ISysBranchinfoService
         } else {
             model.setOrderType(orderType);
         }
-        return sysBranchinfoMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
+        return sysBranchinfoMapper.getRecordsByPaging(appCode,model);
     }
 
     /**
      * 查询分支信息
      *
+     * @param appCode 应用编号
      * @param no 分支信息ID
      * @return 分支信息
      */
     @Override
-    public SysBranchinfo getRecordByNo(String no) {
+    public SysBranchinfo getRecordByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysBranchinfoMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
+            return sysBranchinfoMapper.getRecordByNo(appCode,no);
         }
         return null;
     }
@@ -110,13 +115,14 @@ public class SysBranchinfoServiceImpl implements ISysBranchinfoService
     /**
      * 查询分支信息名称
      *
+     * @param appCode 应用编号
      * @param no 分支信息ID
      * @return 名称
      */
     @Override
-    public String getRecordNameByNo(String no) {
+    public String getRecordNameByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysBranchinfoMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
+            return sysBranchinfoMapper.getRecordNameByNo(appCode,no);
         }
         return null;
     }
@@ -124,25 +130,27 @@ public class SysBranchinfoServiceImpl implements ISysBranchinfoService
     /**
      * 查询分支信息计数
      *
+     * @param appCode 应用编号
      * @param condition 查询条件
      * @return 结果
      */
     @Override
-    public int getCountByCondition(String condition) {
-        return sysBranchinfoMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
+    public int getCountByCondition(String appCode,String condition) {
+        return sysBranchinfoMapper.getCountByCondition(appCode,condition);
     }
 
     /**
      * 新增分支信息
      *
+     * @param appCode 应用编号
      * @param info 分支信息
      * @return 结果
      */
     @Override
-    public int AddNewRecord(SysBranchinfo info) {
+    public int AddNewRecord(String appCode,SysBranchinfo info) {
             info.setCreateTime(DateUtils.getNowDate());
             info.setUpdateTime(DateUtils.getNowDate());
-            info.setAppCode(GlobalConfig.getAppCode());
+            info.setAppCode(appCode);
             info.setVersion(1L);
             return sysBranchinfoMapper.AddNewRecord(info);
     }
@@ -150,26 +158,28 @@ public class SysBranchinfoServiceImpl implements ISysBranchinfoService
     /**
      * 更新分支信息
      *
+     * @param appCode 应用编号
      * @param info 分支信息
      * @return 结果
      */
     @Override
-    public int UpdateRecord(SysBranchinfo info) {
+    public int UpdateRecord(String appCode,SysBranchinfo info) {
         info.setUpdateTime(DateUtils.getNowDate());
-        info.setAppCode(GlobalConfig.getAppCode());
+        info.setAppCode(appCode);
         return sysBranchinfoMapper.UpdateRecord(info);
     }
 
     /**
      * 硬删除分支信息
      *
+     * @param appCode 应用编号
      * @param no 分支信息ID
      * @return 结果
      */
     @Override
-    public int HardDeleteByNo(String no) {
+    public int HardDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysBranchinfoMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
+            return sysBranchinfoMapper.HardDeleteByNo(appCode,no);
         }
         return 0;
     }
@@ -177,13 +187,14 @@ public class SysBranchinfoServiceImpl implements ISysBranchinfoService
     /**
      * 批量硬删除分支信息
      *
+     * @param appCode 应用编号
      * @param nos 分支信息IDs
      * @return 结果
      */
     @Override
-    public int HardDeleteByNos(String[] nos) {
+    public int HardDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return sysBranchinfoMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return sysBranchinfoMapper.HardDeleteByNos(appCode,nos);
         }
         return 0;
     }
@@ -191,24 +202,26 @@ public class SysBranchinfoServiceImpl implements ISysBranchinfoService
     /**
      * 按条件硬删除分支信息
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
     @Override
-    public int HardDeleteByCondition(String condition) {
-        return sysBranchinfoMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
+    public int HardDeleteByCondition(String appCode,String condition) {
+        return sysBranchinfoMapper.HardDeleteByCondition(appCode,condition);
     }
 
     /**
      * 软删除分支信息
      *
+     * @param appCode 应用编号
      * @param no 分支信息ID
      * @return 结果
      */
     @Override
-    public int SoftDeleteByNo(String no) {
+    public int SoftDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return sysBranchinfoMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
+            return sysBranchinfoMapper.SoftDeleteByNo(appCode,no);
         }
         return 0;
     }
@@ -216,13 +229,14 @@ public class SysBranchinfoServiceImpl implements ISysBranchinfoService
     /**
      * 批量软删除分支信息
      *
+     * @param appCode 应用编号
      * @param nos 分支信息IDs
      * @return 结果
      */
     @Override
-    public int SoftDeleteByNos(String[] nos) {
+    public int SoftDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return sysBranchinfoMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
+            return sysBranchinfoMapper.SoftDeleteByNos(appCode,nos);
         }
         return 0;
     }
@@ -230,11 +244,12 @@ public class SysBranchinfoServiceImpl implements ISysBranchinfoService
     /**
      * 按条件软删除分支信息
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
     @Override
-    public int SoftDeleteByCondition(String condition) {
-        return sysBranchinfoMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
+    public int SoftDeleteByCondition(String appCode,String condition) {
+        return sysBranchinfoMapper.SoftDeleteByCondition(appCode,condition);
     }
 }

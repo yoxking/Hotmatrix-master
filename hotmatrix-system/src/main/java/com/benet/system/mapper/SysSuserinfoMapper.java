@@ -144,7 +144,7 @@ public interface SysSuserinfoMapper
      * @param loginName 用户名
      * @return 用户对象信息
      */
-    public SysSuserinfo getRecordByLoginName(@Param("appCode") String appCode,@Param("loginName") String loginName);
+    public SysSuserinfo getRecordByLoginName(@Param("loginName") String loginName);
 
 
     /**
@@ -153,7 +153,7 @@ public interface SysSuserinfoMapper
      * @param telephone 手机号码
      * @return 用户对象信息
      */
-    public SysSuserinfo getRecordByTelephone(@Param("appCode") String appCode,@Param("telephone") String telephone);
+    public SysSuserinfo getRecordByTelephone(@Param("telephone") String telephone);
 
 
     /**
@@ -162,7 +162,7 @@ public interface SysSuserinfoMapper
      * @param email 邮箱
      * @return 用户对象信息
      */
-    public SysSuserinfo getRecordByEmail(@Param("appCode") String appCode,@Param("email") String email);
+    public SysSuserinfo getRecordByEmail(@Param("email") String email);
 
     /**
      * 校验用户名称是否唯一
@@ -170,7 +170,7 @@ public interface SysSuserinfoMapper
      * @param loginName 登录名称
      * @return 结果
      */
-    public int checkLoginNameUnique(@Param("appCode") String appCode,@Param("loginName") String loginName);
+    public int checkLoginNameUnique(@Param("loginName") String loginName);
 
     /**
      * 校验手机号码是否唯一
@@ -178,7 +178,7 @@ public interface SysSuserinfoMapper
      * @param telephone 手机号码
      * @return 结果
      */
-    public int checkTelephoneUnique(@Param("appCode") String appCode,@Param("telephone") String telephone);
+    public int checkTelephoneUnique(@Param("telephone") String telephone);
 
     /**
      * 校验email是否唯一
@@ -186,5 +186,5 @@ public interface SysSuserinfoMapper
      * @param email 用户邮箱
      * @return 结果
      */
-    public int checkEmailUnique(@Param("appCode") String appCode,@Param("email") String email);
+    public int checkEmailUnique(@Param("email") String email);
 }

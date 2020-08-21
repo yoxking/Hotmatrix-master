@@ -62,8 +62,9 @@ public class FlwTabcolumnController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = flwTabcolumnService.getCountByCondition(pRequest.getCondition());
-        List<FlwTabcolumn> list = flwTabcolumnService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwTabcolumnService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<FlwTabcolumn> list = flwTabcolumnService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -78,7 +79,7 @@ public class FlwTabcolumnController extends BaseController
         flwTabcolumn.setColumnNo(UuidUtils.shortUUID());
         flwTabcolumn.setCreateBy(loginUser.getUser().getUserNo());
         flwTabcolumn.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(flwTabcolumnService.AddNewRecord(flwTabcolumn));
+        return toAjax(flwTabcolumnService.AddNewRecord(loginUser.getUser().getAppCode(),flwTabcolumn));
     }
 
     /**
@@ -90,7 +91,7 @@ public class FlwTabcolumnController extends BaseController
         public AjaxResult update(@RequestBody FlwTabcolumn flwTabcolumn) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         flwTabcolumn.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwTabcolumnService.UpdateRecord(flwTabcolumn));
+            return toAjax(flwTabcolumnService.UpdateRecord(loginUser.getUser().getAppCode(),flwTabcolumn));
         }
 
     /**
@@ -101,14 +102,14 @@ public class FlwTabcolumnController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwTabcolumn flwTabcolumn) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(flwTabcolumnService.getRecordByNo(flwTabcolumn.getColumnNo()))) {
+        if (StringUtils.isNull(flwTabcolumnService.getRecordByNo(loginUser.getUser().getAppCode(),flwTabcolumn.getColumnNo()))) {
             flwTabcolumn.setColumnNo(UuidUtils.shortUUID());
             flwTabcolumn.setCreateBy(loginUser.getUser().getUserNo());
             flwTabcolumn.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwTabcolumnService.AddNewRecord(flwTabcolumn));
+            return toAjax(flwTabcolumnService.AddNewRecord(loginUser.getUser().getAppCode(),flwTabcolumn));
         } else {
             flwTabcolumn.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwTabcolumnService.UpdateRecord(flwTabcolumn));
+            return toAjax(flwTabcolumnService.UpdateRecord(loginUser.getUser().getAppCode(),flwTabcolumn));
         }
     }
 
@@ -120,7 +121,8 @@ public class FlwTabcolumnController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(flwTabcolumnService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(flwTabcolumnService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -130,7 +132,8 @@ public class FlwTabcolumnController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(flwTabcolumnService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(flwTabcolumnService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -141,9 +144,10 @@ public class FlwTabcolumnController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = flwTabcolumnService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwTabcolumnService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<FlwTabcolumn> list = flwTabcolumnService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<FlwTabcolumn> list = flwTabcolumnService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<FlwTabcolumn> util = new ExcelUtils<FlwTabcolumn>(FlwTabcolumn.class);
         return util.exportExcel(list, "FlwTabcolumn");
     }

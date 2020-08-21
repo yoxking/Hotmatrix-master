@@ -2,6 +2,7 @@ package com.benet.task.utils;
 
 import java.util.Date;
 
+import com.benet.common.configure.GlobalConfig;
 import com.benet.common.constant.PubConstants;
 import com.benet.common.constant.QutzConstants;
 import com.benet.common.utils.bean.BeanUtils;
@@ -97,7 +98,7 @@ public abstract class AbstractJob implements Job
         sysTaskeLog.setCheckState("1");
 
         // 写入数据库当中
-        SpringUtils.getBean(ISysTaskelogService.class).AddNewRecord(sysTaskeLog);
+        SpringUtils.getBean(ISysTaskelogService.class).AddNewRecord(GlobalConfig.getAppCode(),sysTaskeLog);
     }
 
     /**

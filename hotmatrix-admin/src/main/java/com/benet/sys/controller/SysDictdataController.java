@@ -66,8 +66,9 @@ public class SysDictdataController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = sysDictdataService.getCountByCondition(pRequest.getCondition());
-        List<SysDictdata> list = sysDictdataService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysDictdataService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<SysDictdata> list = sysDictdataService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -78,7 +79,8 @@ public class SysDictdataController extends BaseController
     @GetMapping(value = "/typelist")
     public TableDataInfo typelist()
     {
-        List<SysDicttype> list = sysDicttypeService.getAllRecords();
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        List<SysDicttype> list = sysDicttypeService.getAllRecords(loginUser.getUser().getAppCode());
         return getDataTable(convertList(list), list.size());
     }
 
@@ -112,7 +114,7 @@ public class SysDictdataController extends BaseController
         sysDictdata.setDataNo(UuidUtils.shortUUID());
         sysDictdata.setCreateBy(loginUser.getUser().getUserNo());
         sysDictdata.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysDictdataService.AddNewRecord(sysDictdata));
+        return toAjax(sysDictdataService.AddNewRecord(loginUser.getUser().getAppCode(),sysDictdata));
     }
 
     /**
@@ -124,7 +126,7 @@ public class SysDictdataController extends BaseController
         public AjaxResult update(@RequestBody SysDictdata sysDictdata) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysDictdata.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysDictdataService.UpdateRecord(sysDictdata));
+            return toAjax(sysDictdataService.UpdateRecord(loginUser.getUser().getAppCode(),sysDictdata));
         }
 
     /**
@@ -135,14 +137,14 @@ public class SysDictdataController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysDictdata sysDictdata) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(sysDictdataService.getRecordByNo(sysDictdata.getDataNo()))) {
+        if (StringUtils.isNull(sysDictdataService.getRecordByNo(loginUser.getUser().getAppCode(),sysDictdata.getDataNo()))) {
             sysDictdata.setDataNo(UuidUtils.shortUUID());
             sysDictdata.setCreateBy(loginUser.getUser().getUserNo());
             sysDictdata.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysDictdataService.AddNewRecord(sysDictdata));
+            return toAjax(sysDictdataService.AddNewRecord(loginUser.getUser().getAppCode(),sysDictdata));
         } else {
             sysDictdata.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysDictdataService.UpdateRecord(sysDictdata));
+            return toAjax(sysDictdataService.UpdateRecord(loginUser.getUser().getAppCode(),sysDictdata));
         }
     }
 
@@ -154,7 +156,8 @@ public class SysDictdataController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(sysDictdataService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysDictdataService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -164,7 +167,8 @@ public class SysDictdataController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(sysDictdataService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(sysDictdataService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -175,9 +179,10 @@ public class SysDictdataController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = sysDictdataService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysDictdataService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<SysDictdata> list = sysDictdataService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<SysDictdata> list = sysDictdataService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysDictdata> util = new ExcelUtils<SysDictdata>(SysDictdata.class);
         return util.exportExcel(list, "SysDictdata");
     }

@@ -3,6 +3,9 @@ package com.benet.web.controller;
 import com.benet.common.annotation.Oplog;
 import com.benet.common.core.domain.AjaxResult;
 import com.benet.common.enums.BusinessType;
+import com.benet.common.utils.web.ServletUtils;
+import com.benet.framework.security.LoginUser;
+import com.benet.framework.security.service.MyJwtokenService;
 import com.benet.system.service.ISysConfiginfoService;
 import com.benet.web.vmodel.ConfigInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,9 @@ public class ConfigInfoController {
     @Autowired
     private ISysConfiginfoService sysConfiginfoService;
 
+    @Autowired
+    private MyJwtokenService tokenService;
+
     /**
      * 配置请求
      *
@@ -27,13 +33,14 @@ public class ConfigInfoController {
     @GetMapping("/getConfigInfo")
     public AjaxResult getConfigInfo()
     {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         ConfigInfoVo info=new ConfigInfoVo();
-        info.setSiteName(sysConfiginfoService.getConfigValueByKey("SiteName"));
-        info.setSiteUrl(sysConfiginfoService.getConfigValueByKey("SiteUrl"));
-        info.setAppCode(sysConfiginfoService.getConfigValueByKey("AppCode"));
-        info.setConnStr(sysConfiginfoService.getConfigValueByKey("ConnStr"));
-        info.setSiteDesc(sysConfiginfoService.getConfigValueByKey("SiteDesc"));
-        info.setRunState(sysConfiginfoService.getConfigValueByKey("RunState"));
+        info.setSiteName(sysConfiginfoService.getConfigValueByKey(loginUser.getUser().getAppCode(),"SiteName"));
+        info.setSiteUrl(sysConfiginfoService.getConfigValueByKey(loginUser.getUser().getAppCode(),"SiteUrl"));
+        info.setAppCode(sysConfiginfoService.getConfigValueByKey(loginUser.getUser().getAppCode(),"AppCode"));
+        info.setConnStr(sysConfiginfoService.getConfigValueByKey(loginUser.getUser().getAppCode(),"ConnStr"));
+        info.setSiteDesc(sysConfiginfoService.getConfigValueByKey(loginUser.getUser().getAppCode(),"SiteDesc"));
+        info.setRunState(sysConfiginfoService.getConfigValueByKey(loginUser.getUser().getAppCode(),"RunState"));
 
         return AjaxResult.success(info);
     }
@@ -45,12 +52,13 @@ public class ConfigInfoController {
     @PostMapping("/saveConfigInfo")
     public AjaxResult saveConfigInfo(@RequestBody ConfigInfoVo contentinfo) {
 
-        sysConfiginfoService.saveConfigValueByKey("SiteName",contentinfo.getSiteName(),"Y");
-        sysConfiginfoService.saveConfigValueByKey("SiteUrl",contentinfo.getSiteUrl(),"Y");
-        sysConfiginfoService.saveConfigValueByKey("AppCode",contentinfo.getAppCode(),"Y");
-        sysConfiginfoService.saveConfigValueByKey("ConnStr",contentinfo.getConnStr(),"Y");
-        sysConfiginfoService.saveConfigValueByKey("SiteDesc",contentinfo.getSiteDesc(),"Y");
-        sysConfiginfoService.saveConfigValueByKey("RunState",contentinfo.getRunState(),"Y");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"SiteName",contentinfo.getSiteName(),"Y");
+        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"SiteUrl",contentinfo.getSiteUrl(),"Y");
+        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"AppCode",contentinfo.getAppCode(),"Y");
+        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"ConnStr",contentinfo.getConnStr(),"Y");
+        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"SiteDesc",contentinfo.getSiteDesc(),"Y");
+        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"RunState",contentinfo.getRunState(),"Y");
 
         return  AjaxResult.success();
     }

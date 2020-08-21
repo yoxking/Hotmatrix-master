@@ -18,29 +18,33 @@ public interface ISysTableinfoService
     /**
      * 查询所有代码生成业务列表
      *
+     * @param appCode 应用编号
      * @return 代码生成业务集合
      */
-    public List<SysTableinfo> getAllRecords();
+    public List<SysTableinfo> getAllRecords(String appCode);
 
     /**
      * 按分类查询代码生成业务列表
      *
+     * @param appCode 应用编号
      * @param classNo 分类编号
      * @return 代码生成业务集合
      */
-    public List<SysTableinfo> getRecordsByClassNo(String classNo);
+    public List<SysTableinfo> getRecordsByClassNo(String appCode,String classNo);
 
     /**
      * 分页查询代码生成业务列表
      *
+     * @param appCode 应用编号
      * @param model 分页模型
      * @return 代码生成业务集合
      */
-    public List<SysTableinfo> getRecordsByPaging(PagingModel model);
+    public List<SysTableinfo> getRecordsByPaging(String appCode,PagingModel model);
 
     /**
      * 分页查询代码生成业务列表
      *
+     * @param appCode 应用编号
      * @param pageIndex 当前页索引
      * @param pageSize 分页大小
      * @param condition 分页条件
@@ -48,103 +52,115 @@ public interface ISysTableinfoService
      * @param orderType 排序类型
      * @return 代码生成业务集合
      */
-    public List<SysTableinfo> getRecordsByPaging(int pageIndex, int pageSize, String condition, String orderField, String orderType);
+    public List<SysTableinfo> getRecordsByPaging(String appCode,int pageIndex, int pageSize, String condition, String orderField, String orderType);
 
     /**
      * 查询代码生成业务
      *
+     * @param appCode 应用编号
      * @param no 代码生成业务ID
      * @return 代码生成业务
      */
-    public SysTableinfo getRecordByNo(String no);
+    public SysTableinfo getRecordByNo(String appCode,String no);
 
     /**
      * 查询代码生成业务
      *
+     * @param appCode 应用编号
      * @param tableName 表名
      * @return 代码生成业务
      */
-    public SysTableinfo getRecordByName(String tableName);
+    public SysTableinfo getRecordByName(String appCode,String tableName);
 
     /**
      * 查询代码生成业务名称
      *
+     * @param appCode 应用编号
      * @param no 代码生成业务ID
      * @return 名称
      */
-    public String getRecordNameByNo(String no);
+    public String getRecordNameByNo(String appCode,String no);
 
     /**
      * 查询代码生成业务计数
      *
+     * @param appCode 应用编号
      * @param condition 查询条件
      * @return 结果
      */
-    public int getCountByCondition(String condition);
+    public int getCountByCondition(String appCode,String condition);
 
     /**
      * 新增代码生成业务
      *
+     * @param appCode 应用编号
      * @param info 代码生成业务
      * @return 结果
      */
-    public int AddNewRecord(SysTableinfo info);
+    public int AddNewRecord(String appCode,SysTableinfo info);
 
     /**
      * 更新代码生成业务
      *
+     * @param appCode 应用编号
      * @param info 代码生成业务
      * @return 结果
      */
-    public int UpdateRecord(SysTableinfo info);
+    public int UpdateRecord(String appCode,SysTableinfo info);
 
     /**
      * 硬删除代码生成业务
      *
+     * @param appCode 应用编号
      * @param no 代码生成业务ID
      * @return 结果
      */
-    public int HardDeleteByNo(String no);
+    public int HardDeleteByNo(String appCode,String no);
 
     /**
      * 批量硬删除代码生成业务
      *
+     * @param appCode 应用编号
      * @param nos 代码生成业务IDs
      * @return 结果
      */
-    public int HardDeleteByNos(String[] nos);
+    public int HardDeleteByNos(String appCode,String[] nos);
 
     /**
      * 按条件硬删除代码生成业务
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
-    public int HardDeleteByCondition(String condition);
+    public int HardDeleteByCondition(String appCode,String condition);
 
     /**
      * 软删除代码生成业务
      *
+     * @param appCode 应用编号
      * @param no 代码生成业务ID
      * @return 结果
      */
-    public int SoftDeleteByNo(String no);
+    public int SoftDeleteByNo(String appCode,String no);
 
     /**
      * 批量软删除代码生成业务
      *
+     * @param appCode 应用编号
      * @param nos 代码生成业务IDs
      * @return 结果
      */
-    public int SoftDeleteByNos(String[] nos);
+    public int SoftDeleteByNos(String appCode,String[] nos);
 
     /**
      * 按条件软删除代码生成业务
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
-    public int SoftDeleteByCondition(String condition);
+    public int SoftDeleteByCondition(String appCode,String condition);
 
 
     /**
@@ -175,33 +191,37 @@ public interface ISysTableinfoService
     /**
      * 导入表结构
      *
+     * @param appCode 应用编号
      * @param tableList 导入表列表
      */
-    public void importTableInfo(List<SysTableinfo> tableList);
+    public void importTableInfo(String appCode,List<SysTableinfo> tableList);
 
     /**
      * 预览代码
      *
+     * @param appCode 应用编号
      * @param tableNo 表编号
      * @return 预览数据列表
      */
-    public Map<String, String> previewCode(String tableNo);
+    public Map<String, String> previewCode(String appCode,String tableNo);
 
     /**
      * 生成代码
      *
+     * @param appCode 应用编号
      * @param tableName 表名称
      * @return 数据
      */
-    public byte[] generateCode(String tableName);
+    public byte[] generateCode(String appCode,String tableName);
 
     /**
      * 批量生成代码
      *
+     * @param appCode 应用编号
      * @param tableNames 表数组
      * @return 数据
      */
-    public byte[] generateCode(String[] tableNames);
+    public byte[] generateCode(String appCode,String[] tableNames);
 
     /**
      * 修改保存参数校验

@@ -62,8 +62,9 @@ public class FlwWorkgroupController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = flwWorkgroupService.getCountByCondition(pRequest.getCondition());
-        List<FlwWorkgroup> list = flwWorkgroupService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwWorkgroupService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<FlwWorkgroup> list = flwWorkgroupService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -78,7 +79,7 @@ public class FlwWorkgroupController extends BaseController
         flwWorkgroup.setGroupNo(UuidUtils.shortUUID());
         flwWorkgroup.setCreateBy(loginUser.getUser().getUserNo());
         flwWorkgroup.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(flwWorkgroupService.AddNewRecord(flwWorkgroup));
+        return toAjax(flwWorkgroupService.AddNewRecord(loginUser.getUser().getAppCode(),flwWorkgroup));
     }
 
     /**
@@ -90,7 +91,7 @@ public class FlwWorkgroupController extends BaseController
         public AjaxResult update(@RequestBody FlwWorkgroup flwWorkgroup) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         flwWorkgroup.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwWorkgroupService.UpdateRecord(flwWorkgroup));
+            return toAjax(flwWorkgroupService.UpdateRecord(loginUser.getUser().getAppCode(),flwWorkgroup));
         }
 
     /**
@@ -101,14 +102,14 @@ public class FlwWorkgroupController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwWorkgroup flwWorkgroup) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(flwWorkgroupService.getRecordByNo(flwWorkgroup.getGroupNo()))) {
+        if (StringUtils.isNull(flwWorkgroupService.getRecordByNo(loginUser.getUser().getAppCode(),flwWorkgroup.getGroupNo()))) {
             flwWorkgroup.setGroupNo(UuidUtils.shortUUID());
             flwWorkgroup.setCreateBy(loginUser.getUser().getUserNo());
             flwWorkgroup.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwWorkgroupService.AddNewRecord(flwWorkgroup));
+            return toAjax(flwWorkgroupService.AddNewRecord(loginUser.getUser().getAppCode(),flwWorkgroup));
         } else {
             flwWorkgroup.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwWorkgroupService.UpdateRecord(flwWorkgroup));
+            return toAjax(flwWorkgroupService.UpdateRecord(loginUser.getUser().getAppCode(),flwWorkgroup));
         }
     }
 
@@ -120,7 +121,8 @@ public class FlwWorkgroupController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(flwWorkgroupService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(flwWorkgroupService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -130,7 +132,8 @@ public class FlwWorkgroupController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(flwWorkgroupService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(flwWorkgroupService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -141,9 +144,10 @@ public class FlwWorkgroupController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = flwWorkgroupService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwWorkgroupService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<FlwWorkgroup> list = flwWorkgroupService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<FlwWorkgroup> list = flwWorkgroupService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<FlwWorkgroup> util = new ExcelUtils<FlwWorkgroup>(FlwWorkgroup.class);
         return util.exportExcel(list, "FlwWorkgroup");
     }

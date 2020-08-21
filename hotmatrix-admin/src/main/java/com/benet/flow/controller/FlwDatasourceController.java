@@ -62,8 +62,9 @@ public class FlwDatasourceController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = flwDatasourceService.getCountByCondition(pRequest.getCondition());
-        List<FlwDatasource> list = flwDatasourceService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwDatasourceService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<FlwDatasource> list = flwDatasourceService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -78,7 +79,7 @@ public class FlwDatasourceController extends BaseController
         flwDatasource.setDtsrcNo(UuidUtils.shortUUID());
         flwDatasource.setCreateBy(loginUser.getUser().getUserNo());
         flwDatasource.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(flwDatasourceService.AddNewRecord(flwDatasource));
+        return toAjax(flwDatasourceService.AddNewRecord(loginUser.getUser().getAppCode(),flwDatasource));
     }
 
     /**
@@ -90,7 +91,7 @@ public class FlwDatasourceController extends BaseController
         public AjaxResult update(@RequestBody FlwDatasource flwDatasource) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         flwDatasource.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwDatasourceService.UpdateRecord(flwDatasource));
+            return toAjax(flwDatasourceService.UpdateRecord(loginUser.getUser().getAppCode(),flwDatasource));
         }
 
     /**
@@ -101,14 +102,14 @@ public class FlwDatasourceController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwDatasource flwDatasource) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(flwDatasourceService.getRecordByNo(flwDatasource.getDtsrcNo()))) {
+        if (StringUtils.isNull(flwDatasourceService.getRecordByNo(loginUser.getUser().getAppCode(),flwDatasource.getDtsrcNo()))) {
             flwDatasource.setDtsrcNo(UuidUtils.shortUUID());
             flwDatasource.setCreateBy(loginUser.getUser().getUserNo());
             flwDatasource.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwDatasourceService.AddNewRecord(flwDatasource));
+            return toAjax(flwDatasourceService.AddNewRecord(loginUser.getUser().getAppCode(),flwDatasource));
         } else {
             flwDatasource.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwDatasourceService.UpdateRecord(flwDatasource));
+            return toAjax(flwDatasourceService.UpdateRecord(loginUser.getUser().getAppCode(),flwDatasource));
         }
     }
 
@@ -120,7 +121,8 @@ public class FlwDatasourceController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(flwDatasourceService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(flwDatasourceService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -130,7 +132,8 @@ public class FlwDatasourceController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(flwDatasourceService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(flwDatasourceService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -141,9 +144,10 @@ public class FlwDatasourceController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = flwDatasourceService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwDatasourceService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<FlwDatasource> list = flwDatasourceService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<FlwDatasource> list = flwDatasourceService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<FlwDatasource> util = new ExcelUtils<FlwDatasource>(FlwDatasource.class);
         return util.exportExcel(list, "FlwDatasource");
     }

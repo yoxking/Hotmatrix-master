@@ -51,21 +51,23 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
     /**
      * 查询所有定时任务调度列表
      *
+     * @param appCode 应用编号
      * @return 定时任务调度集合
      */
     @Override
-    public List<SysTaskinfo> getAllRecords() {
+    public List<SysTaskinfo> getAllRecords(String appCode) {
         return sysTaskinfoMapper.getAllRecords(GlobalConfig.getAppCode());
     }
 
     /**
      * 按分类查询定时任务调度列表
      *
+     * @param appCode 应用编号
      * @param classNo 分类编号
      * @return 定时任务调度集合
      */
     @Override
-    public List<SysTaskinfo> getRecordsByClassNo(String classNo) {
+    public List<SysTaskinfo> getRecordsByClassNo(String appCode,String classNo) {
         if (StringUtils.isNotEmpty(classNo)) {
             return sysTaskinfoMapper.getRecordsByClassNo(GlobalConfig.getAppCode(),classNo);
         }
@@ -75,11 +77,12 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
     /**
      * 分页查询定时任务调度列表
      *
+     * @param appCode 应用编号
      * @param model 分页模型
      * @return 定时任务调度集合
      */
     @Override
-    public List<SysTaskinfo> getRecordsByPaging(PagingModel model) {
+    public List<SysTaskinfo> getRecordsByPaging(String appCode,PagingModel model) {
         if (StringUtils.isNotNull(model)) {
             model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
             return sysTaskinfoMapper.getRecordsByPaging(GlobalConfig.getAppCode(),model);
@@ -91,6 +94,7 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
     /**
      * 分页查询定时任务调度列表
      *
+     * @param appCode 应用编号
      * @param pageIndex 当前页起始索引
      * @param pageSize 页面大小
      * @param condition 条件
@@ -99,7 +103,7 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
      * @return 定时任务调度集合
      */
     @Override
-    public List<SysTaskinfo> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType) {
+    public List<SysTaskinfo> getRecordsByPaging(String appCode,int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();
         model.setPageIndex((pageIndex-1) * pageSize);
@@ -121,11 +125,12 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
     /**
      * 查询定时任务调度
      *
+     * @param appCode 应用编号
      * @param no 定时任务调度ID
      * @return 定时任务调度
      */
     @Override
-    public SysTaskinfo getRecordByNo(String no) {
+    public SysTaskinfo getRecordByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
             return sysTaskinfoMapper.getRecordByNo(GlobalConfig.getAppCode(),no);
         }
@@ -135,11 +140,12 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
     /**
      * 查询定时任务调度名称
      *
+     * @param appCode 应用编号
      * @param no 定时任务调度ID
      * @return 名称
      */
     @Override
-    public String getRecordNameByNo(String no) {
+    public String getRecordNameByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
             return sysTaskinfoMapper.getRecordNameByNo(GlobalConfig.getAppCode(),no);
         }
@@ -149,22 +155,24 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
     /**
      * 查询定时任务调度计数
      *
+     * @param appCode 应用编号
      * @param condition 查询条件
      * @return 结果
      */
     @Override
-    public int getCountByCondition(String condition) {
+    public int getCountByCondition(String appCode,String condition) {
         return sysTaskinfoMapper.getCountByCondition(GlobalConfig.getAppCode(),condition);
     }
 
     /**
      * 新增定时任务调度
      *
+     * @param appCode 应用编号
      * @param info 定时任务调度
      * @return 结果
      */
     @Override
-    public int AddNewRecord(SysTaskinfo info) {
+    public int AddNewRecord(String appCode,SysTaskinfo info) {
         info.setCreateTime(DateUtils.getNowDate());
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
@@ -175,11 +183,12 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
     /**
      * 更新定时任务调度
      *
+     * @param appCode 应用编号
      * @param info 定时任务调度
      * @return 结果
      */
     @Override
-    public int UpdateRecord(SysTaskinfo info) {
+    public int UpdateRecord(String appCode,SysTaskinfo info) {
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(GlobalConfig.getAppCode());
         return sysTaskinfoMapper.UpdateRecord(info);
@@ -188,11 +197,12 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
     /**
      * 硬删除定时任务调度
      *
+     * @param appCode 应用编号
      * @param no 定时任务调度ID
      * @return 结果
      */
     @Override
-    public int HardDeleteByNo(String no) {
+    public int HardDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
             return sysTaskinfoMapper.HardDeleteByNo(GlobalConfig.getAppCode(),no);
         }
@@ -202,11 +212,12 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
     /**
      * 批量硬删除定时任务调度
      *
+     * @param appCode 应用编号
      * @param nos 定时任务调度IDs
      * @return 结果
      */
     @Override
-    public int HardDeleteByNos(String[] nos) {
+    public int HardDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
             return sysTaskinfoMapper.HardDeleteByNos(GlobalConfig.getAppCode(),nos);
         }
@@ -216,22 +227,24 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
     /**
      * 按条件硬删除定时任务调度
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
     @Override
-    public int HardDeleteByCondition(String condition) {
+    public int HardDeleteByCondition(String appCode,String condition) {
         return sysTaskinfoMapper.HardDeleteByCondition(GlobalConfig.getAppCode(),condition);
     }
 
     /**
      * 软删除定时任务调度
      *
+     * @param appCode 应用编号
      * @param no 定时任务调度ID
      * @return 结果
      */
     @Override
-    public int SoftDeleteByNo(String no) {
+    public int SoftDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
             return sysTaskinfoMapper.SoftDeleteByNo(GlobalConfig.getAppCode(),no);
         }
@@ -241,11 +254,12 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
     /**
      * 批量软删除定时任务调度
      *
+     * @param appCode 应用编号
      * @param nos 定时任务调度IDs
      * @return 结果
      */
     @Override
-    public int SoftDeleteByNos(String[] nos) {
+    public int SoftDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
             return sysTaskinfoMapper.SoftDeleteByNos(GlobalConfig.getAppCode(),nos);
         }
@@ -255,11 +269,12 @@ public class SysTaskinfoServiceImpl implements ISysTaskinfoService
     /**
      * 按条件软删除定时任务调度
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
     @Override
-    public int SoftDeleteByCondition(String condition) {
+    public int SoftDeleteByCondition(String appCode,String condition) {
         return sysTaskinfoMapper.SoftDeleteByCondition(GlobalConfig.getAppCode(),condition);
     }
 

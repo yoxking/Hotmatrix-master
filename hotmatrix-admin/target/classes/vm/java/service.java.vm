@@ -15,29 +15,33 @@ public interface I${ClassName}Service
     /**
      * 查询所有${functionName}列表
      *
+     * @param appCode 应用编号
      * @return ${functionName}集合
      */
-    public List<${ClassName}> getAllRecords();
+    public List<${ClassName}> getAllRecords(String appCode);
 
     /**
      * 按分类查询${functionName}列表
      *
+     * @param appCode 应用编号
      * @param classNo 分类编号
      * @return ${functionName}集合
      */
-    public List<${ClassName}> getRecordsByClassNo(String classNo);
+    public List<${ClassName}> getRecordsByClassNo(String appCode,String classNo);
 
     /**
      * 分页查询${functionName}列表
      *
+     * @param appCode 应用编号
      * @param model 分页模型
      * @return ${functionName}集合
      */
-    public List<${ClassName}> getRecordsByPaging(PagingModel model);
+    public List<${ClassName}> getRecordsByPaging(String appCode,PagingModel model);
 
     /**
      * 分页查询${functionName}列表
      *
+     * @param appCode 应用编号
      * @param pageIndex 当前页索引
      * @param pageSize 分页大小
      * @param condition 分页条件
@@ -45,93 +49,104 @@ public interface I${ClassName}Service
      * @param orderType 排序类型
      * @return ${functionName}集合
      */
-    public List<${ClassName}> getRecordsByPaging(int pageIndex,int pageSize,String condition,String orderField,String orderType);
+    public List<${ClassName}> getRecordsByPaging(String appCode,int pageIndex,int pageSize,String condition,String orderField,String orderType);
 
     /**
      * 查询${functionName}
      *
+     * @param appCode 应用编号
      * @param no ${functionName}ID
      * @return ${functionName}
      */
-    public ${ClassName} getRecordByNo(String no);
+    public ${ClassName} getRecordByNo(String appCode,String no);
 
     /**
      * 查询${functionName}名称
      *
+     * @param appCode 应用编号
      * @param no ${functionName}ID
      * @return 名称
      */
-    public String getRecordNameByNo(String no);
+    public String getRecordNameByNo(String appCode,String no);
 
     /**
      * 查询${functionName}计数
      *
+     * @param appCode 应用编号
      * @param condition 查询条件
      * @return 结果
      */
-    public int getCountByCondition(String condition);
+    public int getCountByCondition(String appCode,String condition);
 
     /**
      * 新增${functionName}
      *
+     * @param appCode 应用编号
      * @param info ${functionName}
      * @return 结果
      */
-    public int AddNewRecord(${ClassName} info);
+    public int AddNewRecord(String appCode,${ClassName} info);
 
     /**
      * 更新${functionName}
      *
+     * @param appCode 应用编号
      * @param info ${functionName}
      * @return 结果
      */
-    public int UpdateRecord(${ClassName} info);
+    public int UpdateRecord(String appCode,${ClassName} info);
 
     /**
      * 硬删除${functionName}
      *
+     * @param appCode 应用编号
      * @param no ${functionName}ID
      * @return 结果
      */
-    public int HardDeleteByNo(String no);
+    public int HardDeleteByNo(String appCode,String no);
 
     /**
      * 批量硬删除${functionName}
      *
+     * @param appCode 应用编号
      * @param nos ${functionName}IDs
      * @return 结果
      */
-    public int HardDeleteByNos(String[] nos);
+    public int HardDeleteByNos(String appCode,String[] nos);
 
     /**
      * 按条件硬删除${functionName}
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
-    public int HardDeleteByCondition(String condition);
+    public int HardDeleteByCondition(String appCode,String condition);
 
     /**
      * 软删除${functionName}
      *
+     * @param appCode 应用编号
      * @param no ${functionName}ID
      * @return 结果
      */
-    public int SoftDeleteByNo(String no);
+    public int SoftDeleteByNo(String appCode,String no);
 
     /**
      * 批量软删除${functionName}
      *
+     * @param appCode 应用编号
      * @param nos ${functionName}IDs
      * @return 结果
      */
-    public int SoftDeleteByNos(String[] nos);
+    public int SoftDeleteByNos(String appCode,String[] nos);
 
     /**
      * 按条件软删除${functionName}
      *
+     * @param appCode 应用编号
      * @param condition 条件
      * @return 结果
      */
-    public int SoftDeleteByCondition(String condition);
+    public int SoftDeleteByCondition(String appCode,String condition);
 }

@@ -62,8 +62,9 @@ public class FlwFlowentrustController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = flwFlowentrustService.getCountByCondition(pRequest.getCondition());
-        List<FlwFlowentrust> list = flwFlowentrustService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwFlowentrustService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<FlwFlowentrust> list = flwFlowentrustService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -78,7 +79,7 @@ public class FlwFlowentrustController extends BaseController
         flwFlowentrust.setEntrustNo(UuidUtils.shortUUID());
         flwFlowentrust.setCreateBy(loginUser.getUser().getUserNo());
         flwFlowentrust.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(flwFlowentrustService.AddNewRecord(flwFlowentrust));
+        return toAjax(flwFlowentrustService.AddNewRecord(loginUser.getUser().getAppCode(),flwFlowentrust));
     }
 
     /**
@@ -90,7 +91,7 @@ public class FlwFlowentrustController extends BaseController
         public AjaxResult update(@RequestBody FlwFlowentrust flwFlowentrust) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         flwFlowentrust.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwFlowentrustService.UpdateRecord(flwFlowentrust));
+            return toAjax(flwFlowentrustService.UpdateRecord(loginUser.getUser().getAppCode(),flwFlowentrust));
         }
 
     /**
@@ -101,14 +102,14 @@ public class FlwFlowentrustController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwFlowentrust flwFlowentrust) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(flwFlowentrustService.getRecordByNo(flwFlowentrust.getEntrustNo()))) {
+        if (StringUtils.isNull(flwFlowentrustService.getRecordByNo(loginUser.getUser().getAppCode(),flwFlowentrust.getEntrustNo()))) {
             flwFlowentrust.setEntrustNo(UuidUtils.shortUUID());
             flwFlowentrust.setCreateBy(loginUser.getUser().getUserNo());
             flwFlowentrust.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwFlowentrustService.AddNewRecord(flwFlowentrust));
+            return toAjax(flwFlowentrustService.AddNewRecord(loginUser.getUser().getAppCode(),flwFlowentrust));
         } else {
             flwFlowentrust.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(flwFlowentrustService.UpdateRecord(flwFlowentrust));
+            return toAjax(flwFlowentrustService.UpdateRecord(loginUser.getUser().getAppCode(),flwFlowentrust));
         }
     }
 
@@ -120,7 +121,8 @@ public class FlwFlowentrustController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(flwFlowentrustService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(flwFlowentrustService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -130,7 +132,8 @@ public class FlwFlowentrustController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(flwFlowentrustService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(flwFlowentrustService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -141,9 +144,10 @@ public class FlwFlowentrustController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = flwFlowentrustService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = flwFlowentrustService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<FlwFlowentrust> list = flwFlowentrustService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<FlwFlowentrust> list = flwFlowentrustService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<FlwFlowentrust> util = new ExcelUtils<FlwFlowentrust>(FlwFlowentrust.class);
         return util.exportExcel(list, "FlwFlowentrust");
     }

@@ -61,8 +61,9 @@ public class SysBranchinfoController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = sysBranchinfoService.getCountByCondition(pRequest.getCondition());
-        List<SysBranchinfo> list = sysBranchinfoService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysBranchinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<SysBranchinfo> list = sysBranchinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -77,7 +78,7 @@ public class SysBranchinfoController extends BaseController
         sysBranchinfo.setBranchNo(UuidUtils.shortUUID());
         sysBranchinfo.setCreateBy(loginUser.getUser().getUserNo());
         sysBranchinfo.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysBranchinfoService.AddNewRecord(sysBranchinfo));
+        return toAjax(sysBranchinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysBranchinfo));
     }
 
     /**
@@ -89,7 +90,7 @@ public class SysBranchinfoController extends BaseController
     public AjaxResult update(@RequestBody SysBranchinfo sysBranchinfo) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysBranchinfo.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysBranchinfoService.UpdateRecord(sysBranchinfo));
+        return toAjax(sysBranchinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysBranchinfo));
     }
 
     /**
@@ -100,14 +101,14 @@ public class SysBranchinfoController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysBranchinfo sysBranchinfo) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(sysBranchinfoService.getRecordByNo(sysBranchinfo.getBranchNo()))) {
+        if (StringUtils.isNull(sysBranchinfoService.getRecordByNo(loginUser.getUser().getAppCode(),sysBranchinfo.getBranchNo()))) {
             sysBranchinfo.setBranchNo(UuidUtils.shortUUID());
             sysBranchinfo.setCreateBy(loginUser.getUser().getUserNo());
             sysBranchinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysBranchinfoService.AddNewRecord(sysBranchinfo));
+            return toAjax(sysBranchinfoService.AddNewRecord(loginUser.getUser().getAppCode(),sysBranchinfo));
         } else {
             sysBranchinfo.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysBranchinfoService.UpdateRecord(sysBranchinfo));
+            return toAjax(sysBranchinfoService.UpdateRecord(loginUser.getUser().getAppCode(),sysBranchinfo));
         }
     }
 
@@ -119,7 +120,8 @@ public class SysBranchinfoController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(sysBranchinfoService.SoftDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysBranchinfoService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -129,7 +131,8 @@ public class SysBranchinfoController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(sysBranchinfoService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(sysBranchinfoService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -140,9 +143,10 @@ public class SysBranchinfoController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = sysBranchinfoService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysBranchinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<SysBranchinfo> list = sysBranchinfoService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<SysBranchinfo> list = sysBranchinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysBranchinfo> util = new ExcelUtils<SysBranchinfo>(SysBranchinfo.class);
         return util.exportExcel(list, "SysBranchinfo");
     }

@@ -59,8 +59,9 @@ public class SysOperatelogController extends BaseController
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
-        int count = sysOperatelogService.getCountByCondition(pRequest.getCondition());
-        List<SysOperatelog> list = sysOperatelogService.getRecordsByPaging(pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysOperatelogService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<SysOperatelog> list = sysOperatelogService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
@@ -75,7 +76,7 @@ public class SysOperatelogController extends BaseController
         sysOperatelogs.setOplogNo(UuidUtils.shortUUID());
         sysOperatelogs.setCreateBy(loginUser.getUser().getUserNo());
         sysOperatelogs.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(sysOperatelogService.AddNewRecord(sysOperatelogs));
+        return toAjax(sysOperatelogService.AddNewRecord(loginUser.getUser().getAppCode(),sysOperatelogs));
     }
 
     /**
@@ -87,7 +88,7 @@ public class SysOperatelogController extends BaseController
         public AjaxResult update(@RequestBody SysOperatelog sysOperatelogs) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         sysOperatelogs.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysOperatelogService.UpdateRecord(sysOperatelogs));
+            return toAjax(sysOperatelogService.UpdateRecord(loginUser.getUser().getAppCode(),sysOperatelogs));
         }
 
     /**
@@ -98,14 +99,14 @@ public class SysOperatelogController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysOperatelog sysOperatelogs) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(sysOperatelogService.getRecordByNo(sysOperatelogs.getOplogNo()))) {
+        if (StringUtils.isNull(sysOperatelogService.getRecordByNo(loginUser.getUser().getAppCode(),sysOperatelogs.getOplogNo()))) {
             sysOperatelogs.setOplogNo(UuidUtils.shortUUID());
             sysOperatelogs.setCreateBy(loginUser.getUser().getUserNo());
             sysOperatelogs.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysOperatelogService.AddNewRecord(sysOperatelogs));
+            return toAjax(sysOperatelogService.AddNewRecord(loginUser.getUser().getAppCode(),sysOperatelogs));
         } else {
             sysOperatelogs.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(sysOperatelogService.UpdateRecord(sysOperatelogs));
+            return toAjax(sysOperatelogService.UpdateRecord(loginUser.getUser().getAppCode(),sysOperatelogs));
         }
     }
 
@@ -117,7 +118,8 @@ public class SysOperatelogController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
-        return toAjax(sysOperatelogService.HardDeleteByNos(ids));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return toAjax(sysOperatelogService.HardDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
@@ -127,7 +129,8 @@ public class SysOperatelogController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
-        return AjaxResult.success(sysOperatelogService.getRecordByNo(id));
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        return AjaxResult.success(sysOperatelogService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
@@ -138,9 +141,10 @@ public class SysOperatelogController extends BaseController
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
-        int count = sysOperatelogService.getCountByCondition(pRequest.getCondition());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysOperatelogService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<SysOperatelog> list = sysOperatelogService.getRecordsByPaging(1,count,pRequest.getCondition(),"id","Asc");
+        List<SysOperatelog> list = sysOperatelogService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
         ExcelUtils<SysOperatelog> util = new ExcelUtils<SysOperatelog>(SysOperatelog.class);
         return util.exportExcel(list, "SysOperatelogs");
     }

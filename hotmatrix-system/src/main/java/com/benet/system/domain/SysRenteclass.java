@@ -34,6 +34,10 @@ public class SysRenteclass extends BaseEntity
     @Excel(name = "更新者")
     private String comments;
 
+    /** 应用编码 */
+    @Excel(name = "应用编码")
+    private String appCode;
+
     /** 版本号 */
     @Excel(name = "版本号")
     private Long version;
@@ -84,7 +88,15 @@ public class SysRenteclass extends BaseEntity
         return comments;
     }
 
-    public void setVersion(Long version) 
+    public String getAppCode() {
+        return appCode;
+    }
+
+    public void setAppCode(String appCode) {
+        this.appCode = appCode;
+    }
+
+    public void setVersion(Long version)
     {
         this.version = version;
     }
@@ -106,6 +118,7 @@ public class SysRenteclass extends BaseEntity
             .append("updateTime", getUpdateTime())
             .append("deleteFlag", getDeleteFlag())
             .append("comments", getComments())
+                .append("appCode", getAppCode())
             .append("version", getVersion())
             .toString();
     }
