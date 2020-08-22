@@ -47,7 +47,7 @@ public class FlwFlowtaskeController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowtaske:index')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowtaske:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -58,7 +58,7 @@ public class FlwFlowtaskeController extends BaseController
     /**
      * 查询流程任务列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowtaske:list')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowtaske:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -71,7 +71,7 @@ public class FlwFlowtaskeController extends BaseController
     /**
      * 新增流程任务
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowtaske:insert')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowtaske:insert')")
     @Oplog(title = "流程任务", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody FlwFlowtaske flwFlowtaske) {
@@ -85,7 +85,7 @@ public class FlwFlowtaskeController extends BaseController
     /**
      * 编辑流程任务
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowtaske:update')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowtaske:update')")
     @Oplog(title = "流程任务", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody FlwFlowtaske flwFlowtaske) {
@@ -97,7 +97,7 @@ public class FlwFlowtaskeController extends BaseController
     /**
      * 保存流程任务
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowtaske:save')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowtaske:save')")
     @Oplog(title = "流程任务", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwFlowtaske flwFlowtaske) {
@@ -116,7 +116,7 @@ public class FlwFlowtaskeController extends BaseController
     /**
      * 删除流程任务
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowtaske:delete')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowtaske:delete')")
     @Oplog(title = "流程任务", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -128,7 +128,7 @@ public class FlwFlowtaskeController extends BaseController
     /**
      * 获取流程任务详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowtaske:detail')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowtaske:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -139,7 +139,7 @@ public class FlwFlowtaskeController extends BaseController
     /**
      * 导出流程任务列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowtaske:export')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowtaske:export')")
     @Oplog(title = "流程任务", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

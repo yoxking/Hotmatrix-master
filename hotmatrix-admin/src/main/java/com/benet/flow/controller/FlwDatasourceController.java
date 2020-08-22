@@ -47,7 +47,7 @@ public class FlwDatasourceController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:datasource:index')")
+    @PreAuthorize("@ps.hasPermit('wkflow:datasource:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -58,7 +58,7 @@ public class FlwDatasourceController extends BaseController
     /**
      * 查询数据源信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:datasource:list')")
+    @PreAuthorize("@ps.hasPermit('wkflow:datasource:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -71,7 +71,7 @@ public class FlwDatasourceController extends BaseController
     /**
      * 新增数据源信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:datasource:insert')")
+    @PreAuthorize("@ps.hasPermit('wkflow:datasource:addnew')")
     @Oplog(title = "数据源信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody FlwDatasource flwDatasource) {
@@ -85,7 +85,7 @@ public class FlwDatasourceController extends BaseController
     /**
      * 编辑数据源信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:datasource:update')")
+    @PreAuthorize("@ps.hasPermit('wkflow:datasource:update')")
     @Oplog(title = "数据源信息", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody FlwDatasource flwDatasource) {
@@ -97,7 +97,7 @@ public class FlwDatasourceController extends BaseController
     /**
      * 保存数据源信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:datasource:save')")
+    @PreAuthorize("@ps.hasPermit('wkflow:datasource:save')")
     @Oplog(title = "数据源信息", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwDatasource flwDatasource) {
@@ -116,7 +116,7 @@ public class FlwDatasourceController extends BaseController
     /**
      * 删除数据源信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:datasource:delete')")
+    @PreAuthorize("@ps.hasPermit('wkflow:datasource:delete')")
     @Oplog(title = "数据源信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -128,7 +128,7 @@ public class FlwDatasourceController extends BaseController
     /**
      * 获取数据源信息详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:datasource:detail')")
+    @PreAuthorize("@ps.hasPermit('wkflow:datasource:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -139,7 +139,7 @@ public class FlwDatasourceController extends BaseController
     /**
      * 导出数据源信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:datasource:export')")
+    @PreAuthorize("@ps.hasPermit('wkflow:datasource:export')")
     @Oplog(title = "数据源信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

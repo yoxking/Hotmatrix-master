@@ -45,7 +45,7 @@ public class SysDicttypeController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:dicttype:index')")
+    @PreAuthorize("@ps.hasPermit('system:dicttype:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -56,7 +56,7 @@ public class SysDicttypeController extends BaseController
     /**
      * 查询字典类型列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:dicttype:list')")
+    @PreAuthorize("@ps.hasPermit('system:dicttype:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -69,7 +69,7 @@ public class SysDicttypeController extends BaseController
     /**
      * 新增字典类型
      */
-    //@PreAuthorize("@ps.hasPermit('system:dicttype:addnew')")
+    @PreAuthorize("@ps.hasPermit('system:dicttype:addnew')")
     @Oplog(title = "字典类型", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysDicttype sysDicttype) {
@@ -83,7 +83,7 @@ public class SysDicttypeController extends BaseController
     /**
      * 编辑字典类型
      */
-    //@PreAuthorize("@ps.hasPermit('system:dicttype:update')")
+    @PreAuthorize("@ps.hasPermit('system:dicttype:update')")
     @Oplog(title = "字典类型", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysDicttype sysDicttype) {
@@ -95,7 +95,7 @@ public class SysDicttypeController extends BaseController
     /**
      * 保存字典类型
      */
-    //@PreAuthorize("@ps.hasPermit('system:dicttype:save')")
+    @PreAuthorize("@ps.hasPermit('system:dicttype:save')")
     @Oplog(title = "字典类型", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysDicttype sysDicttype) {
@@ -114,7 +114,7 @@ public class SysDicttypeController extends BaseController
     /**
      * 删除字典类型
      */
-    //@PreAuthorize("@ps.hasPermit('system:dicttype:delete')")
+    @PreAuthorize("@ps.hasPermit('system:dicttype:delete')")
     @Oplog(title = "字典类型", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -126,7 +126,7 @@ public class SysDicttypeController extends BaseController
     /**
      * 获取字典类型详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:dicttype:detail')")
+    @PreAuthorize("@ps.hasPermit('system:dicttype:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -137,7 +137,7 @@ public class SysDicttypeController extends BaseController
     /**
      * 导出字典类型列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:dicttype:export')")
+    @PreAuthorize("@ps.hasPermit('system:dicttype:export')")
     @Oplog(title = "字典类型", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

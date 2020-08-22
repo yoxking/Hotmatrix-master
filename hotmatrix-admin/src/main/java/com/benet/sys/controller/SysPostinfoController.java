@@ -45,7 +45,7 @@ public class SysPostinfoController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:postinfo:index')")
+    @PreAuthorize("@ps.hasPermit('system:postinfo:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -56,7 +56,7 @@ public class SysPostinfoController extends BaseController
     /**
      * 查询岗位信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:postinfo:list')")
+    @PreAuthorize("@ps.hasPermit('system:postinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -69,7 +69,7 @@ public class SysPostinfoController extends BaseController
     /**
      * 新增岗位信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:postinfo:insert')")
+    @PreAuthorize("@ps.hasPermit('system:postinfo:addnew')")
     @Oplog(title = "岗位信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysPostinfo sysPostinfo) {
@@ -83,7 +83,7 @@ public class SysPostinfoController extends BaseController
     /**
      * 编辑岗位信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:postinfo:update')")
+    @PreAuthorize("@ps.hasPermit('system:postinfo:update')")
     @Oplog(title = "岗位信息", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysPostinfo sysPostinfo) {
@@ -95,7 +95,7 @@ public class SysPostinfoController extends BaseController
     /**
      * 保存岗位信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:postinfo:save')")
+    @PreAuthorize("@ps.hasPermit('system:postinfo:save')")
     @Oplog(title = "岗位信息", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysPostinfo sysPostinfo) {
@@ -114,7 +114,7 @@ public class SysPostinfoController extends BaseController
     /**
      * 删除岗位信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:postinfo:delete')")
+    @PreAuthorize("@ps.hasPermit('system:postinfo:delete')")
     @Oplog(title = "岗位信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -126,7 +126,7 @@ public class SysPostinfoController extends BaseController
     /**
      * 获取岗位信息详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:postinfo:detail')")
+    @PreAuthorize("@ps.hasPermit('system:postinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -137,7 +137,7 @@ public class SysPostinfoController extends BaseController
     /**
      * 导出岗位信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:postinfo:export')")
+    @PreAuthorize("@ps.hasPermit('system:postinfo:export')")
     @Oplog(title = "岗位信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

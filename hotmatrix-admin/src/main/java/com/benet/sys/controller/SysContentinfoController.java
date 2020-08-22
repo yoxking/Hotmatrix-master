@@ -11,6 +11,7 @@ import com.benet.sys.vmodel.ItemObjectVo;
 import com.benet.system.domain.SysConteeclass;
 import com.benet.system.service.ISysConteeclassService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -51,7 +52,7 @@ public class SysContentinfoController extends BaseController
     /**
      * 首页
      */
-   // @PreAuthorize("@ps.hasPermit('system:contentinfo:index')")
+    @PreAuthorize("@ps.hasPermit('system:contentinfo:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -62,7 +63,7 @@ public class SysContentinfoController extends BaseController
     /**
      * 查询内容信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:contentinfo:listall')")
+    @PreAuthorize("@ps.hasPermit('system:contentinfo:listall')")
     @GetMapping(value = "/classlist")
     public TableDataInfo classlist()
     {
@@ -93,7 +94,7 @@ public class SysContentinfoController extends BaseController
     /**
      * 查询内容信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:contentinfo:list')")
+    @PreAuthorize("@ps.hasPermit('system:contentinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -106,7 +107,7 @@ public class SysContentinfoController extends BaseController
     /**
      * 新增内容信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:contentinfo:insert')")
+    @PreAuthorize("@ps.hasPermit('system:contentinfo:addnew')")
     @Oplog(title = "内容信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysContentinfo sysContentinfo) {
@@ -120,7 +121,7 @@ public class SysContentinfoController extends BaseController
     /**
      * 编辑内容信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:contentinfo:update')")
+    @PreAuthorize("@ps.hasPermit('system:contentinfo:update')")
     @Oplog(title = "内容信息", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysContentinfo sysContentinfo) {
@@ -132,7 +133,7 @@ public class SysContentinfoController extends BaseController
     /**
      * 保存内容信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:contentinfo:save')")
+    @PreAuthorize("@ps.hasPermit('system:contentinfo:save')")
     @Oplog(title = "内容信息", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysContentinfo sysContentinfo) {
@@ -151,7 +152,7 @@ public class SysContentinfoController extends BaseController
     /**
      * 删除内容信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:contentinfo:delete')")
+    @PreAuthorize("@ps.hasPermit('system:contentinfo:delete')")
     @Oplog(title = "内容信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -163,7 +164,7 @@ public class SysContentinfoController extends BaseController
     /**
      * 获取内容信息详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:contentinfo:detail')")
+    @PreAuthorize("@ps.hasPermit('system:contentinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -174,7 +175,7 @@ public class SysContentinfoController extends BaseController
     /**
      * 导出内容信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:contentinfo:export')")
+    @PreAuthorize("@ps.hasPermit('system:contentinfo:export')")
     @Oplog(title = "内容信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

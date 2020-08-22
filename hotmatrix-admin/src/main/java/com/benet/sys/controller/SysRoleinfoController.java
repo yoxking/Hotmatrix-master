@@ -54,7 +54,7 @@ public class SysRoleinfoController extends BaseController {
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:roleinfo:index')")
+    @PreAuthorize("@ps.hasPermit('system:roleinfo:index')")
     @GetMapping(value = "/index")
     public ModelAndView index() {
         ModelAndView mv = new ModelAndView("index");
@@ -64,7 +64,7 @@ public class SysRoleinfoController extends BaseController {
     /**
      * 查询角色信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:roleinfo:list')")
+    @PreAuthorize("@ps.hasPermit('system:roleinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
@@ -76,7 +76,7 @@ public class SysRoleinfoController extends BaseController {
     /**
      * 新增角色信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:roleinfo:insert')")
+    @PreAuthorize("@ps.hasPermit('system:roleinfo:addnew')")
     @Oplog(title = "角色信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysRoleinfo sysRoleinfo) {
@@ -90,7 +90,7 @@ public class SysRoleinfoController extends BaseController {
     /**
      * 编辑角色信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:roleinfo:update')")
+    @PreAuthorize("@ps.hasPermit('system:roleinfo:update')")
     @Oplog(title = "角色信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult update(@RequestBody SysRoleinfo sysRoleinfo) {
@@ -102,7 +102,7 @@ public class SysRoleinfoController extends BaseController {
     /**
      * 保存角色信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:roleinfo:save')")
+    @PreAuthorize("@ps.hasPermit('system:roleinfo:save')")
     @Oplog(title = "角色信息", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysRoleinfo sysRoleinfo) {
@@ -121,7 +121,7 @@ public class SysRoleinfoController extends BaseController {
     /**
      * 删除角色信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:roleinfo:delete')")
+    @PreAuthorize("@ps.hasPermit('system:roleinfo:delete')")
     @Oplog(title = "角色信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids) {
@@ -132,7 +132,7 @@ public class SysRoleinfoController extends BaseController {
     /**
      * 获取角色信息详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:roleinfo:detail')")
+    @PreAuthorize("@ps.hasPermit('system:roleinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
@@ -142,7 +142,7 @@ public class SysRoleinfoController extends BaseController {
     /**
      * 导出角色信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:roleinfo:export')")
+    @PreAuthorize("@ps.hasPermit('system:roleinfo:export')")
     @Oplog(title = "角色信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest) {
@@ -157,7 +157,7 @@ public class SysRoleinfoController extends BaseController {
     /**
      * 查询权限树形列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:permitinfo:tree')")
+    @PreAuthorize("@ps.hasPermit('system:permitinfo:list')")
     @GetMapping(value = "/permittree/{roleNo}")
     public AjaxResult permittree(@PathVariable("roleNo") String roleNo) {
 
@@ -199,7 +199,7 @@ public class SysRoleinfoController extends BaseController {
     /**
      * 查询用户树形列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:permitinfo:tree')")
+    @PreAuthorize("@ps.hasPermit('system:permitinfo:list')")
     @GetMapping(value = "/suersource/{roleNo}")
     public AjaxResult suersource(@PathVariable("roleNo") String roleNo) {
 
@@ -239,7 +239,7 @@ public class SysRoleinfoController extends BaseController {
     /**
      * 保存角色权限信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:roleinfo:save')")
+    @PreAuthorize("@ps.hasPermit('system:roleinfo:update')")
     @Oplog(title = "更新角色用户信息", businessType = BusinessType.UPDATE)
     @PostMapping(value = "/updateSusers")
     public AjaxResult updateSusers(@RequestParam("roleNo") String roleNo,@RequestParam("suserNos") String[] suserNos) {
@@ -251,7 +251,7 @@ public class SysRoleinfoController extends BaseController {
     /**
      * 保存角色权限信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:roleinfo:save')")
+    @PreAuthorize("@ps.hasPermit('system:roleinfo:update')")
     @Oplog(title = "更新角色权限信息", businessType = BusinessType.UPDATE)
     @PostMapping(value = "/updatePermits")
     public AjaxResult updatePermits(@RequestParam("roleNo") String roleNo,@RequestParam("permitNos") String[] permitNos) {

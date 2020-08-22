@@ -47,7 +47,7 @@ public class FlwFlowbuttonController extends BaseController
     /**
      * 首页
      */
-    ////@PreAuthorize("@ps.hasPermit('system:flowbutton:index')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowbutton:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -58,7 +58,7 @@ public class FlwFlowbuttonController extends BaseController
     /**
      * 查询工作流程按钮列表
      */
-    ////@PreAuthorize("@ps.hasPermit('system:flowbutton:list')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowbutton:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -71,7 +71,7 @@ public class FlwFlowbuttonController extends BaseController
     /**
      * 新增工作流程按钮
      */
-    ////@PreAuthorize("@ps.hasPermit('system:flowbutton:insert')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowbutton:addnew')")
     @Oplog(title = "工作流程按钮", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody FlwFlowbutton flwFlowbutton) {
@@ -85,7 +85,7 @@ public class FlwFlowbuttonController extends BaseController
     /**
      * 编辑工作流程按钮
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowbutton:update')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowbutton:update')")
     @Oplog(title = "工作流程按钮", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody FlwFlowbutton flwFlowbutton) {
@@ -97,7 +97,7 @@ public class FlwFlowbuttonController extends BaseController
     /**
      * 保存工作流程按钮
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowbutton:save')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowbutton:save')")
     @Oplog(title = "工作流程按钮", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwFlowbutton flwFlowbutton) {
@@ -116,7 +116,7 @@ public class FlwFlowbuttonController extends BaseController
     /**
      * 删除工作流程按钮
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowbutton:delete')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowbutton:delete')")
     @Oplog(title = "工作流程按钮", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -128,7 +128,7 @@ public class FlwFlowbuttonController extends BaseController
     /**
      * 获取工作流程按钮详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowbutton:detail')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowbutton:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -139,7 +139,7 @@ public class FlwFlowbuttonController extends BaseController
     /**
      * 导出工作流程按钮列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowbutton:export')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowbutton:export')")
     @Oplog(title = "工作流程按钮", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

@@ -47,7 +47,7 @@ public class FlwFlownotesController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:flownotes:index')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flownotes:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -58,7 +58,7 @@ public class FlwFlownotesController extends BaseController
     /**
      * 查询流程处理意见列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:flownotes:list')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flownotes:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -71,7 +71,7 @@ public class FlwFlownotesController extends BaseController
     /**
      * 新增流程处理意见
      */
-    //@PreAuthorize("@ps.hasPermit('system:flownotes:insert')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flownotes:addnew')")
     @Oplog(title = "流程处理意见", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody FlwFlownotes flwFlownotes) {
@@ -85,7 +85,7 @@ public class FlwFlownotesController extends BaseController
     /**
      * 编辑流程处理意见
      */
-    //@PreAuthorize("@ps.hasPermit('system:flownotes:update')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flownotes:update')")
     @Oplog(title = "流程处理意见", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody FlwFlownotes flwFlownotes) {
@@ -97,7 +97,7 @@ public class FlwFlownotesController extends BaseController
     /**
      * 保存流程处理意见
      */
-    //@PreAuthorize("@ps.hasPermit('system:flownotes:save')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flownotes:save')")
     @Oplog(title = "流程处理意见", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwFlownotes flwFlownotes) {
@@ -116,7 +116,7 @@ public class FlwFlownotesController extends BaseController
     /**
      * 删除流程处理意见
      */
-    //@PreAuthorize("@ps.hasPermit('system:flownotes:delete')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flownotes:delete')")
     @Oplog(title = "流程处理意见", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -128,7 +128,7 @@ public class FlwFlownotesController extends BaseController
     /**
      * 获取流程处理意见详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:flownotes:detail')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flownotes:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -139,7 +139,7 @@ public class FlwFlownotesController extends BaseController
     /**
      * 导出流程处理意见列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:flownotes:export')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flownotes:export')")
     @Oplog(title = "流程处理意见", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

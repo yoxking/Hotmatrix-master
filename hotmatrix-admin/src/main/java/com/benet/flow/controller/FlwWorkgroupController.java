@@ -47,7 +47,7 @@ public class FlwWorkgroupController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:workgroup:index')")
+    @PreAuthorize("@ps.hasPermit('wkflow:workgroup:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -58,7 +58,7 @@ public class FlwWorkgroupController extends BaseController
     /**
      * 查询工作组列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:workgroup:list')")
+    @PreAuthorize("@ps.hasPermit('wkflow:workgroup:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -71,7 +71,7 @@ public class FlwWorkgroupController extends BaseController
     /**
      * 新增工作组
      */
-    //@PreAuthorize("@ps.hasPermit('system:workgroup:insert')")
+    @PreAuthorize("@ps.hasPermit('wkflow:workgroup:addnew')")
     @Oplog(title = "工作组", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody FlwWorkgroup flwWorkgroup) {
@@ -85,7 +85,7 @@ public class FlwWorkgroupController extends BaseController
     /**
      * 编辑工作组
      */
-    //@PreAuthorize("@ps.hasPermit('system:workgroup:update')")
+    @PreAuthorize("@ps.hasPermit('wkflow:workgroup:update')")
     @Oplog(title = "工作组", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody FlwWorkgroup flwWorkgroup) {
@@ -97,7 +97,7 @@ public class FlwWorkgroupController extends BaseController
     /**
      * 保存工作组
      */
-    //@PreAuthorize("@ps.hasPermit('system:workgroup:save')")
+    @PreAuthorize("@ps.hasPermit('wkflow:workgroup:save')")
     @Oplog(title = "工作组", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwWorkgroup flwWorkgroup) {
@@ -116,7 +116,7 @@ public class FlwWorkgroupController extends BaseController
     /**
      * 删除工作组
      */
-    //@PreAuthorize("@ps.hasPermit('system:workgroup:delete')")
+    @PreAuthorize("@ps.hasPermit('wkflow:workgroup:delete')")
     @Oplog(title = "工作组", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -128,7 +128,7 @@ public class FlwWorkgroupController extends BaseController
     /**
      * 获取工作组详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:workgroup:detail')")
+    @PreAuthorize("@ps.hasPermit('wkflow:workgroup:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -139,7 +139,7 @@ public class FlwWorkgroupController extends BaseController
     /**
      * 导出工作组列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:workgroup:export')")
+    @PreAuthorize("@ps.hasPermit('wkflow:workgroup:export')")
     @Oplog(title = "工作组", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

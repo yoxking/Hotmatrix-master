@@ -7,6 +7,7 @@ import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -44,7 +45,7 @@ public class SysConteeclassController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:contzclass:index')")
+    @PreAuthorize("@ps.hasPermit('system:conteeclass:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -55,7 +56,7 @@ public class SysConteeclassController extends BaseController
     /**
      * 查询内容类型列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:contzclass:list')")
+    @PreAuthorize("@ps.hasPermit('system:conteeclass:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -68,7 +69,7 @@ public class SysConteeclassController extends BaseController
     /**
      * 新增内容类型
      */
-    //@PreAuthorize("@ps.hasPermit('system:contzclass:insert')")
+    @PreAuthorize("@ps.hasPermit('system:conteeclass:addnew')")
     @Oplog(title = "内容类型", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysConteeclass sysContzclass) {
@@ -82,7 +83,7 @@ public class SysConteeclassController extends BaseController
     /**
      * 编辑内容类型
      */
-    //@PreAuthorize("@ps.hasPermit('system:contzclass:update')")
+    @PreAuthorize("@ps.hasPermit('system:conteeclass:update')")
     @Oplog(title = "内容类型", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysConteeclass sysContzclass) {
@@ -94,7 +95,7 @@ public class SysConteeclassController extends BaseController
     /**
      * 保存内容类型
      */
-    //@PreAuthorize("@ps.hasPermit('system:contzclass:save')")
+    @PreAuthorize("@ps.hasPermit('system:conteeclass:save')")
     @Oplog(title = "内容类型", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysConteeclass sysContzclass) {
@@ -113,7 +114,7 @@ public class SysConteeclassController extends BaseController
     /**
      * 删除内容类型
      */
-    //@PreAuthorize("@ps.hasPermit('system:contzclass:delete')")
+    @PreAuthorize("@ps.hasPermit('system:conteeclass:delete')")
     @Oplog(title = "内容类型", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -125,7 +126,7 @@ public class SysConteeclassController extends BaseController
     /**
      * 获取内容类型详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:contzclass:detail')")
+    @PreAuthorize("@ps.hasPermit('system:conteeclass:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -136,7 +137,7 @@ public class SysConteeclassController extends BaseController
     /**
      * 导出内容类型列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:contzclass:export')")
+    @PreAuthorize("@ps.hasPermit('system:conteeclass:export')")
     @Oplog(title = "内容类型", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

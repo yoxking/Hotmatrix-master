@@ -60,7 +60,7 @@ public class GenTableinfoController extends BaseController
     /**
      * 首页
      */
-    @PreAuthorize("@ps.hasPermit('generate:tableinfo:index')")
+    @PreAuthorize("@ps.hasPermit('system:tableinfo:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -71,7 +71,7 @@ public class GenTableinfoController extends BaseController
     /**
      * 查询代码生成列表
      */
-    //@PreAuthorize("@ps.hasPermit('generate:tableinfo:list')")
+    @PreAuthorize("@ps.hasPermit('system:tableinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -130,7 +130,7 @@ public class GenTableinfoController extends BaseController
     /**
      * 保存代码生成业务
      */
-    @PreAuthorize("@ps.hasPermit('generate:tableinfo:save')")
+    @PreAuthorize("@ps.hasPermit('system:tableinfo:save')")
     @Oplog(title = "代码生成", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysTableinfo sysTableInfo) {
@@ -149,7 +149,7 @@ public class GenTableinfoController extends BaseController
     /**
      * 删除表格信息
      */
-    //@PreAuthorize("@ps.hasPermit('generate:tableinfo:delete')")
+    @PreAuthorize("@ps.hasPermit('system:tableinfo:delete')")
     @Oplog(title = "代码生成", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -161,7 +161,7 @@ public class GenTableinfoController extends BaseController
     /**
      * 代码生成信息详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('generate:tableinfo:detail')")
+    @PreAuthorize("@ps.hasPermit('system:tableinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -172,7 +172,7 @@ public class GenTableinfoController extends BaseController
     /**
      * 导出表格信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('generate:tableinfo:export')")
+    @PreAuthorize("@ps.hasPermit('system:tableinfo:export')")
     @Oplog(title = "代码生成", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

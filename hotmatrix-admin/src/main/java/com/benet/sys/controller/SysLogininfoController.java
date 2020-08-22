@@ -56,7 +56,7 @@ public class SysLogininfoController extends BaseController
     /**
      * 查询系统访问记录列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:logininfo:list')")
+    @PreAuthorize("@ps.hasPermit('system:logininfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -69,7 +69,7 @@ public class SysLogininfoController extends BaseController
     /**
      * 新增系统访问记录
      */
-    //@PreAuthorize("@ps.hasPermit('system:logininfo:insert')")
+    @PreAuthorize("@ps.hasPermit('system:logininfo:addnew')")
     @Oplog(title = "系统访问记录", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysLogininfo sysLogininfo) {
@@ -83,7 +83,7 @@ public class SysLogininfoController extends BaseController
     /**
      * 编辑系统访问记录
      */
-    //@PreAuthorize("@ps.hasPermit('system:logininfo:update')")
+    @PreAuthorize("@ps.hasPermit('system:logininfo:update')")
     @Oplog(title = "系统访问记录", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysLogininfo sysLogininfo) {
@@ -95,7 +95,7 @@ public class SysLogininfoController extends BaseController
     /**
      * 保存系统访问记录
      */
-    //@PreAuthorize("@ps.hasPermit('system:logininfo:save')")
+    @PreAuthorize("@ps.hasPermit('system:logininfo:save')")
     @Oplog(title = "系统访问记录", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysLogininfo sysLogininfo) {
@@ -114,7 +114,7 @@ public class SysLogininfoController extends BaseController
     /**
      * 删除系统访问记录
      */
-    //@PreAuthorize("@ps.hasPermit('system:logininfo:delete')")
+    @PreAuthorize("@ps.hasPermit('system:logininfo:delete')")
     @Oplog(title = "系统访问记录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -126,7 +126,7 @@ public class SysLogininfoController extends BaseController
     /**
      * 获取系统访问记录详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:logininfo:detail')")
+    @PreAuthorize("@ps.hasPermit('system:logininfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -137,7 +137,7 @@ public class SysLogininfoController extends BaseController
     /**
      * 导出系统访问记录列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:logininfo:export')")
+    @PreAuthorize("@ps.hasPermit('system:logininfo:export')")
     @Oplog(title = "系统访问记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

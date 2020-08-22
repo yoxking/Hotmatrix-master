@@ -9,6 +9,7 @@ import com.benet.framework.security.service.MyJwtokenService;
 import com.benet.task.domain.SysTaskelog;
 import com.benet.task.service.ISysTaskelogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -44,7 +45,7 @@ public class SysTaskelogController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:tasklogs:index')")
+    @PreAuthorize("@ps.hasPermit('system:taskelog:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -55,7 +56,7 @@ public class SysTaskelogController extends BaseController
     /**
      * 查询定时任务调度日志列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:tasklogs:list')")
+    @PreAuthorize("@ps.hasPermit('system:taskelog:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -68,7 +69,7 @@ public class SysTaskelogController extends BaseController
     /**
      * 新增定时任务调度日志
      */
-    //@PreAuthorize("@ps.hasPermit('system:tasklogs:insert')")
+    @PreAuthorize("@ps.hasPermit('system:taskelog:addnew')")
     @Oplog(title = "定时任务调度日志", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysTaskelog sysTasklogs) {
@@ -82,7 +83,7 @@ public class SysTaskelogController extends BaseController
     /**
      * 编辑定时任务调度日志
      */
-    //@PreAuthorize("@ps.hasPermit('system:tasklogs:update')")
+    @PreAuthorize("@ps.hasPermit('system:taskelog:update')")
     @Oplog(title = "定时任务调度日志", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysTaskelog sysTasklogs) {
@@ -94,7 +95,7 @@ public class SysTaskelogController extends BaseController
     /**
      * 保存定时任务调度日志
      */
-    //@PreAuthorize("@ps.hasPermit('system:tasklogs:save')")
+    @PreAuthorize("@ps.hasPermit('system:taskelog:save')")
     @Oplog(title = "定时任务调度日志", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysTaskelog sysTasklogs) {
@@ -113,7 +114,7 @@ public class SysTaskelogController extends BaseController
     /**
      * 删除定时任务调度日志
      */
-    //@PreAuthorize("@ps.hasPermit('system:tasklogs:delete')")
+    @PreAuthorize("@ps.hasPermit('system:taskelog:delete')")
     @Oplog(title = "定时任务调度日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -125,7 +126,7 @@ public class SysTaskelogController extends BaseController
     /**
      * 获取定时任务调度日志详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:tasklogs:detail')")
+    @PreAuthorize("@ps.hasPermit('system:taskelog:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -136,7 +137,7 @@ public class SysTaskelogController extends BaseController
     /**
      * 导出定时任务调度日志列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:tasklogs:export')")
+    @PreAuthorize("@ps.hasPermit('system:taskelog:export')")
     @Oplog(title = "定时任务调度日志", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

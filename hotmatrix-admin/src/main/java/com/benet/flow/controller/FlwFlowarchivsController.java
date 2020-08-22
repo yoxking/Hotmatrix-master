@@ -9,6 +9,7 @@ import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -46,7 +47,7 @@ public class FlwFlowarchivsController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowarchives:index')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowarchivs:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -57,7 +58,7 @@ public class FlwFlowarchivsController extends BaseController
     /**
      * 查询【请填写功能名称】列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowarchives:list')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowarchivs:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -70,7 +71,7 @@ public class FlwFlowarchivsController extends BaseController
     /**
      * 新增【请填写功能名称】
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowarchives:insert')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowarchivs:addnew')")
     @Oplog(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody FlwFlowarchivs flwFlowarchives) {
@@ -84,7 +85,7 @@ public class FlwFlowarchivsController extends BaseController
     /**
      * 编辑【请填写功能名称】
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowarchives:update')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowarchivs:update')")
     @Oplog(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody FlwFlowarchivs flwFlowarchives) {
@@ -96,7 +97,7 @@ public class FlwFlowarchivsController extends BaseController
     /**
      * 保存【请填写功能名称】
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowarchives:save')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowarchivs:save')")
     @Oplog(title = "【请填写功能名称】", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwFlowarchivs flwFlowarchives) {
@@ -115,7 +116,7 @@ public class FlwFlowarchivsController extends BaseController
     /**
      * 删除【请填写功能名称】
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowarchives:delete')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowarchivs:delete')")
     @Oplog(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -127,7 +128,7 @@ public class FlwFlowarchivsController extends BaseController
     /**
      * 获取【请填写功能名称】详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowarchives:detail')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowarchivs:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -138,7 +139,7 @@ public class FlwFlowarchivsController extends BaseController
     /**
      * 导出【请填写功能名称】列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowarchives:export')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowarchivs:export')")
     @Oplog(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

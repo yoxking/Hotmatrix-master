@@ -44,7 +44,7 @@ public class SysDepartmentController extends BaseController {
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:department:index')")
+    @PreAuthorize("@ps.hasPermit('system:department:index')")
     @GetMapping(value = "/index")
     public ModelAndView index() {
         ModelAndView mv = new ModelAndView("index");
@@ -54,7 +54,7 @@ public class SysDepartmentController extends BaseController {
     /**
      * 查询部门信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:department:list')")
+    @PreAuthorize("@ps.hasPermit('system:department:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
@@ -66,7 +66,7 @@ public class SysDepartmentController extends BaseController {
     /**
      * 查询部门信息树形列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:department:tree')")
+    @PreAuthorize("@ps.hasPermit('system:department:list')")
     @GetMapping(value = "/tree")
     public TableDataInfo tree() {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
@@ -107,8 +107,8 @@ public class SysDepartmentController extends BaseController {
     /**
      * 新增部门信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:department:insert')")
-    //@Oplog(title = "部门信息", businessType = BusinessType.INSERT)
+    @PreAuthorize("@ps.hasPermit('system:department:addnew')")
+    @Oplog(title = "部门信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysDepartment sysDepartment) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
@@ -121,8 +121,8 @@ public class SysDepartmentController extends BaseController {
     /**
      * 编辑部门信息
      */
-    // @PreAuthorize("@ps.hasPermit('system:department:update')")
-    //@Oplog(title = "部门信息", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@ps.hasPermit('system:department:update')")
+    @Oplog(title = "部门信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult update(@RequestBody SysDepartment sysDepartment) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
@@ -133,8 +133,8 @@ public class SysDepartmentController extends BaseController {
     /**
      * 保存部门信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:department:save')")
-    //@Oplog(title = "部门信息", businessType = BusinessType.SAVE)
+    @PreAuthorize("@ps.hasPermit('system:department:save')")
+    @Oplog(title = "部门信息", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysDepartment sysDepartment) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
@@ -152,8 +152,8 @@ public class SysDepartmentController extends BaseController {
     /**
      * 删除部门信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:department:delete')")
-    //@Oplog(title = "部门信息", businessType = BusinessType.DELETE)
+    @PreAuthorize("@ps.hasPermit('system:department:delete')")
+    @Oplog(title = "部门信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
@@ -163,7 +163,7 @@ public class SysDepartmentController extends BaseController {
     /**
      * 获取部门信息详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:department:detail')")
+    @PreAuthorize("@ps.hasPermit('system:department:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
@@ -173,8 +173,8 @@ public class SysDepartmentController extends BaseController {
     /**
      * 导出部门信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:department:export')")
-    //@Oplog(title = "部门信息", businessType = BusinessType.EXPORT)
+    @PreAuthorize("@ps.hasPermit('system:department:export')")
+    @Oplog(title = "部门信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest) {
 

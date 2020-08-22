@@ -47,7 +47,7 @@ public class FlwFlowentrustController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowentrust:index')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowentrust:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -58,7 +58,7 @@ public class FlwFlowentrustController extends BaseController
     /**
      * 查询流程委托列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowentrust:list')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowentrust:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -71,7 +71,7 @@ public class FlwFlowentrustController extends BaseController
     /**
      * 新增流程委托
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowentrust:insert')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowentrust:addnew')")
     @Oplog(title = "流程委托", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody FlwFlowentrust flwFlowentrust) {
@@ -85,7 +85,7 @@ public class FlwFlowentrustController extends BaseController
     /**
      * 编辑流程委托
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowentrust:update')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowentrust:update')")
     @Oplog(title = "流程委托", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody FlwFlowentrust flwFlowentrust) {
@@ -97,7 +97,7 @@ public class FlwFlowentrustController extends BaseController
     /**
      * 保存流程委托
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowentrust:save')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowentrust:save')")
     @Oplog(title = "流程委托", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwFlowentrust flwFlowentrust) {
@@ -116,7 +116,7 @@ public class FlwFlowentrustController extends BaseController
     /**
      * 删除流程委托
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowentrust:delete')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowentrust:delete')")
     @Oplog(title = "流程委托", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -128,7 +128,7 @@ public class FlwFlowentrustController extends BaseController
     /**
      * 获取流程委托详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowentrust:detail')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowentrust:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -139,7 +139,7 @@ public class FlwFlowentrustController extends BaseController
     /**
      * 导出流程委托列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:flowentrust:export')")
+    @PreAuthorize("@ps.hasPermit('wkflow:flowentrust:export')")
     @Oplog(title = "流程委托", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

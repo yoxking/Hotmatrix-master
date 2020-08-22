@@ -47,7 +47,7 @@ public class FlwTabcolumnController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:tabcolumn:index')")
+    @PreAuthorize("@ps.hasPermit('wkflow:tabcolumn:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -58,7 +58,7 @@ public class FlwTabcolumnController extends BaseController
     /**
      * 查询表单字段列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:tabcolumn:list')")
+    @PreAuthorize("@ps.hasPermit('wkflow:tabcolumn:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -71,7 +71,7 @@ public class FlwTabcolumnController extends BaseController
     /**
      * 新增表单字段
      */
-    //@PreAuthorize("@ps.hasPermit('system:tabcolumn:insert')")
+    @PreAuthorize("@ps.hasPermit('wkflow:tabcolumn:addnew')")
     @Oplog(title = "表单字段", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody FlwTabcolumn flwTabcolumn) {
@@ -85,7 +85,7 @@ public class FlwTabcolumnController extends BaseController
     /**
      * 编辑表单字段
      */
-    //@PreAuthorize("@ps.hasPermit('system:tabcolumn:update')")
+    @PreAuthorize("@ps.hasPermit('wkflow:tabcolumn:update')")
     @Oplog(title = "表单字段", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody FlwTabcolumn flwTabcolumn) {
@@ -97,7 +97,7 @@ public class FlwTabcolumnController extends BaseController
     /**
      * 保存表单字段
      */
-    //@PreAuthorize("@ps.hasPermit('system:tabcolumn:save')")
+    @PreAuthorize("@ps.hasPermit('wkflow:tabcolumn:save')")
     @Oplog(title = "表单字段", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwTabcolumn flwTabcolumn) {
@@ -116,7 +116,7 @@ public class FlwTabcolumnController extends BaseController
     /**
      * 删除表单字段
      */
-    //@PreAuthorize("@ps.hasPermit('system:tabcolumn:delete')")
+    @PreAuthorize("@ps.hasPermit('wkflow:tabcolumn:delete')")
     @Oplog(title = "表单字段", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -128,7 +128,7 @@ public class FlwTabcolumnController extends BaseController
     /**
      * 获取表单字段详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:tabcolumn:detail')")
+    @PreAuthorize("@ps.hasPermit('wkflow:tabcolumn:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -139,7 +139,7 @@ public class FlwTabcolumnController extends BaseController
     /**
      * 导出表单字段列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:tabcolumn:export')")
+    @PreAuthorize("@ps.hasPermit('wkflow:tabcolumn:export')")
     @Oplog(title = "表单字段", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

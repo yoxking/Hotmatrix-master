@@ -21,6 +21,7 @@ import com.benet.system.service.*;
 import com.google.code.kaptcha.util.ConfigHelper;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -77,7 +78,7 @@ public class SysRenterinfoController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:appinfo:index')")
+    @PreAuthorize("@ps.hasPermit('system:renterinfo:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -88,7 +89,7 @@ public class SysRenterinfoController extends BaseController
     /**
      * 查询租户信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:appinfo:list')")
+    @PreAuthorize("@ps.hasPermit('system:renterinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -101,7 +102,7 @@ public class SysRenterinfoController extends BaseController
     /**
      * 查询内容信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:contentinfo:listall')")
+    @PreAuthorize("@ps.hasPermit('system:renterinfo:list')")
     @GetMapping(value = "/classlist")
     public TableDataInfo classList()
     {
@@ -132,7 +133,7 @@ public class SysRenterinfoController extends BaseController
     /**
      * 新增租户信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:appinfo:insert')")
+    @PreAuthorize("@ps.hasPermit('system:renterinfo:addnew')")
     @Oplog(title = "租户信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysRenterinfo sysAppinfo) {
@@ -146,7 +147,7 @@ public class SysRenterinfoController extends BaseController
     /**
      * 编辑租户信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:appinfo:update')")
+    @PreAuthorize("@ps.hasPermit('system:renterinfo:update')")
     @Oplog(title = "租户信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult update(@RequestBody SysRenterinfo sysAppinfo) {
@@ -158,7 +159,7 @@ public class SysRenterinfoController extends BaseController
     /**
      * 保存租户信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:appinfo:save')")
+    @PreAuthorize("@ps.hasPermit('system:renterinfo:save')")
     @Oplog(title = "租户信息", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysRenterinfo sysAppinfo) {
@@ -177,7 +178,7 @@ public class SysRenterinfoController extends BaseController
     /**
      * 删除租户信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:appinfo:delete')")
+    @PreAuthorize("@ps.hasPermit('system:renterinfo:delete')")
     @Oplog(title = "租户信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -189,7 +190,7 @@ public class SysRenterinfoController extends BaseController
     /**
      * 获取租户信息详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:appinfo:detail')")
+    @PreAuthorize("@ps.hasPermit('system:renterinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -200,7 +201,7 @@ public class SysRenterinfoController extends BaseController
     /**
      * 导出租户信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:appinfo:export')")
+    @PreAuthorize("@ps.hasPermit('system:renterinfo:export')")
     @Oplog(title = "租户信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
@@ -216,7 +217,7 @@ public class SysRenterinfoController extends BaseController
     /**
      * 新增租户信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:appinfo:insert')")
+    @PreAuthorize("@ps.hasPermit('system:renterinfo:addnew')")
     @Oplog(title = "租户信息", businessType = BusinessType.INSERT)
     @PostMapping("/initialize")
     public AjaxResult initialize(@RequestBody RentObjectVo rentObject) {
@@ -256,7 +257,7 @@ public class SysRenterinfoController extends BaseController
             String suserNo=initSuserInfo(appCode,branchNo,rentObject.getUsername(),rentObject.getPassword(),deptNo,orgzNo,rentObject.getTelephone(),rentObject.getEmail());
             String roleNo=initRoleInfo(appCode,branchNo,suserNo);
             initPermitInfo(appCode,branchNo,roleNo);
-            //initConfigInfo(appCode,branchNo);
+            initConfigInfo(appCode,branchNo,rentObject.getRcnname());
             initMessageInfo(appCode,branchNo,suserNo);
 
             return toAjax(1);
@@ -445,27 +446,15 @@ public class SysRenterinfoController extends BaseController
             permitNos.add(uuid);
         }
     }
-    private String initConfigInfo(String appCode,String branchNo){
+    private String initConfigInfo(String appCode,String branchNo,String siteName){
 
-        SysConfiginfo info=new SysConfiginfo();
-        String uuid=UuidUtils.shortUUID();
-        info.setConfigNo(uuid);
-        info.setConfigName("");
-        info.setConfigKey("");
-        info.setConfigValue("");
-        info.setConfigType("Y");
-        info.setCheckState("1");
+        configinfoService.saveConfigValueByKey(appCode,"SiteName",siteName,"Y");
+        configinfoService.saveConfigValueByKey(appCode,"SiteUrl","http://","Y");
+        configinfoService.saveConfigValueByKey(appCode,"AppCode",appCode,"Y");
+        configinfoService.saveConfigValueByKey(appCode,"ConnStr","connString","Y");
+        configinfoService.saveConfigValueByKey(appCode,"SiteDesc",siteName,"Y");
+        configinfoService.saveConfigValueByKey(appCode,"RunState","1","Y");
 
-        info.setBranchNo(branchNo);
-        info.setCreateBy("");
-        info.setUpdateBy("");
-        info.setDeleteFlag("1");
-        info.setComments("");
-        info.setAppCode(appCode);
-
-        if(configinfoService.AddNewRecord(appCode,info)>0){
-            return uuid;
-        }
         return "";
     }
     private String initMessageInfo(String appCode,String branchNo,String suserNo){

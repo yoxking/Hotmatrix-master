@@ -7,6 +7,7 @@ import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -44,7 +45,7 @@ public class SysOperatelogController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:operatelogs:index')")
+    @PreAuthorize("@ps.hasPermit('system:operatelog:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -55,7 +56,7 @@ public class SysOperatelogController extends BaseController
     /**
      * 查询操作日志记录列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:operatelogs:list')")
+    @PreAuthorize("@ps.hasPermit('system:operatelog:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -68,7 +69,7 @@ public class SysOperatelogController extends BaseController
     /**
      * 新增操作日志记录
      */
-    //@PreAuthorize("@ps.hasPermit('system:operatelogs:addnew')")
+    @PreAuthorize("@ps.hasPermit('system:operatelog:addnew')")
     @Oplog(title = "操作日志记录", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysOperatelog sysOperatelogs) {
@@ -82,7 +83,7 @@ public class SysOperatelogController extends BaseController
     /**
      * 编辑操作日志记录
      */
-    //@PreAuthorize("@ps.hasPermit('system:operatelogs:update')")
+    @PreAuthorize("@ps.hasPermit('system:operatelog:update')")
     @Oplog(title = "操作日志记录", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysOperatelog sysOperatelogs) {
@@ -94,7 +95,7 @@ public class SysOperatelogController extends BaseController
     /**
      * 保存操作日志记录
      */
-    //@PreAuthorize("@ps.hasPermit('system:operatelogs:save')")
+    @PreAuthorize("@ps.hasPermit('system:operatelog:save')")
     @Oplog(title = "操作日志记录", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysOperatelog sysOperatelogs) {
@@ -113,7 +114,7 @@ public class SysOperatelogController extends BaseController
     /**
      * 删除操作日志记录
      */
-    //@PreAuthorize("@ps.hasPermit('system:operatelogs:delete')")
+    @PreAuthorize("@ps.hasPermit('system:operatelog:delete')")
     @Oplog(title = "操作日志记录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -125,7 +126,7 @@ public class SysOperatelogController extends BaseController
     /**
      * 获取操作日志记录详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:operatelogs:detail')")
+    @PreAuthorize("@ps.hasPermit('system:operatelog:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -136,7 +137,7 @@ public class SysOperatelogController extends BaseController
     /**
      * 导出操作日志记录列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:operatelogs:export')")
+    @PreAuthorize("@ps.hasPermit('system:operatelog:export')")
     @Oplog(title = "操作日志记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

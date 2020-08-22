@@ -9,6 +9,7 @@ import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -46,7 +47,7 @@ public class FlwWorkflowsController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:workflow:index')")
+    @PreAuthorize("@ps.hasPermit('wkflow:workflows:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -57,7 +58,7 @@ public class FlwWorkflowsController extends BaseController
     /**
      * 查询工作流列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:workflow:list')")
+    @PreAuthorize("@ps.hasPermit('wkflow:workflows:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -70,7 +71,7 @@ public class FlwWorkflowsController extends BaseController
     /**
      * 新增工作流
      */
-    //@PreAuthorize("@ps.hasPermit('system:workflow:insert')")
+    @PreAuthorize("@ps.hasPermit('wkflow:workflows:addnew')")
     @Oplog(title = "工作流", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody FlwWorkflows flwWorkflow) {
@@ -84,7 +85,7 @@ public class FlwWorkflowsController extends BaseController
     /**
      * 编辑工作流
      */
-    //@PreAuthorize("@ps.hasPermit('system:workflow:update')")
+    @PreAuthorize("@ps.hasPermit('wkflow:workflows:update')")
     @Oplog(title = "工作流", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody FlwWorkflows flwWorkflow) {
@@ -96,7 +97,7 @@ public class FlwWorkflowsController extends BaseController
     /**
      * 保存工作流
      */
-    //@PreAuthorize("@ps.hasPermit('system:workflow:save')")
+    @PreAuthorize("@ps.hasPermit('wkflow:workflows:save')")
     @Oplog(title = "工作流", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwWorkflows flwWorkflow) {
@@ -115,7 +116,7 @@ public class FlwWorkflowsController extends BaseController
     /**
      * 删除工作流
      */
-    //@PreAuthorize("@ps.hasPermit('system:workflow:delete')")
+    @PreAuthorize("@ps.hasPermit('wkflow:workflows:delete')")
     @Oplog(title = "工作流", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -127,7 +128,7 @@ public class FlwWorkflowsController extends BaseController
     /**
      * 获取工作流详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:workflow:detail')")
+    @PreAuthorize("@ps.hasPermit('wkflow:workflows:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -138,7 +139,7 @@ public class FlwWorkflowsController extends BaseController
     /**
      * 导出工作流列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:workflow:export')")
+    @PreAuthorize("@ps.hasPermit('wkflow:workflows:export')")
     @Oplog(title = "工作流", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

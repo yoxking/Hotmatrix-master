@@ -11,6 +11,7 @@ import com.benet.sys.vmodel.ItemObjectVo;
 import com.benet.system.domain.SysDicttype;
 import com.benet.system.service.ISysDicttypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -51,7 +52,7 @@ public class SysDictdataController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:dictdata:index')")
+    @PreAuthorize("@ps.hasPermit('system:dictdata:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -62,7 +63,7 @@ public class SysDictdataController extends BaseController
     /**
      * 查询字典数据列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:dictdata:list')")
+    @PreAuthorize("@ps.hasPermit('system:dictdata:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -75,7 +76,7 @@ public class SysDictdataController extends BaseController
     /**
      * 查询内容信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:contentinfo:listall')")
+    @PreAuthorize("@ps.hasPermit('system:contentinfo:list')")
     @GetMapping(value = "/typelist")
     public TableDataInfo typelist()
     {
@@ -106,7 +107,7 @@ public class SysDictdataController extends BaseController
     /**
      * 新增字典数据
      */
-    //@PreAuthorize("@ps.hasPermit('system:dictdata:insert')")
+    @PreAuthorize("@ps.hasPermit('system:dictdata:addnew')")
     @Oplog(title = "字典数据", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysDictdata sysDictdata) {
@@ -120,7 +121,7 @@ public class SysDictdataController extends BaseController
     /**
      * 编辑字典数据
      */
-    //@PreAuthorize("@ps.hasPermit('system:dictdata:update')")
+    @PreAuthorize("@ps.hasPermit('system:dictdata:update')")
     @Oplog(title = "字典数据", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysDictdata sysDictdata) {
@@ -132,7 +133,7 @@ public class SysDictdataController extends BaseController
     /**
      * 保存字典数据
      */
-    //@PreAuthorize("@ps.hasPermit('system:dictdata:save')")
+    @PreAuthorize("@ps.hasPermit('system:dictdata:save')")
     @Oplog(title = "字典数据", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysDictdata sysDictdata) {
@@ -151,7 +152,7 @@ public class SysDictdataController extends BaseController
     /**
      * 删除字典数据
      */
-    //@PreAuthorize("@ps.hasPermit('system:dictdata:delete')")
+    @PreAuthorize("@ps.hasPermit('system:dictdata:delete')")
     @Oplog(title = "字典数据", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -163,7 +164,7 @@ public class SysDictdataController extends BaseController
     /**
      * 获取字典数据详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:dictdata:detail')")
+    @PreAuthorize("@ps.hasPermit('system:dictdata:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -174,7 +175,7 @@ public class SysDictdataController extends BaseController
     /**
      * 导出字典数据列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:dictdata:export')")
+    @PreAuthorize("@ps.hasPermit('system:dictdata:export')")
     @Oplog(title = "字典数据", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

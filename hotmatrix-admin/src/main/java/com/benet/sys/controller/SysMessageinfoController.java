@@ -48,7 +48,7 @@ public class SysMessageinfoController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:messageinfo:index')")
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -59,7 +59,7 @@ public class SysMessageinfoController extends BaseController
     /**
      * 查询消息信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:messageinfo:list')")
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -72,7 +72,7 @@ public class SysMessageinfoController extends BaseController
     /**
      * 新增消息信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:messageinfo:insert')")
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:addnew')")
     @Oplog(title = "消息信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysMessageinfo sysMessageinfo) {
@@ -86,7 +86,7 @@ public class SysMessageinfoController extends BaseController
     /**
      * 编辑消息信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:messageinfo:update')")
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:update')")
     @Oplog(title = "消息信息", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody SysMessageinfo sysMessageinfo) {
@@ -98,7 +98,7 @@ public class SysMessageinfoController extends BaseController
     /**
      * 保存消息信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:messageinfo:save')")
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:save')")
     @Oplog(title = "消息信息", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysMessageinfo sysMessageinfo) {
@@ -117,7 +117,7 @@ public class SysMessageinfoController extends BaseController
     /**
      * 删除消息信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:messageinfo:delete')")
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:delete')")
     @Oplog(title = "消息信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -129,7 +129,7 @@ public class SysMessageinfoController extends BaseController
     /**
      * 获取消息信息详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:messageinfo:detail')")
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -140,7 +140,7 @@ public class SysMessageinfoController extends BaseController
     /**
      * 导出消息信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:messageinfo:export')")
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:export')")
     @Oplog(title = "消息信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
@@ -156,7 +156,7 @@ public class SysMessageinfoController extends BaseController
     /**
      * 查询消息信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:messageinfo:list')")
+    @PreAuthorize("@ps.hasPermit('system:messageinfo:list')")
     @GetMapping(value="/getMessages")
     public TableDataInfo getMessages()
     {

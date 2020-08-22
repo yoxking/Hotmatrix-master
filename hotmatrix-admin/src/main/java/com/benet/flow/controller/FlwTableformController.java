@@ -47,7 +47,7 @@ public class FlwTableformController extends BaseController
     /**
      * 首页
      */
-    //@PreAuthorize("@ps.hasPermit('system:tableform:index')")
+    @PreAuthorize("@ps.hasPermit('wkflow:tableform:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -58,7 +58,7 @@ public class FlwTableformController extends BaseController
     /**
      * 查询表单设计列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:tableform:list')")
+    @PreAuthorize("@ps.hasPermit('wkflow:tableform:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -71,7 +71,7 @@ public class FlwTableformController extends BaseController
     /**
      * 新增表单设计
      */
-    //@PreAuthorize("@ps.hasPermit('system:tableform:insert')")
+    @PreAuthorize("@ps.hasPermit('wkflow:tableform:addnew')")
     @Oplog(title = "表单设计", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody FlwTableform flwTableform) {
@@ -85,7 +85,7 @@ public class FlwTableformController extends BaseController
     /**
      * 编辑表单设计
      */
-    //@PreAuthorize("@ps.hasPermit('system:tableform:update')")
+    @PreAuthorize("@ps.hasPermit('wkflow:tableform:update')")
     @Oplog(title = "单设计", businessType = BusinessType.UPDATE)
     @PutMapping
         public AjaxResult update(@RequestBody FlwTableform flwTableform) {
@@ -97,7 +97,7 @@ public class FlwTableformController extends BaseController
     /**
      * 保存表单设计
      */
-    //@PreAuthorize("@ps.hasPermit('system:tableform:save')")
+    @PreAuthorize("@ps.hasPermit('wkflow:tableform:save')")
     @Oplog(title = "表单设计", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody FlwTableform flwTableform) {
@@ -116,7 +116,7 @@ public class FlwTableformController extends BaseController
     /**
      * 删除表单设计
      */
-    //@PreAuthorize("@ps.hasPermit('system:tableform:delete')")
+    @PreAuthorize("@ps.hasPermit('wkflow:tableform:delete')")
     @Oplog(title = "表单设计", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -128,7 +128,7 @@ public class FlwTableformController extends BaseController
     /**
      * 获取表单设计详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:tableform:detail')")
+    @PreAuthorize("@ps.hasPermit('wkflow:tableform:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -139,7 +139,7 @@ public class FlwTableformController extends BaseController
     /**
      * 导出表单设计列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:tableform:export')")
+    @PreAuthorize("@ps.hasPermit('wkflow:tableform:export')")
     @Oplog(title = "表单设计", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

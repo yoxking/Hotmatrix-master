@@ -48,7 +48,7 @@ public class SysRenteclassController extends BaseController
     /**
      * 首页
      */
-    @PreAuthorize("@ps.hasPermit('system:appclass:index')")
+    @PreAuthorize("@ps.hasPermit('system:renteclass:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -59,7 +59,7 @@ public class SysRenteclassController extends BaseController
     /**
      * 查询租户类型列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:appclass:list')")
+    @PreAuthorize("@ps.hasPermit('system:renteclass:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -72,7 +72,7 @@ public class SysRenteclassController extends BaseController
     /**
      * 新增租户类型
      */
-    //@PreAuthorize("@ps.hasPermit('system:appclass:insert')")
+    @PreAuthorize("@ps.hasPermit('system:renteclass:addnew')")
     @Oplog(title = "租户类型", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysRenteclass sysAppclass) {
@@ -86,7 +86,7 @@ public class SysRenteclassController extends BaseController
     /**
      * 编辑租户类型
      */
-    //@PreAuthorize("@ps.hasPermit('system:appclass:update')")
+    @PreAuthorize("@ps.hasPermit('system:renteclass:update')")
     @Oplog(title = "租户类型", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult update(@RequestBody SysRenteclass sysAppclass) {
@@ -98,7 +98,7 @@ public class SysRenteclassController extends BaseController
     /**
      * 保存租户类型
      */
-    @PreAuthorize("@ps.hasPermit('system:appclass:save')")
+    @PreAuthorize("@ps.hasPermit('system:renteclass:save')")
     @Oplog(title = "租户类型", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody SysRenteclass sysAppclass) {
@@ -117,7 +117,7 @@ public class SysRenteclassController extends BaseController
     /**
      * 删除租户类型
      */
-    //@PreAuthorize("@ps.hasPermit('system:appclass:delete')")
+    @PreAuthorize("@ps.hasPermit('system:renteclass:delete')")
     @Oplog(title = "租户类型", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -129,7 +129,7 @@ public class SysRenteclassController extends BaseController
     /**
      * 获取租户类型详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:appclass:detail')")
+    @PreAuthorize("@ps.hasPermit('system:renteclass:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -140,7 +140,7 @@ public class SysRenteclassController extends BaseController
     /**
      * 导出租户类型列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:appclass:export')")
+    @PreAuthorize("@ps.hasPermit('system:renteclass:export')")
     @Oplog(title = "租户类型", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)

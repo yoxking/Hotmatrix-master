@@ -57,7 +57,7 @@ public class SysBranchinfoController extends BaseController
     /**
      * 查询分支信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:branchinfo:list')")
+    @PreAuthorize("@ps.hasPermit('system:branchinfo:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
@@ -70,7 +70,7 @@ public class SysBranchinfoController extends BaseController
     /**
      * 新增分支信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:branchinfo:addnew')")
+    @PreAuthorize("@ps.hasPermit('system:branchinfo:addnew')")
     @Oplog(title = "分支信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysBranchinfo sysBranchinfo) {
@@ -84,7 +84,7 @@ public class SysBranchinfoController extends BaseController
     /**
      * 编辑分支信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:branchinfo:update')")
+    @PreAuthorize("@ps.hasPermit('system:branchinfo:update')")
     @Oplog(title = "分支信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult update(@RequestBody SysBranchinfo sysBranchinfo) {
@@ -115,7 +115,7 @@ public class SysBranchinfoController extends BaseController
     /**
      * 删除分支信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:branchinfo:delete')")
+    @PreAuthorize("@ps.hasPermit('system:branchinfo:delete')")
     @Oplog(title = "分支信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
@@ -127,7 +127,7 @@ public class SysBranchinfoController extends BaseController
     /**
      * 获取分支信息详细信息
      */
-    //@PreAuthorize("@ps.hasPermit('system:branchinfo:detail')")
+    @PreAuthorize("@ps.hasPermit('system:branchinfo:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
@@ -138,7 +138,7 @@ public class SysBranchinfoController extends BaseController
     /**
      * 导出分支信息列表
      */
-    //@PreAuthorize("@ps.hasPermit('system:branchinfo:export')")
+    @PreAuthorize("@ps.hasPermit('system:branchinfo:export')")
     @Oplog(title = "分支信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
