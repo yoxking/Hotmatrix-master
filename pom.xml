@@ -163,6 +163,7 @@
         <module>hotmatrix-framework</module>
         <module>hotmatrix-workflow</module>
         <module>hotmatrix-system</module>
+        <module>hotmatrix-collect</module>
     </modules>
 
     <dependencies>

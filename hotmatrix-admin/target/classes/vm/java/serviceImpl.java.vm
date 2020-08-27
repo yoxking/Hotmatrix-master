@@ -99,7 +99,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
         } else {
             model.setOrderType(orderType);
         }
-        return ${className}Mapper.getRecordsByPaging(String appCode,appCode,model);
+        return ${className}Mapper.getRecordsByPaging(appCode,model);
     }
 
     /**

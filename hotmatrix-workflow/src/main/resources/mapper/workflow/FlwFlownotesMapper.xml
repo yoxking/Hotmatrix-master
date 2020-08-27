@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.benet.workflow.mapper.FlwFlownotesMapper">
+<mapper namespace="com.benet.wkflow.mapper.FlwFlownotesMapper">
 
     <resultMap type="FlwFlownotes" id="FlwFlownotesResult">
         <result property="id" column="id"/>

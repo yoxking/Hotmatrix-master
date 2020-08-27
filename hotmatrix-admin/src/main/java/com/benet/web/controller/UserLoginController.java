@@ -2,14 +2,13 @@ package com.benet.web.controller;
 
 import com.benet.common.constant.JwtConstants;
 import com.benet.common.core.domain.AjaxResult;
-import com.benet.common.core.pager.TableDataInfo;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
 import com.benet.framework.security.service.SysLoginService;
 import com.benet.framework.utils.RouterUtils;
 import com.benet.framework.web.vmodel.RouterVo;
-import com.benet.sys.vmodel.RenterInfoVo;
+import com.benet.system.vmodel.RenterInfoVo;
 import com.benet.system.domain.SysPermitinfo;
 import com.benet.system.domain.SysRenterinfo;
 import com.benet.system.domain.SysSuserinfo;
@@ -17,7 +16,6 @@ import com.benet.system.service.ISysPermitinfoService;
 import com.benet.system.service.ISysRenterinfoService;
 import com.benet.system.service.ISysRoleinfoService;
 import com.benet.web.vmodel.LoginInfoVo;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
