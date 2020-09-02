@@ -10,6 +10,7 @@ import com.benet.framework.security.service.MyJwtokenService;
 import com.benet.system.vmodel.ItemObjectVo;
 import com.benet.system.domain.SysDicttype;
 import com.benet.system.service.ISysDicttypeService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,7 @@ import com.benet.common.core.pager.TableDataInfo;
  * @author yoxking
  * @date 2020-04-23
  */
+@Api(value = "system/dictdata", tags = "字典数据控制器")
 @RestController
 @RequestMapping("/system/dictdata")
 public class SysDictdataController extends BaseController

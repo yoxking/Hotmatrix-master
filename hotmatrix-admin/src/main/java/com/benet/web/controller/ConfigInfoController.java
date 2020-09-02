@@ -8,6 +8,7 @@ import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
 import com.benet.system.service.ISysConfiginfoService;
 import com.benet.web.vmodel.ConfigInfoVo;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author yoxking
  */
+@Api(value = "web", tags = "配置请求处理控制器")
 @RestController
 @RequestMapping("/web")
 public class ConfigInfoController {

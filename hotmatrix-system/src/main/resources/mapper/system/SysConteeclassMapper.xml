@@ -8,6 +8,8 @@
         <result property="id" column="id"/>
         <result property="classNo" column="class_no"/>
         <result property="className" column="class_name"/>
+        <result property="parentNo" column="parent_no"/>
+        <result property="orderNo" column="order_no"/>
         <result property="branchNo" column="branch_no"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -20,7 +22,7 @@
     </resultMap>
 
     <sql id="selectSysConteeclassVo">
-        select id, class_no, class_name, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_conteeclass
+        select id, class_no, class_name, parent_no, order_no,branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_conteeclass
     </sql>
 
     <select id="getAllRecords" resultMap="SysConteeclassResult">
@@ -30,7 +32,7 @@
 
     <select id="getRecordsByClassNo" resultMap="SysConteeclassResult">
         <include refid="selectSysConteeclassVo"/>
-        where delete_flag='1' and app_code=#{appCode} and class_no=#{classNo}
+        where delete_flag='1' and app_code=#{appCode} and parent_no=#{classNo}
     </select>
 
     <select id="getRecordsByPaging" resultMap="SysConteeclassResult">
@@ -60,6 +62,8 @@
         insert into sys_conteeclass (
         <if test="info.classNo != null  and info.classNo != ''">class_no,</if>
         <if test="info.className != null  and info.className != ''">class_name,</if>
+        <if test="info.parentNo != null  and info.parentNo != ''">parent_no,</if>
+        <if test="info.orderNo != null ">order_no,</if>
         <if test="info.branchNo != null  and info.branchNo != ''">branch_no,</if>
         <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
         <if test="info.createTime != null ">create_time,</if>
@@ -72,6 +76,8 @@
         )values(
         <if test="info.classNo != null  and info.classNo != ''">#{info.classNo},</if>
         <if test="info.className != null  and info.className != ''">#{info.className},</if>
+        <if test="info.parentNo != null  and info.parentNo != ''">#{info.parentNo},</if>
+        <if test="info.orderNo != null ">#{info.orderNo},</if>
         <if test="info.branchNo != null  and info.branchNo != ''">#{info.branchNo},</if>
         <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
         <if test="info.createTime != null ">#{info.createTime},</if>
@@ -89,6 +95,8 @@
         <set>
             <if test="info.classNo != null  and info.classNo != ''">class_no = #{info.classNo},</if>
             <if test="info.className != null  and info.className != ''">class_name = #{info.className},</if>
+            <if test="info.parentNo != null  and info.parentNo != ''">parent_no = #{info.parentNo},</if>
+            <if test="info.orderNo != null ">order_no = #{info.orderNo},</if>
             <if test="info.branchNo != null  and info.branchNo != ''">branch_no = #{info.branchNo},</if>
             <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
             <if test="info.createTime != null ">create_time = #{info.createTime},</if>

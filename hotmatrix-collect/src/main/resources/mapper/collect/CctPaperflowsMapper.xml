@@ -14,7 +14,7 @@
         <result property="optScore" column="opt_score"/>
         <result property="startTime" column="start_time"/>
         <result property="enditTime" column="endit_time"/>
-        <result property="checkState" column="check_state"/>
+        <result property="branchNo" column="branch_no"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
@@ -26,7 +26,7 @@
     </resultMap>
 
     <sql id="selectCctPaperflowsVo">
-        select id, pflow_no, paper_no, ruser_no, quest_no, opt_no, opt_score, start_time, endit_time, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from cct_paperflows
+        select id, pflow_no, paper_no, ruser_no, quest_no, opt_no, opt_score, start_time, endit_time, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from cct_paperflows
     </sql>
 
     <select id="getAllRecords" resultMap="CctPaperflowsResult">
@@ -72,7 +72,7 @@
         <if test="info.optScore != null ">opt_score,</if>
         <if test="info.startTime != null ">start_time,</if>
         <if test="info.enditTime != null ">endit_time,</if>
-        <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
+        <if test="info.branchNo != null  and info.branchNo != ''">branch_no,</if>
         <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
         <if test="info.createTime != null ">create_time,</if>
         <if test="info.updateBy != null  and info.updateBy != ''">update_by,</if>
@@ -90,7 +90,7 @@
         <if test="info.optScore != null ">#{info.optScore},</if>
         <if test="info.startTime != null ">#{info.startTime},</if>
         <if test="info.enditTime != null ">#{info.enditTime},</if>
-        <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
+        <if test="info.branchNo != null  and info.branchNo != ''">#{info.branchNo},</if>
         <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
         <if test="info.createTime != null ">#{info.createTime},</if>
         <if test="info.updateBy != null  and info.updateBy != ''">#{info.updateBy},</if>
@@ -113,7 +113,7 @@
             <if test="info.optScore != null ">opt_score = #{info.optScore},</if>
             <if test="info.startTime != null ">start_time = #{info.startTime},</if>
             <if test="info.enditTime != null ">endit_time = #{info.enditTime},</if>
-            <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
+            <if test="info.branchNo != null  and info.branchNo != ''">branch_no = #{info.branchNo},</if>
             <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
             <if test="info.createTime != null ">create_time = #{info.createTime},</if>
             <if test="info.updateBy != null  and info.updateBy != ''">update_by = #{info.updateBy},</if>

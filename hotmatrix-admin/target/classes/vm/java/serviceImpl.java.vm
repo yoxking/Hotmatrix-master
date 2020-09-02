@@ -1,7 +1,6 @@
 package ${packageName}.service.impl;
 
 import java.util.List;
-import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
 #foreach ($column in $columns)

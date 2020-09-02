@@ -15,6 +15,7 @@ import com.benet.framework.security.service.MyJwtokenService;
 import com.benet.system.vmodel.DeptmentVo;
 import com.benet.system.domain.SysDepartment;
 import com.benet.system.service.ISysDepartmentService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,7 @@ import java.util.List;
  * @author yoxking
  * @date 2020-03-29
  */
+@Api(value = "system/department", tags = "部门信息控制器")
 @RestController
 @RequestMapping("/system/department")
 public class SysDepartmentController extends BaseController {

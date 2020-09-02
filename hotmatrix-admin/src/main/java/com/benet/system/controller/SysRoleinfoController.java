@@ -14,6 +14,7 @@ import com.benet.system.domain.SysPermitinfo;
 import com.benet.system.domain.SysSuserinfo;
 import com.benet.system.service.ISysPermitinfoService;
 import com.benet.system.service.ISysSuserinfoService;
+import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,7 @@ import com.benet.common.core.pager.TableDataInfo;
  * @author yoxking
  * @date 2020-04-20
  */
+@Api(value = "system/roleinfo", tags = "角色信息控制器")
 @RestController
 @RequestMapping("/system/roleinfo")
 public class SysRoleinfoController extends BaseController {

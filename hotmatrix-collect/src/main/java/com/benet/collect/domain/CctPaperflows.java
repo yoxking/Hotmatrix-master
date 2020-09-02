@@ -11,7 +11,7 @@ import java.util.Date;
  * 测评结果对象 cct_paperflows
  * 
  * @author yoxking
- * @date 2020-08-27
+ * @date 2020-08-31
  */
 public class CctPaperflows extends BaseEntity
 {
@@ -52,9 +52,9 @@ public class CctPaperflows extends BaseEntity
     @Excel(name = "结束时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date enditTime;
 
-    /** 状态（1正常 0停用） */
-    @Excel(name = "状态", readConverterExp = "1=正常,0=停用")
-    private String checkState;
+    /** 分支编号 */
+    @Excel(name = "分支编号")
+    private String branchNo;
 
     /** 创建者 */
     private String createBy;
@@ -165,14 +165,14 @@ public class CctPaperflows extends BaseEntity
     {
         return enditTime;
     }
-    public void setCheckState(String checkState) 
+    public void setBranchNo(String branchNo) 
     {
-        this.checkState = checkState;
+        this.branchNo = branchNo;
     }
 
-    public String getCheckState() 
+    public String getBranchNo() 
     {
-        return checkState;
+        return branchNo;
     }
     public void setCreateBy(String createBy) 
     {
@@ -259,7 +259,7 @@ public class CctPaperflows extends BaseEntity
             .append("optScore", getOptScore())
             .append("startTime", getStartTime())
             .append("enditTime", getEnditTime())
-            .append("checkState", getCheckState())
+            .append("branchNo", getBranchNo())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())

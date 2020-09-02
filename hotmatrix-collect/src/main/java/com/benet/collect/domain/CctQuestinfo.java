@@ -10,7 +10,7 @@ import com.benet.common.core.domain.BaseEntity;
  * 测评题库对象 cct_questinfo
  * 
  * @author yoxking
- * @date 2020-08-27
+ * @date 2020-08-31
  */
 public class CctQuestinfo extends BaseEntity
 {
@@ -43,6 +43,10 @@ public class CctQuestinfo extends BaseEntity
     @Excel(name = "显示顺序")
     private Integer orderNo;
 
+    /** 是否必填（1必填 0可选填） */
+    @Excel(name = "是否必填", readConverterExp = "1=必填,0=可选填")
+    private String questMust;
+
     /** 试题总分 */
     @Excel(name = "试题总分")
     private Long questScore;
@@ -50,6 +54,10 @@ public class CctQuestinfo extends BaseEntity
     /** 状态（1正常 0停用） */
     @Excel(name = "状态", readConverterExp = "1=正常,0=停用")
     private String checkState;
+
+    /** 分支编号 */
+    @Excel(name = "分支编号")
+    private String branchNo;
 
     /** 创建者 */
     private String createBy;
@@ -142,6 +150,15 @@ public class CctQuestinfo extends BaseEntity
     {
         return orderNo;
     }
+    public void setQuestMust(String questMust) 
+    {
+        this.questMust = questMust;
+    }
+
+    public String getQuestMust() 
+    {
+        return questMust;
+    }
     public void setQuestScore(Long questScore) 
     {
         this.questScore = questScore;
@@ -159,6 +176,15 @@ public class CctQuestinfo extends BaseEntity
     public String getCheckState() 
     {
         return checkState;
+    }
+    public void setBranchNo(String branchNo) 
+    {
+        this.branchNo = branchNo;
+    }
+
+    public String getBranchNo() 
+    {
+        return branchNo;
     }
     public void setCreateBy(String createBy) 
     {
@@ -243,8 +269,10 @@ public class CctQuestinfo extends BaseEntity
             .append("questDesc", getQuestDesc())
             .append("classNo", getClassNo())
             .append("orderNo", getOrderNo())
+            .append("questMust", getQuestMust())
             .append("questScore", getQuestScore())
             .append("checkState", getCheckState())
+            .append("branchNo", getBranchNo())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())

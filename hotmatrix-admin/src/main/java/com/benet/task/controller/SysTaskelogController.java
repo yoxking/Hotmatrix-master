@@ -8,6 +8,7 @@ import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
 import com.benet.task.domain.SysTaskelog;
 import com.benet.task.service.ISysTaskelogService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,7 @@ import com.benet.common.core.pager.TableDataInfo;
  * @author yoxking
  * @date 2020-04-20
  */
+@Api(value = "task/taskelog", tags = "定时任务调度日志控制器")
 @RestController
 @RequestMapping("/task/taskelog")
 public class SysTaskelogController extends BaseController

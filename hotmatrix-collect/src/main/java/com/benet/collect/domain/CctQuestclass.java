@@ -10,7 +10,7 @@ import com.benet.common.core.domain.BaseEntity;
  * 测题类型对象 cct_questclass
  * 
  * @author yoxking
- * @date 2020-08-27
+ * @date 2020-08-31
  */
 public class CctQuestclass extends BaseEntity
 {
@@ -35,9 +35,9 @@ public class CctQuestclass extends BaseEntity
     @Excel(name = "显示顺序")
     private Integer orderNo;
 
-    /** 状态（1正常 0停用） */
-    @Excel(name = "状态", readConverterExp = "1=正常,0=停用")
-    private String checkState;
+    /** 分支编号 */
+    @Excel(name = "分支编号")
+    private String branchNo;
 
     /** 创建者 */
     private String createBy;
@@ -112,14 +112,14 @@ public class CctQuestclass extends BaseEntity
     {
         return orderNo;
     }
-    public void setCheckState(String checkState) 
+    public void setBranchNo(String branchNo) 
     {
-        this.checkState = checkState;
+        this.branchNo = branchNo;
     }
 
-    public String getCheckState() 
+    public String getBranchNo() 
     {
-        return checkState;
+        return branchNo;
     }
     public void setCreateBy(String createBy) 
     {
@@ -202,7 +202,7 @@ public class CctQuestclass extends BaseEntity
             .append("className", getClassName())
             .append("parentNo", getParentNo())
             .append("orderNo", getOrderNo())
-            .append("checkState", getCheckState())
+            .append("branchNo", getBranchNo())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())

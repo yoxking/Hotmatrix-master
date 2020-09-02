@@ -11,6 +11,7 @@ import com.benet.common.utils.data.VrfyCodeUtils;
 import com.benet.common.utils.security.Base64Utils;
 import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.framework.utils.RedisUtils;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 
  * @author yoxking
  */
+@Api(value = "web", tags = "验证码操作处理控制器")
 @RestController
 @RequestMapping("/web")
 public class CaptchasController

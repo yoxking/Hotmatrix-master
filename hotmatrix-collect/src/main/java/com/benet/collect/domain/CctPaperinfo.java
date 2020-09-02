@@ -11,7 +11,7 @@ import java.util.Date;
  * 问卷信息对象 cct_paperinfo
  * 
  * @author yoxking
- * @date 2020-08-27
+ * @date 2020-08-31
  */
 public class CctPaperinfo extends BaseEntity
 {
@@ -75,6 +75,10 @@ public class CctPaperinfo extends BaseEntity
     /** 状态（1正常 0停用） */
     @Excel(name = "状态", readConverterExp = "1=正常,0=停用")
     private String checkState;
+
+    /** 分支编号 */
+    @Excel(name = "分支编号")
+    private String branchNo;
 
     /** 创建者 */
     private String createBy;
@@ -239,6 +243,15 @@ public class CctPaperinfo extends BaseEntity
     {
         return checkState;
     }
+    public void setBranchNo(String branchNo) 
+    {
+        this.branchNo = branchNo;
+    }
+
+    public String getBranchNo() 
+    {
+        return branchNo;
+    }
     public void setCreateBy(String createBy) 
     {
         this.createBy = createBy;
@@ -330,6 +343,7 @@ public class CctPaperinfo extends BaseEntity
             .append("enditDate", getEnditDate())
             .append("duration", getDuration())
             .append("checkState", getCheckState())
+            .append("branchNo", getBranchNo())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())

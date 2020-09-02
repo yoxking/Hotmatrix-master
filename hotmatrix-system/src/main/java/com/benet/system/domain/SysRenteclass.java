@@ -26,6 +26,14 @@ public class SysRenteclass extends BaseEntity
     @Excel(name = "类型名称")
     private String className;
 
+    /** 上级类型 */
+    @Excel(name = "上级类型")
+    private String parentNo;
+
+    /** 显示顺序 */
+    @Excel(name = "显示顺序")
+    private Integer orderNo;
+
     /** 删除标志（1代表存在 0代表删除） */
     @Excel(name = "删除标志", readConverterExp = "1=代表存在,0=代表删除")
     private String deleteFlag;
@@ -68,6 +76,22 @@ public class SysRenteclass extends BaseEntity
     public String getClassName() 
     {
         return className;
+    }
+
+    public String getParentNo() {
+        return parentNo;
+    }
+
+    public void setParentNo(String parentNo) {
+        this.parentNo = parentNo;
+    }
+
+    public Integer getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
     }
     public void setDeleteFlag(String deleteFlag) 
     {
@@ -112,6 +136,8 @@ public class SysRenteclass extends BaseEntity
             .append("id", getId())
             .append("classNo", getClassNo())
             .append("className", getClassName())
+                .append("parentNo", getParentNo())
+                .append("orderNo", getOrderNo())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())

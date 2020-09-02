@@ -8,6 +8,8 @@
         <result property="id" column="id"/>
         <result property="classNo" column="class_no"/>
         <result property="className" column="class_name"/>
+        <result property="parentNo" column="parent_no"/>
+        <result property="orderNo" column="order_no"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
@@ -19,7 +21,7 @@
     </resultMap>
 
     <sql id="selectSysRenteclassVo">
-        select id, class_no, class_name, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_renteclass
+        select id, class_no, class_name, parent_no, order_no,create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_renteclass
     </sql>
 
     <select id="getAllRecords" resultMap="SysRenteclassResult">
@@ -29,7 +31,7 @@
 
     <select id="getRecordsByClassNo" resultMap="SysRenteclassResult">
         <include refid="selectSysRenteclassVo"/>
-        where delete_flag='1' and app_code=#{appCode} and class_no=#{classNo}
+        where delete_flag='1' and app_code=#{appCode} and parent_no=#{classNo}
     </select>
 
     <select id="getRecordsByPaging" resultMap="SysRenteclassResult">
@@ -59,6 +61,8 @@
         insert into sys_renteclass (
         <if test="info.classNo != null  and info.classNo != ''">class_no,</if>
         <if test="info.className != null  and info.className != ''">class_name,</if>
+        <if test="info.parentNo != null  and info.parentNo != ''">parent_no,</if>
+        <if test="info.orderNo != null ">order_no,</if>
         <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
         <if test="info.createTime != null ">create_time,</if>
         <if test="info.updateBy != null  and info.updateBy != ''">update_by,</if>
@@ -70,6 +74,8 @@
         )values(
         <if test="info.classNo != null  and info.classNo != ''">#{info.classNo},</if>
         <if test="info.className != null  and info.className != ''">#{info.className},</if>
+        <if test="info.parentNo != null  and info.parentNo != ''">#{info.parentNo},</if>
+        <if test="info.orderNo != null ">#{info.orderNo},</if>
         <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
         <if test="info.createTime != null ">#{info.createTime},</if>
         <if test="info.updateBy != null  and info.updateBy != ''">#{info.updateBy},</if>
@@ -86,6 +92,8 @@
         <set>
             <if test="info.classNo != null  and info.classNo != ''">class_no = #{info.classNo},</if>
             <if test="info.className != null  and info.className != ''">class_name = #{info.className},</if>
+            <if test="info.parentNo != null  and info.parentNo != ''">parent_no = #{info.parentNo},</if>
+            <if test="info.orderNo != null ">order_no = #{info.orderNo},</if>
             <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
             <if test="info.createTime != null ">create_time = #{info.createTime},</if>
             <if test="info.updateBy != null  and info.updateBy != ''">update_by = #{info.updateBy},</if>

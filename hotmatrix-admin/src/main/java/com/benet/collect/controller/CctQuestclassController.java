@@ -1,5 +1,6 @@
 package com.benet.collect.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.benet.common.core.pager.PageRequest;
 import com.benet.common.core.pager.TableDataInfo;
@@ -7,6 +8,8 @@ import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
+import com.benet.system.domain.SysConteeclass;
+import com.benet.system.vmodel.ItemObjectVo;
 import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +69,41 @@ public class CctQuestclassController extends BaseController
         int count = cctQuestclassService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
         List<CctQuestclass> list = cctQuestclassService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
+    }
+
+    /**
+     * 查询内容类型列表
+     */
+    @PreAuthorize("@ps.hasPermit('collect:questclass:list')")
+    @GetMapping(value = "/tree")
+    public TableDataInfo tree()
+    {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = cctQuestclassService.getCountByCondition(loginUser.getUser().getAppCode(),"");
+        List<ItemObjectVo> list = buildItemTree(loginUser.getUser().getAppCode(),"0");
+        return getDataTable(list, count);
+    }
+
+    private List<ItemObjectVo> buildItemTree(String appCode, String parentNo) {
+
+        List<ItemObjectVo> itemTree = null;
+        ItemObjectVo item = null;
+        List<CctQuestclass> infoList = cctQuestclassService.getRecordsByClassNo(appCode,parentNo);
+
+        if (infoList != null && infoList.size() > 0) {
+            itemTree = new ArrayList<>();
+            for (CctQuestclass info : infoList) {
+                item = new ItemObjectVo();
+                item.setId(info.getClassNo());
+                item.setKey(info.getClassNo());
+                item.setTitle(info.getClassName());
+                item.setValue(info.getClassNo());
+                item.setChildren(buildItemTree(appCode,info.getClassNo()));
+
+                itemTree.add(item);
+            }
+        }
+        return itemTree;
     }
 
     /**

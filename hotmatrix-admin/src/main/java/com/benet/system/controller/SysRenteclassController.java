@@ -1,5 +1,6 @@
 package com.benet.system.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.benet.common.core.pager.PageRequest;
@@ -7,6 +8,7 @@ import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
+import com.benet.system.vmodel.ItemObjectVo;
 import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,7 @@ import com.benet.common.core.pager.TableDataInfo;
  * @author yoxking
  * @date 2020-04-20
  */
-@Api(value = "system/renteclass", tags = "租户类型Controller")
+@Api(value = "system/renteclass", tags = "租户类型控制器")
 @RestController
 @RequestMapping("/system/renteclass")
 public class SysRenteclassController extends BaseController
@@ -67,6 +69,37 @@ public class SysRenteclassController extends BaseController
         int count = sysRenteclassService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
         List<SysRenteclass> list = sysRenteclassService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
+    }
+
+    /**
+     * 查询内容信息列表
+     */
+    @PreAuthorize("@ps.hasPermit('system:renteclass:list')")
+    @GetMapping(value = "/tree")
+    public TableDataInfo tree()
+    {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        List<SysRenteclass> list = sysRenteclassService.getAllRecords(loginUser.getUser().getAppCode());
+        return getDataTable(convertList(list), list.size());
+    }
+
+    private List<ItemObjectVo> convertList(List<SysRenteclass> list){
+
+        List<ItemObjectVo> itemList=new ArrayList<>();
+        ItemObjectVo item=null;
+        if(list!=null&&list.size()>0){
+            for(SysRenteclass info:list){
+                item=new ItemObjectVo();
+                item.setId(info.getClassNo());
+                item.setKey(info.getClassNo());
+                item.setTitle(info.getClassName());
+                item.setValue(info.getClassNo());
+                item.setChildren(null);
+
+                itemList.add(item);
+            }
+        }
+        return itemList;
     }
 
     /**

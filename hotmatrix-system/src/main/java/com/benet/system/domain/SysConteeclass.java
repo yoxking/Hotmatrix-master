@@ -26,6 +26,14 @@ public class SysConteeclass extends BaseEntity
     @Excel(name = "类型名称")
     private String className;
 
+    /** 上级类型 */
+    @Excel(name = "上级类型")
+    private String parentNo;
+
+    /** 显示顺序 */
+    @Excel(name = "显示顺序")
+    private Integer orderNo;
+
     /** 分支编号 */
     @Excel(name = "分支编号")
     private String branchNo;
@@ -73,7 +81,24 @@ public class SysConteeclass extends BaseEntity
     {
         return className;
     }
-    public void setBranchNo(String branchNo) 
+
+    public String getParentNo() {
+        return parentNo;
+    }
+
+    public void setParentNo(String parentNo) {
+        this.parentNo = parentNo;
+    }
+
+    public Integer getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public void setBranchNo(String branchNo)
     {
         this.branchNo = branchNo;
     }
@@ -125,6 +150,8 @@ public class SysConteeclass extends BaseEntity
             .append("id", getId())
             .append("classNo", getClassNo())
             .append("className", getClassName())
+                .append("parentNo", getParentNo())
+                .append("orderNo", getOrderNo())
             .append("branchNo", getBranchNo())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())

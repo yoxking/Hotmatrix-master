@@ -7,9 +7,12 @@ import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
+import com.benet.system.domain.SysDepartment;
+import com.benet.system.vmodel.DeptmentVo;
 import com.benet.system.vmodel.ItemObjectVo;
 import com.benet.system.domain.SysConteeclass;
 import com.benet.system.service.ISysConteeclassService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,15 +40,13 @@ import com.benet.common.core.pager.TableDataInfo;
  * @author yoxking
  * @date 2020-04-20
  */
+@Api(value = "system/contentinfo", tags = "内容信息控制器")
 @RestController
 @RequestMapping("/system/contentinfo")
 public class SysContentinfoController extends BaseController
 {
     @Autowired
     private MyJwtokenService tokenService;
-
-    @Autowired
-    private ISysConteeclassService sysContzclassService;
 
     @Autowired
     private ISysContentinfoService sysContentinfoService;
@@ -58,37 +59,6 @@ public class SysContentinfoController extends BaseController
     {
         ModelAndView mv=new ModelAndView("index");
         return mv;
-    }
-
-    /**
-     * 查询内容信息列表
-     */
-    @PreAuthorize("@ps.hasPermit('system:contentinfo:list')")
-    @GetMapping(value = "/classlist")
-    public TableDataInfo classlist()
-    {
-        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        List<SysConteeclass> list = sysContzclassService.getAllRecords(loginUser.getUser().getAppCode());
-        return getDataTable(convertList(list), list.size());
-    }
-
-    private List<ItemObjectVo> convertList(List<SysConteeclass> list){
-
-        List<ItemObjectVo> itemList=new ArrayList<>();
-        ItemObjectVo item=null;
-        if(list!=null&&list.size()>0){
-            for(SysConteeclass info:list){
-                item=new ItemObjectVo();
-                item.setId(info.getClassNo());
-                item.setKey(info.getClassNo());
-                item.setTitle(info.getClassName());
-                item.setValue(info.getClassNo());
-                item.setChildren(null);
-
-                itemList.add(item);
-            }
-        }
-        return itemList;
     }
 
     /**

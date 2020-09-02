@@ -42,7 +42,7 @@ import com.benet.common.core.pager.TableDataInfo;
  * @author yoxking
  * @date 2020-04-20
  */
-@Api(value = "sys/renterinfo", tags = "租户信息Controller")
+@Api(value = "sys/renterinfo", tags = "租户信息控制器")
 @RestController
 @RequestMapping("/system/renterinfo")
 public class SysRenterinfoController extends BaseController
@@ -94,37 +94,6 @@ public class SysRenterinfoController extends BaseController
         int count = sysRenterinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
         List<SysRenterinfo> list = sysRenterinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
-    }
-
-    /**
-     * 查询内容信息列表
-     */
-    @PreAuthorize("@ps.hasPermit('system:renterinfo:list')")
-    @GetMapping(value = "/classlist")
-    public TableDataInfo classList()
-    {
-        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        List<SysRenteclass> list = sysRenteclassService.getAllRecords(loginUser.getUser().getAppCode());
-        return getDataTable(convertList(list), list.size());
-    }
-
-    private List<ItemObjectVo> convertList(List<SysRenteclass> list){
-
-        List<ItemObjectVo> itemList=new ArrayList<>();
-        ItemObjectVo item=null;
-        if(list!=null&&list.size()>0){
-            for(SysRenteclass info:list){
-                item=new ItemObjectVo();
-                item.setId(info.getClassNo());
-                item.setKey(info.getClassNo());
-                item.setTitle(info.getClassName());
-                item.setValue(info.getClassNo());
-                item.setChildren(null);
-
-                itemList.add(item);
-            }
-        }
-        return itemList;
     }
 
     /**

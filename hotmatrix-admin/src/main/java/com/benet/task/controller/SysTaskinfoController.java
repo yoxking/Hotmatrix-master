@@ -9,6 +9,7 @@ import com.benet.framework.security.service.MyJwtokenService;
 import com.benet.task.domain.SysTaskinfo;
 import com.benet.task.service.ISysTaskinfoService;
 import com.benet.task.vmodel.TaskObjectVo;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,7 @@ import com.benet.common.core.pager.TableDataInfo;
  * @author yoxking
  * @date 2020-04-20
  */
+@Api(value = "task/taskinfo", tags = "定时任务调度控制器")
 @RestController
 @RequestMapping("/task/taskinfo")
 public class SysTaskinfoController extends BaseController

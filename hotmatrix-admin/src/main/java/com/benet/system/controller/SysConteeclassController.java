@@ -1,11 +1,14 @@
 package com.benet.system.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.benet.common.core.pager.PageRequest;
 import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
+import com.benet.system.vmodel.ItemObjectVo;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +36,7 @@ import com.benet.common.core.pager.TableDataInfo;
  * @author yoxking
  * @date 2020-04-20
  */
+@Api(value = "system/conteeclass", tags = "内容类型控制器")
 @RestController
 @RequestMapping("/system/conteeclass")
 public class SysConteeclassController extends BaseController
@@ -64,6 +68,41 @@ public class SysConteeclassController extends BaseController
         int count = sysConteeclassService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
         List<SysConteeclass> list = sysConteeclassService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
+    }
+
+    /**
+     * 查询内容类型列表
+     */
+    @PreAuthorize("@ps.hasPermit('system:conteeclass:list')")
+    @GetMapping(value = "/tree")
+    public TableDataInfo tree()
+    {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysConteeclassService.getCountByCondition(loginUser.getUser().getAppCode(),"");
+        List<ItemObjectVo> list = buildItemTree(loginUser.getUser().getAppCode(),"0");
+        return getDataTable(list, count);
+    }
+
+    private List<ItemObjectVo> buildItemTree(String appCode, String parentNo) {
+
+        List<ItemObjectVo> itemTree = null;
+        ItemObjectVo item = null;
+        List<SysConteeclass> infoList = sysConteeclassService.getRecordsByClassNo(appCode,parentNo);
+
+        if (infoList != null && infoList.size() > 0) {
+            itemTree = new ArrayList<>();
+            for (SysConteeclass info : infoList) {
+                item = new ItemObjectVo();
+                item.setId(info.getClassNo());
+                item.setKey(info.getClassNo());
+                item.setTitle(info.getClassName());
+                item.setValue(info.getClassNo());
+                item.setChildren(buildItemTree(appCode,info.getClassNo()));
+
+                itemTree.add(item);
+            }
+        }
+        return itemTree;
     }
 
     /**

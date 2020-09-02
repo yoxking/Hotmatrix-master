@@ -10,7 +10,7 @@ import com.benet.common.core.domain.BaseEntity;
  * 测题选项对象 cct_questopts
  * 
  * @author yoxking
- * @date 2020-08-27
+ * @date 2020-08-31
  */
 public class CctQuestopts extends BaseEntity
 {
@@ -46,6 +46,10 @@ public class CctQuestopts extends BaseEntity
     /** 状态（1正常 0停用） */
     @Excel(name = "状态", readConverterExp = "1=正常,0=停用")
     private String checkState;
+
+    /** 分支编号 */
+    @Excel(name = "分支编号")
+    private String branchNo;
 
     /** 创建者 */
     private String createBy;
@@ -147,6 +151,15 @@ public class CctQuestopts extends BaseEntity
     {
         return checkState;
     }
+    public void setBranchNo(String branchNo) 
+    {
+        this.branchNo = branchNo;
+    }
+
+    public String getBranchNo() 
+    {
+        return branchNo;
+    }
     public void setCreateBy(String createBy) 
     {
         this.createBy = createBy;
@@ -231,6 +244,7 @@ public class CctQuestopts extends BaseEntity
             .append("orderNo", getOrderNo())
             .append("optScore", getOptScore())
             .append("checkState", getCheckState())
+            .append("branchNo", getBranchNo())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())

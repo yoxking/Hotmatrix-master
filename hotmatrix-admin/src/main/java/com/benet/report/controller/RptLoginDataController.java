@@ -7,6 +7,7 @@ import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
 import com.benet.system.service.ISysLogininfoService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author yoxking
  * @date 2020-04-20
  */
+@Api(value = "report/logindata", tags = "户登录报表控制器")
 @RestController
 @RequestMapping("/report/logindata")
 public class RptLoginDataController extends BaseController

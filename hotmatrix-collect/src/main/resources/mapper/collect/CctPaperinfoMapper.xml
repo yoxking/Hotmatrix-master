@@ -20,6 +20,7 @@
         <result property="enditDate" column="endit_date"/>
         <result property="duration" column="duration"/>
         <result property="checkState" column="check_state"/>
+        <result property="branchNo" column="branch_no"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
@@ -31,7 +32,7 @@
     </resultMap>
 
     <sql id="selectCctPaperinfoVo">
-        select id, paper_no, paper_title, paper_desc, paper_type, class_no, order_no, paper_score, rules_quests, paper_quests, paper_rusers, start_date, endit_date, duration, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from cct_paperinfo
+        select id, paper_no, paper_title, paper_desc, paper_type, class_no, order_no, paper_score, rules_quests, paper_quests, paper_rusers, start_date, endit_date, duration, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from cct_paperinfo
     </sql>
 
     <select id="getAllRecords" resultMap="CctPaperinfoResult">
@@ -83,6 +84,7 @@
         <if test="info.enditDate != null ">endit_date,</if>
         <if test="info.duration != null ">duration,</if>
         <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
+        <if test="info.branchNo != null  and info.branchNo != ''">branch_no,</if>
         <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
         <if test="info.createTime != null ">create_time,</if>
         <if test="info.updateBy != null  and info.updateBy != ''">update_by,</if>
@@ -106,6 +108,7 @@
         <if test="info.enditDate != null ">#{info.enditDate},</if>
         <if test="info.duration != null ">#{info.duration},</if>
         <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
+        <if test="info.branchNo != null  and info.branchNo != ''">#{info.branchNo},</if>
         <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
         <if test="info.createTime != null ">#{info.createTime},</if>
         <if test="info.updateBy != null  and info.updateBy != ''">#{info.updateBy},</if>
@@ -134,6 +137,7 @@
             <if test="info.enditDate != null ">endit_date = #{info.enditDate},</if>
             <if test="info.duration != null ">duration = #{info.duration},</if>
             <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
+            <if test="info.branchNo != null  and info.branchNo != ''">branch_no = #{info.branchNo},</if>
             <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
             <if test="info.createTime != null ">create_time = #{info.createTime},</if>
             <if test="info.updateBy != null  and info.updateBy != ''">update_by = #{info.updateBy},</if>
@@ -141,7 +145,7 @@
             <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag = #{info.deleteFlag},</if>
             <if test="info.comments != null  and info.comments != ''">comments = #{info.comments},</if>
             <if test="info.appCode != null  and info.appCode != ''">app_code = #{info.appCode},</if>
-            <if test="info.version != null ">version = #{info.version},</if>
+            <if test="info.version != null ">version = #{info.version}</if>
         </set>
         where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and paper_no =
         #{info.paperNo}

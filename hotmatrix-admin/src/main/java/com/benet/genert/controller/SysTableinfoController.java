@@ -22,6 +22,7 @@ import com.benet.genert.domain.SysTabcolumn;
 import com.benet.genert.domain.SysTableinfo;
 import com.benet.genert.service.ISysTabcolumnService;
 import com.benet.genert.service.ISysTableinfoService;
+import io.swagger.annotations.Api;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,6 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  * @author yoxking
  */
+@Api(value = "genert/tableinfo", tags = "代码生成控制器")
 @RestController
 @RequestMapping("/genert/tableinfo")
 public class SysTableinfoController extends BaseController

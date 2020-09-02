@@ -16,6 +16,7 @@ import com.benet.system.service.ISysPermitinfoService;
 import com.benet.system.service.ISysRenterinfoService;
 import com.benet.system.service.ISysRoleinfoService;
 import com.benet.web.vmodel.LoginInfoVo;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ import java.util.Set;
  * 
  * @author yoxking
  */
+@Api(value = "web", tags = "登录验证控制器")
 @RestController
 @RequestMapping("/web")
 public class UserLoginController

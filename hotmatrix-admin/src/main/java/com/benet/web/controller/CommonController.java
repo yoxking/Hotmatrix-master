@@ -10,6 +10,7 @@ import com.benet.common.core.domain.AjaxResult;
 import com.benet.common.utils.file.FileUploadUtils;
 import com.benet.common.utils.file.FileUtils;
 import com.benet.common.utils.string.StringUtils;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
  * 
  * @author yoxking
  */
+@Api(value = "web", tags = "通用请求处理控制器")
 @RestController
 @RequestMapping("/web")
 public class CommonController
