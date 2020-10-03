@@ -196,4 +196,33 @@
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>
 
+    <select id="getRecordByLoginName" resultMap="SysRuserinfoResult">
+        <include refid="selectSysRuserinfoVo"/>
+        where delete_flag='1'  and login_name = #{loginName}
+    </select>
+
+    <select id="getRecordByTelephone" resultMap="SysRuserinfoResult">
+        <include refid="selectSysRuserinfoVo"/>
+        where delete_flag='1' and telephone = #{telephone}
+    </select>
+
+    <select id="getRecordByEmail" resultMap="SysRuserinfoResult">
+        <include refid="selectSysRuserinfoVo"/>
+        where delete_flag='1' and email = #{email}
+    </select>
+
+    <select id="checkLoginNameUnique" resultType="Integer">
+        select count(*) from sys_ruserinfo
+        where delete_flag='1'  and login_name = #{loginName}
+    </select>
+
+    <select id="checkTelephoneUnique" resultType="Integer">
+        select count(*) from sys_ruserinfo
+        where delete_flag='1'  and telephone = #{telephone}
+    </select>
+
+    <select id="checkEmailUnique" resultType="Integer">
+        select count(*) from sys_ruserinfo
+        where delete_flag='1'  and email = #{email}
+    </select>
 </mapper>

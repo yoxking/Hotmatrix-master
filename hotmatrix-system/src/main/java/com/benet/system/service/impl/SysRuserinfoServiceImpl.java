@@ -5,6 +5,7 @@ import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
+import com.benet.system.domain.SysSuserinfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.benet.system.mapper.SysRuserinfoMapper;
@@ -251,5 +252,85 @@ public class SysRuserinfoServiceImpl implements ISysRuserinfoService
     @Override
     public int SoftDeleteByCondition(String appCode,String condition) {
         return sysRuserinfoMapper.SoftDeleteByCondition(appCode,condition);
+    }
+
+    /**
+     * 通过用户名查询用户
+     *
+     * @param loginName 用户名
+     * @return 用户对象信息
+     */
+    @Override
+    public SysRuserinfo getRecordByLoginName(String loginName){
+        return sysRuserinfoMapper.getRecordByLoginName(loginName);
+    }
+
+
+    /**
+     * 通过手机号码查询用户
+     *
+     * @param telephone 手机号码
+     * @return 用户对象信息
+     */
+    @Override
+    public SysRuserinfo getRecordByTelephone(String telephone){
+        return sysRuserinfoMapper.getRecordByTelephone(telephone);
+    }
+
+
+    /**
+     * 通过邮箱查询用户
+     *
+     * @param email 邮箱
+     * @return 用户对象信息
+     */
+    public SysRuserinfo getRecordByEmail(String email){
+        return sysRuserinfoMapper.getRecordByEmail(email);
+    }
+
+    /**
+     * 校验用户名称是否唯一
+     *
+     * @param loginName 登录名称
+     * @return 结果
+     */
+    @Override
+    public int checkLoginNameUnique(String loginName){
+        return sysRuserinfoMapper.checkLoginNameUnique(loginName);
+    }
+
+    /**
+     * 校验手机号码是否唯一
+     *
+     * @param telephone 手机号码
+     * @return 结果
+     */
+    @Override
+    public int checkTelephoneUnique(String telephone){
+        return sysRuserinfoMapper.checkTelephoneUnique(telephone);
+    }
+
+    /**
+     * 校验email是否唯一
+     *
+     * @param email 用户邮箱
+     * @return 结果
+     */
+    @Override
+    public int checkEmailUnique(String email){
+        return sysRuserinfoMapper.checkEmailUnique(email);
+    }
+
+    /**
+     * 修改用户密码信息
+     *
+     * @param userNo 用户Id
+     * @param password 密码
+     * @return 结果
+     */
+    @Override
+    public int ResetUserPassword(String userNo,String password){
+        // return sysSuserinfoMapper.checkEmailUnique(appCode,email);
+        return 0;
     }
 }

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>心理测评中心-登录</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+	<link rel="icon" th:href="@{/images/Favicon.png}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/fontello.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/fontello-codes.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/responsive.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/color.css}">
+</head>
+<body>
+
+<div class="wrapper">
+	<header>
+		<div class="top_bar">
+			<div class="container">
+				<div class="top_header_content">
+					<div class="menu_logo">
+						<a href="index.html" title="" class="logo">
+							<img th:src="@{/images/logo.png}" alt="">
+						</a>
+					</div><!--menu_logo end-->
+					<div class="clearfix"></div>
+				</div><!--top_header_content end-->
+			</div>
+		</div><!--header_content end-->
+	</header><!--header end-->
+
+	<section class="form_popup">
+	
+		<div class="login_form" id="login_form">
+		 	<div class="hd-lg">
+		 		<img th:src="@{/images/logo.png}" alt="">
+		 		<span>登录账号</span>
+		 	</div><!--hd-lg end-->
+			<div class="user-account-pr">
+				<form>
+					<div class="input-sec">
+						<input type="text" name="username" placeholder="账号">
+					</div>
+					<div class="input-sec">
+						<input type="Password" name="password" placeholder="密码">
+					</div>
+					<div class="chekbox-lg">
+						<label>
+							<input type="checkbox" id="rememberme" name="rememberme">
+							<b class="checkmark"> </b>
+							<span>记住我</span>
+						</label>
+					</div>
+					<div class="input-sec mb-0">
+						<button onclick="signin()">登录</button>
+					</div><!--input-sec end-->
+				</form>
+				<a href="#" title="" class="fg_btn">忘记密码?马上找回</a>
+			</div><!--user-account end--->
+		</div><!--login end--->
+
+	</section><!--form_popup end-->
+
+	<section class="more_items_sec br-top text-center">
+		<div class="container">
+			copyright @2020 百纳云纪科技
+		</div>
+	</section><!--more_items_sec end-->			
+
+
+</div><!--wrapper end-->
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/popper.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/script.js}"></script>
+<script type="text/javascript">
+	function signin() {
+		var username = $("input[name='username']").val();
+		var password = $("input[name='password']").val();
+		var rememberMe = $("input[name='rememberme']").is(':checked');
+		$.ajax({
+			type: "post",
+			url: "/ajaxLogin",
+			data: {
+				"username": username,
+				"password": password,
+				"rememberMe": rememberMe
+			},
+			success: function(r) {
+				console.log(r)
+			}
+		});
+	}
+</script>
+
+</body>
+</html>

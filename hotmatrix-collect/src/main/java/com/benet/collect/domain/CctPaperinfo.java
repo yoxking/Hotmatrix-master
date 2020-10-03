@@ -5,7 +5,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.benet.common.annotation.Excel;
 import java.util.Date;
 import com.benet.common.core.domain.BaseEntity;
-import java.util.Date;
 
 /**
  * 问卷信息对象 cct_paperinfo

@@ -156,7 +156,7 @@
         },
         rules: {
           branchName: [
-            { required: true, message: '请输入名称', trigger: 'change' }
+            { required: true, message: '请输入名称', trigger: 'blur' }
           ]
         }
       }

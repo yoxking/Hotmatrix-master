@@ -3,6 +3,7 @@ package com.benet.system.mapper;
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.system.domain.SysRuserinfo;
+import com.benet.system.domain.SysSuserinfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -138,4 +139,54 @@ public interface SysRuserinfoMapper
      */
     public int SoftDeleteByCondition(@Param("appCode") String appCode,@Param("condition") String condition);
 
+
+    /**
+     * 通过用户名查询用户
+     *
+     * @param loginName 用户名
+     * @return 用户对象信息
+     */
+    public SysRuserinfo getRecordByLoginName(@Param("loginName") String loginName);
+
+
+    /**
+     * 通过手机号码查询用户
+     *
+     * @param telephone 手机号码
+     * @return 用户对象信息
+     */
+    public SysRuserinfo getRecordByTelephone(@Param("telephone") String telephone);
+
+
+    /**
+     * 通过邮箱查询用户
+     *
+     * @param email 邮箱
+     * @return 用户对象信息
+     */
+    public SysRuserinfo getRecordByEmail(@Param("email") String email);
+
+    /**
+     * 校验用户名称是否唯一
+     *
+     * @param loginName 登录名称
+     * @return 结果
+     */
+    public int checkLoginNameUnique(@Param("loginName") String loginName);
+
+    /**
+     * 校验手机号码是否唯一
+     *
+     * @param telephone 手机号码
+     * @return 结果
+     */
+    public int checkTelephoneUnique(@Param("telephone") String telephone);
+
+    /**
+     * 校验email是否唯一
+     *
+     * @param email 用户邮箱
+     * @return 结果
+     */
+    public int checkEmailUnique(@Param("email") String email);
 }

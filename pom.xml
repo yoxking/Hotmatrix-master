@@ -21,19 +21,21 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <mybatis.boot.version>2.1.2</mybatis.boot.version>
-        <druid.version>1.1.21</druid.version>
+        <druid.version>1.1.22</druid.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <bitwalker.version>1.21</bitwalker.version>
         <oshi.version>4.5.0</oshi.version>
         <velocity.version>1.7</velocity.version>
         <swagger.version>2.9.2</swagger.version>
-        <fastjson.version>1.2.67</fastjson.version>
+        <fastjson.version>1.2.73</fastjson.version>
         <javajwt.version>0.9.0</javajwt.version>
         <commons.io.version>2.6</commons.io.version>
         <pagehelper.boot.version>1.2.13</pagehelper.boot.version>
         <commons.fileupload.version>1.4</commons.fileupload.version>
         <poi.version>3.17</poi.version>
         <jedis.version>3.1.0</jedis.version>
+        <shiro.version>1.6.0</shiro.version>
+        <log4j.version>1.2.17</log4j.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -164,6 +166,7 @@
         <module>hotmatrix-workflow</module>
         <module>hotmatrix-system</module>
         <module>hotmatrix-collect</module>
+        <module>hotmatrix-console</module>
     </modules>
 
     <dependencies>
