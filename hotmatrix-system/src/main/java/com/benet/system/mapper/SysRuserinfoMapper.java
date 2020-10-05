@@ -189,4 +189,13 @@ public interface SysRuserinfoMapper
      * @return 结果
      */
     public int checkEmailUnique(@Param("email") String email);
+
+    /**
+     * 修改用户密码信息
+     *
+     * @param userNo 用户Id
+     * @param password 密码
+     * @return 结果
+     */
+    public int resetUserPassword(@Param("userNo") String userNo,@Param("password") String password);
 }

@@ -2,6 +2,8 @@ package com.benet.console.controller;
 
 import com.benet.common.core.domain.AjaxResult;
 import com.benet.common.utils.string.StringUtils;
+import com.benet.console.common.BaseViewController;
+import com.benet.console.utils.ShiroUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -11,16 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import static com.benet.common.core.domain.AjaxResult.error;
-import static com.benet.common.core.domain.AjaxResult.success;
-
 /**
  * 登录验证
  *
  * @author yoxking
  */
 @Controller
-public class RuserLoginController {
+public class RuserLoginController extends BaseViewController {
 
     /**
      * 登录

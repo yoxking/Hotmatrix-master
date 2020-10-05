@@ -1,220 +1,23 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8">
-  <title>心理测评中心-控制台</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="" />
-  <meta name="keywords" content="" />
-  <link rel="icon" th:href="@{/images/Favicon.png}">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/animate.css}">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/fontello.css}">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/fontello-codes.css}">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/color.css}">
+  <th:block th:include="include :: headblock('心理测评中心-控制台')" />
 </head>
+
 <body>
   <div class="wrapper hp_1">
-    <header>
-      <div class="top_bar">
-        <div class="container">
-          <div class="top_header_content">
-            <div class="menu_logo">
-              <a href="#" title="" class="menu">
-                <i class="icon-menu"></i>
-              </a>
-              <a href="index.html" title="" class="logo">
-                <img th:src="@{/images/logo.png}" alt="">
-              </a>
-            </div>
-            <!--menu_logo end-->
-            <ul class="controls-lv">
-              <li>
-                <a href="#" title=""><i class="icon-message"></i></a>
-              </li>
-              <li>
-                <a href="#" title=""><i class="icon-notification"></i></a>
-              </li>
-              <li class="user-log">
-                <div class="user-ac-img">
-                  <img th:src="@{/images/resources/user-img.png}" alt="">
-                </div>
-                <div class="account-menu">
-                  <h4>张三 <span class="usr-status">管理员</span></h4>
-                  <div class="sd_menu">
-                    <ul class="mm_menu">
-                      <li>
-                        <span>
-                          <i class="icon-user"></i>
-                        </span>
-                        <a href="#" title="">我的信息</a>
-                      </li>
-                      <li>
-                        <span>
-                          <i class="icon-paid_sub"></i>
-                        </span>
-                        <a href="#" title="">角色切换</a>
-                      </li>
-                      <li>
-                        <span>
-                          <i class="icon-settings"></i>
-                        </span>
-                        <a href="#" title="">设置</a>
-                      </li>
-                      <li>
-                        <span>
-                          <i class="icon-logout"></i>
-                        </span>
-                        <a href="#" title="">退出</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <!--restricted-more end-->
-                </div>
-              </li>
-            </ul>
-            <!--controls-lv end-->
-            <div class="clearfix"></div>
-          </div>
-          <!--top_header_content end-->
-        </div>
-      </div>
-      <!--header_content end-->
-      <div class="btm_bar">
-        <div class="container">
-          <div class="btm_bar_content">
-            <nav>
-              <ul>
-                <li><a href="#" title=""  style="font-weight: bold;">功能列表</a>
-                  <div class="mega-menu">
-                    <ul>
-                      <li><a href="#" title="">通知公告</a></li>
-                      <li><a href="#" title="">心理资讯</a></li>
-                      <li><a href="#" title="">心理案例</a></li>
-                      <li><a href="#" title="">活动组织</a></li>
-                    </ul>
-                    <ul>
-                      <li><a href="#" title="">心理测评<span class="icon-arrow_below"></span></a>
-                        <ul>
-                          <li><a href="#" title="">恋爱婚姻</a></li>
-                          <li><a href="#" title="">情绪压力</a></li>
-                          <li><a href="#" title="">人际关系</a></li>
-                          <li><a href="#" title="">孩子教育</a></li>
-                          <li><a href="#" title="">职场发展</a></li>
-                          <li><a href="#" title="">个人成长</a></li>
-                        </ul>
-                      </li>
-                      <li><a href="#" title="">测评报告</a></li>
-                      <li><a href="#" title="">心理咨询师</a></li>
-                      <li><a href="#" title="">成长日志</a></li>
-                    </ul>
-                  </div>
-                  <div class="clearfix"></div>
-                </li>
-                <li><a href="#" title="">心理测评</a></li>
-                <li><a href="#" title="">测评报告</a></li>
-                <li><a href="#" title="">心理咨询师</a></li>
-                <li><a href="#" title="">成长日志</a></li>
-              </ul>
-            </nav>
-            <!--shr_links end-->
-            <ul class="vid_thums">
-              <li>
-                <a class="active" href="#" title=""><i class="icon-grid"></i></a>
-              </li>
-            </ul>
-            <!--vid_status end-->
-            <div class="clearfix"></div>
-          </div>
-          <!--btm_bar_content end-->
-        </div>
-      </div>
-      <!--btm_bar end-->
-    </header>
-    <!--header end-->
+    <th:block th:include="include :: topmenubar" />
 
-    <div class="side_menu">
-      <div class="sd_menu">
-        <ul class="mm_menu">
-          <li>
-            <span>
-              <i class="icon-home"></i>
-            </span>
-            <a href="#" title="">首页</a>
-          </li>
-        </ul>
-      </div>
-      <!--sd_menu end-->
-      <div class="sd_menu">
-        <h3>操作列表</h3>
-        <ul class="mm_menu">
-          <li>
-            <span>
-              <i class="icon-history"></i>
-            </span>
-            <a href="#" title="">成长日志</a>
-          </li>
-          <li>
-            <span>
-              <i class="icon-watch_later"></i>
-            </span>
-            <a href="#" title="">我的测评</a>
-          </li>
-          <li>
-            <span>
-              <i class="icon-purchased"></i>
-            </span>
-            <a href="#" title="">购买记录</a>
-          </li>
-        </ul>
-      </div>
-      <!--sd_menu end-->
-      <div class="sd_menu">
-        <ul class="mm_menu">
-          <li>
-            <span>
-              <i class="icon-settings"></i>
-            </span>
-            <a href="#" title="">个人设置</a>
-          </li>
-          <li>
-            <span>
-              <i class="icon-flag"></i>
-            </span>
-            <a href="#" title="">测评统计</a>
-          </li>
-          <li>
-            <span>
-              <i class="icon-logout"></i>
-            </span>
-            <a href="#" title="">退出</a>
-          </li>
-        </ul>
-      </div>
-      <!--sd_menu end-->
-      <div class="sd_menu m_linkz">
-        <ul class="mm_menu">
-          <li><a href="#">关于</a></li>
-          <li><a href="#">帮助</a></li>
-          <li><a href="#">隐私</a></li>
-          <li><a href="#">文档</a></li>
-        </ul>
-        <span>星星之火咨询</span>
-      </div>
-      <!--sd_menu end-->
-      <div class="dd_menu"></div>
-    </div>
-    <!--side_menu end-->
+    <th:block th:include="include :: sidemenubar" />
 
     <section class="banner-section">
       <div class="container">
         <div class="banner-text">
-          <h2>Watch share and upload with friends</h2>
-          <a href="#" title="">Create my account</a>
+          <h2>专业的心理测评服务</h2>
+          <p>我们提供专业的心理测评报告、专业的心理咨询服务</p>
         </div>
         <!--banner-text end-->
-        <h3 class="headline">Video of the Day by <a href="#" title="">newfox media</a></h3>
       </div>
     </section>
     <!--banner-section end-->
@@ -225,7 +28,7 @@
           <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
               <div class="service-col">
-                <img src="images/sv1.png" alt="">
+                <img th:src="@{/imgs/sv1.png}" alt="">
                 <h3>大数据分析报告</h3>
                 <p>基于大数据分析的心理分析报告</p>
               </div>
@@ -233,7 +36,7 @@
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
               <div class="service-col">
-                <img src="images/sv2.png" alt="">
+                <img th:src="@{/imgs/sv2.png}" alt="">
                 <h3>心理成长日志</h3>
                 <p>记录每一天心理的成长日志 </p>
               </div>
@@ -241,7 +44,7 @@
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
               <div class="service-col">
-                <img src="images/sv3.png" alt="">
+                <img th:src="@{/imgs/sv3.png}" alt="">
                 <h3>专业心理咨询师</h3>
                 <p>在您身边的专业心理咨询师</p>
               </div>
@@ -249,7 +52,7 @@
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
               <div class="service-col">
-                <img src="images/sv4.png" alt="">
+                <img th:src="@{/imgs/sv4.png}" alt="">
                 <h3>公益测评帮助</h3>
                 <p>免费的全民公益心理测评</p>
               </div>
@@ -269,12 +72,12 @@
             <h3>心理测评</h3>
             <div class="vidz_list">
               <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
+                <div th:each="paper:${paperList}" class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
                   <div class="videoo">
                     <div class="vid_thumbainl">
-                      <a href="single_video_page.html" title="">
-                        <img src="images/resources/vide1.png" alt="">
-                        <span class="vid-time">10:21</span>
+                      <a th:href="@{/mainview/content(id=${paper.paperNo})}" target="_blank" th:title="${paper.paperTitle}">
+                        <img th:src="(${paper.paperPoster} == '') ? @{/imgs/resources/vide6.png} : @{${paper.paperPoster}}" alt="海报图片">
+                        <span class="vid-time">[[${paper.exDruation}]]</span>
                         <span class="watch_later">
                           <i class="icon-watch_later_fill"></i>
                         </span>
@@ -282,158 +85,9 @@
                     </div>
                     <!--vid_thumbnail end-->
                     <div class="video_info">
-                      <h3><a href="single_video_page.html" title="">Kingdom Come: Deliverance Funny Moments and
-                          Fails</a></h3>
-                      <h4><a href="Single_Channel_Home.html" title="">newfox media</a> <span class="verify_ic"><i
-                            class="icon-tick"></i></span></h4>
-                      <span>686K views .<small class="posted_dt">1 week ago</small></span>
-                    </div>
-                  </div>
-                  <!--videoo end-->
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-                  <div class="videoo">
-                    <div class="vid_thumbainl">
-                      <a href="single_video_page.html" title="">
-                        <img src="images/resources/vide2.png" alt="">
-                        <span class="vid-time">13:49</span>
-                        <span class="watch_later">
-                          <i class="icon-watch_later_fill"></i>
-                        </span>
-                      </a>
-                    </div>
-                    <!--vid_thumbnail end-->
-                    <div class="video_info">
-                      <h3><a href="single_video_page.html" title="">DR DISRESPECT - Before They Were Famous - Twitch
-                          Streamer</a></h3>
-                      <h4><a href="Single_Channel_Home.html" title="">Eros Now</a> </h4>
-                      <span>283K views .<small class="posted_dt">3 months ago</small></span>
-                    </div>
-                  </div>
-                  <!--videoo end-->
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-                  <div class="videoo">
-                    <div class="vid_thumbainl">
-                      <a href="single_video_page.html" title="">
-                        <img src="images/resources/vide3.png" alt="">
-                        <span class="vid-time">2:54</span>
-                        <span class="watch_later">
-                          <i class="icon-watch_later_fill"></i>
-                        </span>
-                      </a>
-                    </div>
-                    <!--vid_thumbnail end-->
-                    <div class="video_info">
-                      <h3><a href="single_video_page.html" title="">Top Perectly Timed Twitch Moments 2017 #7</a></h3>
-                      <h4><a href="Single_Channel_Home.html" title="">Animal Planet</a> <span class="verify_ic"><i
-                            class="icon-tick"></i></span></h4>
-                      <span>2.6M views .<small class="posted_dt">2 months ago</small></span>
-                    </div>
-                  </div>
-                  <!--videoo end-->
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-                  <div class="videoo">
-                    <div class="vid_thumbainl">
-                      <a href="single_video_page.html" title="">
-                        <img src="images/resources/vide4.png" alt="">
-                        <span class="vid-time">5:25</span>
-                        <span class="watch_later">
-                          <i class="icon-watch_later_fill"></i>
-                        </span>
-                      </a>
-                    </div>
-                    <!--vid_thumbnail end-->
-                    <div class="video_info">
-                      <h3><a href="single_video_page.html" title="">Top 5 Amazing Bridge Block ever in PUBG</a></h3>
-                      <h4><a href="Single_Channel_Home.html" title="">Maketzi</a> </h4>
-                      <span>612K views .<small class="posted_dt">5 months ago</small></span>
-                    </div>
-                  </div>
-                  <!--videoo end-->
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-                  <div class="videoo">
-                    <div class="vid_thumbainl">
-                      <a href="single_video_page.html" title="">
-                        <img src="images/resources/vide5.png" alt="">
-                        <span class="vid-time">4:01</span>
-                        <span class="watch_later">
-                          <i class="icon-watch_later_fill"></i>
-                        </span>
-                      </a>
-                    </div>
-                    <!--vid_thumbnail end-->
-                    <div class="video_info">
-                      <h3><a href="single_video_page.html" title="">Trailer Park Boys Season 12 - Official Trailer</a>
-                      </h3>
-                      <h4><a href="Single_Channel_Home.html" title="">ScereBro</a> </h4>
-                      <span>45K views .<small class="posted_dt">3 days ago</small></span>
-                    </div>
-                  </div>
-                  <!--videoo end-->
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-                  <div class="videoo">
-                    <div class="vid_thumbainl">
-                      <a href="single_video_page.html" title="">
-                        <img src="images/resources/vide6.png" alt="">
-                        <span class="vid-time">6:20</span>
-                        <span class="watch_later">
-                          <i class="icon-watch_later_fill"></i>
-                        </span>
-                      </a>
-                    </div>
-                    <!--vid_thumbnail end-->
-                    <div class="video_info">
-                      <h3><a href="single_video_page.html" title="">A day in the life of a Google software engineer</a>
-                      </h3>
-                      <h4><a href="Single_Channel_Home.html" title="">MathChief</a> </h4>
-                      <span>86K views .<small class="posted_dt">6 days ago</small></span>
-                    </div>
-                  </div>
-                  <!--videoo end-->
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-                  <div class="videoo">
-                    <div class="vid_thumbainl">
-                      <a href="single_video_page.html" title="">
-                        <img src="images/resources/vide7.png" alt="">
-                        <span class="vid-time">8:16</span>
-                        <span class="watch_later">
-                          <i class="icon-watch_later_fill"></i>
-                        </span>
-                      </a>
-                    </div>
-                    <!--vid_thumbnail end-->
-                    <div class="video_info">
-                      <h3><a href="single_video_page.html" title="">Avengers: Infinity War - Gym Workout motivation
-                          2019</a></h3>
-                      <h4><a href="Single_Channel_Home.html" title="">RealLifeLore</a> <span class="verify_ic"><i
-                            class="icon-tick"></i></span></h4>
-                      <span>144K views .<small class="posted_dt">6 days ago</small></span>
-                    </div>
-                  </div>
-                  <!--videoo end-->
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-                  <div class="videoo">
-                    <div class="vid_thumbainl">
-                      <a href="single_video_page.html" title="">
-                        <img src="images/resources/vide8.png" alt="">
-                        <span class="vid-time">29:32</span>
-                        <span class="watch_later">
-                          <i class="icon-watch_later_fill"></i>
-                        </span>
-                      </a>
-                    </div>
-                    <!--vid_thumbnail end-->
-                    <div class="video_info">
-                      <h3><a href="single_video_page.html" title="">How the Universe Works - The Milky Way Galaxy -
-                          Space</a></h3>
-                      <h4><a href="Single_Channel_Home.html" title="">Loskes</a></h4>
-                      <span>408K views .<small class="posted_dt">19 hours ago</small></span>
+                      <h3><a href="#" title="">[[${paper.paperTitle}]]</a></h3>
+                      <h4><a href="#" title="">[[${paper.paperDesc}]]</a></h4>
+                      <span>次数：[[${paper.examTimes}]] &nbsp;&nbsp;价格：[[${paper.paperPrice}]]</span>
                     </div>
                   </div>
                   <!--videoo end-->
@@ -447,178 +101,47 @@
       </div>
       <!--vidz-row end-->
       <div class="vidz-row">
-				<div class="container">
-					<div class="vidz_sec">
-						<h3>测试报告</h3>
-						<div class="vidz_list">
-							<div class="row">
-								<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-									<div class="videoo">
-										<div class="vid_thumbainl">
-											<a href="single_video_page.html" title="">
-												<img src="images/resources/vide13.png" alt="">
-												<span class="vid-time">10:21</span>
-												<span class="watch_later">
-													<i class="icon-watch_later_fill"></i>
-												</span>
-											</a>	
-										</div><!--vid_thumbnail end-->
-										<div class="video_info">
-											<h3><a href="single_video_page.html" title="">Kingdom Come: Deliverance Funny Moments and Fails</a></h3>
-											<h4><a href="Single_Channel_Home.html" title="">newfox media</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-											<span>686K views .<small class="posted_dt">1 week ago</small></span>
-										</div>
-									</div><!--videoo end-->
-								</div>
-								<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-									<div class="videoo">
-										<div class="vid_thumbainl">
-											<a href="single_video_page.html" title="">
-												<img src="images/resources/vide14.png" alt="">
-												<span class="vid-time">13:49</span>
-												<span class="watch_later">
-													<i class="icon-watch_later_fill"></i>
-												</span>
-											</a>	
-										</div><!--vid_thumbnail end-->
-										<div class="video_info">
-											<h3><a href="single_video_page.html" title="">DR DISRESPECT - Before They Were Famous - Twitch Streamer</a></h3>
-											<h4><a href="Single_Channel_Home.html" title="">Eros Now</a> </h4>
-											<span>283K views .<small class="posted_dt">3 months ago</small></span>
-										</div>
-									</div><!--videoo end-->
-								</div>
-								<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-									<div class="videoo">
-										<div class="vid_thumbainl">
-											<a href="single_video_page.html" title="">
-												<img src="images/resources/vide15.png" alt="">
-												<span class="vid-time">2:54</span>
-												<span class="watch_later">
-													<i class="icon-watch_later_fill"></i>
-												</span>
-											</a>	
-										</div><!--vid_thumbnail end-->
-										<div class="video_info">
-											<h3><a href="single_video_page.html" title="">Top Perectly Timed Twitch Moments 2017 #7</a></h3>
-											<h4><a href="Single_Channel_Home.html" title="">Animal Planet</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-											<span>2.6M views .<small class="posted_dt">2 months ago</small></span>
-										</div>
-									</div><!--videoo end-->
-								</div>
-								<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-									<div class="videoo">
-										<div class="vid_thumbainl">
-											<a href="single_video_page.html" title="">
-												<img src="images/resources/vide16.png" alt="">
-												<span class="vid-time">5:25</span>
-												<span class="watch_later">
-													<i class="icon-watch_later_fill"></i>
-												</span>
-											</a>	
-										</div><!--vid_thumbnail end-->
-										<div class="video_info">
-											<h3><a href="single_video_page.html" title="">Top 5 Amazing Bridge Block ever in PUBG</a></h3>
-											<h4><a href="Single_Channel_Home.html" title="">Maketzi</a> </h4>
-											<span>612K views .<small class="posted_dt">5 months ago</small></span>
-										</div>
-									</div><!--videoo end-->
-								</div>
-								<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-									<div class="videoo">
-										<div class="vid_thumbainl">
-											<a href="single_video_page.html" title="">
-												<img src="images/resources/vide17.png" alt="">
-												<span class="vid-time">4:01</span>
-												<span class="watch_later">
-													<i class="icon-watch_later_fill"></i>
-												</span>
-											</a>	
-										</div><!--vid_thumbnail end-->
-										<div class="video_info">
-											<h3><a href="single_video_page.html" title="">Trailer Park Boys Season 12 - Official Trailer</a></h3>
-											<h4><a href="Single_Channel_Home.html" title="">ScereBro</a> </h4>
-											<span>45K views .<small class="posted_dt">3 days ago</small></span>
-										</div>
-									</div><!--videoo end-->
-								</div>
-								<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-									<div class="videoo">
-										<div class="vid_thumbainl">
-											<a href="single_video_page.html" title="">
-												<img src="images/resources/vide18.png" alt="">
-												<span class="vid-time">6:20</span>
-												<span class="watch_later">
-													<i class="icon-watch_later_fill"></i>
-												</span>
-											</a>	
-										</div><!--vid_thumbnail end-->
-										<div class="video_info">
-											<h3><a href="single_video_page.html" title="">A day in the life of a Google software engineer</a></h3>
-											<h4><a href="Single_Channel_Home.html" title="">MathChief</a> </h4>
-											<span>86K views .<small class="posted_dt">6 days ago</small></span>
-										</div>
-									</div><!--videoo end-->
-								</div>
-								<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-									<div class="videoo">
-										<div class="vid_thumbainl">
-											<a href="single_video_page.html" title="">
-												<img src="images/resources/vide19.png" alt="">
-												<span class="vid-time">8:16</span>
-												<span class="watch_later">
-													<i class="icon-watch_later_fill"></i>
-												</span>
-											</a>	
-										</div><!--vid_thumbnail end-->
-										<div class="video_info">
-											<h3><a href="single_video_page.html" title="">Avengers: Infinity War - Gym Workout motivation 2019</a></h3>
-											<h4><a href="Single_Channel_Home.html" title="">RealLifeLore</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-											<span>144K views .<small class="posted_dt">6 days ago</small></span>
-										</div>
-									</div><!--videoo end-->
-								</div>
-								<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-									<div class="videoo">
-										<div class="vid_thumbainl">
-											<a href="single_video_page.html" title="">
-												<img src="images/resources/vide20.png" alt="">
-												<span class="vid-time">29:32</span>
-												<span class="watch_later">
-													<i class="icon-watch_later_fill"></i>
-												</span>
-											</a>	
-										</div><!--vid_thumbnail end-->
-										<div class="video_info">
-											<h3><a href="single_video_page.html" title="">How the Universe Works - The Milky Way Galaxy - Space</a></h3>
-											<h4><a href="Single_Channel_Home.html" title="">Loskes</a></h4>
-											<span>408K views .<small class="posted_dt">19 hours ago</small></span>
-										</div>
-									</div><!--videoo end-->
-								</div>
-							</div>
-						</div><!--vidz_list end-->
-					</div><!--vidz_videos end-->
-				</div>
+        <div class="container">
+          <div class="vidz_sec">
+            <h3>测试报告</h3>
+            <div class="vidz_list">
+              <div class="row">
+                <div th:each="paper:${paperList}" class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
+                  <div class="videoo">
+                    <div class="vid_thumbainl">
+                      <a th:href="@{/mainview/content(id=${paper.paperNo})}" target="_blank" th:title="${paper.paperTitle}">
+                        <img th:src="(${paper.paperPoster} == '') ? @{/imgs/resources/vide6.png} : @{${paper.paperPoster}}" alt="海报图片">
+                        <span class="vid-time">[[${paper.exDruation}]]</span>
+                        <span class="watch_later">
+                          <i class="icon-watch_later_fill"></i>
+                        </span>
+                      </a>
+                    </div>
+                    <!--vid_thumbnail end-->
+                    <div class="video_info">
+                      <h3><a href="#" title="">[[${paper.paperTitle}]]</a></h3>
+                      <h4><a href="#" title="">[[${paper.paperDesc}]]</a></h4>
+                      <span>次数：[[${paper.examTimes}]] &nbsp;&nbsp;价格：[[${paper.paperPrice}]]</span>
+                    </div>
+                  </div>
+                  <!--videoo end-->
+                </div>
+              </div>
+            </div>
+            <!--vidz_list end-->
+          </div>
+          <!--vidz_videos end-->
+        </div>
       </div>
       <!--vidz-row end-->
     </section>
     <!--vds-main end-->
 
-    <section class="more_items_sec text-center">
-      <div class="container">
-        copyright @2020 百纳云纪科技
-      </div>
-    </section>
-    <!--more_items_sec end-->
-
+    <th:block th:include="include :: copyright" />
   </div>
   <!--wrapper end-->
 
-  <script th:src="@{/js/jquery.min.js}"></script>
-  <script th:src="@{/js/popper.js}"></script>
-  <script th:src="@{/js/bootstrap.min.js}"></script>
-  <script th:src="@{/js/script.js}"></script>
+  <th:block th:include="include :: scriptblock" />
 </body>
 
 </html>

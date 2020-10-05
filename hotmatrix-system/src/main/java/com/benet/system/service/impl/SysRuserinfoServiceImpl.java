@@ -329,8 +329,7 @@ public class SysRuserinfoServiceImpl implements ISysRuserinfoService
      * @return 结果
      */
     @Override
-    public int ResetUserPassword(String userNo,String password){
-        // return sysSuserinfoMapper.checkEmailUnique(appCode,email);
-        return 0;
+    public int resetUserPassword(String userNo,String password){
+        return sysRuserinfoMapper.resetUserPassword(userNo,password);
     }
 }

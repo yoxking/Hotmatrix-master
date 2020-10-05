@@ -96,7 +96,8 @@ public class MyShiroConfig {
         chain.addPathDefinition("/unauth", "anon");
         chain.addPathDefinition("/css/**", "anon");
         chain.addPathDefinition("/font/**", "anon");
-        chain.addPathDefinition("/images/**", "anon");
+        chain.addPathDefinition("/imgs/**", "anon");
+        chain.addPathDefinition("/layer/**", "anon");
         chain.addPathDefinition("/js/**", "anon");
 
         //除了以上的请求外，其它请求都需要登录

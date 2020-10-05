@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: headblock('心理测评中心-用户中心')" />
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="account-details">
+        <div class="account_details_content">
+            <form>
+                <h4 class="slct-hd">选择角色</h4>
+                <ul class="gend">
+                    <li>
+                        <div class="chekbox-lg">
+                            <label>
+                                <input type="radio" name="gender" value="00" th:checked="${loginer.ruserType=='用户'}">
+                                <b class="checkmark"></b>
+                                <span>用户</span>
+                            </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="chekbox-lg">
+                            <label>
+                                <input type="radio" name="gender" value="01" th:checked="${loginer.ruserType=='家长'}">
+                                <b class="checkmark"> </b>
+                                <span>家长</span>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+                <div class="ch-pswd">
+                    <button type="button">确定</button>
+                </div><!--ch-pswd end-->
+            </form>
+        </div><!--account_details_content end-->
+        <div class="clearfix"></div>
+    </div><!--Account Details end-->
+</div>
+
+</div>
+
+<th:block th:include="include :: scriptblock" />
+</body>
+</html>

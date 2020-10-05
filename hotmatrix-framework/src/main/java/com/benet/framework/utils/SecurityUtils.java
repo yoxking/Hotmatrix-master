@@ -1,7 +1,5 @@
 package com.benet.framework.utils;
 
-import com.benet.common.enums.HttpStatus;
-import com.benet.common.exception.user.UserException;
 import com.benet.framework.security.LoginUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

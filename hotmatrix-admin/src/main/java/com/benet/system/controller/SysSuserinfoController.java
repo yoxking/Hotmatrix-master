@@ -165,6 +165,7 @@ public class SysSuserinfoController extends BaseController {
     @Oplog(title = "修改用户密码", businessType = BusinessType.UPDATE)
     @PutMapping(value = "/password")
     public AjaxResult password(String oldPswd, String newPswd) {
+
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         String userNo = loginUser.getUserno();
         String password = loginUser.getPassword();
@@ -175,12 +176,7 @@ public class SysSuserinfoController extends BaseController {
             return AjaxResult.error("新密码不能与旧密码相同");
         }
 
-        SysSuserinfo userInfo = sysSuserinfoService.getRecordByNo(loginUser.getUser().getAppCode(),userNo);
-        userInfo.setPassword(SecurityUtils.encryptPassword(newPswd));
-        userInfo.setUpdateBy(loginUser.getUsername());
-        userInfo.setUpdateTime(DateUtils.getNowDate());
-
-        if (sysSuserinfoService.UpdateRecord(loginUser.getUser().getAppCode(),userInfo) > 0) {
+        if (sysSuserinfoService.resetUserPassword(userNo,SecurityUtils.encryptPassword(newPswd)) > 0) {
             // 更新缓存用户密码
             loginUser.getUser().setPassword(SecurityUtils.encryptPassword(newPswd));
             tokenService.setLoginUser(loginUser);

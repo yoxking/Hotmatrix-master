@@ -52,15 +52,15 @@ public class ConfigInfoController {
      */
     @Oplog(title = "保存配置信息", businessType = BusinessType.SAVE)
     @PostMapping("/saveConfigInfo")
-    public AjaxResult saveConfigInfo(@RequestBody ConfigInfoVo contentinfo) {
+    public AjaxResult saveConfigInfo(@RequestBody ConfigInfoVo configInfo) {
 
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"SiteName",contentinfo.getSiteName(),"Y");
-        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"SiteUrl",contentinfo.getSiteUrl(),"Y");
-        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"AppCode",contentinfo.getAppCode(),"Y");
-        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"ConnStr",contentinfo.getConnStr(),"Y");
-        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"SiteDesc",contentinfo.getSiteDesc(),"Y");
-        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"RunState",contentinfo.getRunState(),"Y");
+        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"SiteName",configInfo.getSiteName(),"Y");
+        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"SiteUrl",configInfo.getSiteUrl(),"Y");
+        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"AppCode",configInfo.getAppCode(),"Y");
+        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"ConnStr",configInfo.getConnStr(),"Y");
+        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"SiteDesc",configInfo.getSiteDesc(),"Y");
+        sysConfiginfoService.saveConfigValueByKey(loginUser.getUser().getAppCode(),"RunState",configInfo.getRunState(),"Y");
 
         return  AjaxResult.success();
     }

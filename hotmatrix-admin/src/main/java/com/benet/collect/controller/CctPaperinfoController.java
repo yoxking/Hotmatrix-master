@@ -1,6 +1,14 @@
 package com.benet.collect.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.benet.collect.domain.CctQuestinfo;
+import com.benet.collect.domain.CctQuestopts;
+import com.benet.collect.service.ICctQuestinfoService;
+import com.benet.collect.service.ICctQuestoptsService;
+import com.benet.collect.vmodel.QuestInfoVo;
+import com.benet.collect.vmodel.QuestOptsVo;
 import com.benet.common.core.pager.PageRequest;
 import com.benet.common.core.pager.TableDataInfo;
 import com.benet.common.utils.uuid.UuidUtils;
@@ -44,6 +52,12 @@ public class CctPaperinfoController extends BaseController
 
     @Autowired
     private ICctPaperinfoService cctPaperinfoService;
+
+    @Autowired
+    private ICctQuestinfoService cctQuestinfoService;
+
+    @Autowired
+    private ICctQuestoptsService cctQuestoptsService;
     /**
      * 首页
      */
@@ -66,6 +80,57 @@ public class CctPaperinfoController extends BaseController
         int count = cctPaperinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
         List<CctPaperinfo> list = cctPaperinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
+    }
+
+    /**
+     * 查询问卷题库集列表
+     */
+    @PreAuthorize("@ps.hasPermit('collect:paperinfo:list')")
+    @GetMapping(value = "/paperQuests/{id}")
+    public AjaxResult paperQuests(@PathVariable("id") String id)
+    {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        CctPaperinfo paperInfo=cctPaperinfoService.getRecordByNo(loginUser.getUser().getAppCode(),id);
+
+        List<QuestInfoVo> questVoList=new ArrayList<>();
+        List<QuestOptsVo> optsVoList=new ArrayList<>();
+        QuestInfoVo questVo=null;
+        QuestOptsVo optsVo=null;
+
+        List<CctQuestinfo> questList = cctQuestinfoService.getRecordsByClassNo(loginUser.getUser().getAppCode(),paperInfo.getQuestClass());
+        if(questList!=null&&questList.size()>0){
+            for(CctQuestinfo questItem:questList){
+                questVo=new QuestInfoVo();
+                questVo.setQuestNo(questItem.getQuestNo());
+                questVo.setQuestTitle(questItem.getQuestTitle());
+                questVo.setQuestDesc(questItem.getQuestDesc());
+                questVo.setQuestType(questItem.getQuestType());
+                questVo.setQuestMust(questItem.getQuestMust());
+                questVo.setClassNo(questItem.getClassNo());
+                questVo.setOrderNo(questItem.getOrderNo());
+                questVo.setQuestScore(questItem.getQuestScore());
+                questVo.setCheckState(questItem.getCheckState());
+                questVo.setComments(questItem.getComments());
+
+                List<CctQuestopts> optsList=cctQuestoptsService.getRecordsByClassNo(loginUser.getUser().getAppCode(),questItem.getQuestNo());
+                if(optsList!=null&&optsList.size()>0){
+                    optsVoList.clear();
+                    for(CctQuestopts optItem:optsList){
+                        optsVo=new QuestOptsVo();
+                        optsVo.setOptNo(optItem.getOptNo());
+                        optsVo.setOptTitle(optItem.getOptTitle());
+                        optsVo.setOptScore(optItem.getOptScore());
+
+                        optsVoList.add(optsVo);
+                    }
+                }
+                questVo.setOptions((QuestOptsVo[])optsVoList.toArray(new QuestOptsVo[0]));
+                questVoList.add(questVo);
+            }
+            return AjaxResult.success(questVoList);
+        }
+
+        return AjaxResult.success();
     }
 
     /**

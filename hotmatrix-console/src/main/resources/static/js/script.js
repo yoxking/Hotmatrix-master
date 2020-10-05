@@ -2,8 +2,6 @@
   
   "use strict";
 
-
-
     //  ==================== SCROLLING FUNCTION ====================
 
     $(window).on("scroll", function() {
@@ -14,7 +12,6 @@
             $(".top_bar").removeClass("scroll animated slideInDown")
         }
     });
-
 
 
     var header_height = $(".top_bar").innerHeight();
@@ -52,9 +49,51 @@
       $('[data-toggle="tooltip"]').tooltip()
     })
 
+    //  =========================系统菜单方法============================
 
+    $(".top_bar .mm_menu .ruser").on("click", function(e) {
+        layer.open({
+            type: 2,
+            title: '用户中心',
+            shadeClose: true,
+            shade: false,
+            maxmin: false, //开启最大化最小化按钮
+            area: ['893px', '600px'],
+            content: '/ruserview/profile'
+        });
+    });
 
+    $(".top_bar .mm_menu .roles").on("click", function(e) {
+        layer.open({
+            type: 2,
+            title: '角色切换',
+            shadeClose: true,
+            shade: false,
+            maxmin: false, //开启最大化最小化按钮
+            area: ['893px', '600px'],
+            content: '/ruserview/swtrole'
+        });
+    });
+
+    $(".top_bar .mm_menu .setting").on("click", function(e) {
+        layer.open({
+            type: 2,
+            title: '设置',
+            shadeClose: true,
+            shade: false,
+            maxmin: false, //开启最大化最小化按钮
+            area: ['893px', '600px'],
+            content: '/ruserview/setting'
+        });
+    });
+
+    $(".top_bar .mm_menu .logout").on("click", function(e) {
+        layer.confirm('您确定要退出当前登录？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            location.href = '/logout';
+        }, function(){
+        });
+    });
 
 })(window.jQuery);
-
-

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: headblock('心理测评中心-用户中心')" />
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="account-details">
+        <div class="account_details_content">
+            <form>
+            <h4 class="slct-hd">站点名称</h4>
+            <div class="ch-pswd">
+                <input name="siteName" th:value="${configInfo.siteName}" placeholder="站点名称">
+            </div>
+            <h4 class="slct-hd">站点URL</h4>
+            <div class="ch-pswd">
+                <input name="siteUrl" th:value="${configInfo.siteUrl}" placeholder="站点URL">
+            </div>
+            <h4 class="slct-hd">站点描述</h4>
+            <div class="ch-pswd">
+                <input name="siteDesc" th:value="${configInfo.siteDesc}" placeholder="站点描述">
+            </div>
+            <div class="ch-pswd">
+                <button type="button" onclick="onSetting()">保存</button>
+            </div><!--ch-pswd end-->
+            </form>
+        </div><!--account_details_content end-->
+        <div class="clearfix"></div>
+    </div><!--Account Details end-->
+</div>
+
+</div>
+
+<th:block th:include="include :: scriptblock" />
+<script type="text/javascript">
+    function onSetting() {
+        var siteName = $("input[name='siteName']").val();
+        var siteUrl = $("input[name='siteUrl']").val();
+        var siteDesc = $("input[name='siteDesc']").val();
+
+        $.ajax({
+            type: "post",
+            url: "/ruserview/ajaxSetting",
+            data: {
+                "siteName": siteName,
+                "siteUrl": siteUrl,
+                "siteDesc": siteDesc
+            },
+            success: function(res) {
+                layer.msg(res.msg)
+            }
+        });
+    }
+</script>
+</body>
+</html>

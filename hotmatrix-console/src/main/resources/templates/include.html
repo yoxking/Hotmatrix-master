@@ -1,0 +1,249 @@
+<!-- 通用CSS -->
+<head th:fragment=headblock(title)>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <title th:text="${title}"></title>
+  <link rel="shortcut icon" th:href="@{/images/favicon.png}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/animate.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/fontello.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/fontello-codes.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/color.css}">
+</head>
+
+<!-- 通用JS -->
+<div th:fragment="scriptblock">
+  <script th:src="@{/js/jquery.min.js}"></script>
+  <script th:src="@{/js/popper.js}"></script>
+  <script th:src="@{/js/bootstrap.min.js}"></script>
+  <script th:src="@{/layer/layer.js}"></script>
+  <script th:src="@{/js/script.js}"></script>
+  <script th:inline="javascript"> var ctx = [[@{/}]]; </script>
+</div>
+
+<!-- 底部版权 -->
+<div th:fragment="copyright">
+  <section class="more_items_sec text-center">
+    <div class="container">
+      copyright @2020 百纳云纪科技
+    </div>
+  </section>
+  <!--more_items_sec end-->
+</div>
+
+<!-- 顶部简单导航 -->
+<div th:fragment="topsimpbar">
+  <header>
+    <div class="top_bar">
+      <div class="container">
+        <div class="top_header_content">
+          <div class="menu_logo">
+            <a href="mainview/index.html" title="" class="logo">
+              <img th:src="@{/imgs/logo.png}" alt="">
+            </a>
+          </div>
+          <!--menu_logo end-->
+          <div class="clearfix"></div>
+        </div>
+        <!--top_header_content end-->
+      </div>
+    </div>
+    <!--header_content end-->
+  </header>
+  <!--header end-->
+</div>
+
+<!-- 顶部菜单导航 -->
+<div th:fragment="topmenubar">
+  <header>
+    <div class="top_bar">
+      <div class="container">
+        <div class="top_header_content">
+          <div class="menu_logo">
+            <a href="#" title="" class="menu">
+              <i class="icon-menu"></i>
+            </a>
+            <a href="/index" title="" class="logo">
+              <img th:src="@{/imgs/logo.png}" alt="">
+            </a>
+          </div>
+          <!--menu_logo end-->
+          <ul class="controls-lv">
+            <li>
+              <a href="/ruserview/message" title="我的消息" target="_blank"><i class="icon-message"></i></a>
+            </li>
+            <li>
+              <a href="/helper" title="帮助文档" target="_blank"><i class="icon-notification"></i></a>
+            </li>
+            <li class="user-log">
+              <div class="user-ac-img">
+                <img th:src="(${loginer.ruserAvatar} == '') ? @{/imgs/profile.jpg} : @{${loginer.ruserAvatar}}" width="50" height="50" alt="用户头像">
+              </div>
+              <div class="account-menu">
+                <h4>[[${loginer.rnickName}]] <span class="usr-status">[[${loginer.ruserType}]]</span></h4>
+                  <div style="border-bottom: 1px solid #e2ebef;">&nbsp;</div>
+                <div class="sd_menu">
+                  <ul class="mm_menu">
+                    <li>
+                      <span>
+                        <i class="icon-user"></i>
+                      </span>
+                      <a href="javascript:void(0);" class="ruser" title="">我的信息</a>
+                    </li>
+                    <li>
+                      <span>
+                        <i class="icon-paid_sub"></i>
+                      </span>
+                      <a href="javascript:void(0);" class="roles" title="">角色切换</a>
+                    </li>
+                    <li>
+                      <span>
+                        <i class="icon-settings"></i>
+                      </span>
+                      <a href="javascript:void(0);" class="setting" title="">设置</a>
+                    </li>
+                    <li>
+                      <span>
+                        <i class="icon-logout"></i>
+                      </span>
+                      <a href="javascript:void(0);" class="logout" title="">退出</a>
+                    </li>
+                  </ul>
+                </div>
+                <!--restricted-more end-->
+              </div>
+            </li>
+          </ul>
+          <!--controls-lv end-->
+          <div class="clearfix"></div>
+        </div>
+        <!--top_header_content end-->
+      </div>
+    </div>
+    <!--header_content end-->
+    <div class="btm_bar">
+      <div class="container">
+        <div class="btm_bar_content">
+          <nav>
+            <ul>
+              <li><a href="#" title="" style="font-weight: bold;">功能列表</a>
+                <div class="mega-menu">
+                  <ul>
+                    <li><a href="#" title="">通知公告</a></li>
+                    <li><a href="#" title="">心理资讯</a></li>
+                    <li><a href="#" title="">心理案例</a></li>
+                    <li><a href="#" title="">活动组织</a></li>
+                  </ul>
+                  <ul>
+                    <li><a href="#" title="">心理测评<span class="icon-arrow_below"></span></a>
+                      <ul>
+                        <li><a href="#" title="">恋爱婚姻</a></li>
+                        <li><a href="#" title="">情绪压力</a></li>
+                        <li><a href="#" title="">人际关系</a></li>
+                        <li><a href="#" title="">孩子教育</a></li>
+                        <li><a href="#" title="">职场发展</a></li>
+                        <li><a href="#" title="">个人成长</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="#" title="">测评报告</a></li>
+                    <li><a href="#" title="">心理咨询师</a></li>
+                    <li><a href="#" title="">成长日志</a></li>
+                  </ul>
+                </div>
+                <div class="clearfix"></div>
+              </li>
+              <li><a href="#" title="">心理测评</a></li>
+              <li><a href="#" title="">测评报告</a></li>
+              <li><a href="#" title="">心理咨询师</a></li>
+              <li><a href="#" title="">成长日志</a></li>
+            </ul>
+          </nav>
+          <!--shr_links end-->
+          <ul class="vid_thums">
+            <li>
+              <a class="active" href="#" title=""><i class="icon-grid"></i></a>
+            </li>
+          </ul>
+          <!--vid_status end-->
+          <div class="clearfix"></div>
+        </div>
+        <!--btm_bar_content end-->
+      </div>
+    </div>
+    <!--btm_bar end-->
+  </header>
+  <!--header end-->
+</div>
+
+<!-- 左则菜单导航 -->
+<div th:fragment="sidemenubar">
+  <div class="side_menu">
+    <div class="sd_menu">
+      <ul class="mm_menu">
+        <li>
+          <span>
+            <i class="icon-home"></i>
+          </span>
+          <a href="/index" title="首页">首页</a>
+        </li>
+      </ul>
+    </div>
+    <!--sd_menu end-->
+    <div class="sd_menu">
+      <h3 style="font-weight: bold;">操作列表</h3>
+      <ul class="mm_menu">
+        <li>
+          <span>
+            <i class="icon-history"></i>
+          </span>
+          <a href="#" title="">成长日志</a>
+        </li>
+        <li>
+          <span>
+            <i class="icon-watch_later"></i>
+          </span>
+          <a href="#" title="">我的测评</a>
+        </li>
+        <li>
+          <span>
+            <i class="icon-purchased"></i>
+          </span>
+          <a href="#" title="">购买记录</a>
+        </li>
+      </ul>
+    </div>
+    <!--sd_menu end-->
+    <div class="sd_menu">
+      <ul class="mm_menu">
+        <li>
+          <span>
+            <i class="icon-settings"></i>
+          </span>
+          <a href="#" title="">个人设置</a>
+        </li>
+        <li>
+          <span>
+            <i class="icon-flag"></i>
+          </span>
+          <a href="#" title="">测评统计</a>
+        </li>
+      </ul>
+    </div>
+    <!--sd_menu end-->
+    <div class="sd_menu m_linkz">
+      <ul class="mm_menu">
+        <li><a href="#">关于</a></li>
+        <li><a href="#">帮助</a></li>
+        <li><a href="#">隐私</a></li>
+        <li><a href="#">文档</a></li>
+      </ul>
+      <span>&nbsp;</span>
+    </div>
+    <!--sd_menu end-->
+    <div class="dd_menu"></div>
+  </div>
+  <!--side_menu end-->
+</div>

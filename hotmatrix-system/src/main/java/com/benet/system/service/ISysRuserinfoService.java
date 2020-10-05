@@ -210,5 +210,5 @@ public interface ISysRuserinfoService
      * @param password 密码
      * @return 结果
      */
-    public int ResetUserPassword(String userNo,String password);
+    public int resetUserPassword(String userNo,String password);
 }

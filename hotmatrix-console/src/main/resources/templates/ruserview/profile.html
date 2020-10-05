@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: headblock('心理测评中心-用户中心')" />
+</head>
+<body>
+
+<div class="wrapper">
+
+    <section class="videso_section">
+        <div class="info-pr-sec">
+            <div class="container">
+                <div class="vcp_inf cr">
+					<span class="vc_hd">
+						<img th:src="(${loginer.ruserAvatar} == '') ? @{/imgs/profile.jpg} : @{${loginer.ruserAvatar}}" width="80" height="80" alt="用户头像">
+					</span>
+                    <div class="vc_info pr">
+                        <input type="hidden" name="ruserNo" th:value="${loginer.ruserNo}" />
+                        <h4>[[${loginer.ruserName}]] <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+                        <span>登录：[[${loginer.loginDate}]]</span>
+                    </div>
+                </div><!--vcp_inf end-->
+                <div class="clearfix"></div>
+            </div>
+        </div><!--info-pr-sec end-->
+        <div class="history-lst tbY">
+            <div class="container">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home_tab" data-toggle="tab" href="#home_vidz" role="tab" aria-controls="home_tab" aria-selected="true">基本信息</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="about-tab" data-toggle="tab" href="#about_tab" role="tab" aria-controls="about-tab" aria-selected="false">修改密码</a>
+                    </li>
+                </ul><!--nav-tabs end-->
+                <div class="clearfix"></div>
+            </div>
+        </div><!--history-lst end-->
+        <div class="tab-content p-0" id="myTabContent">
+            <div class="tab-pane fade show active" id="home_vidz" role="tabpanel" aria-labelledby="home_tab">
+                <div class="home_tb_details">
+                    <div class="account-details">
+                        <div class="account_details_content">
+                            <form>
+                            <div class="ch-pswd">
+                                <input name="rnickName" th:value="${loginer.rnickName}" placeholder="昵称">
+                            </div>
+                            <ul class="gend">
+                                <li>
+                                    <div class="chekbox-lg">
+                                        <label>
+                                            <input type="radio" name="ruserSex" value="1" th:checked="${loginer.ruserSex=='男'}">
+                                            <b class="checkmark"></b>
+                                            <span>男</span>
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="chekbox-lg">
+                                        <label>
+                                            <input type="radio" name="ruserSex" value="0" th:checked="${loginer.ruserSex=='女'}">
+                                            <b class="checkmark"> </b>
+                                            <span>女</span>
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="ch-pswd">
+                                <input name="email" th:value="${loginer.ruserMail}" placeholder="邮箱">
+                            </div>
+                            <div class="ch-pswd">
+                                <input name="telephone" th:value="${loginer.telephone}" placeholder="电话">
+                            </div>
+                            <div class="ch-pswd">
+                                <button type="button" onclick="onProfile()">保存</button>
+                            </div><!--ch-pswd end-->
+                            </form>
+                        </div><!--account_details_content end-->
+                        <div class="clearfix"></div>
+                    </div><!--Account Details end-->
+                </div><!--home_tb_details end-->
+            </div>
+            <div class="tab-pane fade" id="about_tab" role="tabpanel" aria-labelledby="about-tab">
+                <div class="about_tab_content">
+                    <div class="change-pswd">
+                        <form>
+                            <div class="ch-pswd">
+                                <input type="password" name="old_password" placeholder="原密码">
+                            </div><!--ch-pswd end-->
+                            <div class="ch-pswd">
+                                <input type="password" name="new_password" placeholder="新密码">
+                            </div><!--ch-pswd end-->
+                            <div class="ch-pswd">
+                                <input type="password" name="re_password" placeholder="确认新密码">
+                            </div><!--ch-pswd end-->
+                            <div class="ch-pswd">
+                                <button type="button" onclick="onPassword()">保存</button>
+                            </div><!--ch-pswd end-->
+                        </form>
+                    </div><!--change-pswd end-->
+                </div><!--about_tab_content end-->
+            </div>
+        </div>
+    </section><!--Featured Videos end-->
+
+</div><!--wrapper end-->
+
+<th:block th:include="include :: scriptblock" />
+<script type="text/javascript">
+    function onProfile() {
+        var ruserNo = $("input[name='ruserNo']").val();
+        var rnickName = $("input[name='rnickName']").val();
+        var ruserSex = $("input[name='ruserSex']:checked").val();
+        var telephone = $("input[name='telephone']").val();
+        var ruserMail = $("input[name='email']").val();
+
+        $.ajax({
+            type: "post",
+            url: "/ruserview/ajaxProfile",
+            data: {
+                "ruserNo": ruserNo,
+                "rnickName": rnickName,
+                "ruserSex": ruserSex,
+                "telephone": telephone,
+                "ruserMail": ruserMail
+            },
+            success: function(res) {
+                layer.msg(res.msg)
+            }
+        });
+    }
+    function onPassword(){
+        var ruserNo = $("input[name='ruserNo']").val();
+        var oldpassword = $("input[name='old_password']").val();
+        var newpassword = $("input[name='new_password']").val();
+        var repassword = $("input[name='re_password']").val();
+
+        if(oldpassword===newpassword){
+            layer.msg("新旧密码不能相同!")
+            return
+        }
+
+        if(newpassword!==repassword){
+            layer.msg("两次输入的密码不一致!")
+        }
+        else {
+            $.ajax({
+                type: "post",
+                url: "/ruserview/ajaxPassword",
+                data: {
+                    "ruserNo": ruserNo,
+                    "oldpassword": oldpassword,
+                    "newpassword": newpassword
+                },
+                success: function (res) {
+                    $("input[name='old_password']").val("");
+                    $("input[name='new_password']").val("");
+                    $("input[name='re_password']").val("");
+                    layer.msg(res.msg)
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>

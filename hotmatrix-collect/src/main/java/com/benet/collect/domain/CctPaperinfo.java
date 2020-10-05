@@ -5,12 +5,13 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.benet.common.annotation.Excel;
 import java.util.Date;
 import com.benet.common.core.domain.BaseEntity;
+import java.util.Date;
 
 /**
  * 问卷信息对象 cct_paperinfo
  * 
  * @author yoxking
- * @date 2020-08-31
+ * @date 2020-10-03
  */
 public class CctPaperinfo extends BaseEntity
 {
@@ -27,12 +28,16 @@ public class CctPaperinfo extends BaseEntity
     @Excel(name = "问卷名称")
     private String paperTitle;
 
+    /** 问卷海报 */
+    @Excel(name = "问卷海报")
+    private String paperPoster;
+
     /** 问卷描述 */
     @Excel(name = "问卷描述")
     private String paperDesc;
 
-    /** 问卷类别（1:手动生成，2：随机生成） */
-    @Excel(name = "问卷类别", readConverterExp = "1=:手动生成，2：随机生成")
+    /** 问卷类别（1=:公开，2：私有） */
+    @Excel(name = "问卷类别", readConverterExp = "1:公开，2：私有")
     private String paperType;
 
     /** 问卷类型 */
@@ -43,13 +48,17 @@ public class CctPaperinfo extends BaseEntity
     @Excel(name = "显示顺序")
     private Integer orderNo;
 
+    /** 题库类型 */
+    @Excel(name = "题库类型")
+    private String questClass;
+
+    /** 题库生成规则 */
+    @Excel(name = "题库生成规则")
+    private String questRules;
+
     /** 问卷总得分 */
     @Excel(name = "问卷总得分")
     private Long paperScore;
-
-    /** 生成试题规则 */
-    @Excel(name = "生成试题规则")
-    private String rulesQuests;
 
     /** 问卷试题集 */
     @Excel(name = "问卷试题集")
@@ -69,7 +78,7 @@ public class CctPaperinfo extends BaseEntity
 
     /** 测评时长 */
     @Excel(name = "测评时长")
-    private Integer duration;
+    private Integer exDuration;
 
     /** 状态（1正常 0停用） */
     @Excel(name = "状态", readConverterExp = "1=正常,0=停用")
@@ -134,6 +143,15 @@ public class CctPaperinfo extends BaseEntity
     {
         return paperTitle;
     }
+    public void setPaperPoster(String paperPoster) 
+    {
+        this.paperPoster = paperPoster;
+    }
+
+    public String getPaperPoster() 
+    {
+        return paperPoster;
+    }
     public void setPaperDesc(String paperDesc) 
     {
         this.paperDesc = paperDesc;
@@ -170,6 +188,24 @@ public class CctPaperinfo extends BaseEntity
     {
         return orderNo;
     }
+    public void setQuestClass(String questClass) 
+    {
+        this.questClass = questClass;
+    }
+
+    public String getQuestClass() 
+    {
+        return questClass;
+    }
+    public void setQuestRules(String questRules) 
+    {
+        this.questRules = questRules;
+    }
+
+    public String getQuestRules() 
+    {
+        return questRules;
+    }
     public void setPaperScore(Long paperScore) 
     {
         this.paperScore = paperScore;
@@ -178,15 +214,6 @@ public class CctPaperinfo extends BaseEntity
     public Long getPaperScore() 
     {
         return paperScore;
-    }
-    public void setRulesQuests(String rulesQuests) 
-    {
-        this.rulesQuests = rulesQuests;
-    }
-
-    public String getRulesQuests() 
-    {
-        return rulesQuests;
     }
     public void setPaperQuests(String paperQuests) 
     {
@@ -224,14 +251,14 @@ public class CctPaperinfo extends BaseEntity
     {
         return enditDate;
     }
-    public void setDuration(Integer duration) 
+    public void setExDuration(Integer exDuration) 
     {
-        this.duration = duration;
+        this.exDuration = exDuration;
     }
 
-    public Integer getDuration() 
+    public Integer getExDuration() 
     {
-        return duration;
+        return exDuration;
     }
     public void setCheckState(String checkState) 
     {
@@ -330,17 +357,19 @@ public class CctPaperinfo extends BaseEntity
             .append("id", getId())
             .append("paperNo", getPaperNo())
             .append("paperTitle", getPaperTitle())
+            .append("paperPoster", getPaperPoster())
             .append("paperDesc", getPaperDesc())
             .append("paperType", getPaperType())
             .append("classNo", getClassNo())
             .append("orderNo", getOrderNo())
+            .append("questClass", getQuestClass())
+            .append("questRules", getQuestRules())
             .append("paperScore", getPaperScore())
-            .append("rulesQuests", getRulesQuests())
             .append("paperQuests", getPaperQuests())
             .append("paperRusers", getPaperRusers())
             .append("startDate", getStartDate())
             .append("enditDate", getEnditDate())
-            .append("duration", getDuration())
+            .append("exDuration", getExDuration())
             .append("checkState", getCheckState())
             .append("branchNo", getBranchNo())
             .append("createBy", getCreateBy())

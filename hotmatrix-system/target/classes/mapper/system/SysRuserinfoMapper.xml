@@ -225,4 +225,9 @@
         select count(*) from sys_ruserinfo
         where delete_flag='1'  and email = #{email}
     </select>
+
+    <update id="resetUserPassword">
+        update sys_ruserinfo set password = #{password}
+        where delete_flag='1' and user_no = #{userNo}
+    </update>
 </mapper>
