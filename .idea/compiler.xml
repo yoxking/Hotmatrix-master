@@ -10,9 +10,9 @@
         <module name="hotmatrix-admin" />
         <module name="hotmatrix-workflow" />
         <module name="hotmatrix-framework" />
-        <module name="hotmatrix-system" />
-        <module name="hotmatrix-common" />
         <module name="hotmatrix-console" />
+        <module name="hotmatrix-common" />
+        <module name="hotmatrix-system" />
       </profile>
     </annotationProcessing>
   </component>

@@ -5,52 +5,51 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.benet.common.annotation.Excel;
 import java.util.Date;
 import com.benet.common.core.domain.BaseEntity;
-import java.util.Date;
 
 /**
- * 测评结果对象 cct_paperflows
+ * 答题结果对象 cct_questflows
  * 
  * @author yoxking
  * @date 2020-10-06
  */
-public class CctPaperflows extends BaseEntity
+public class CctQuestflows extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** id */
     private Long id;
 
+    /** 答题编号 */
+    @Excel(name = "答题编号")
+    private String qflowNo;
+
     /** 测评编号 */
     @Excel(name = "测评编号")
     private String pflowNo;
 
-    /** 问卷编号 */
-    @Excel(name = "问卷编号")
-    private String paperNo;
+    /** 题型编号 */
+    @Excel(name = "题型编号")
+    private String questNo;
 
-    /** 人员编号 */
-    @Excel(name = "人员编号")
-    private String ruserNo;
+    /** 答题值 */
+    @Excel(name = "答题值")
+    private String qtoptValue;
 
-    /** 开始时间 */
-    @Excel(name = "开始时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date startTime;
+    /** 答题得分 */
+    @Excel(name = "答题得分")
+    private Long qtoptScore;
 
-    /** 结束时间 */
-    @Excel(name = "结束时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date enditTime;
+    /** 答题标志 */
+    @Excel(name = "答题标志")
+    private String qtoptFlag;
 
-    /** 测评用时 */
-    @Excel(name = "测评用时")
-    private String pflowTime;
+    /** 答题评论 */
+    @Excel(name = "答题评论")
+    private String qtoptView;
 
-    /** 测评得分 */
-    @Excel(name = "测评得分")
-    private Long pflowScore;
-
-    /** 测评状态 */
-    @Excel(name = "测评状态")
-    private String pflowState;
+    /** 状态 */
+    @Excel(name = "状态")
+    private String checkState;
 
     /** 分支编号 */
     @Excel(name = "分支编号")
@@ -93,6 +92,15 @@ public class CctPaperflows extends BaseEntity
     {
         return id;
     }
+    public void setQflowNo(String qflowNo) 
+    {
+        this.qflowNo = qflowNo;
+    }
+
+    public String getQflowNo() 
+    {
+        return qflowNo;
+    }
     public void setPflowNo(String pflowNo) 
     {
         this.pflowNo = pflowNo;
@@ -102,68 +110,59 @@ public class CctPaperflows extends BaseEntity
     {
         return pflowNo;
     }
-    public void setPaperNo(String paperNo) 
+    public void setQuestNo(String questNo) 
     {
-        this.paperNo = paperNo;
+        this.questNo = questNo;
     }
 
-    public String getPaperNo() 
+    public String getQuestNo() 
     {
-        return paperNo;
+        return questNo;
     }
-    public void setRuserNo(String ruserNo) 
+    public void setQtoptValue(String qtoptValue) 
     {
-        this.ruserNo = ruserNo;
-    }
-
-    public String getRuserNo() 
-    {
-        return ruserNo;
-    }
-    public void setStartTime(Date startTime) 
-    {
-        this.startTime = startTime;
+        this.qtoptValue = qtoptValue;
     }
 
-    public Date getStartTime() 
+    public String getQtoptValue() 
     {
-        return startTime;
+        return qtoptValue;
     }
-    public void setEnditTime(Date enditTime) 
+    public void setQtoptScore(Long qtoptScore) 
     {
-        this.enditTime = enditTime;
-    }
-
-    public Date getEnditTime() 
-    {
-        return enditTime;
-    }
-    public void setPflowTime(String pflowTime) 
-    {
-        this.pflowTime = pflowTime;
+        this.qtoptScore = qtoptScore;
     }
 
-    public String getPflowTime() 
+    public Long getQtoptScore() 
     {
-        return pflowTime;
+        return qtoptScore;
     }
-    public void setPflowScore(Long pflowScore) 
+    public void setQtoptFlag(String qtoptFlag) 
     {
-        this.pflowScore = pflowScore;
-    }
-
-    public Long getPflowScore() 
-    {
-        return pflowScore;
-    }
-    public void setPflowState(String pflowState) 
-    {
-        this.pflowState = pflowState;
+        this.qtoptFlag = qtoptFlag;
     }
 
-    public String getPflowState() 
+    public String getQtoptFlag() 
     {
-        return pflowState;
+        return qtoptFlag;
+    }
+    public void setQtoptView(String qtoptView) 
+    {
+        this.qtoptView = qtoptView;
+    }
+
+    public String getQtoptView() 
+    {
+        return qtoptView;
+    }
+    public void setCheckState(String checkState) 
+    {
+        this.checkState = checkState;
+    }
+
+    public String getCheckState() 
+    {
+        return checkState;
     }
     public void setBranchNo(String branchNo) 
     {
@@ -251,14 +250,14 @@ public class CctPaperflows extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
+            .append("qflowNo", getQflowNo())
             .append("pflowNo", getPflowNo())
-            .append("paperNo", getPaperNo())
-            .append("ruserNo", getRuserNo())
-            .append("startTime", getStartTime())
-            .append("enditTime", getEnditTime())
-            .append("pflowTime", getPflowTime())
-            .append("pflowScore", getPflowScore())
-            .append("pflowState", getPflowState())
+            .append("questNo", getQuestNo())
+            .append("qtoptValue", getQtoptValue())
+            .append("qtoptScore", getQtoptScore())
+            .append("qtoptFlag", getQtoptFlag())
+            .append("qtoptView", getQtoptView())
+            .append("checkState", getCheckState())
             .append("branchNo", getBranchNo())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())

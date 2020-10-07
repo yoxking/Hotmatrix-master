@@ -3,9 +3,7 @@ package com.benet.console.controller;
 import com.benet.collect.domain.CctPaperinfo;
 import com.benet.collect.service.ICctPaperinfoService;
 import com.benet.console.common.BaseViewController;
-import com.benet.console.security.LoginRuser;
 import com.benet.console.utils.ShiroUtils;
-import com.benet.console.vmodel.LoginerVo;
 import com.benet.console.vmodel.PaperInfoVo;
 import com.benet.system.domain.SysRuserinfo;
 import com.benet.system.service.ISysBranchinfoService;
@@ -13,12 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 

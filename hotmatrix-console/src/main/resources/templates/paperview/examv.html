@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: headblock('心理测评中心-在线测评')" />
+</head>
+<body>
+<div class="wrapper">
+    <th:block th:include="include :: topsimpbar" />
+
+    <section class="videso_section">
+        <div class="info-pr-sec">
+            <div class="container">
+                <div class="vcp_inf cr">
+					<span class="vc_hd">
+						<img th:src="(${loginer.ruserAvatar} == '') ? @{/imgs/profile.jpg} : @{${loginer.ruserAvatar}}" alt="用户头像">
+					</span>
+                    <div class="vc_info pr">
+                        <h4>[[${loginer.rnickName}]] <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+                        <span>测试次数：4次</span>
+                    </div>
+                </div><!--vcp_inf end-->
+                <ul class="chan_cantrz">
+                    <li>
+                        <a href="#" title="" class="donate">提交</a>
+                    </li>
+                    <li>
+                        <a href="#" title="" class="subscribe">暂存</a>
+                    </li>
+                </ul><!--chan_cantrz end-->
+                <div class="clearfix"></div>
+            </div>
+        </div><!--info-pr-sec end-->
+        <div class="history-lst tbY">
+            <div class="container">
+                <input type="hidden" id="paperNo" name="paperNo" th:value="${paperInfo.paperNo}">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about_tab" role="tab" aria-controls="about-tab" aria-selected="false">[[${paperInfo.paperTitle}]]</a>
+                    </li>
+                </ul><!--nav-tabs end-->
+                <div class="clearfix"></div>
+            </div>
+        </div><!--history-lst end-->
+        <div class="tab-content p-0" id="myTabContent">
+            <div class="tab-pane fade show active" id="about_tab" role="tabpanel" aria-labelledby="about-tab">
+                <div class="about_tab_content">
+                    <div class="container">
+                        <div class="description">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="decp_cotnet">
+                                        <h2 class="ab-fd">第1题：请选择正确的选项 </h2>
+                                        <p>这是题目描述，请认真阅读并选择正确的答案</p>
+                                    </div><!--abt-founder end-->
+                                    <div class="link-pr">
+                                        <ul>
+                                            <li><a href="#" title="">A.答案A</a></li>
+                                            <li><a href="#" title="">B.答案B</a></li>
+                                            <li><a href="#" title="">C.答案C</a></li>
+                                            <li><a href="#" title="">D.答案D</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="link-pr">
+                                        <h2 class="ab-fd">导航操作</h2>
+                                        <p style="text-align: right;">
+                                            <a href="#" title="" style="color:#4a90e2;margin: 0 8px;">作标记</a>
+                                            <a href="#" title="" style="color:#4a90e2;margin: 0 8px;">上一题</a>
+                                            <a href="#" title="" style="color:#4a90e2;margin: 0 8px;">下一题</a>
+                                        </p>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="stats">
+                                        <h2 class="ab-fd" style="font-weight: bold;">答题统计</h2>
+                                        <ul>
+                                            <li>已完成9/20题 </li>
+                                            <li>已用时30/120分钟</li>
+                                            <li>已标记5题</li>
+                                            <li>当前时间：9:00</li>
+                                        </ul>
+                                    </div><!--stats end-->
+                                    <div class="flagg">
+                                        <ul>
+                                            <li>
+                                                <a href="#" title="做标记">
+                                                    <i class="icon-flag"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" title="留言">
+                                                    <i class="icon-message"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div><!--flagg end-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--about_tab_content end-->
+            </div>
+        </div>
+    </section><!--Featured Videos end-->
+
+    <th:block th:include="include :: copyright" />
+</div><!--wrapper end-->
+
+<th:block th:include="include :: scriptblock" />
+<script type="text/javascript">
+    $(document).ready(function(){
+
+
+    });
+
+</script>
+</body>
+</html>

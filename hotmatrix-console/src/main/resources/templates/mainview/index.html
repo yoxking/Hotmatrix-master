@@ -106,12 +106,12 @@
             <h3>测试报告</h3>
             <div class="vidz_list">
               <div class="row">
-                <div th:each="paper:${paperList}" class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
+                <div th:each="paperInfo:${paperList}" class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
                   <div class="videoo">
                     <div class="vid_thumbainl">
-                      <a th:href="@{/mainview/content(id=${paper.paperNo})}" target="_blank" th:title="${paper.paperTitle}">
-                        <img th:src="(${paper.paperPoster} == '') ? @{/imgs/resources/vide6.png} : @{${paper.paperPoster}}" alt="海报图片">
-                        <span class="vid-time">[[${paper.exDruation}]]</span>
+                      <a th:href="@{/mainview/content(id=${paperInfo.paperNo})}" target="_blank" th:title="${paperInfo.paperTitle}">
+                        <img th:src="(${paperInfo.paperPoster} == '') ? @{/imgs/resources/vide6.png} : @{${paperInfo.paperPoster}}" alt="海报图片">
+                        <span class="vid-time">[[${paperInfo.exDruation}]]</span>
                         <span class="watch_later">
                           <i class="icon-watch_later_fill"></i>
                         </span>
@@ -119,9 +119,9 @@
                     </div>
                     <!--vid_thumbnail end-->
                     <div class="video_info">
-                      <h3><a href="#" title="">[[${paper.paperTitle}]]</a></h3>
-                      <h4><a href="#" title="">[[${paper.paperDesc}]]</a></h4>
-                      <span>次数：[[${paper.examTimes}]] &nbsp;&nbsp;价格：[[${paper.paperPrice}]]</span>
+                      <h3><a href="#" title="">[[${paperInfo.paperTitle}]]</a></h3>
+                      <h4><a href="#" title="">[[${paperInfo.paperDesc}]]</a></h4>
+                      <span>次数：[[${paperInfo.examTimes}]] &nbsp;&nbsp;价格：[[${paperInfo.paperPrice}]]</span>
                     </div>
                   </div>
                   <!--videoo end-->
