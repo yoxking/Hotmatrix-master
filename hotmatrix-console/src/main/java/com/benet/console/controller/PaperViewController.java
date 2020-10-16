@@ -50,8 +50,8 @@ public class PaperViewController extends BaseViewController {
     /**
      * 答题页
      */
-    @GetMapping(value="/examv")
-    public String examv(ModelMap model,@RequestParam("id") String id)
+    @GetMapping(value="/examview")
+    public String examview(ModelMap model,@RequestParam("id") String id)
     {
         SysRuserinfo loginUser = ShiroUtils.getLoginRuser().getUser();
 
@@ -125,7 +125,7 @@ public class PaperViewController extends BaseViewController {
 
         model.put("loginer",getLoginer());
         model.put("paperInfo",paperInfo);
-        return prefix + "/examv";
+        return prefix + "/examview";
     }
 
     @PostMapping("/getQuestData")

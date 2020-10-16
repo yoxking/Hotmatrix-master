@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: headblock('心理测评中心-控制台')" />
+</head>
+<body>
+<div class="wrapper hp_1">
+    <th:block th:include="include :: topmenubar" />
+
+    <th:block th:include="include :: sidemenubar" />
+
+    <section class="mn-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="mn-vid-sc single_video">
+                        <div class="cmt-bx">
+                            <ul class="cmt-pr">
+                                <li><span>18,386</span> 条日记</li>
+                                <li>
+                                    <span><a href="#" title="">查找</a></span>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                            <div class="clearfix"></div>
+                            <div class="vcp_inf pc">
+                                <div class="vc_hd">
+                                    <img src="images/resources/th1.png" alt="">
+                                </div>
+                                <form>
+                                    <input type="text" placeholder="输入日志内容">
+                                    <button type="submit">发布</button>
+                                </form>
+                                <div class="clearfix"></div>
+                                <div class="rt-cmt">
+                                    <a href="#" title="">
+                                        <i class="icon-cancel"></i>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                </div><!--vcp_inf end-->
+                            </div><!--cmt-bx end-->
+                            <ul class="cmn-lst">
+                                <li>
+                                    <div class="vcp_inf">
+                                        <div class="vc_hd">
+                                            <img src="images/resources/th3.png" alt="">
+                                        </div>
+                                        <div class="coments">
+                                            <h2>小明 <small class="posted_dt"> . 2小时前</small></h2>
+                                            <p>我的心情日记</p>
+                                            <ul class="cmn-i">
+                                                <li>
+                                                    <a href="#" title="">
+                                                        <i class="icon-thumbs_up"></i>
+                                                    </a>
+                                                    <span>61</span>
+                                                </li>
+                                                <li>
+                                                    <a href="#" title="">
+                                                        <i class="icon-thumbs_down"></i>
+                                                    </a>
+                                                    <span>3</span>
+                                                </li>
+                                            </ul>
+                                            <a href="#" title="">转发3次</a>
+                                        </div><!--coments end-->
+                                    </div><!--vcp_inf end-->
+                                </li>
+                            </ul><!--comment list end-->
+                        </div>
+                    </div><!--mn-vid-sc end--->
+                </div><!---col-lg-9 end-->
+                <div class="col-lg-3">
+                    <div class="sidebar">
+                        <div class="vidz-prt">
+                            <h2 class="sm-vidz" style="font-weight: bold;">推荐咨询师</h2>
+                            <div class="clearfix"></div>
+                        </div><!--vidz-prt end-->
+                        <div class="videoo-list-ab">
+                            <div class="videoo">
+                                <div class="vid_thumbainl">
+                                    <a href="#" title="马上预约">
+                                        <img src="http://127.0.0.1:8095/imgs/resources/vide6.png" alt="">
+                                    </a>
+                                </div><!--vid_thumbnail end-->
+                                <div class="video_info">
+                                    <h3><a href="#" title="马上预约">张三</a></h3>
+                                    <h4>心理咨询师</h4>
+                                    <span>咨询人数：2K.  <small class="posted_dt">1天前</small></span>
+                                </div>
+                            </div><!--videoo end-->
+                            <div class="videoo">
+                                <div class="vid_thumbainl">
+                                    <a href="#" title="马上预约">
+                                        <img src="http://127.0.0.1:8095/imgs/resources/vide6.png" alt="">
+                                    </a>
+                                </div><!--vid_thumbnail end-->
+                                <div class="video_info">
+                                    <h3><a href="#" title="马上预约">李四</a></h3>
+                                    <h4>心理咨询师</h4>
+                                    <span>咨询人数：2K.  <small class="posted_dt">1周前</small></span>
+                                </div>
+                            </div><!--videoo end-->
+                        </div><!--videoo-list-ab end-->
+                    </div><!--side-bar end-->
+                </div>
+            </div>
+        </div>
+    </section><!--mn-sec end-->
+
+    <th:block th:include="include :: copyright" />
+</div>
+<!--wrapper end-->
+
+<th:block th:include="include :: scriptblock" />
+</body>
+
+</html>

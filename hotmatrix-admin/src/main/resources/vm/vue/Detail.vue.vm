@@ -31,14 +31,14 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="12">
+        <a-col :span="spanCol">
           <a-form-item label="负责人"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
             {{model.master}}
           </a-form-item>
         </a-col>
-        <a-col :span="12">
+        <a-col :span="spanCol">
           <a-form-item label="排序"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
@@ -47,14 +47,14 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="12">
+        <a-col :span="spanCol">
           <a-form-item label="电话"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
             {{model.telephone}}
           </a-form-item>
         </a-col>
-        <a-col :span="12">
+        <a-col :span="spanCol">
           <a-form-item label="邮箱"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
@@ -72,14 +72,14 @@
         </a-col>
       </a-row>
       <a-row>
-        <a-col :span="12">
+        <a-col :span="spanCol">
           <a-form-item label="状态"
                        :labelCol="{span: 6}"
                        :wrapperCol="{span: 16}">
             {{model.checkState}}
           </a-form-item>
         </a-col>
-        <a-col :span="12">
+        <a-col :span="spanCol">
           &nbsp;
         </a-col>
       </a-row>

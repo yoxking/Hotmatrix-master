@@ -16,21 +16,21 @@
                     <div class="mn-vid-sc single_video">
                         <div class="vid-1">
                             <div class="vid-info">
-                                <h3>[[${paperInfo.paperTitle}]]</h3>
+                                <h3>Kingdom Come: Deliverance Funny Moments and Fails Compilation</h3>
                                 <div class="info-pr">
-                                    <span>测评次数：[[${paperInfo.examTimes}]]</span>
+                                    <span>60,723,169 views</span>
                                     <ul class="pr_links">
                                         <li>
-                                            <button data-toggle="tooltip" data-placement="top" title="喜欢">
+                                            <button data-toggle="tooltip" data-placement="top" title="I like this">
                                                 <i class="icon-thumbs_up_fill"></i>
                                             </button>
-                                            <span>[[${paperInfo.examTimes}]]</span>
+                                            <span>388K</span>
                                         </li>
                                         <li>
-                                            <button data-toggle="tooltip" data-placement="top" title="不喜欢">
+                                            <button data-toggle="tooltip" data-placement="top" title="I dislike this">
                                                 <i class="icon-thumbs_down_fill"></i>
                                             </button>
-                                            <span>0</span>
+                                            <span>28K</span>
                                         </li>
                                     </ul>
                                     <div class="clearfix"></div>
@@ -41,29 +41,44 @@
                             <div class="info-pr-sec">
                                 <div class="vcp_inf cr">
                                     <div class="vc_hd">
-                                        <img th:src="(${paperInfo.paperPoster} == '') ? @{/imgs/resources/vide6.png} : @{${paperInfo.paperPoster}}" alt="海报图片">
+                                        <img src="images/resources/th5.png" alt="">
                                     </div>
                                     <div class="vc_info pr">
-                                        <h4>测评用时</h4>
-                                        <span>[[${paperInfo.exDruation}]]</span>
+                                        <h4><a href="#" title="">ScereBro</a></h4>
+                                        <span>Published on Oct 22, 2017</span>
                                     </div>
                                 </div><!--vcp_inf end-->
                                 <ul class="chan_cantrz">
                                     <li>
-                                        <a th:href="@{/paperview/examview(id=${paperInfo.paperNo})}" th:title="${paperInfo.paperTitle}" class="donate">马上测评</a>
+                                        <a href="#" title="" class="donate">Donate</a>
                                     </li>
                                     <li>
-                                        <a href="#" title="" class="subscribe">订阅收藏</a>
+                                        <a href="#" title="" class="subscribe">Subscribe <strong>13M</strong></a>
                                     </li>
                                 </ul><!--chan_cantrz end-->
                                 <ul class="df-list">
                                     <li>
-                                        <button data-toggle="tooltip" data-placement="top" title="分享测评">
+                                        <button data-toggle="tooltip" data-placement="top" title="Add to playlist">
+                                            <i class="icon-add_to_playlist"></i>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button data-toggle="tooltip" data-placement="top" title="Favorite">
+                                            <i class="icon-like"></i>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button data-toggle="tooltip" data-placement="top" title="Watch Later">
+                                            <i class="icon-watch_later"></i>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button data-toggle="tooltip" data-placement="top" title="Share">
                                             <i class="icon-share"></i>
                                         </button>
                                     </li>
                                     <li>
-                                        <button data-toggle="tooltip" data-placement="top" title="反馈问题">
+                                        <button data-toggle="tooltip" data-placement="top" title="Report Video">
                                             <i class="icon-flag"></i>
                                         </button>
                                     </li>
@@ -73,11 +88,16 @@
                             <div class="clearfix"></div>
                             <div class="about-ch-sec">
                                 <div class="abt-rw">
-                                    <h4>费用:</h4>
-                                    <p>[[${paperInfo.paperPrice}]]</p>
+                                    <h4>Cast:</h4>
+                                    <ul>
+                                        <li><span>Nathan Drake</span></li>
+                                        <li><span>Victor Sullivan </span></li>
+                                        <li><span>Sam Drake </span></li>
+                                        <li><span>Elena Fisher</span></li>
+                                    </ul>
                                 </div>
                                 <div class="abt-rw">
-                                    <h4>分类 : </h4>
+                                    <h4>Category : </h4>
                                     <ul>
                                         <li><span>Gaming</span></li>
                                         <li><span>PS4 Exclusive  </span></li>
@@ -86,19 +106,21 @@
                                     </ul>
                                 </div>
                                 <div class="abt-rw">
-                                    <h4>简介 : </h4>
-                                    <p>[[${paperInfo.paperDesc}]]</p>
+                                    <h4>About : </h4>
+                                    <p> Three years after the events of Uncharted 3: Drake's Deception, Nathan Drake, now retired as a fortune hunter, has settled into a normal life with his wife Elena Fisher. His world is then turned upside down when his older brother Sam, long believed to be dead, suddenly reappears seeking Drake's help. </p>
                                 </div>
                                 <div class="abt-rw tgs">
-                                    <h4>标签 : </h4>
+                                    <h4>Tags : </h4>
                                     <ul>
-                                        <li><a href="#" title="">#[[${paperInfo.paperTitle}]]</a></li>
+                                        <li><a href="#" title="">#Kingdom</a></li>
+                                        <li><a href="#" title="">#ImStillHereBecause </a></li>
                                         <li><a href="#" title="">#denim</a></li>
                                         <li><a href="#" title="">#tshirt</a></li>
                                     </ul>
                                 </div>
                             </div><!--about-ch-sec end-->
                         </div><!--abt-mk end-->
+
                     </div><!--mn-vid-sc end--->
                 </div><!---col-lg-9 end-->
                 <div class="col-lg-3">

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.benet.collect.mapper.CctBlogsinfoMapper">
+
+    <resultMap type="CctBlogsinfo" id="CctBlogsinfoResult">
+        <result property="id" column="id"/>
+        <result property="blogNo" column="blog_no"/>
+        <result property="blogTitle" column="blog_title"/>
+        <result property="classNo" column="class_no"/>
+        <result property="ruserNo" column="ruser_no"/>
+        <result property="blogContent" column="blog_content"/>
+        <result property="dolikeHit" column="dolike_hit"/>
+        <result property="repostHit" column="repost_hit"/>
+        <result property="checkState" column="check_state"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteFlag" column="delete_flag"/>
+        <result property="comments" column="comments"/>
+        <result property="appCode" column="app_code"/>
+        <result property="version" column="version"/>
+    </resultMap>
+
+    <sql id="selectCctBlogsinfoVo">
+        select id, blog_no, blog_title, class_no, ruser_no, blog_content, dolike_hit, repost_hit, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from cct_blogsinfo
+    </sql>
+
+    <select id="getAllRecords" resultMap="CctBlogsinfoResult">
+        <include refid="selectCctBlogsinfoVo"/>
+        where delete_flag='1' and app_code=#{appCode}
+    </select>
+
+    <select id="getRecordsByClassNo" resultMap="CctBlogsinfoResult">
+        <include refid="selectCctBlogsinfoVo"/>
+        where delete_flag='1' and app_code=#{appCode} and class_no=#{classNo}
+    </select>
+
+    <select id="getRecordsByPaging" resultMap="CctBlogsinfoResult">
+        <include refid="selectCctBlogsinfoVo"/>
+        where delete_flag='1' and app_code=${appCode}
+        <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
+        order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
+    </select>
+
+    <select id="getRecordByNo" resultMap="CctBlogsinfoResult">
+        <include refid="selectCctBlogsinfoVo"/>
+        where delete_flag='1' and app_code=#{appCode} and blog_no = #{no}
+    </select>
+
+    <select id="getRecordNameByNo" resultType="String">
+        select blog_title from cct_blogsinfo
+        where delete_flag='1' and app_code=#{appCode} and blog_no = #{no}
+    </select>
+
+    <select id="getCountByCondition" resultType="Integer">
+        select count(*) from cct_blogsinfo
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </select>
+
+    <insert id="AddNewRecord" parameterType="CctBlogsinfo" useGeneratedKeys="true" keyProperty="id">
+        insert into cct_blogsinfo (
+        <if test="info.blogNo != null  and info.blogNo != ''">blog_no,</if>
+        <if test="info.blogTitle != null  and info.blogTitle != ''">blog_title,</if>
+        <if test="info.classNo != null  and info.classNo != ''">class_no,</if>
+        <if test="info.ruserNo != null  and info.ruserNo != ''">ruser_no,</if>
+        <if test="info.blogContent != null  and info.blogContent != ''">blog_content,</if>
+        <if test="info.dolikeHit != null ">dolike_hit,</if>
+        <if test="info.repostHit != null ">repost_hit,</if>
+        <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
+        <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
+        <if test="info.createTime != null ">create_time,</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">update_by,</if>
+        <if test="info.updateTime != null ">update_time,</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag,</if>
+        <if test="info.comments != null  and info.comments != ''">comments,</if>
+        <if test="info.appCode != null  and info.appCode != ''">app_code,</if>
+        <if test="info.version != null ">version</if>
+        )values(
+        <if test="info.blogNo != null  and info.blogNo != ''">#{info.blogNo},</if>
+        <if test="info.blogTitle != null  and info.blogTitle != ''">#{info.blogTitle},</if>
+        <if test="info.classNo != null  and info.classNo != ''">#{info.classNo},</if>
+        <if test="info.ruserNo != null  and info.ruserNo != ''">#{info.ruserNo},</if>
+        <if test="info.blogContent != null  and info.blogContent != ''">#{info.blogContent},</if>
+        <if test="info.dolikeHit != null ">#{info.dolikeHit},</if>
+        <if test="info.repostHit != null ">#{info.repostHit},</if>
+        <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
+        <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
+        <if test="info.createTime != null ">#{info.createTime},</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">#{info.updateBy},</if>
+        <if test="info.updateTime != null ">#{info.updateTime},</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">#{info.deleteFlag},</if>
+        <if test="info.comments != null  and info.comments != ''">#{info.comments},</if>
+        <if test="info.appCode != null  and info.appCode != ''">#{info.appCode},</if>
+        <if test="info.version != null ">#{info.version}</if>
+        )
+    </insert>
+
+    <update id="UpdateRecord" parameterType="CctBlogsinfo">
+        update cct_blogsinfo
+        <set>
+            <if test="info.blogNo != null  and info.blogNo != ''">blog_no = #{info.blogNo},</if>
+            <if test="info.blogTitle != null  and info.blogTitle != ''">blog_title = #{info.blogTitle},</if>
+            <if test="info.classNo != null  and info.classNo != ''">class_no = #{info.classNo},</if>
+            <if test="info.ruserNo != null  and info.ruserNo != ''">ruser_no = #{info.ruserNo},</if>
+            <if test="info.blogContent != null  and info.blogContent != ''">blog_content = #{info.blogContent},</if>
+            <if test="info.dolikeHit != null ">dolike_hit = #{info.dolikeHit},</if>
+            <if test="info.repostHit != null ">repost_hit = #{info.repostHit},</if>
+            <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
+            <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
+            <if test="info.createTime != null ">create_time = #{info.createTime},</if>
+            <if test="info.updateBy != null  and info.updateBy != ''">update_by = #{info.updateBy},</if>
+            <if test="info.updateTime != null ">update_time = #{info.updateTime},</if>
+            <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag = #{info.deleteFlag},</if>
+            <if test="info.comments != null  and info.comments != ''">comments = #{info.comments},</if>
+            <if test="info.appCode != null  and info.appCode != ''">app_code = #{info.appCode},</if>
+            <if test="info.version != null ">version = #{info.version}</if>
+        </set>
+        where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and blog_no = #{info.blogNo}
+    </update>
+
+    <delete id="HardDeleteByNo">
+        delete from cct_blogsinfo
+        where delete_flag='1' and app_code=#{appCode} and blog_no = #{no}
+    </delete>
+
+    <delete id="HardDeleteByNos">
+        delete from cct_blogsinfo
+        where delete_flag='1' and app_code=#{appCode} and blog_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="HardDeleteByCondition">
+        delete from cct_blogsinfo
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </delete>
+
+    <delete id="SoftDeleteByNo">
+        update cct_blogsinfo set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and blog_no = #{no}
+    </delete>
+
+    <delete id="SoftDeleteByNos">
+        update cct_blogsinfo set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and blog_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="SoftDeleteByCondition">
+        update cct_blogsinfo set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </delete>
+
+</mapper>
