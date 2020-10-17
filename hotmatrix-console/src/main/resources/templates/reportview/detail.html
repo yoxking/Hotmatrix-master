@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: headblock('心理测评中心-在线测评')" />
+</head>
+<body>
+<div class="wrapper">
+    <th:block th:include="include :: topsimpbar" />
+
+    <section class="videso_section">
+        <div class="info-pr-sec">
+            <div class="container">
+                <div class="vcp_inf cr">
+					<span class="vc_hd">
+						<img th:src="(${loginer.ruserAvatar} == '') ? @{/imgs/profile.jpg} : @{${loginer.ruserAvatar}}" alt="用户头像">
+					</span>
+                    <div class="vc_info pr">
+                        <h4>[[${loginer.rnickName}]] <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+                        <span>浏览次数：4次</span>
+                    </div>
+                </div><!--vcp_inf end-->
+                <ul class="chan_cantrz">
+                    <li>
+                        <a href="#" title="" class="donate">打印报告</a>
+                    </li>
+                    <li>
+                        <a href="#" title="" class="subscribe">下载报告</a>
+                    </li>
+                </ul><!--chan_cantrz end-->
+                <div class="clearfix"></div>
+            </div>
+        </div><!--info-pr-sec end-->
+        <div class="history-lst tbY">
+            <div class="container">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about_tab" role="tab" aria-controls="about-tab" aria-selected="false">测评报告正文</a>
+                    </li>
+                </ul><!--nav-tabs end-->
+                <div class="clearfix"></div>
+            </div>
+        </div><!--history-lst end-->
+        <div class="tab-content p-0" id="myTabContent">
+            <div class="tab-pane fade show active" id="about_tab" role="tabpanel" aria-labelledby="about-tab">
+                <div class="about_tab_content">
+                    <div class="container">
+                        <div class="description">
+                            <h3>报告名称</h3>
+                            <p>测评时间：2020-09-09</p>
+                            <p>测评内容：</p>
+                        </div>
+                    </div>
+                </div><!--about_tab_content end-->
+            </div>
+        </div>
+    </section><!--Featured Videos end-->
+
+    <th:block th:include="include :: copyright" />
+</div><!--wrapper end-->
+
+<th:block th:include="include :: scriptblock" />
+<script type="text/javascript">
+    $(document).ready(function(){
+
+
+    });
+
+</script>
+</body>
+</html>

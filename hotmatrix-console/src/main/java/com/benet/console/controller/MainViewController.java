@@ -68,41 +68,6 @@ public class MainViewController extends BaseViewController
     }
 
     /**
-     * 列表页1
-     */
-    @GetMapping(value="/list1")
-    public String list1(ModelMap model)
-    {
-        model.put("loginer",getLoginer());
-        return prefix + "/list1";
-    }
-
-    /**
-     * 列表页2
-     */
-    @GetMapping(value="/content")
-    public String content(ModelMap model,@RequestParam("id") String id)
-    {
-        SysRuserinfo loginUser = ShiroUtils.getLoginRuser().getUser();
-        CctPaperinfo info=cctPaperinfoService.getRecordByNo(loginUser.getAppCode(),id);
-
-        if(info!=null) {
-            PaperInfoVo paper = new PaperInfoVo();
-            paper.setPaperNo(info.getPaperNo());
-            paper.setPaperTitle(info.getPaperTitle());
-            paper.setPaperPoster(info.getPaperPoster());
-            paper.setPaperDesc(info.getPaperDesc());
-            paper.setPaperPrice("免费");
-            paper.setExamTimes("0");
-            paper.setExDruation(info.getExDuration() + "分钟");
-
-            model.put("paperInfo",paper);
-        }
-        model.put("loginer", getLoginer());
-        return prefix + "/content";
-    }
-
-    /**
      * 历史页
      */
     @GetMapping(value="/history")

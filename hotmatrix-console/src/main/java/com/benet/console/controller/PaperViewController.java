@@ -48,10 +48,57 @@ public class PaperViewController extends BaseViewController {
 
 
     /**
+     * 测评主页
+     */
+    @GetMapping(value="/index")
+    public String index(ModelMap model)
+    {
+        SysRuserinfo loginUser = ShiroUtils.getLoginRuser().getUser();
+        model.put("loginer", getLoginer());
+        return prefix + "/index";
+    }
+
+    /**
+     * 分类列表
+     */
+    @GetMapping(value="/classlist")
+    public String classlist(ModelMap model)
+    {
+        SysRuserinfo loginUser = ShiroUtils.getLoginRuser().getUser();
+        model.put("loginer", getLoginer());
+        return prefix + "/classlist";
+    }
+
+    /**
+     * 详细
+     */
+    @GetMapping(value="/detail")
+    public String detail(ModelMap model,@RequestParam("id") String id)
+    {
+        SysRuserinfo loginUser = ShiroUtils.getLoginRuser().getUser();
+        CctPaperinfo info=paperinfoService.getRecordByNo(loginUser.getAppCode(),id);
+
+        if(info!=null) {
+            PaperInfoVo paper = new PaperInfoVo();
+            paper.setPaperNo(info.getPaperNo());
+            paper.setPaperTitle(info.getPaperTitle());
+            paper.setPaperPoster(info.getPaperPoster());
+            paper.setPaperDesc(info.getPaperDesc());
+            paper.setPaperPrice("免费");
+            paper.setExamTimes("0");
+            paper.setExDruation(info.getExDuration() + "分钟");
+
+            model.put("paperInfo",paper);
+        }
+        model.put("loginer", getLoginer());
+        return prefix + "/detail";
+    }
+
+    /**
      * 答题页
      */
-    @GetMapping(value="/examview")
-    public String examview(ModelMap model,@RequestParam("id") String id)
+    @GetMapping(value="/collect")
+    public String collect(ModelMap model,@RequestParam("id") String id)
     {
         SysRuserinfo loginUser = ShiroUtils.getLoginRuser().getUser();
 
@@ -125,7 +172,7 @@ public class PaperViewController extends BaseViewController {
 
         model.put("loginer",getLoginer());
         model.put("paperInfo",paperInfo);
-        return prefix + "/examview";
+        return prefix + "/collect";
     }
 
     @PostMapping("/getQuestData")

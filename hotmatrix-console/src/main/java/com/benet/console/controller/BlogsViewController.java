@@ -1,9 +1,9 @@
 package com.benet.console.controller;
 
 import com.benet.collect.service.ICctBlogsinfoService;
-import com.benet.collect.service.ICctPaperinfoService;
 import com.benet.console.common.BaseViewController;
-import com.benet.system.service.ISysBranchinfoService;
+import com.benet.console.utils.ShiroUtils;
+import com.benet.system.domain.SysRuserinfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,6 +30,8 @@ public class BlogsViewController extends BaseViewController {
     @GetMapping(value="/index")
     public String index(ModelMap model)
     {
-        return prefix +"index";
+        SysRuserinfo loginUser = ShiroUtils.getLoginRuser().getUser();
+        model.put("loginer",getLoginer());
+        return prefix +"/index";
     }
 }

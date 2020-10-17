@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: headblock('心理测评中心-控制台')" />
+</head>
+<body>
+<div class="wrapper hp_1">
+    <th:block th:include="include :: topmenubar" />
+
+    <th:block th:include="include :: sidemenubar" />
+
+    <section class="mn-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="history-lst">
+                        <div class="container">
+                            <div class="history-hd-head">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="watch_history_tab" data-toggle="tab" href="#watch_history" role="tab" aria-controls="watch_history_tab" aria-selected="true">通知公告</a>
+                                    </li>
+                                </ul><!--nav-tabs end-->
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="watch_history" role="tabpanel" aria-labelledby="watch_history_tab">
+                                <div class="tabs_lzt">
+                                    <div class="tab-history">
+                                        <div class="videoo">
+                                            <div class="vid_thumbainl ms">
+                                                <a href="#" title="">
+                                                    <img src="images/resources/vide1.png" alt="">
+                                                    <span class="vid-time">10:21</span>
+                                                    <span class="watch_later">
+											<i class="icon-watch_later_fill"></i>
+										</span>
+                                                </a>
+                                            </div><!--vid_thumbnail end-->
+                                            <div class="video_info ms">
+                                                <h3><a href="/newsview/detail" title="">Kingdom Come: Deliverance Funny Moments and Fails</a></h3>
+                                                <h4><a href="/newsview/detail" title="">newfox media</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+                                                <span>686K views .<small class="posted_dt">1 week ago</small></span>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div><!--videoo end-->
+                                    </div><!--tab-history end-->
+                                    <div class="tab-history">
+                                        <div class="videoo">
+                                            <div class="vid_thumbainl ms">
+                                                <a href="#" title="">
+                                                    <img src="images/resources/vide1.png" alt="">
+                                                    <span class="vid-time">10:21</span>
+                                                    <span class="watch_later">
+											<i class="icon-watch_later_fill"></i>
+										</span>
+                                                </a>
+                                            </div><!--vid_thumbnail end-->
+                                            <div class="video_info ms">
+                                                <h3><a href="single_video_page.html" title="">Kingdom Come: Deliverance Funny Moments and Fails</a></h3>
+                                                <h4><a href="Single_Channel_Playlist.html" title="">newfox media</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+                                                <span>686K views .<small class="posted_dt">1 week ago</small></span>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div><!--videoo end-->
+                                    </div><!--tab-history end-->
+                                    <div class="tab-history">
+                                        <div class="videoo">
+                                            <div class="vid_thumbainl ms">
+                                                <a href="#" title="">
+                                                    <img src="images/resources/vide1.png" alt="">
+                                                    <span class="vid-time">10:21</span>
+                                                    <span class="watch_later">
+											<i class="icon-watch_later_fill"></i>
+										</span>
+                                                </a>
+                                            </div><!--vid_thumbnail end-->
+                                            <div class="video_info ms">
+                                                <h3><a href="single_video_page.html" title="">Kingdom Come: Deliverance Funny Moments and Fails</a></h3>
+                                                <h4><a href="Single_Channel_Playlist.html" title="">newfox media</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+                                                <span>686K views .<small class="posted_dt">1 week ago</small></span>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div><!--videoo end-->
+                                    </div><!--tab-history end-->
+                                </div><!--tabs_lz end-->
+                            </div>
+                        </div>
+                    </div>
+                </div><!---col-lg-9 end-->
+                <div class="col-lg-3">
+                    <div class="sidebar">
+                        <div class="vidz-adimg">
+                            <img src="/imgs/resources/vide6.png" alt="" />
+                        </div>
+                        <div class="vidz-prt">
+                            <h2 class="sm-vidz" style="font-weight: bold;">热门推荐</h2>
+                            <div class="clearfix"></div>
+                        </div><!--vidz-prt end-->
+                        <div class="videoo-list-ab">
+                            <ul>
+                                <li><a href="#" title="">一例厌学高中生的咨询案例报告 79140次阅读  9个赞</a> </li>
+                                <li><a href="#" title="">一例厌学高中生的咨询案例报告 79140次阅读  9个赞</a> </li>
+                                <li><a href="#" title="">一例厌学高中生的咨询案例报告 79140次阅读  9个赞</a> </li>
+                                <li><a href="#" title="">一例厌学高中生的咨询案例报告 79140次阅读  9个赞</a> </li>
+                            </ul>
+                        </div><!--videoo-list-ab end-->
+                    </div><!--side-bar end-->
+                </div>
+            </div>
+        </div>
+    </section><!--mn-sec end-->
+
+    <th:block th:include="include :: copyright" />
+</div>
+<!--wrapper end-->
+
+<th:block th:include="include :: scriptblock" />
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: headblock('心理测评中心-控制台')" />
+</head>
+<body>
+<div class="wrapper hp_1">
+    <th:block th:include="include :: topmenubar" />
+
+    <th:block th:include="include :: sidemenubar" />
+
+    <section class="mn-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="mn-vid-sc single_video">
+                        <div class="vid-1">
+                            <div class="vid-info">
+                                <h3>标题标题标题标题标题标题</h3>
+                                <div class="info-pr">
+                                    <span>发布时间：2020-09-09 &nbsp;&nbsp;&nbsp;&nbsp;作者：admin &nbsp;&nbsp;&nbsp;&nbsp;点击次数：3 </span>
+                                    <div class="clearfix"></div>
+                                </div><!--info-pr end-->
+                            </div><!--vid-info end-->
+                        </div><!--vid-1 end-->
+                        <div class="vid-desc">
+                            <p>
+                                asfasdfadsfafdsadffasfasdfasd<br />fadfsadf<br />
+                            </p><!--about-ch-sec end-->
+                        </div><!--abt-mk end-->
+                    </div><!--mn-vid-sc end--->
+                </div><!---col-lg-9 end-->
+                <div class="col-lg-3">
+                    <div class="sidebar">
+                        <div class="vidz-adimg">
+                            <img src="/imgs/resources/vide6.png" alt="" />
+                        </div>
+                        <div class="vidz-prt">
+                            <h2 class="sm-vidz" style="font-weight: bold;">热门推荐</h2>
+                            <div class="clearfix"></div>
+                        </div><!--vidz-prt end-->
+                        <div class="videoo-list-ab">
+                            <ul>
+                                <li><a href="#" title="">一例厌学高中生的咨询案例报告 79140次阅读  9个赞</a> </li>
+                                <li><a href="#" title="">一例厌学高中生的咨询案例报告 79140次阅读  9个赞</a> </li>
+                                <li><a href="#" title="">一例厌学高中生的咨询案例报告 79140次阅读  9个赞</a> </li>
+                                <li><a href="#" title="">一例厌学高中生的咨询案例报告 79140次阅读  9个赞</a> </li>
+                            </ul>
+                        </div><!--videoo-list-ab end-->
+                    </div><!--side-bar end-->
+                </div>
+            </div>
+        </div>
+    </section><!--mn-sec end-->
+
+    <th:block th:include="include :: copyright" />
+</div>
+<!--wrapper end-->
+
+<th:block th:include="include :: scriptblock" />
+</body>
+
+</html>

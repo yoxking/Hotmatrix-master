@@ -75,7 +75,7 @@
               <div th:each="paper:${paperList}" class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
                 <div class="videoo">
                   <div class="vid_thumbainl">
-                    <a th:href="@{/mainview/content(id=${paper.paperNo})}" target="_blank" th:title="${paper.paperTitle}">
+                    <a th:href="@{/paperview/detail(id=${paper.paperNo})}" target="_blank" th:title="${paper.paperTitle}">
                       <img th:src="(${paper.paperPoster} == '') ? @{/imgs/resources/vide6.png} : @{${paper.paperPoster}}" alt="海报图片">
                       <span class="vid-time">[[${paper.exDruation}]]</span>
                       <span class="watch_later">
@@ -109,7 +109,7 @@
               <div th:each="paperInfo:${paperList}" class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
                 <div class="videoo">
                   <div class="vid_thumbainl">
-                    <a th:href="@{/mainview/content(id=${paperInfo.paperNo})}" target="_blank" th:title="${paperInfo.paperTitle}">
+                    <a th:href="@{/paperview/detail(id=${paperInfo.paperNo})}" target="_blank" th:title="${paperInfo.paperTitle}">
                       <img th:src="(${paperInfo.paperPoster} == '') ? @{/imgs/resources/vide6.png} : @{${paperInfo.paperPoster}}" alt="海报图片">
                       <span class="vid-time">[[${paperInfo.exDruation}]]</span>
                       <span class="watch_later">
