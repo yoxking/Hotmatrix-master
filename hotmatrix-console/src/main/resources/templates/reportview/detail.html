@@ -45,9 +45,9 @@
                 <div class="about_tab_content">
                     <div class="container">
                         <div class="description">
-                            <h3>报告名称</h3>
-                            <p>测评时间：2020-09-09</p>
-                            <p>测评内容：</p>
+                            <h3>[[${reptInfo.reptName}]]</h3>
+                            <p>测评时间：[[${reptInfo.pubDate}]]</p>
+                            <p>测评内容：[[${reptInfo.reptDesc}]]</p><br /><br />
                         </div>
                     </div>
                 </div><!--about_tab_content end-->
@@ -61,8 +61,6 @@
 <th:block th:include="include :: scriptblock" />
 <script type="text/javascript">
     $(document).ready(function(){
-
-
     });
 
 </script>

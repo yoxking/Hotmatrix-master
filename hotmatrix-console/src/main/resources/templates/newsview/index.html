@@ -29,63 +29,30 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="watch_history" role="tabpanel" aria-labelledby="watch_history_tab">
                                 <div class="tabs_lzt">
-                                    <div class="tab-history">
+                                    <div th:each="contzInfo:${pagerInfo.list}" class="tab-history">
                                         <div class="videoo">
                                             <div class="vid_thumbainl ms">
-                                                <a href="#" title="">
-                                                    <img src="images/resources/vide1.png" alt="">
-                                                    <span class="vid-time">10:21</span>
-                                                    <span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
+                                                <a th:href="@{/newsview/detail(id=${contzInfo.cntzNo})}" target="_blank" th:title="${contzInfo.title}">
+                                                    <img th:src="(${contzInfo.poster} == '') ? @{/imgs/resources/vide6.png} : @{${contzInfo.poster}}" alt="图片" style="width:90px;height:80px;">
                                                 </a>
                                             </div><!--vid_thumbnail end-->
                                             <div class="video_info ms">
-                                                <h3><a href="/newsview/detail" title="">Kingdom Come: Deliverance Funny Moments and Fails</a></h3>
-                                                <h4><a href="/newsview/detail" title="">newfox media</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-                                                <span>686K views .<small class="posted_dt">1 week ago</small></span>
+                                                <h3><a th:href="@{/newsview/detail(id=${contzInfo.cntzNo})}" target="_blank" th:title="${contzInfo.title}">[[${contzInfo.title}]]</a></h3>
+                                                <h4><a th:href="@{/newsview/detail(id=${contzInfo.cntzNo})}" target="_blank" th:title="${contzInfo.title}">[[${contzInfo.author}]]</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+                                                <span>点击次数:[[${contzInfo.hitCount}]]  &nbsp;&nbsp;&nbsp;&nbsp;发布时间:<small class="posted_dt">[[${contzInfo.pubdate}]]</small></span>
                                             </div>
                                             <div class="clearfix"></div>
                                         </div><!--videoo end-->
                                     </div><!--tab-history end-->
-                                    <div class="tab-history">
-                                        <div class="videoo">
-                                            <div class="vid_thumbainl ms">
-                                                <a href="#" title="">
-                                                    <img src="images/resources/vide1.png" alt="">
-                                                    <span class="vid-time">10:21</span>
-                                                    <span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-                                                </a>
-                                            </div><!--vid_thumbnail end-->
-                                            <div class="video_info ms">
-                                                <h3><a href="single_video_page.html" title="">Kingdom Come: Deliverance Funny Moments and Fails</a></h3>
-                                                <h4><a href="Single_Channel_Playlist.html" title="">newfox media</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-                                                <span>686K views .<small class="posted_dt">1 week ago</small></span>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div><!--videoo end-->
-                                    </div><!--tab-history end-->
-                                    <div class="tab-history">
-                                        <div class="videoo">
-                                            <div class="vid_thumbainl ms">
-                                                <a href="#" title="">
-                                                    <img src="images/resources/vide1.png" alt="">
-                                                    <span class="vid-time">10:21</span>
-                                                    <span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-                                                </a>
-                                            </div><!--vid_thumbnail end-->
-                                            <div class="video_info ms">
-                                                <h3><a href="single_video_page.html" title="">Kingdom Come: Deliverance Funny Moments and Fails</a></h3>
-                                                <h4><a href="Single_Channel_Playlist.html" title="">newfox media</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-                                                <span>686K views .<small class="posted_dt">1 week ago</small></span>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div><!--videoo end-->
-                                    </div><!--tab-history end-->
+                                    <nav aria-label="news list pages" style="text-align: center;">
+                                        <ul class="pagination">
+                                            <li th:class="${pagerInfo.pageIndex>1}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/newsview/index(pageIndex=1)}">首页</a></li>
+                                            <li th:class="${pagerInfo.pageIndex>1}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/newsview/index(pageIndex=${pagerInfo.pageIndex-1})}">上一页</a></li>
+                                            <li th:class="${pagerInfo.pageIndex<pagerInfo.pageTotal}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/newsview/index(pageIndex=${pagerInfo.pageIndex+1})}">下一页</a></li>
+                                            <li th:class="${pagerInfo.pageIndex<pagerInfo.pageTotal}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/newsview/index(pageIndex=${pagerInfo.pageTotal})}">尾页</a></li>
+                                            <li class="page-item" style="padding:33px 0 0 60px;"> <span>当前第[[${pagerInfo.pageIndex}]]页/共[[${pagerInfo.pageTotal}]]页</span></li>
+                                        </ul>
+                                    </nav>
                                 </div><!--tabs_lz end-->
                             </div>
                         </div>

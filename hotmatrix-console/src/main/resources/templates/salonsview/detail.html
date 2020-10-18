@@ -16,9 +16,9 @@
                     <div class="mn-vid-sc single_video">
                         <div class="vid-1">
                             <div class="vid-info">
-                                <h3>主题活动名称</h3>
+                                <h3>[[${salonInfo.salonName}]]</h3>
                                 <div class="info-pr">
-                                    <span>浏览次数：33</span>
+                                    <span>审核状态：[[${salonInfo.checkState}]]</span>
                                     <div class="clearfix"></div>
                                 </div><!--info-pr end-->
                             </div><!--vid-info end-->
@@ -48,7 +48,7 @@
                             <div class="about-ch-sec">
                                 <div class="abt-rw">
                                     <h4>活动时间:</h4>
-                                    <p>2020-09-09</p>
+                                    <p>[[${salonInfo.startTime}]]</p>
                                 </div>
                                 <div class="abt-rw">
                                     <h4>活动费用:</h4>
@@ -56,20 +56,20 @@
                                 </div>
                                 <div class="abt-rw">
                                     <h4>活动人数:</h4>
-                                    <p>3/50</p>
+                                    <p>[[${salonInfo.registRusers}]]</p>
                                 </div>
                                 <div class="abt-rw">
                                     <h4>活动地址:</h4>
-                                    <p>asdfadsfafdsafafds</p>
+                                    <p>[[${salonInfo.salonAddress}]]</p>
                                 </div>
                                 <div class="abt-rw">
                                     <h4>活动简介 : </h4>
-                                    <p>asfdadsfafdsafdsaf</p>
+                                    <p>[[${salonInfo.salonContent}]]</p>
                                 </div>
                                 <div class="abt-rw tgs">
                                     <h4>标签 : </h4>
                                     <ul>
-                                        <li><a href="#" title="">#afas</a></li>
+                                        <li><a href="#" title="">#[[${salonInfo.className}]]</a></li>
                                         <li><a href="#" title="">#denim</a></li>
                                         <li><a href="#" title="">#tshirt</a></li>
                                     </ul>
