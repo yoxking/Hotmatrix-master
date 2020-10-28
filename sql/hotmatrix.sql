@@ -153,6 +153,38 @@ create table sys_ruserinfo (
   UNIQUE INDEX idx_ruser_no (`user_no`)
 ) engine=innodb auto_increment=100 comment = '注册用户信息表';
 
+-- ----------------------------
+-- 5、用户排班表
+-- ----------------------------
+drop table if exists sys_ruserrota;
+create table sys_ruserrota (
+  id				bigint(20)      not null auto_increment    comment 'id',
+  rota_no           varchar(20)     default ''    	           comment '排班ID',
+  user_no           varchar(20)     not null                   comment '用户ID',
+  rota_type         char(1)         default '1'  	           comment '1正常排班 2临时排班',
+  start_time        datetime                                   comment '开始时间',
+  endit_time        datetime                                   comment '结束时间',
+  week_day1         char(1)         default '0'                comment '周一(0休息 1上午 2下午 3全天)',
+  week_day2         char(1)         default '0'                comment '周二(0休息 1上午 2下午 3全天)',
+  week_day3         char(1)         default '0'                comment '周三(0休息 1上午 2下午 3全天)',
+  week_day4         char(1)         default '0'                comment '周四(0休息 1上午 2下午 3全天)',
+  week_day5         char(1)         default '0'                comment '周五(0休息 1上午 2下午 3全天)',
+  week_day6         char(1)         default '0'                comment '周六(0休息 1上午 2下午 3全天)',
+  week_day7         char(1)         default '0'                comment '周日(0休息 1上午 2下午 3全天)',
+  rota_format       varchar(200)    default ''                  comment '排班格式',
+  check_state       char(1)         default '0'                comment '状态（1正常 0停用）',
+  branch_no         varchar(20)     default ''				   comment '分支编号',
+  create_by         varchar(64)     default ''                 comment '创建者',
+  create_time 	    datetime                                   comment '创建时间',
+  update_by         varchar(64)     default ''                 comment '更新者',
+  update_time       datetime                                   comment '更新时间',
+  delete_flag       char(1)         default '1'                comment '删除标志（1代表存在 0代表删除）',
+  comments          varchar(256)     default ''                comment '更新者',
+  app_code          varchar(256)     default ''                comment '应用编码',
+  version           bigint(20)       default 0                 comment '版本号',
+  primary key (id),
+  UNIQUE INDEX idx_rotano (`rota_no`)
+) engine=innodb auto_increment=100 comment = '注册用户排班表';
 
 -- ----------------------------
 -- 6、岗位信息表

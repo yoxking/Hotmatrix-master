@@ -90,6 +90,7 @@ public class MyShiroConfig {
         DefaultShiroFilterChainDefinition chain = new DefaultShiroFilterChainDefinition();
         //哪些请求可以匿名访问
         chain.addPathDefinition("/login", "anon");
+        chain.addPathDefinition("/getCode","anon");
         chain.addPathDefinition("/ajaxLogin", "anon");
         chain.addPathDefinition("/regist", "anon");
         chain.addPathDefinition("/forget", "anon");

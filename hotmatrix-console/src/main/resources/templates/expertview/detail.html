@@ -2,7 +2,6 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="include :: headblock('心理测评中心-控制台')" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/loading.css}">
 </head>
 <body>
 <div class="wrapper hp_1">
@@ -17,23 +16,9 @@
                     <div class="mn-vid-sc single_video">
                         <div class="vid-1">
                             <div class="vid-info">
-                                <h3>[[${paperInfo.paperTitle}]]</h3>
+                                <h3>[[${exptInfo.ruserName}]]</h3>
                                 <div class="info-pr">
-                                    <span>测评次数：[[${paperInfo.examTimes}]]</span>
-                                    <ul class="pr_links">
-                                        <li>
-                                            <button data-toggle="tooltip" data-placement="top" title="喜欢">
-                                                <i class="icon-thumbs_up_fill"></i>
-                                            </button>
-                                            <span>[[${paperInfo.examTimes}]]</span>
-                                        </li>
-                                        <li>
-                                            <button data-toggle="tooltip" data-placement="top" title="不喜欢">
-                                                <i class="icon-thumbs_down_fill"></i>
-                                            </button>
-                                            <span>0</span>
-                                        </li>
-                                    </ul>
+                                    <span>类型：[[${exptInfo.ruserType}]]</span>
                                     <div class="clearfix"></div>
                                 </div><!--info-pr end-->
                             </div><!--vid-info end-->
@@ -42,59 +27,45 @@
                             <div class="info-pr-sec">
                                 <div class="vcp_inf cr">
                                     <div class="vc_hd">
-                                        <img th:src="(${paperInfo.paperPoster} == '') ? @{/imgs/resources/vide6.png} : @{${paperInfo.paperPoster}}" alt="海报图片">
+                                        <img th:src="@{/imgs/resources/vide6.png}" alt="海报图片">
                                     </div>
                                     <div class="vc_info pr">
-                                        <h4>测评用时</h4>
-                                        <span>[[${paperInfo.exDruation}]]</span>
+                                        <h4>张三</h4>
+                                        <span>状态：已预约</span>
                                     </div>
                                 </div><!--vcp_inf end-->
                                 <ul class="chan_cantrz">
                                     <li>
-                                        <input type="hidden" id="paperNo" name="paperNo" th:value="${paperInfo.paperNo}">
-                                        <a href="#" title="马上测评" onclick="loadit()" class="donate">马上测评</a>
+                                        <a href="#" title="" class="donate">马上预约</a>
                                     </li>
                                     <li>
                                         <a href="#" title="" class="subscribe">订阅收藏</a>
                                     </li>
                                 </ul><!--chan_cantrz end-->
-                                <ul class="df-list">
-                                    <li>
-                                        <button data-toggle="tooltip" data-placement="top" title="分享测评">
-                                            <i class="icon-share"></i>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button data-toggle="tooltip" data-placement="top" title="反馈问题">
-                                            <i class="icon-flag"></i>
-                                        </button>
-                                    </li>
-                                </ul><!--df-list end-->
                                 <div class="clearfix"></div>
                             </div>
                             <div class="clearfix"></div>
                             <div class="about-ch-sec">
                                 <div class="abt-rw">
-                                    <h4>费用:</h4>
-                                    <p>[[${paperInfo.paperPrice}]]</p>
+                                    <h4>电话:</h4>
+                                    <p>[[${exptInfo.telephone}]]</p>
                                 </div>
                                 <div class="abt-rw">
-                                    <h4>分类 : </h4>
-                                    <ul>
-                                        <li><span>Gaming</span></li>
-                                        <li><span>PS4 Exclusive  </span></li>
-                                        <li><span>Gameplay  </span></li>
-                                        <li><span>1080p</span></li>
-                                    </ul>
+                                    <h4>活动费用:</h4>
+                                    <p>免费</p>
                                 </div>
                                 <div class="abt-rw">
-                                    <h4>简介 : </h4>
-                                    <p>[[${paperInfo.paperDesc}]]</p>
+                                    <h4>邮箱:</h4>
+                                    <p>[[${exptInfo.email}]]</p>
+                                </div>
+                                <div class="abt-rw">
+                                    <h4>性别: </h4>
+                                    <p>[[${exptInfo.sex}]]</p>
                                 </div>
                                 <div class="abt-rw tgs">
                                     <h4>标签 : </h4>
                                     <ul>
-                                        <li><a href="#" title="">#[[${paperInfo.paperTitle}]]</a></li>
+                                        <li><a href="#" title="">#[[${exptInfo.ruserType}]]</a></li>
                                         <li><a href="#" title="">#denim</a></li>
                                         <li><a href="#" title="">#tshirt</a></li>
                                     </ul>
@@ -146,33 +117,6 @@
 <!--wrapper end-->
 
 <th:block th:include="include :: scriptblock" />
-<script type="text/javascript" th:src="@{/js/loading.js}"></script>
-<script type="text/javascript">
-    function loadit() {
-
-        loading.showLoading({
-            type:1,
-            tip:"正在生成,请稍等..."
-        })
-
-        var paperNo = $("input[name='paperNo']").val();
-        $.ajax({
-            type: "post",
-            url: "/paperview/createPaper",
-            data: {
-                "paperNo": paperNo
-            },
-            success: function(res) {
-                if(res.code===200){
-                    loading.hideLoading();
-                    location.href = ctx + 'paperview/collect?pflowNo='+res.msg;
-                }else {
-                    layer.msg(res.msg)
-                }
-            }
-        });
-    }
-</script>
 </body>
 
 </html>

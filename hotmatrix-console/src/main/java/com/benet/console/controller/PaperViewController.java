@@ -4,6 +4,7 @@ import com.benet.collect.domain.*;
 import com.benet.collect.service.*;
 import com.benet.common.core.domain.AjaxResult;
 import com.benet.common.utils.date.DateUtils;
+import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.console.common.BaseViewController;
 import com.benet.console.utils.ShiroUtils;
@@ -133,25 +134,25 @@ public class PaperViewController extends BaseViewController {
     }
 
     /**
-     * 答题页
+     * 生成测评
      */
-    @GetMapping(value="/collect")
-    public String collect(ModelMap model,@RequestParam("id") String id)
-    {
-        SysRuserinfo loginUser = ShiroUtils.getLoginRuser().getUser();
+    @PostMapping("/createPaper")
+    @ResponseBody
+    public AjaxResult createPaper(String paperNo){
 
-        String pflowNo="";
-        String condition=" paper_no='"+id+"' And ruser_no='"+loginUser.getUserNo()+"' And pflow_state=0 ";
+        SysRuserinfo loginUser = ShiroUtils.getLoginRuser().getUser();
+        String condition=" paper_no='"+paperNo+"' And ruser_no='"+loginUser.getUserNo()+"' And pflow_state=0 ";
         List<CctPaperflows> pflowsList=paperflowsService.getRecordsByPaging(loginUser.getAppCode(),1,10,condition,"id","asc");
 
-        CctPaperinfo paperInfo =paperinfoService.getRecordByNo(loginUser.getAppCode(),id);
+        String pflowNo="";
         if(pflowsList!=null&&pflowsList.size()>0){
-
+            pflowNo=pflowsList.get(0).getPflowNo();
         }else{
             pflowNo=UuidUtils.shortUUID();
+
             CctPaperflows pflowsInfo=new CctPaperflows();
             pflowsInfo.setPflowNo(pflowNo);
-            pflowsInfo.setPaperNo(id);
+            pflowsInfo.setPaperNo(paperNo);
             pflowsInfo.setRuserNo(loginUser.getUserNo());
             pflowsInfo.setStartTime(DateUtils.getNowDate());
             pflowsInfo.setEnditTime(DateUtils.getNowDate());
@@ -170,9 +171,11 @@ public class PaperViewController extends BaseViewController {
             if(paperflowsService.AddNewRecord(loginUser.getAppCode(),pflowsInfo)>0){
 
                 CctQuestflows qflows=null;
+                CctPaperinfo paperInfo =paperinfoService.getRecordByNo(loginUser.getAppCode(),paperNo);
                 List<CctQuestinfo> qinfoList=questinfoService.getRecordsByClassNo(loginUser.getAppCode(),paperInfo.getQuestClass());
                 if(qinfoList!=null&&qinfoList.size()>0){
                     for(CctQuestinfo qinfo:qinfoList){
+
                         qflows=new CctQuestflows();
                         qflows.setQflowNo(UuidUtils.shortUUID());
                         qflows.setPflowNo(pflowNo);
@@ -192,70 +195,86 @@ public class PaperViewController extends BaseViewController {
                         qflows.setAppCode(loginUser.getAppCode());
 
                         questflowsService.AddNewRecord(loginUser.getAppCode(),qflows);
-
                     }
                 }
+            }else{
+                pflowNo="";
             }
-
         }
-
-        PaperInfoVo paperInfoVo=new PaperInfoVo();
-        paperInfoVo.setPaperNo(pflowNo);
-        paperInfoVo.setPaperTitle(paperInfo.getPaperTitle());
-        paperInfoVo.setPaperPoster(paperInfo.getPaperPoster());
-        paperInfoVo.setPaperDesc(paperInfo.getPaperDesc());
-        paperInfoVo.setPaperPrice("0");
-        paperInfoVo.setExamTimes("0");
-        paperInfoVo.setExDruation(paperInfo.getExDuration()+"分钟");
-
-        model.put("loginer",getLoginer());
-        model.put("paperInfo",paperInfo);
-        return prefix + "/collect";
+        if(StringUtils.isEmpty(pflowNo)){
+            return error();
+        }else {
+            return success(pflowNo);
+        }
     }
 
-    @PostMapping("/getQuestData")
-    @ResponseBody
-    public AjaxResult getQuestData(String pflowNo, String pageIndex)
+    /**
+     * 答题页
+     */
+    @GetMapping(value="/collect")
+    public String collect(ModelMap model,@RequestParam("pflowNo") String pflowNo,@RequestParam(defaultValue = "1",value = "pageIndex") Integer pageIndex,
+                          @RequestParam(defaultValue = "1",value = "pageSize") Integer pageSize)
     {
         SysRuserinfo loginUser = ShiroUtils.getLoginRuser().getUser();
 
-        String condition=" pflow_no='"+pflowNo+"' ";
-        List<CctQuestflows> qflowsList=questflowsService.getRecordsByPaging(loginUser.getAppCode(),Integer.parseInt(pageIndex),1,condition,"id","asc");
+        PaperInfoVo paperInfoVo=null;
+        CctPaperflows paperFlows=paperflowsService.getRecordByNo(loginUser.getAppCode(),pflowNo);
+        if(paperFlows!=null){
+            CctPaperinfo paperInfo =paperinfoService.getRecordByNo(loginUser.getAppCode(),paperFlows.getPaperNo());
 
+            paperInfoVo=new PaperInfoVo();
+            paperInfoVo.setPaperNo(pflowNo);
+            paperInfoVo.setPaperTitle(paperInfo.getPaperTitle());
+            paperInfoVo.setPaperPoster(paperInfo.getPaperPoster());
+            paperInfoVo.setPaperDesc(paperInfo.getPaperDesc());
+            paperInfoVo.setPaperPrice("0");
+            paperInfoVo.setExamTimes("0");
+            paperInfoVo.setExDruation(paperInfo.getExDuration()+"分钟");
+        }
+
+        List<QuestInfoVo> questList=new ArrayList<>();
+        String condition=" pflow_no='"+pflowNo+"' ";
+        int count=questflowsService.getCountByCondition(loginUser.getAppCode(),condition);
+        List<CctQuestflows> qflowsList=questflowsService.getRecordsByPaging(loginUser.getAppCode(),pageIndex,pageSize,condition,"id","asc");
         if(qflowsList!=null&&qflowsList.size()>0) {
 
-            CctQuestflows questflow=qflowsList.get(0);
+            CctQuestflows questflow = qflowsList.get(0);
+            CctQuestinfo questInfo=questinfoService.getRecordByNo(loginUser.getAppCode(),questflow.getQuestNo());
 
-            QuestInfoVo questInfo=new QuestInfoVo();
-            questInfo.setQuestNo(questflow.getQuestNo());
-            questInfo.setQuestTitle(questflow.getQuestNo());
-            questInfo.setQuestDesc(questflow.getQuestNo());
-            questInfo.setQuestMust(questflow.getQuestNo());
-            questInfo.setQuestType(questflow.getQuestNo());
+            QuestInfoVo questInfoVo = new QuestInfoVo();
+            questInfoVo.setQuestNo(questInfo.getQuestNo());
+            questInfoVo.setQuestTitle(questInfo.getQuestTitle());
+            questInfoVo.setQuestDesc(questInfo.getQuestDesc());
+            questInfoVo.setQuestMust(questInfo.getQuestMust());
+            questInfoVo.setQuestType(questInfo.getQuestType());
 
-            List<CctQuestopts> qoptsList=questoptsService.getRecordsByClassNo(loginUser.getAppCode(),questflow.getQuestNo());
-            if(qoptsList!=null&&qoptsList.size()>0){
+            List<CctQuestopts> qoptsList = questoptsService.getRecordsByClassNo(loginUser.getAppCode(), questflow.getQuestNo());
+            if (qoptsList != null && qoptsList.size() > 0) {
 
-                List<QuestOptVo> questoptsList=new ArrayList<>();
-                QuestOptVo questOpt=null;
-                for(CctQuestopts qopt:qoptsList){
-                    questOpt=new QuestOptVo();
+                List<QuestOptVo> questoptsList = new ArrayList<>();
+                QuestOptVo questOpt = null;
+                for (CctQuestopts qopt : qoptsList) {
+                    questOpt = new QuestOptVo();
                     questOpt.setOptNo(qopt.getOptNo());
                     questOpt.setOptTitle(qopt.getOptTitle());
                     questOpt.setOptDesc(qopt.getOptDesc());
-                    questOpt.setOptScore(qopt.getOptScore()+"");
+                    questOpt.setOptScore(qopt.getOptScore() + "");
 
                     questoptsList.add(questOpt);
                 }
-                questInfo.setQuestOpts(questoptsList);
-            }else{
-                questInfo.setQuestOpts(null);
+                questInfoVo.setQuestOpts(questoptsList);
+            } else {
+                questInfoVo.setQuestOpts(null);
             }
+            questList.add(questInfoVo);
+        }
 
-            return AjaxResult.success(questInfo);
-        }
-        else{
-            return error();
-        }
+        PagerInfoVo<QuestInfoVo> pagerInfo=new PagerInfoVo<QuestInfoVo>(pageIndex,pageSize,count,questList);
+
+        model.put("loginer", getLoginer());
+        model.put("pflowNo", pflowNo);
+        model.put("paperInfo", paperInfoVo);
+        model.put("pagerInfo",pagerInfo);
+        return prefix + "/collect";
     }
 }

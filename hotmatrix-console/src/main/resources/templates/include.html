@@ -17,12 +17,12 @@
 
 <!-- 通用JS -->
 <div th:fragment="scriptblock">
-  <script th:src="@{/js/jquery.min.js}"></script>
-  <script th:src="@{/js/popper.min.js}"></script>
-  <script th:src="@{/js/bootstrap.min.js}"></script>
-  <script th:src="@{/layer/layer.js}"></script>
-  <script th:src="@{/js/script.js}"></script>
-  <script th:inline="javascript"> var ctx = [[@{/}]]; </script>
+  <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+  <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+  <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+  <script type="text/javascript" th:src="@{/js/script.js}"></script>
+  <script type="text/javascript" th:inline="javascript"> var ctx = [[@{/}]]; </script>
 </div>
 
 <!-- 底部版权 -->
@@ -149,7 +149,7 @@
                         <li><a href="/paperview/classlist" title="个人成长">个人成长</a></li>
                       </ul>
                     </li>
-                    <li><a href="#" title="">心理咨询</a></li>
+                    <li><a href="/expertview/index" title="心理咨询">心理咨询</a></li>
                     <li><a href="/salonsview/index" title="主题活动">主题活动</a></li>
                     <li><a href="/blogsview/index" title="成长日记">成长日记</a></li>
                   </ul>
@@ -158,7 +158,7 @@
               </li>
               <li><a href="/paperview/index" title="心理测评">心理测评</a></li>
               <li><a href="/reportview/index" title="测评报告">测评报告</a></li>
-              <li><a href="#" title="">心理咨询</a></li>
+              <li><a href="/expertview/index" title="心理咨询">心理咨询</a></li>
               <li><a href="/salonsview/index" title="主题活动">主题活动</a></li>
               <li><a href="/blogsview/index" title="成长日记">成长日记</a></li>
             </ul>

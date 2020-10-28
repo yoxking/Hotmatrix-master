@@ -39,7 +39,7 @@
                             <li th:class="${pagerInfo.pageIndex>1}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/reportview/index(pageIndex=${pagerInfo.pageIndex-1})}">上一页</a></li>
                             <li th:class="${pagerInfo.pageIndex<pagerInfo.pageTotal}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/reportview/index(pageIndex=${pagerInfo.pageIndex+1})}">下一页</a></li>
                             <li th:class="${pagerInfo.pageIndex<pagerInfo.pageTotal}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/reportview/index(pageIndex=${pagerInfo.pageTotal})}">尾页</a></li>
-                            <li class="page-item" style="padding:33px 0 0 60px;"> <span>当前第[[${pagerInfo.pageIndex}]]页/共[[${pagerInfo.pageTotal}]]页</span></li>
+                            <li class="page-item disabled"> <a class="page-link" href="#">当前第[[${pagerInfo.pageIndex}]]页/共[[${pagerInfo.pageTotal}]]页</a></li>
                         </ul>
                     </nav>
                     <div class="clearfix"></div>

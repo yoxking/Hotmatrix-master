@@ -19,7 +19,7 @@
                                 <div class="history-hd-head">
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="watch_history_tab" data-toggle="tab" href="#watch_history" role="tab" aria-controls="watch_history_tab" aria-selected="true">主题活动</a>
+                                            <a class="nav-link active" id="watch_history_tab" data-toggle="tab" href="#watch_history" role="tab" aria-controls="watch_history_tab" aria-selected="true">心理咨询师</a>
                                         </li>
                                     </ul><!--nav-tabs end-->
                                     <div class="clearfix"></div>
@@ -30,7 +30,7 @@
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="watch_history" role="tabpanel" aria-labelledby="watch_history_tab">
                                     <div class="tabs_lzt">
-                                        <div th:each="salonInfo:${pagerInfo.list}" class="tab-history">
+                                        <div th:each="exptInfo:${pagerInfo.list}" class="tab-history">
                                             <div class="videoo">
                                                 <div class="vid_thumbainl ms">
                                                     <a href="#" title="">
@@ -38,19 +38,19 @@
                                                     </a>
                                                 </div><!--vid_thumbnail end-->
                                                 <div class="video_info ms">
-                                                    <h3><a th:href="@{/salonsview/detail(id=${salonInfo.salonNo})}" title="">[[${salonInfo.salonName}]]</a></h3>
-                                                    <h4><a th:href="@{/salonsview/detail(id=${salonInfo.salonNo})}" title="">[[${salonInfo.salonAddress}]]</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-                                                    <span>[[${salonInfo.className}]] <small class="posted_dt">[[${salonInfo.startTime}]]</small></span>
+                                                    <h3><a th:href="@{/expertview/detail(id=${exptInfo.ruserNo})}" title="">[[${exptInfo.ruserName}]]</a></h3>
+                                                    <h4><a th:href="@{/expertview/detail(id=${exptInfo.ruserNo})}" title="">[[${exptInfo.sex}]]</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+                                                    <span>[[${exptInfo.ruserType}]] <small class="posted_dt">[[${exptInfo.telephone}]]</small></span>
                                                 </div>
                                                 <div class="clearfix"></div>
                                             </div><!--videoo end-->
                                         </div><!--tab-history end-->
                                         <nav aria-label="salons list pages" style="text-align: center;">
                                             <ul class="pagination">
-                                                <li th:class="${pagerInfo.pageIndex>1}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/salonsview/index(pageIndex=1)}">首页</a></li>
-                                                <li th:class="${pagerInfo.pageIndex>1}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/salonsview/index(pageIndex=${pagerInfo.pageIndex-1})}">上一页</a></li>
-                                                <li th:class="${pagerInfo.pageIndex<pagerInfo.pageTotal}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/salonsview/index(pageIndex=${pagerInfo.pageIndex+1})}">下一页</a></li>
-                                                <li th:class="${pagerInfo.pageIndex<pagerInfo.pageTotal}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/salonsview/index(pageIndex=${pagerInfo.pageTotal})}">尾页</a></li>
+                                                <li th:class="${pagerInfo.pageIndex>1}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/expertview/index(pageIndex=1)}">首页</a></li>
+                                                <li th:class="${pagerInfo.pageIndex>1}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/expertview/index(pageIndex=${pagerInfo.pageIndex-1})}">上一页</a></li>
+                                                <li th:class="${pagerInfo.pageIndex<pagerInfo.pageTotal}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/expertview/index(pageIndex=${pagerInfo.pageIndex+1})}">下一页</a></li>
+                                                <li th:class="${pagerInfo.pageIndex<pagerInfo.pageTotal}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/expertview/index(pageIndex=${pagerInfo.pageTotal})}">尾页</a></li>
                                                 <li class="page-item disabled"> <a class="page-link" href="#">当前第[[${pagerInfo.pageIndex}]]页/共[[${pagerInfo.pageTotal}]]页</a></li>
                                             </ul>
                                         </nav>

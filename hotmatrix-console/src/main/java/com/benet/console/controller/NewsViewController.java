@@ -1,12 +1,10 @@
 package com.benet.console.controller;
 
-import com.benet.collect.domain.CctPaperinfo;
 import com.benet.common.utils.date.DateUtils;
 import com.benet.console.common.BaseViewController;
 import com.benet.console.utils.ShiroUtils;
 import com.benet.console.vmodel.ContentInfoVo;
 import com.benet.console.vmodel.PagerInfoVo;
-import com.benet.console.vmodel.PaperInfoVo;
 import com.benet.system.domain.SysContentinfo;
 import com.benet.system.domain.SysRuserinfo;
 import com.benet.system.service.ISysContentinfoService;

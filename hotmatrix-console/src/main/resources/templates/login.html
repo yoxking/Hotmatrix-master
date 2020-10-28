@@ -22,6 +22,12 @@
 					<div class="input-sec">
 						<input type="Password" name="password" placeholder="密码">
 					</div>
+					<div class="input-sec">
+						<input type="text" name="verifyCode" placeholder="验证码" style="width: 70%;">
+						<a href="javascript:void(0);" onclick="getCode()" >
+							<img id="verifyCode" name="verifyCode" src="/getCode" width="90"  height="40" />
+						</a>
+					</div>
 					<div class="chekbox-lg">
 						<label>
 							<input type="checkbox" id="rememberme" name="rememberme">
@@ -47,9 +53,15 @@
 
 <th:block th:include="include :: scriptblock" />
 <script type="text/javascript">
+
+	function getCode() {
+		document.getElementById("verifyCode").setAttribute("src","/getCode");
+	}
+
 	function signin() {
 		var username = $("input[name='username']").val();
 		var password = $("input[name='password']").val();
+		var verifyCode = $("input[name='verifyCode']").val();
 		var rememberMe = $("input[name='rememberme']").is(':checked');
 		$.ajax({
 			type: "post",
@@ -57,6 +69,7 @@
 			data: {
 				"username": username,
 				"password": password,
+				"verifyCode": verifyCode,
 				"rememberMe": rememberMe
 			},
 			success: function(res) {
@@ -64,6 +77,7 @@
 					location.href = ctx + 'index';
 				}else {
 					layer.msg(res.msg)
+					getCode();
 				}
 			}
 		});
