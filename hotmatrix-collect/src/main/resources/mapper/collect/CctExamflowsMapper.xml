@@ -14,7 +14,7 @@
         <result property="enditTime" column="endit_time"/>
         <result property="examsDuration" column="exams_duration"/>
         <result property="examsTscore" column="exams_tscore"/>
-        <result property="mflowState" column="mflow_state"/>
+        <result property="checkState" column="check_state"/>
         <result property="branchNo" column="branch_no"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -27,7 +27,7 @@
     </resultMap>
 
     <sql id="selectCctExamflowsVo">
-        select id, mflow_no, exams_no, paper_no, ruser_no, start_time, endit_time, exams_duration, exams_tscore, mflow_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from cct_examflows
+        select id, mflow_no, exams_no, paper_no, ruser_no, start_time, endit_time, exams_duration, exams_tscore, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from cct_examflows
     </sql>
 
     <select id="getAllRecords" resultMap="CctExamflowsResult">
@@ -73,7 +73,7 @@
         <if test="info.enditTime != null ">endit_time,</if>
         <if test="info.examsDuration != null ">exams_duration,</if>
         <if test="info.examsTscore != null ">exams_tscore,</if>
-        <if test="info.mflowState != null  and info.mflowState != ''">mflow_state,</if>
+        <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
         <if test="info.branchNo != null  and info.branchNo != ''">branch_no,</if>
         <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
         <if test="info.createTime != null ">create_time,</if>
@@ -92,7 +92,7 @@
         <if test="info.enditTime != null ">#{info.enditTime},</if>
         <if test="info.examsDuration != null ">#{info.examsDuration},</if>
         <if test="info.examsTscore != null ">#{info.examsTscore},</if>
-        <if test="info.mflowState != null  and info.mflowState != ''">#{info.mflowState},</if>
+        <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
         <if test="info.branchNo != null  and info.branchNo != ''">#{info.branchNo},</if>
         <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
         <if test="info.createTime != null ">#{info.createTime},</if>
@@ -116,7 +116,7 @@
             <if test="info.enditTime != null ">endit_time = #{info.enditTime},</if>
             <if test="info.examsDuration != null ">exams_duration = #{info.examsDuration},</if>
             <if test="info.examsTscore != null ">exams_tscore = #{info.examsTscore},</if>
-            <if test="info.mflowState != null  and info.mflowState != ''">mflow_state = #{info.mflowState},</if>
+            <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
             <if test="info.branchNo != null  and info.branchNo != ''">branch_no = #{info.branchNo},</if>
             <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
             <if test="info.createTime != null ">create_time = #{info.createTime},</if>

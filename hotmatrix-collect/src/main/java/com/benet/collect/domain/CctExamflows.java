@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.benet.common.annotation.Excel;
 import java.util.Date;
 import com.benet.common.core.domain.BaseEntity;
+import java.util.Date;
 
 /**
  * 测评结果对象 cct_examflows
@@ -53,7 +54,7 @@ public class CctExamflows extends BaseEntity
 
     /** 测评状态 */
     @Excel(name = "测评状态")
-    private String mflowState;
+    private String checkState;
 
     /** 分支编号 */
     @Excel(name = "分支编号")
@@ -168,14 +169,14 @@ public class CctExamflows extends BaseEntity
     {
         return examsTscore;
     }
-    public void setMflowState(String mflowState) 
+    public void setCheckState(String checkState) 
     {
-        this.mflowState = mflowState;
+        this.checkState = checkState;
     }
 
-    public String getMflowState() 
+    public String getCheckState() 
     {
-        return mflowState;
+        return checkState;
     }
     public void setBranchNo(String branchNo) 
     {
@@ -271,7 +272,7 @@ public class CctExamflows extends BaseEntity
             .append("enditTime", getEnditTime())
             .append("examsDuration", getExamsDuration())
             .append("examsTscore", getExamsTscore())
-            .append("mflowState", getMflowState())
+            .append("checkState", getCheckState())
             .append("branchNo", getBranchNo())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
