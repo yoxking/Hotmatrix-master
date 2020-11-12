@@ -34,7 +34,7 @@ import com.benet.common.utils.string.StringUtils;
 
 /**
  * 日记类型Controller
- * 
+ * asas
  * @author yoxking
  * @date 2020-10-14
  */
