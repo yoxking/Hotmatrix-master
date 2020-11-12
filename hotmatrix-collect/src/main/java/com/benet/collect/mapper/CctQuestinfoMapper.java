@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
  * 测评题库Mapper接口
  * 
  * @author yoxking
- * @date 2020-08-27
+ * @date 2020-11-10
  */
 @Mapper
 public interface CctQuestinfoMapper 

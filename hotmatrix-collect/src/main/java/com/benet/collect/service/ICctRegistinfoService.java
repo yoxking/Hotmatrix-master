@@ -1,19 +1,16 @@
-package com.benet.collect.mapper;
+package com.benet.collect.service;
 
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
-import com.benet.collect.domain.CctRegistflows;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import com.benet.collect.domain.CctRegistinfo;
 
 /**
- * 预约信息Mapper接口
+ * 预约信息Service接口
  * 
  * @author yoxking
- * @date 2020-10-14
+ * @date 2020-11-10
  */
-@Mapper
-public interface CctRegistflowsMapper 
+public interface ICctRegistinfoService 
 {
     /**
      * 查询所有预约信息列表
@@ -21,7 +18,7 @@ public interface CctRegistflowsMapper
      * @param appCode 应用编号
      * @return 预约信息集合
      */
-    public List<CctRegistflows> getAllRecords(@Param("appCode") String appCode);
+    public List<CctRegistinfo> getAllRecords(String appCode);
 
     /**
      * 按分类查询预约信息列表
@@ -30,7 +27,7 @@ public interface CctRegistflowsMapper
      * @param classNo 分类编号
      * @return 预约信息集合
      */
-    public List<CctRegistflows> getRecordsByClassNo(@Param("appCode") String appCode, @Param("classNo") String classNo);
+    public List<CctRegistinfo> getRecordsByClassNo(String appCode,String classNo);
 
     /**
      * 分页查询预约信息列表
@@ -39,7 +36,20 @@ public interface CctRegistflowsMapper
      * @param model 分页模型
      * @return 预约信息集合
      */
-    public List<CctRegistflows> getRecordsByPaging(@Param("appCode") String appCode, @Param("model") PagingModel model);
+    public List<CctRegistinfo> getRecordsByPaging(String appCode,PagingModel model);
+
+    /**
+     * 分页查询预约信息列表
+     *
+     * @param appCode 应用编号
+     * @param pageIndex 当前页索引
+     * @param pageSize 分页大小
+     * @param condition 分页条件
+     * @param orderField 排序列
+     * @param orderType 排序类型
+     * @return 预约信息集合
+     */
+    public List<CctRegistinfo> getRecordsByPaging(String appCode,int pageIndex,int pageSize,String condition,String orderField,String orderType);
 
     /**
      * 查询预约信息
@@ -48,7 +58,7 @@ public interface CctRegistflowsMapper
      * @param no 预约信息ID
      * @return 预约信息
      */
-    public CctRegistflows getRecordByNo(@Param("appCode") String appCode, @Param("no") String no);
+    public CctRegistinfo getRecordByNo(String appCode,String no);
 
     /**
      * 查询预约信息名称
@@ -57,7 +67,7 @@ public interface CctRegistflowsMapper
      * @param no 预约信息ID
      * @return 名称
      */
-    public String getRecordNameByNo(@Param("appCode") String appCode, @Param("no") String no);
+    public String getRecordNameByNo(String appCode,String no);
 
     /**
      * 查询预约信息计数
@@ -66,23 +76,25 @@ public interface CctRegistflowsMapper
      * @param condition 查询条件
      * @return 结果
      */
-    public int getCountByCondition(@Param("appCode") String appCode, @Param("condition") String condition);
+    public int getCountByCondition(String appCode,String condition);
 
     /**
      * 新增预约信息
      *
+     * @param appCode 应用编号
      * @param info 预约信息
      * @return 结果
      */
-    public int AddNewRecord(@Param("info") CctRegistflows info);
+    public int AddNewRecord(String appCode,CctRegistinfo info);
 
     /**
      * 更新预约信息
      *
+     * @param appCode 应用编号
      * @param info 预约信息
      * @return 结果
      */
-    public int UpdateRecord(@Param("info") CctRegistflows info);
+    public int UpdateRecord(String appCode,CctRegistinfo info);
 
     /**
      * 硬删除预约信息
@@ -91,7 +103,7 @@ public interface CctRegistflowsMapper
      * @param no 预约信息ID
      * @return 结果
      */
-    public int HardDeleteByNo(@Param("appCode") String appCode, @Param("no") String no);
+    public int HardDeleteByNo(String appCode,String no);
 
     /**
      * 批量硬删除预约信息
@@ -100,7 +112,7 @@ public interface CctRegistflowsMapper
      * @param nos 预约信息IDs
      * @return 结果
      */
-    public int HardDeleteByNos(@Param("appCode") String appCode, @Param("nos") String[] nos);
+    public int HardDeleteByNos(String appCode,String[] nos);
 
     /**
      * 按条件硬删除预约信息
@@ -109,7 +121,7 @@ public interface CctRegistflowsMapper
      * @param condition 条件
      * @return 结果
      */
-    public int HardDeleteByCondition(@Param("appCode") String appCode, @Param("condition") String condition);
+    public int HardDeleteByCondition(String appCode,String condition);
 
     /**
      * 软删除预约信息
@@ -118,7 +130,7 @@ public interface CctRegistflowsMapper
      * @param no 预约信息ID
      * @return 结果
      */
-    public int SoftDeleteByNo(@Param("appCode") String appCode, @Param("no") String no);
+    public int SoftDeleteByNo(String appCode,String no);
 
     /**
      * 批量软删除预约信息
@@ -127,7 +139,7 @@ public interface CctRegistflowsMapper
      * @param nos 预约信息IDs
      * @return 结果
      */
-    public int SoftDeleteByNos(@Param("appCode") String appCode, @Param("nos") String[] nos);
+    public int SoftDeleteByNos(String appCode,String[] nos);
 
     /**
      * 按条件软删除预约信息
@@ -136,6 +148,5 @@ public interface CctRegistflowsMapper
      * @param condition 条件
      * @return 结果
      */
-    public int SoftDeleteByCondition(@Param("appCode") String appCode, @Param("condition") String condition);
-
+    public int SoftDeleteByCondition(String appCode,String condition);
 }

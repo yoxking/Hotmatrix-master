@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
  * 答题结果Mapper接口
  * 
  * @author yoxking
- * @date 2020-10-06
+ * @date 2020-11-10
  */
 @Mapper
 public interface CctQuestflowsMapper 
@@ -30,7 +30,7 @@ public interface CctQuestflowsMapper
      * @param classNo 分类编号
      * @return 答题结果集合
      */
-    public List<CctQuestflows> getRecordsByClassNo(@Param("appCode") String appCode, @Param("classNo") String classNo);
+    public List<CctQuestflows> getRecordsByClassNo(@Param("appCode") String appCode,@Param("classNo") String classNo);
 
     /**
      * 分页查询答题结果列表
@@ -39,7 +39,7 @@ public interface CctQuestflowsMapper
      * @param model 分页模型
      * @return 答题结果集合
      */
-    public List<CctQuestflows> getRecordsByPaging(@Param("appCode") String appCode, @Param("model") PagingModel model);
+    public List<CctQuestflows> getRecordsByPaging(@Param("appCode") String appCode,@Param("model") PagingModel model);
 
     /**
      * 查询答题结果
@@ -48,7 +48,7 @@ public interface CctQuestflowsMapper
      * @param no 答题结果ID
      * @return 答题结果
      */
-    public CctQuestflows getRecordByNo(@Param("appCode") String appCode, @Param("no") String no);
+    public CctQuestflows getRecordByNo(@Param("appCode") String appCode,@Param("no") String no);
 
     /**
      * 查询答题结果名称
@@ -57,7 +57,7 @@ public interface CctQuestflowsMapper
      * @param no 答题结果ID
      * @return 名称
      */
-    public String getRecordNameByNo(@Param("appCode") String appCode, @Param("no") String no);
+    public String getRecordNameByNo(@Param("appCode") String appCode,@Param("no") String no);
 
     /**
      * 查询答题结果计数
@@ -66,7 +66,7 @@ public interface CctQuestflowsMapper
      * @param condition 查询条件
      * @return 结果
      */
-    public int getCountByCondition(@Param("appCode") String appCode, @Param("condition") String condition);
+    public int getCountByCondition(@Param("appCode") String appCode,@Param("condition") String condition);
 
     /**
      * 新增答题结果
@@ -91,7 +91,7 @@ public interface CctQuestflowsMapper
      * @param no 答题结果ID
      * @return 结果
      */
-    public int HardDeleteByNo(@Param("appCode") String appCode, @Param("no") String no);
+    public int HardDeleteByNo(@Param("appCode") String appCode,@Param("no") String no);
 
     /**
      * 批量硬删除答题结果
@@ -100,7 +100,7 @@ public interface CctQuestflowsMapper
      * @param nos 答题结果IDs
      * @return 结果
      */
-    public int HardDeleteByNos(@Param("appCode") String appCode, @Param("nos") String[] nos);
+    public int HardDeleteByNos(@Param("appCode") String appCode,@Param("nos") String[] nos);
 
     /**
      * 按条件硬删除答题结果
@@ -109,7 +109,7 @@ public interface CctQuestflowsMapper
      * @param condition 条件
      * @return 结果
      */
-    public int HardDeleteByCondition(@Param("appCode") String appCode, @Param("condition") String condition);
+    public int HardDeleteByCondition(@Param("appCode") String appCode,@Param("condition") String condition);
 
     /**
      * 软删除答题结果
@@ -118,7 +118,7 @@ public interface CctQuestflowsMapper
      * @param no 答题结果ID
      * @return 结果
      */
-    public int SoftDeleteByNo(@Param("appCode") String appCode, @Param("no") String no);
+    public int SoftDeleteByNo(@Param("appCode") String appCode,@Param("no") String no);
 
     /**
      * 批量软删除答题结果
@@ -127,7 +127,7 @@ public interface CctQuestflowsMapper
      * @param nos 答题结果IDs
      * @return 结果
      */
-    public int SoftDeleteByNos(@Param("appCode") String appCode, @Param("nos") String[] nos);
+    public int SoftDeleteByNos(@Param("appCode") String appCode,@Param("nos") String[] nos);
 
     /**
      * 按条件软删除答题结果
@@ -136,6 +136,6 @@ public interface CctQuestflowsMapper
      * @param condition 条件
      * @return 结果
      */
-    public int SoftDeleteByCondition(@Param("appCode") String appCode, @Param("condition") String condition);
+    public int SoftDeleteByCondition(@Param("appCode") String appCode,@Param("condition") String condition);
 
 }

@@ -76,7 +76,7 @@ public class CctQuestoptsController extends BaseController
     @PostMapping
     public AjaxResult insert(@RequestBody CctQuestopts cctQuestopts) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        cctQuestopts.setOptNo(UuidUtils.shortUUID());
+        cctQuestopts.setOptsNo(UuidUtils.shortUUID());
         cctQuestopts.setCreateBy(loginUser.getUser().getUserNo());
         cctQuestopts.setUpdateBy(loginUser.getUser().getUserNo());
         return toAjax(cctQuestoptsService.AddNewRecord(loginUser.getUser().getAppCode(),cctQuestopts));
@@ -102,8 +102,8 @@ public class CctQuestoptsController extends BaseController
     @PostMapping(value = "/save")
     public AjaxResult save(@RequestBody CctQuestopts cctQuestopts) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(cctQuestoptsService.getRecordByNo(loginUser.getUser().getAppCode(),cctQuestopts.getOptNo()))) {
-            cctQuestopts.setOptNo(UuidUtils.shortUUID());
+        if (StringUtils.isNull(cctQuestoptsService.getRecordByNo(loginUser.getUser().getAppCode(),cctQuestopts.getOptsNo()))) {
+            cctQuestopts.setOptsNo(UuidUtils.shortUUID());
             cctQuestopts.setCreateBy(loginUser.getUser().getUserNo());
             cctQuestopts.setUpdateBy(loginUser.getUser().getUserNo());
             return toAjax(cctQuestoptsService.AddNewRecord(loginUser.getUser().getAppCode(),cctQuestopts));

@@ -7,33 +7,33 @@ import java.util.Date;
 import com.benet.common.core.domain.BaseEntity;
 
 /**
- * 问卷类型对象 cct_paperclass
+ * 题库信息对象 cct_questsets
  * 
  * @author yoxking
  * @date 2020-11-10
  */
-public class CctPaperclass extends BaseEntity
+public class CctQuestsets extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** id */
     private Long id;
 
-    /** 类型id */
-    @Excel(name = "类型id")
-    private String classNo;
+    /** 题库id */
+    @Excel(name = "题库id")
+    private String setsNo;
 
-    /** 类型名称 */
-    @Excel(name = "类型名称")
-    private String className;
+    /** 题库名称 */
+    @Excel(name = "题库名称")
+    private String setsName;
 
-    /** 上级类型 */
-    @Excel(name = "上级类型")
-    private String parentNo;
+    /** 数据来源 */
+    @Excel(name = "数据来源")
+    private String dataFrom;
 
-    /** 显示顺序 */
-    @Excel(name = "显示顺序")
-    private Integer orderNo;
+    /** 试题数量 */
+    @Excel(name = "试题数量")
+    private Integer questNums;
 
     /** 状态（1正常 0停用） */
     @Excel(name = "状态", readConverterExp = "1=正常,0=停用")
@@ -76,41 +76,41 @@ public class CctPaperclass extends BaseEntity
     {
         return id;
     }
-    public void setClassNo(String classNo) 
+    public void setSetsNo(String setsNo) 
     {
-        this.classNo = classNo;
+        this.setsNo = setsNo;
     }
 
-    public String getClassNo() 
+    public String getSetsNo() 
     {
-        return classNo;
+        return setsNo;
     }
-    public void setClassName(String className) 
+    public void setSetsName(String setsName) 
     {
-        this.className = className;
-    }
-
-    public String getClassName() 
-    {
-        return className;
-    }
-    public void setParentNo(String parentNo) 
-    {
-        this.parentNo = parentNo;
+        this.setsName = setsName;
     }
 
-    public String getParentNo() 
+    public String getSetsName() 
     {
-        return parentNo;
+        return setsName;
     }
-    public void setOrderNo(Integer orderNo) 
+    public void setDataFrom(String dataFrom) 
     {
-        this.orderNo = orderNo;
+        this.dataFrom = dataFrom;
     }
 
-    public Integer getOrderNo() 
+    public String getDataFrom() 
     {
-        return orderNo;
+        return dataFrom;
+    }
+    public void setQuestNums(Integer questNums) 
+    {
+        this.questNums = questNums;
+    }
+
+    public Integer getQuestNums() 
+    {
+        return questNums;
     }
     public void setCheckState(String checkState) 
     {
@@ -198,10 +198,10 @@ public class CctPaperclass extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("classNo", getClassNo())
-            .append("className", getClassName())
-            .append("parentNo", getParentNo())
-            .append("orderNo", getOrderNo())
+            .append("setsNo", getSetsNo())
+            .append("setsName", getSetsName())
+            .append("dataFrom", getDataFrom())
+            .append("questNums", getQuestNums())
             .append("checkState", getCheckState())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())

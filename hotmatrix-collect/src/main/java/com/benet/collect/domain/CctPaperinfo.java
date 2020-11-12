@@ -5,13 +5,12 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.benet.common.annotation.Excel;
 import java.util.Date;
 import com.benet.common.core.domain.BaseEntity;
-import java.util.Date;
 
 /**
  * 问卷信息对象 cct_paperinfo
  * 
  * @author yoxking
- * @date 2020-10-03
+ * @date 2020-11-10
  */
 public class CctPaperinfo extends BaseEntity
 {
@@ -28,17 +27,25 @@ public class CctPaperinfo extends BaseEntity
     @Excel(name = "问卷名称")
     private String paperTitle;
 
-    /** 问卷海报 */
-    @Excel(name = "问卷海报")
+    /** 问卷图片 */
+    @Excel(name = "问卷图片")
     private String paperPoster;
 
     /** 问卷描述 */
     @Excel(name = "问卷描述")
     private String paperDesc;
 
-    /** 问卷类别（1=:公开，2：私有） */
-    @Excel(name = "问卷类别", readConverterExp = "1:公开，2：私有")
+    /** 问卷类别（1:固定问卷，2：随机问卷） */
+    @Excel(name = "问卷类别", readConverterExp = "1=:固定问卷，2：随机问卷")
     private String paperType;
+
+    /** 问卷来源 */
+    @Excel(name = "问卷来源")
+    private String dataFrom;
+
+    /** 浏览权限（1:公开，2:私有） */
+    @Excel(name = "浏览权限", readConverterExp = "1=:公开，2:私有")
+    private String viewType;
 
     /** 问卷类型 */
     @Excel(name = "问卷类型")
@@ -48,44 +55,24 @@ public class CctPaperinfo extends BaseEntity
     @Excel(name = "显示顺序")
     private Integer orderNo;
 
-    /** 题库类型 */
-    @Excel(name = "题库类型")
-    private String questClass;
-
-    /** 题库生成规则 */
-    @Excel(name = "题库生成规则")
-    private String questRules;
-
-    /** 问卷总得分 */
-    @Excel(name = "问卷总得分")
-    private Long paperScore;
+    /** 试题数量 */
+    @Excel(name = "试题数量")
+    private Integer questNums;
 
     /** 问卷试题集 */
     @Excel(name = "问卷试题集")
     private String paperQuests;
 
-    /** 测评对象集 */
-    @Excel(name = "测评对象集")
-    private String paperRusers;
-
-    /** 开始时间 */
-    @Excel(name = "开始时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date startDate;
-
-    /** 结束时间 */
-    @Excel(name = "结束时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date enditDate;
-
-    /** 测评时长 */
-    @Excel(name = "测评时长")
-    private Integer exDuration;
+    /** 问卷总得分 */
+    @Excel(name = "问卷总得分")
+    private Long paperTscore;
 
     /** 状态（1正常 0停用） */
     @Excel(name = "状态", readConverterExp = "1=正常,0=停用")
     private String checkState;
 
-    /** 分支编号 */
-    @Excel(name = "分支编号")
+    /** 分支 */
+    @Excel(name = "分支")
     private String branchNo;
 
     /** 创建者 */
@@ -170,6 +157,24 @@ public class CctPaperinfo extends BaseEntity
     {
         return paperType;
     }
+    public void setDataFrom(String dataFrom) 
+    {
+        this.dataFrom = dataFrom;
+    }
+
+    public String getDataFrom() 
+    {
+        return dataFrom;
+    }
+    public void setViewType(String viewType) 
+    {
+        this.viewType = viewType;
+    }
+
+    public String getViewType() 
+    {
+        return viewType;
+    }
     public void setClassNo(String classNo) 
     {
         this.classNo = classNo;
@@ -188,32 +193,14 @@ public class CctPaperinfo extends BaseEntity
     {
         return orderNo;
     }
-    public void setQuestClass(String questClass) 
+    public void setQuestNums(Integer questNums) 
     {
-        this.questClass = questClass;
+        this.questNums = questNums;
     }
 
-    public String getQuestClass() 
+    public Integer getQuestNums() 
     {
-        return questClass;
-    }
-    public void setQuestRules(String questRules) 
-    {
-        this.questRules = questRules;
-    }
-
-    public String getQuestRules() 
-    {
-        return questRules;
-    }
-    public void setPaperScore(Long paperScore) 
-    {
-        this.paperScore = paperScore;
-    }
-
-    public Long getPaperScore() 
-    {
-        return paperScore;
+        return questNums;
     }
     public void setPaperQuests(String paperQuests) 
     {
@@ -224,41 +211,14 @@ public class CctPaperinfo extends BaseEntity
     {
         return paperQuests;
     }
-    public void setPaperRusers(String paperRusers) 
+    public void setPaperTscore(Long paperTscore) 
     {
-        this.paperRusers = paperRusers;
+        this.paperTscore = paperTscore;
     }
 
-    public String getPaperRusers() 
+    public Long getPaperTscore() 
     {
-        return paperRusers;
-    }
-    public void setStartDate(Date startDate) 
-    {
-        this.startDate = startDate;
-    }
-
-    public Date getStartDate() 
-    {
-        return startDate;
-    }
-    public void setEnditDate(Date enditDate) 
-    {
-        this.enditDate = enditDate;
-    }
-
-    public Date getEnditDate() 
-    {
-        return enditDate;
-    }
-    public void setExDuration(Integer exDuration) 
-    {
-        this.exDuration = exDuration;
-    }
-
-    public Integer getExDuration() 
-    {
-        return exDuration;
+        return paperTscore;
     }
     public void setCheckState(String checkState) 
     {
@@ -360,16 +320,13 @@ public class CctPaperinfo extends BaseEntity
             .append("paperPoster", getPaperPoster())
             .append("paperDesc", getPaperDesc())
             .append("paperType", getPaperType())
+            .append("dataFrom", getDataFrom())
+            .append("viewType", getViewType())
             .append("classNo", getClassNo())
             .append("orderNo", getOrderNo())
-            .append("questClass", getQuestClass())
-            .append("questRules", getQuestRules())
-            .append("paperScore", getPaperScore())
+            .append("questNums", getQuestNums())
             .append("paperQuests", getPaperQuests())
-            .append("paperRusers", getPaperRusers())
-            .append("startDate", getStartDate())
-            .append("enditDate", getEnditDate())
-            .append("exDuration", getExDuration())
+            .append("paperTscore", getPaperTscore())
             .append("checkState", getCheckState())
             .append("branchNo", getBranchNo())
             .append("createBy", getCreateBy())

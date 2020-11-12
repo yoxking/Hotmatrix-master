@@ -8,12 +8,16 @@
         <result property="id" column="id"/>
         <result property="questNo" column="quest_no"/>
         <result property="questTitle" column="quest_title"/>
+        <result property="questImage" column="quest_image"/>
         <result property="questType" column="quest_type"/>
         <result property="questDesc" column="quest_desc"/>
         <result property="classNo" column="class_no"/>
         <result property="orderNo" column="order_no"/>
         <result property="questMust" column="quest_must"/>
-        <result property="questScore" column="quest_score"/>
+        <result property="questTscore" column="quest_tscore"/>
+        <result property="questAnswer" column="quest_answer"/>
+        <result property="questKeyword" column="quest_keyword"/>
+        <result property="questExplain" column="quest_explain"/>
         <result property="checkState" column="check_state"/>
         <result property="branchNo" column="branch_no"/>
         <result property="createBy" column="create_by"/>
@@ -27,7 +31,7 @@
     </resultMap>
 
     <sql id="selectCctQuestinfoVo">
-        select id, quest_no, quest_title, quest_type, quest_desc, class_no, order_no, quest_must, quest_score, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from cct_questinfo
+        select id, quest_no, quest_title, quest_image, quest_type, quest_desc, class_no, order_no, quest_must, quest_tscore, quest_answer, quest_keyword, quest_explain, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from cct_questinfo
     </sql>
 
     <select id="getAllRecords" resultMap="CctQuestinfoResult">
@@ -67,12 +71,16 @@
         insert into cct_questinfo (
         <if test="info.questNo != null  and info.questNo != ''">quest_no,</if>
         <if test="info.questTitle != null  and info.questTitle != ''">quest_title,</if>
+        <if test="info.questImage != null  and info.questImage != ''">quest_image,</if>
         <if test="info.questType != null  and info.questType != ''">quest_type,</if>
         <if test="info.questDesc != null  and info.questDesc != ''">quest_desc,</if>
         <if test="info.classNo != null  and info.classNo != ''">class_no,</if>
         <if test="info.orderNo != null ">order_no,</if>
         <if test="info.questMust != null  and info.questMust != ''">quest_must,</if>
-        <if test="info.questScore != null ">quest_score,</if>
+        <if test="info.questTscore != null ">quest_tscore,</if>
+        <if test="info.questAnswer != null  and info.questAnswer != ''">quest_answer,</if>
+        <if test="info.questKeyword != null  and info.questKeyword != ''">quest_keyword,</if>
+        <if test="info.questExplain != null  and info.questExplain != ''">quest_explain,</if>
         <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
         <if test="info.branchNo != null  and info.branchNo != ''">branch_no,</if>
         <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
@@ -86,12 +94,16 @@
         )values(
         <if test="info.questNo != null  and info.questNo != ''">#{info.questNo},</if>
         <if test="info.questTitle != null  and info.questTitle != ''">#{info.questTitle},</if>
+        <if test="info.questImage != null  and info.questImage != ''">#{info.questImage},</if>
         <if test="info.questType != null  and info.questType != ''">#{info.questType},</if>
         <if test="info.questDesc != null  and info.questDesc != ''">#{info.questDesc},</if>
         <if test="info.classNo != null  and info.classNo != ''">#{info.classNo},</if>
         <if test="info.orderNo != null ">#{info.orderNo},</if>
         <if test="info.questMust != null  and info.questMust != ''">#{info.questMust},</if>
-        <if test="info.questScore != null ">#{info.questScore},</if>
+        <if test="info.questTscore != null ">#{info.questTscore},</if>
+        <if test="info.questAnswer != null  and info.questAnswer != ''">#{info.questAnswer},</if>
+        <if test="info.questKeyword != null  and info.questKeyword != ''">#{info.questKeyword},</if>
+        <if test="info.questExplain != null  and info.questExplain != ''">#{info.questExplain},</if>
         <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
         <if test="info.branchNo != null  and info.branchNo != ''">#{info.branchNo},</if>
         <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
@@ -110,12 +122,16 @@
         <set>
             <if test="info.questNo != null  and info.questNo != ''">quest_no = #{info.questNo},</if>
             <if test="info.questTitle != null  and info.questTitle != ''">quest_title = #{info.questTitle},</if>
+            <if test="info.questImage != null  and info.questImage != ''">quest_image = #{info.questImage},</if>
             <if test="info.questType != null  and info.questType != ''">quest_type = #{info.questType},</if>
             <if test="info.questDesc != null  and info.questDesc != ''">quest_desc = #{info.questDesc},</if>
             <if test="info.classNo != null  and info.classNo != ''">class_no = #{info.classNo},</if>
             <if test="info.orderNo != null ">order_no = #{info.orderNo},</if>
             <if test="info.questMust != null  and info.questMust != ''">quest_must = #{info.questMust},</if>
-            <if test="info.questScore != null ">quest_score = #{info.questScore},</if>
+            <if test="info.questTscore != null ">quest_tscore = #{info.questTscore},</if>
+            <if test="info.questAnswer != null  and info.questAnswer != ''">quest_answer = #{info.questAnswer},</if>
+            <if test="info.questKeyword != null  and info.questKeyword != ''">quest_keyword = #{info.questKeyword},</if>
+            <if test="info.questExplain != null  and info.questExplain != ''">quest_explain = #{info.questExplain},</if>
             <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
             <if test="info.branchNo != null  and info.branchNo != ''">branch_no = #{info.branchNo},</if>
             <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>

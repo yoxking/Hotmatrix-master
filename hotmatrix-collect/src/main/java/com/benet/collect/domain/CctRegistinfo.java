@@ -8,12 +8,12 @@ import com.benet.common.core.domain.BaseEntity;
 import java.util.Date;
 
 /**
- * 预约信息对象 cct_registflows
+ * 预约信息对象 cct_registinfo
  * 
  * @author yoxking
- * @date 2020-10-14
+ * @date 2020-11-10
  */
-public class CctRegistflows extends BaseEntity
+public class CctRegistinfo extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 

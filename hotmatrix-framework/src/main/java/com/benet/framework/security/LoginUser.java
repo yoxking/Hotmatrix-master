@@ -36,7 +36,7 @@ public class LoginUser implements UserDetails
     /**
      * 登录IP地址
      */
-    private String ipaddr;
+    private String ipaddress;
 
     /**
      * 登录地点
@@ -157,14 +157,14 @@ public class LoginUser implements UserDetails
         this.loginTime = loginTime;
     }
 
-    public String getIpaddr()
+    public String getIpaddress()
     {
-        return ipaddr;
+        return ipaddress;
     }
 
-    public void setIpaddr(String ipaddr)
+    public void setIpaddress(String ipaddress)
     {
-        this.ipaddr = ipaddr;
+        this.ipaddress = ipaddress;
     }
 
     public String getLoginLocation()

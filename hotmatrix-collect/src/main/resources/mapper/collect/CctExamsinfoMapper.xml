@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.benet.collect.mapper.CctExamsinfoMapper">
+
+    <resultMap type="CctExamsinfo" id="CctExamsinfoResult">
+        <result property="id" column="id"/>
+        <result property="examsNo" column="exams_no"/>
+        <result property="examsTitle" column="exams_title"/>
+        <result property="examsPoster" column="exams_poster"/>
+        <result property="examsDesc" column="exams_desc"/>
+        <result property="examsType" column="exams_type"/>
+        <result property="classNo" column="class_no"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="paperNo" column="paper_no"/>
+        <result property="startTime" column="start_time"/>
+        <result property="enditTime" column="endit_time"/>
+        <result property="examsTimes" column="exams_times"/>
+        <result property="examsDuration" column="exams_duration"/>
+        <result property="examsPassmark" column="exams_passmark"/>
+        <result property="examsRusers" column="exams_rusers"/>
+        <result property="examsAdmin" column="exams_admin"/>
+        <result property="examsRules" column="exams_rules"/>
+        <result property="checkState" column="check_state"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteFlag" column="delete_flag"/>
+        <result property="comments" column="comments"/>
+        <result property="appCode" column="app_code"/>
+        <result property="version" column="version"/>
+    </resultMap>
+
+    <sql id="selectCctExamsinfoVo">
+        select id, exams_no, exams_title, exams_poster, exams_desc, exams_type, class_no, order_no, paper_no, start_time, endit_time, exams_times, exams_duration, exams_passmark, exams_rusers, exams_admin, exams_rules, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from cct_examsinfo
+    </sql>
+
+    <select id="getAllRecords" resultMap="CctExamsinfoResult">
+        <include refid="selectCctExamsinfoVo"/>
+        where delete_flag='1' and app_code=#{appCode}
+    </select>
+
+    <select id="getRecordsByClassNo" resultMap="CctExamsinfoResult">
+        <include refid="selectCctExamsinfoVo"/>
+        where delete_flag='1' and app_code=#{appCode} and class_no=#{classNo}
+    </select>
+
+    <select id="getRecordsByPaging" resultMap="CctExamsinfoResult">
+        <include refid="selectCctExamsinfoVo"/>
+        where delete_flag='1' and app_code=${appCode}
+        <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
+        order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
+    </select>
+
+    <select id="getRecordByNo" resultMap="CctExamsinfoResult">
+        <include refid="selectCctExamsinfoVo"/>
+        where delete_flag='1' and app_code=#{appCode} and exams_no = #{no}
+    </select>
+
+    <select id="getRecordNameByNo" resultType="String">
+        select exams_title from cct_examsinfo
+        where delete_flag='1' and app_code=#{appCode} and exams_no = #{no}
+    </select>
+
+    <select id="getCountByCondition" resultType="Integer">
+        select count(*) from cct_examsinfo
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </select>
+
+    <insert id="AddNewRecord" parameterType="CctExamsinfo" useGeneratedKeys="true" keyProperty="id">
+        insert into cct_examsinfo (
+        <if test="info.examsNo != null  and info.examsNo != ''">exams_no,</if>
+        <if test="info.examsTitle != null  and info.examsTitle != ''">exams_title,</if>
+        <if test="info.examsPoster != null  and info.examsPoster != ''">exams_poster,</if>
+        <if test="info.examsDesc != null  and info.examsDesc != ''">exams_desc,</if>
+        <if test="info.examsType != null  and info.examsType != ''">exams_type,</if>
+        <if test="info.classNo != null  and info.classNo != ''">class_no,</if>
+        <if test="info.orderNo != null ">order_no,</if>
+        <if test="info.paperNo != null  and info.paperNo != ''">paper_no,</if>
+        <if test="info.startTime != null ">start_time,</if>
+        <if test="info.enditTime != null ">endit_time,</if>
+        <if test="info.examsTimes != null ">exams_times,</if>
+        <if test="info.examsDuration != null ">exams_duration,</if>
+        <if test="info.examsPassmark != null ">exams_passmark,</if>
+        <if test="info.examsRusers != null  and info.examsRusers != ''">exams_rusers,</if>
+        <if test="info.examsAdmin != null  and info.examsAdmin != ''">exams_admin,</if>
+        <if test="info.examsRules != null  and info.examsRules != ''">exams_rules,</if>
+        <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
+        <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
+        <if test="info.createTime != null ">create_time,</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">update_by,</if>
+        <if test="info.updateTime != null ">update_time,</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag,</if>
+        <if test="info.comments != null  and info.comments != ''">comments,</if>
+        <if test="info.appCode != null  and info.appCode != ''">app_code,</if>
+        <if test="info.version != null ">version</if>
+        )values(
+        <if test="info.examsNo != null  and info.examsNo != ''">#{info.examsNo},</if>
+        <if test="info.examsTitle != null  and info.examsTitle != ''">#{info.examsTitle},</if>
+        <if test="info.examsPoster != null  and info.examsPoster != ''">#{info.examsPoster},</if>
+        <if test="info.examsDesc != null  and info.examsDesc != ''">#{info.examsDesc},</if>
+        <if test="info.examsType != null  and info.examsType != ''">#{info.examsType},</if>
+        <if test="info.classNo != null  and info.classNo != ''">#{info.classNo},</if>
+        <if test="info.orderNo != null ">#{info.orderNo},</if>
+        <if test="info.paperNo != null  and info.paperNo != ''">#{info.paperNo},</if>
+        <if test="info.startTime != null ">#{info.startTime},</if>
+        <if test="info.enditTime != null ">#{info.enditTime},</if>
+        <if test="info.examsTimes != null ">#{info.examsTimes},</if>
+        <if test="info.examsDuration != null ">#{info.examsDuration},</if>
+        <if test="info.examsPassmark != null ">#{info.examsPassmark},</if>
+        <if test="info.examsRusers != null  and info.examsRusers != ''">#{info.examsRusers},</if>
+        <if test="info.examsAdmin != null  and info.examsAdmin != ''">#{info.examsAdmin},</if>
+        <if test="info.examsRules != null  and info.examsRules != ''">#{info.examsRules},</if>
+        <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
+        <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
+        <if test="info.createTime != null ">#{info.createTime},</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">#{info.updateBy},</if>
+        <if test="info.updateTime != null ">#{info.updateTime},</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">#{info.deleteFlag},</if>
+        <if test="info.comments != null  and info.comments != ''">#{info.comments},</if>
+        <if test="info.appCode != null  and info.appCode != ''">#{info.appCode},</if>
+        <if test="info.version != null ">#{info.version}</if>
+        )
+    </insert>
+
+    <update id="UpdateRecord" parameterType="CctExamsinfo">
+        update cct_examsinfo
+        <set>
+            <if test="info.examsNo != null  and info.examsNo != ''">exams_no = #{info.examsNo},</if>
+            <if test="info.examsTitle != null  and info.examsTitle != ''">exams_title = #{info.examsTitle},</if>
+            <if test="info.examsPoster != null  and info.examsPoster != ''">exams_poster = #{info.examsPoster},</if>
+            <if test="info.examsDesc != null  and info.examsDesc != ''">exams_desc = #{info.examsDesc},</if>
+            <if test="info.examsType != null  and info.examsType != ''">exams_type = #{info.examsType},</if>
+            <if test="info.classNo != null  and info.classNo != ''">class_no = #{info.classNo},</if>
+            <if test="info.orderNo != null ">order_no = #{info.orderNo},</if>
+            <if test="info.paperNo != null  and info.paperNo != ''">paper_no = #{info.paperNo},</if>
+            <if test="info.startTime != null ">start_time = #{info.startTime},</if>
+            <if test="info.enditTime != null ">endit_time = #{info.enditTime},</if>
+            <if test="info.examsTimes != null ">exams_times = #{info.examsTimes},</if>
+            <if test="info.examsDuration != null ">exams_duration = #{info.examsDuration},</if>
+            <if test="info.examsPassmark != null ">exams_passmark = #{info.examsPassmark},</if>
+            <if test="info.examsRusers != null  and info.examsRusers != ''">exams_rusers = #{info.examsRusers},</if>
+            <if test="info.examsAdmin != null  and info.examsAdmin != ''">exams_admin = #{info.examsAdmin},</if>
+            <if test="info.examsRules != null  and info.examsRules != ''">exams_rules = #{info.examsRules},</if>
+            <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
+            <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
+            <if test="info.createTime != null ">create_time = #{info.createTime},</if>
+            <if test="info.updateBy != null  and info.updateBy != ''">update_by = #{info.updateBy},</if>
+            <if test="info.updateTime != null ">update_time = #{info.updateTime},</if>
+            <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag = #{info.deleteFlag},</if>
+            <if test="info.comments != null  and info.comments != ''">comments = #{info.comments},</if>
+            <if test="info.appCode != null  and info.appCode != ''">app_code = #{info.appCode},</if>
+            <if test="info.version != null ">version = #{info.version}</if>
+        </set>
+        where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and exams_no =
+        #{info.examsNo}
+    </update>
+
+    <delete id="HardDeleteByNo">
+        delete from cct_examsinfo
+        where delete_flag='1' and app_code=#{appCode} and exams_no = #{no}
+    </delete>
+
+    <delete id="HardDeleteByNos">
+        delete from cct_examsinfo
+        where delete_flag='1' and app_code=#{appCode} and exams_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="HardDeleteByCondition">
+        delete from cct_examsinfo
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </delete>
+
+    <delete id="SoftDeleteByNo">
+        update cct_examsinfo set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and exams_no = #{no}
+    </delete>
+
+    <delete id="SoftDeleteByNos">
+        update cct_examsinfo set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and exams_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="SoftDeleteByCondition">
+        update cct_examsinfo set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </delete>
+
+</mapper>

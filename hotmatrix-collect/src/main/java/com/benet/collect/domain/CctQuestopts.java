@@ -10,7 +10,7 @@ import com.benet.common.core.domain.BaseEntity;
  * 测题选项对象 cct_questopts
  * 
  * @author yoxking
- * @date 2020-08-31
+ * @date 2020-11-10
  */
 public class CctQuestopts extends BaseEntity
 {
@@ -21,15 +21,19 @@ public class CctQuestopts extends BaseEntity
 
     /** 选项id */
     @Excel(name = "选项id")
-    private String optNo;
+    private String optsNo;
 
     /** 选项名称 */
     @Excel(name = "选项名称")
-    private String optTitle;
+    private String optsTitle;
+
+    /** 选项图片 */
+    @Excel(name = "选项图片")
+    private String optsImage;
 
     /** 选项描述 */
     @Excel(name = "选项描述")
-    private String optDesc;
+    private String optsDesc;
 
     /** 试题编号 */
     @Excel(name = "试题编号")
@@ -41,15 +45,11 @@ public class CctQuestopts extends BaseEntity
 
     /** 选项得分 */
     @Excel(name = "选项得分")
-    private Long optScore;
+    private Long optsScore;
 
     /** 状态（1正常 0停用） */
     @Excel(name = "状态", readConverterExp = "1=正常,0=停用")
     private String checkState;
-
-    /** 分支编号 */
-    @Excel(name = "分支编号")
-    private String branchNo;
 
     /** 创建者 */
     private String createBy;
@@ -88,32 +88,41 @@ public class CctQuestopts extends BaseEntity
     {
         return id;
     }
-    public void setOptNo(String optNo) 
+    public void setOptsNo(String optsNo) 
     {
-        this.optNo = optNo;
+        this.optsNo = optsNo;
     }
 
-    public String getOptNo() 
+    public String getOptsNo() 
     {
-        return optNo;
+        return optsNo;
     }
-    public void setOptTitle(String optTitle) 
+    public void setOptsTitle(String optsTitle) 
     {
-        this.optTitle = optTitle;
-    }
-
-    public String getOptTitle() 
-    {
-        return optTitle;
-    }
-    public void setOptDesc(String optDesc) 
-    {
-        this.optDesc = optDesc;
+        this.optsTitle = optsTitle;
     }
 
-    public String getOptDesc() 
+    public String getOptsTitle() 
     {
-        return optDesc;
+        return optsTitle;
+    }
+    public void setOptsImage(String optsImage) 
+    {
+        this.optsImage = optsImage;
+    }
+
+    public String getOptsImage() 
+    {
+        return optsImage;
+    }
+    public void setOptsDesc(String optsDesc) 
+    {
+        this.optsDesc = optsDesc;
+    }
+
+    public String getOptsDesc() 
+    {
+        return optsDesc;
     }
     public void setQuestNo(String questNo) 
     {
@@ -133,14 +142,14 @@ public class CctQuestopts extends BaseEntity
     {
         return orderNo;
     }
-    public void setOptScore(Long optScore) 
+    public void setOptsScore(Long optsScore) 
     {
-        this.optScore = optScore;
+        this.optsScore = optsScore;
     }
 
-    public Long getOptScore() 
+    public Long getOptsScore() 
     {
-        return optScore;
+        return optsScore;
     }
     public void setCheckState(String checkState) 
     {
@@ -150,15 +159,6 @@ public class CctQuestopts extends BaseEntity
     public String getCheckState() 
     {
         return checkState;
-    }
-    public void setBranchNo(String branchNo) 
-    {
-        this.branchNo = branchNo;
-    }
-
-    public String getBranchNo() 
-    {
-        return branchNo;
     }
     public void setCreateBy(String createBy) 
     {
@@ -237,14 +237,14 @@ public class CctQuestopts extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("optNo", getOptNo())
-            .append("optTitle", getOptTitle())
-            .append("optDesc", getOptDesc())
+            .append("optsNo", getOptsNo())
+            .append("optsTitle", getOptsTitle())
+            .append("optsImage", getOptsImage())
+            .append("optsDesc", getOptsDesc())
             .append("questNo", getQuestNo())
             .append("orderNo", getOrderNo())
-            .append("optScore", getOptScore())
+            .append("optsScore", getOptsScore())
             .append("checkState", getCheckState())
-            .append("branchNo", getBranchNo())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())

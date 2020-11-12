@@ -10,7 +10,7 @@ import com.benet.common.core.domain.BaseEntity;
  * 答题结果对象 cct_questflows
  * 
  * @author yoxking
- * @date 2020-10-06
+ * @date 2020-11-10
  */
 public class CctQuestflows extends BaseEntity
 {
@@ -25,7 +25,7 @@ public class CctQuestflows extends BaseEntity
 
     /** 测评编号 */
     @Excel(name = "测评编号")
-    private String pflowNo;
+    private String xflowNo;
 
     /** 题型编号 */
     @Excel(name = "题型编号")
@@ -101,14 +101,14 @@ public class CctQuestflows extends BaseEntity
     {
         return qflowNo;
     }
-    public void setPflowNo(String pflowNo) 
+    public void setXflowNo(String xflowNo) 
     {
-        this.pflowNo = pflowNo;
+        this.xflowNo = xflowNo;
     }
 
-    public String getPflowNo() 
+    public String getXflowNo() 
     {
-        return pflowNo;
+        return xflowNo;
     }
     public void setQuestNo(String questNo) 
     {
@@ -251,7 +251,7 @@ public class CctQuestflows extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("qflowNo", getQflowNo())
-            .append("pflowNo", getPflowNo())
+            .append("xflowNo", getXflowNo())
             .append("questNo", getQuestNo())
             .append("qtoptValue", getQtoptValue())
             .append("qtoptScore", getQtoptScore())

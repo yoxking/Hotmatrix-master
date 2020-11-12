@@ -2,15 +2,15 @@ package com.benet.collect.service;
 
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
-import com.benet.collect.domain.CctPaperflows;
+import com.benet.collect.domain.CctExamflows;
 
 /**
  * 测评结果Service接口
  * 
  * @author yoxking
- * @date 2020-10-06
+ * @date 2020-11-12
  */
-public interface ICctPaperflowsService 
+public interface ICctExamflowsService 
 {
     /**
      * 查询所有测评结果列表
@@ -18,7 +18,7 @@ public interface ICctPaperflowsService
      * @param appCode 应用编号
      * @return 测评结果集合
      */
-    public List<CctPaperflows> getAllRecords(String appCode);
+    public List<CctExamflows> getAllRecords(String appCode);
 
     /**
      * 按分类查询测评结果列表
@@ -27,7 +27,7 @@ public interface ICctPaperflowsService
      * @param classNo 分类编号
      * @return 测评结果集合
      */
-    public List<CctPaperflows> getRecordsByClassNo(String appCode, String classNo);
+    public List<CctExamflows> getRecordsByClassNo(String appCode,String classNo);
 
     /**
      * 分页查询测评结果列表
@@ -36,7 +36,7 @@ public interface ICctPaperflowsService
      * @param model 分页模型
      * @return 测评结果集合
      */
-    public List<CctPaperflows> getRecordsByPaging(String appCode, PagingModel model);
+    public List<CctExamflows> getRecordsByPaging(String appCode,PagingModel model);
 
     /**
      * 分页查询测评结果列表
@@ -49,7 +49,7 @@ public interface ICctPaperflowsService
      * @param orderType 排序类型
      * @return 测评结果集合
      */
-    public List<CctPaperflows> getRecordsByPaging(String appCode, int pageIndex, int pageSize, String condition, String orderField, String orderType);
+    public List<CctExamflows> getRecordsByPaging(String appCode,int pageIndex,int pageSize,String condition,String orderField,String orderType);
 
     /**
      * 查询测评结果
@@ -58,7 +58,7 @@ public interface ICctPaperflowsService
      * @param no 测评结果ID
      * @return 测评结果
      */
-    public CctPaperflows getRecordByNo(String appCode, String no);
+    public CctExamflows getRecordByNo(String appCode,String no);
 
     /**
      * 查询测评结果名称
@@ -67,7 +67,7 @@ public interface ICctPaperflowsService
      * @param no 测评结果ID
      * @return 名称
      */
-    public String getRecordNameByNo(String appCode, String no);
+    public String getRecordNameByNo(String appCode,String no);
 
     /**
      * 查询测评结果计数
@@ -76,7 +76,7 @@ public interface ICctPaperflowsService
      * @param condition 查询条件
      * @return 结果
      */
-    public int getCountByCondition(String appCode, String condition);
+    public int getCountByCondition(String appCode,String condition);
 
     /**
      * 新增测评结果
@@ -85,7 +85,7 @@ public interface ICctPaperflowsService
      * @param info 测评结果
      * @return 结果
      */
-    public int AddNewRecord(String appCode, CctPaperflows info);
+    public int AddNewRecord(String appCode,CctExamflows info);
 
     /**
      * 更新测评结果
@@ -94,7 +94,7 @@ public interface ICctPaperflowsService
      * @param info 测评结果
      * @return 结果
      */
-    public int UpdateRecord(String appCode, CctPaperflows info);
+    public int UpdateRecord(String appCode,CctExamflows info);
 
     /**
      * 硬删除测评结果
@@ -103,7 +103,7 @@ public interface ICctPaperflowsService
      * @param no 测评结果ID
      * @return 结果
      */
-    public int HardDeleteByNo(String appCode, String no);
+    public int HardDeleteByNo(String appCode,String no);
 
     /**
      * 批量硬删除测评结果
@@ -112,7 +112,7 @@ public interface ICctPaperflowsService
      * @param nos 测评结果IDs
      * @return 结果
      */
-    public int HardDeleteByNos(String appCode, String[] nos);
+    public int HardDeleteByNos(String appCode,String[] nos);
 
     /**
      * 按条件硬删除测评结果
@@ -121,7 +121,7 @@ public interface ICctPaperflowsService
      * @param condition 条件
      * @return 结果
      */
-    public int HardDeleteByCondition(String appCode, String condition);
+    public int HardDeleteByCondition(String appCode,String condition);
 
     /**
      * 软删除测评结果
@@ -130,7 +130,7 @@ public interface ICctPaperflowsService
      * @param no 测评结果ID
      * @return 结果
      */
-    public int SoftDeleteByNo(String appCode, String no);
+    public int SoftDeleteByNo(String appCode,String no);
 
     /**
      * 批量软删除测评结果
@@ -139,7 +139,7 @@ public interface ICctPaperflowsService
      * @param nos 测评结果IDs
      * @return 结果
      */
-    public int SoftDeleteByNos(String appCode, String[] nos);
+    public int SoftDeleteByNos(String appCode,String[] nos);
 
     /**
      * 按条件软删除测评结果
@@ -148,5 +148,5 @@ public interface ICctPaperflowsService
      * @param condition 条件
      * @return 结果
      */
-    public int SoftDeleteByCondition(String appCode, String condition);
+    public int SoftDeleteByCondition(String appCode,String condition);
 }

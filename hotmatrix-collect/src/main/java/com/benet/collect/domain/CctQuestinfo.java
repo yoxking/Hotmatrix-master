@@ -10,7 +10,7 @@ import com.benet.common.core.domain.BaseEntity;
  * 测评题库对象 cct_questinfo
  * 
  * @author yoxking
- * @date 2020-08-31
+ * @date 2020-11-10
  */
 public class CctQuestinfo extends BaseEntity
 {
@@ -26,6 +26,10 @@ public class CctQuestinfo extends BaseEntity
     /** 试题名称 */
     @Excel(name = "试题名称")
     private String questTitle;
+
+    /** 试题图片 */
+    @Excel(name = "试题图片")
+    private String questImage;
 
     /** 试题类别 */
     @Excel(name = "试题类别")
@@ -43,20 +47,32 @@ public class CctQuestinfo extends BaseEntity
     @Excel(name = "显示顺序")
     private Integer orderNo;
 
-    /** 是否必填（1必填 0可选填） */
-    @Excel(name = "是否必填", readConverterExp = "1=必填,0=可选填")
+    /** 是否必填（1必填 0选填） */
+    @Excel(name = "是否必填", readConverterExp = "1=必填,0=选填")
     private String questMust;
 
     /** 试题总分 */
     @Excel(name = "试题总分")
-    private Long questScore;
+    private Long questTscore;
+
+    /** 试题答案 */
+    @Excel(name = "试题答案")
+    private String questAnswer;
+
+    /** 答案关键词 */
+    @Excel(name = "答案关键词")
+    private String questKeyword;
+
+    /** 答案解析 */
+    @Excel(name = "答案解析")
+    private String questExplain;
 
     /** 状态（1正常 0停用） */
     @Excel(name = "状态", readConverterExp = "1=正常,0=停用")
     private String checkState;
 
-    /** 分支编号 */
-    @Excel(name = "分支编号")
+    /** 应用编号 */
+    @Excel(name = "应用编号")
     private String branchNo;
 
     /** 创建者 */
@@ -114,6 +130,15 @@ public class CctQuestinfo extends BaseEntity
     {
         return questTitle;
     }
+    public void setQuestImage(String questImage) 
+    {
+        this.questImage = questImage;
+    }
+
+    public String getQuestImage() 
+    {
+        return questImage;
+    }
     public void setQuestType(String questType) 
     {
         this.questType = questType;
@@ -159,14 +184,41 @@ public class CctQuestinfo extends BaseEntity
     {
         return questMust;
     }
-    public void setQuestScore(Long questScore) 
+    public void setQuestTscore(Long questTscore) 
     {
-        this.questScore = questScore;
+        this.questTscore = questTscore;
     }
 
-    public Long getQuestScore() 
+    public Long getQuestTscore() 
     {
-        return questScore;
+        return questTscore;
+    }
+    public void setQuestAnswer(String questAnswer) 
+    {
+        this.questAnswer = questAnswer;
+    }
+
+    public String getQuestAnswer() 
+    {
+        return questAnswer;
+    }
+    public void setQuestKeyword(String questKeyword) 
+    {
+        this.questKeyword = questKeyword;
+    }
+
+    public String getQuestKeyword() 
+    {
+        return questKeyword;
+    }
+    public void setQuestExplain(String questExplain) 
+    {
+        this.questExplain = questExplain;
+    }
+
+    public String getQuestExplain() 
+    {
+        return questExplain;
     }
     public void setCheckState(String checkState) 
     {
@@ -265,12 +317,16 @@ public class CctQuestinfo extends BaseEntity
             .append("id", getId())
             .append("questNo", getQuestNo())
             .append("questTitle", getQuestTitle())
+            .append("questImage", getQuestImage())
             .append("questType", getQuestType())
             .append("questDesc", getQuestDesc())
             .append("classNo", getClassNo())
             .append("orderNo", getOrderNo())
             .append("questMust", getQuestMust())
-            .append("questScore", getQuestScore())
+            .append("questTscore", getQuestTscore())
+            .append("questAnswer", getQuestAnswer())
+            .append("questKeyword", getQuestKeyword())
+            .append("questExplain", getQuestExplain())
             .append("checkState", getCheckState())
             .append("branchNo", getBranchNo())
             .append("createBy", getCreateBy())

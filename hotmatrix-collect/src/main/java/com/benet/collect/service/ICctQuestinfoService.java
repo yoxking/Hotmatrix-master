@@ -8,7 +8,7 @@ import com.benet.collect.domain.CctQuestinfo;
  * 测评题库Service接口
  * 
  * @author yoxking
- * @date 2020-08-27
+ * @date 2020-11-10
  */
 public interface ICctQuestinfoService 
 {

@@ -11,16 +11,13 @@
         <result property="paperPoster" column="paper_poster"/>
         <result property="paperDesc" column="paper_desc"/>
         <result property="paperType" column="paper_type"/>
+        <result property="dataFrom" column="data_from"/>
+        <result property="viewType" column="view_type"/>
         <result property="classNo" column="class_no"/>
         <result property="orderNo" column="order_no"/>
-        <result property="questClass" column="quest_class"/>
-        <result property="questRules" column="quest_rules"/>
-        <result property="paperScore" column="paper_score"/>
+        <result property="questNums" column="quest_nums"/>
         <result property="paperQuests" column="paper_quests"/>
-        <result property="paperRusers" column="paper_rusers"/>
-        <result property="startDate" column="start_date"/>
-        <result property="enditDate" column="endit_date"/>
-        <result property="exDuration" column="ex_duration"/>
+        <result property="paperTscore" column="paper_tscore"/>
         <result property="checkState" column="check_state"/>
         <result property="branchNo" column="branch_no"/>
         <result property="createBy" column="create_by"/>
@@ -34,7 +31,7 @@
     </resultMap>
 
     <sql id="selectCctPaperinfoVo">
-        select id, paper_no, paper_title, paper_poster, paper_desc, paper_type, class_no, order_no, quest_class, quest_rules, paper_score, paper_quests, paper_rusers, start_date, endit_date, ex_duration, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from cct_paperinfo
+        select id, paper_no, paper_title, paper_poster, paper_desc, paper_type, data_from, view_type, class_no, order_no, quest_nums, paper_quests, paper_tscore, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from cct_paperinfo
     </sql>
 
     <select id="getAllRecords" resultMap="CctPaperinfoResult">
@@ -77,16 +74,13 @@
         <if test="info.paperPoster != null  and info.paperPoster != ''">paper_poster,</if>
         <if test="info.paperDesc != null  and info.paperDesc != ''">paper_desc,</if>
         <if test="info.paperType != null  and info.paperType != ''">paper_type,</if>
+        <if test="info.dataFrom != null  and info.dataFrom != ''">data_from,</if>
+        <if test="info.viewType != null  and info.viewType != ''">view_type,</if>
         <if test="info.classNo != null  and info.classNo != ''">class_no,</if>
         <if test="info.orderNo != null ">order_no,</if>
-        <if test="info.questClass != null  and info.questClass != ''">quest_class,</if>
-        <if test="info.questRules != null  and info.questRules != ''">quest_rules,</if>
-        <if test="info.paperScore != null ">paper_score,</if>
+        <if test="info.questNums != null ">quest_nums,</if>
         <if test="info.paperQuests != null  and info.paperQuests != ''">paper_quests,</if>
-        <if test="info.paperRusers != null  and info.paperRusers != ''">paper_rusers,</if>
-        <if test="info.startDate != null ">start_date,</if>
-        <if test="info.enditDate != null ">endit_date,</if>
-        <if test="info.exDuration != null ">ex_duration,</if>
+        <if test="info.paperTscore != null ">paper_tscore,</if>
         <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
         <if test="info.branchNo != null  and info.branchNo != ''">branch_no,</if>
         <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
@@ -103,16 +97,13 @@
         <if test="info.paperPoster != null  and info.paperPoster != ''">#{info.paperPoster},</if>
         <if test="info.paperDesc != null  and info.paperDesc != ''">#{info.paperDesc},</if>
         <if test="info.paperType != null  and info.paperType != ''">#{info.paperType},</if>
+        <if test="info.dataFrom != null  and info.dataFrom != ''">#{info.dataFrom},</if>
+        <if test="info.viewType != null  and info.viewType != ''">#{info.viewType},</if>
         <if test="info.classNo != null  and info.classNo != ''">#{info.classNo},</if>
         <if test="info.orderNo != null ">#{info.orderNo},</if>
-        <if test="info.questClass != null  and info.questClass != ''">#{info.questClass},</if>
-        <if test="info.questRules != null  and info.questRules != ''">#{info.questRules},</if>
-        <if test="info.paperScore != null ">#{info.paperScore},</if>
+        <if test="info.questNums != null ">#{info.questNums},</if>
         <if test="info.paperQuests != null  and info.paperQuests != ''">#{info.paperQuests},</if>
-        <if test="info.paperRusers != null  and info.paperRusers != ''">#{info.paperRusers},</if>
-        <if test="info.startDate != null ">#{info.startDate},</if>
-        <if test="info.enditDate != null ">#{info.enditDate},</if>
-        <if test="info.exDuration != null ">#{info.exDuration},</if>
+        <if test="info.paperTscore != null ">#{info.paperTscore},</if>
         <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
         <if test="info.branchNo != null  and info.branchNo != ''">#{info.branchNo},</if>
         <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
@@ -134,16 +125,13 @@
             <if test="info.paperPoster != null  and info.paperPoster != ''">paper_poster = #{info.paperPoster},</if>
             <if test="info.paperDesc != null  and info.paperDesc != ''">paper_desc = #{info.paperDesc},</if>
             <if test="info.paperType != null  and info.paperType != ''">paper_type = #{info.paperType},</if>
+            <if test="info.dataFrom != null  and info.dataFrom != ''">data_from = #{info.dataFrom},</if>
+            <if test="info.viewType != null  and info.viewType != ''">view_type = #{info.viewType},</if>
             <if test="info.classNo != null  and info.classNo != ''">class_no = #{info.classNo},</if>
             <if test="info.orderNo != null ">order_no = #{info.orderNo},</if>
-            <if test="info.questClass != null  and info.questClass != ''">quest_class = #{info.questClass},</if>
-            <if test="info.questRules != null  and info.questRules != ''">quest_rules = #{info.questRules},</if>
-            <if test="info.paperScore != null ">paper_score = #{info.paperScore},</if>
+            <if test="info.questNums != null ">quest_nums = #{info.questNums},</if>
             <if test="info.paperQuests != null  and info.paperQuests != ''">paper_quests = #{info.paperQuests},</if>
-            <if test="info.paperRusers != null  and info.paperRusers != ''">paper_rusers = #{info.paperRusers},</if>
-            <if test="info.startDate != null ">start_date = #{info.startDate},</if>
-            <if test="info.enditDate != null ">endit_date = #{info.enditDate},</if>
-            <if test="info.exDuration != null ">ex_duration = #{info.exDuration},</if>
+            <if test="info.paperTscore != null ">paper_tscore = #{info.paperTscore},</if>
             <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
             <if test="info.branchNo != null  and info.branchNo != ''">branch_no = #{info.branchNo},</if>
             <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
@@ -155,7 +143,8 @@
             <if test="info.appCode != null  and info.appCode != ''">app_code = #{info.appCode},</if>
             <if test="info.version != null ">version = #{info.version}</if>
         </set>
-        where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and paper_no = #{info.paperNo}
+        where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and paper_no =
+        #{info.paperNo}
     </update>
 
     <delete id="HardDeleteByNo">

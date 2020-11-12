@@ -5,24 +5,27 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.benet.common.annotation.Excel;
 import java.util.Date;
 import com.benet.common.core.domain.BaseEntity;
-import java.util.Date;
 
 /**
- * 测评结果对象 cct_paperflows
+ * 测评结果对象 cct_examflows
  * 
  * @author yoxking
- * @date 2020-10-06
+ * @date 2020-11-12
  */
-public class CctPaperflows extends BaseEntity
+public class CctExamflows extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** id */
     private Long id;
 
+    /** 流水编号 */
+    @Excel(name = "流水编号")
+    private String mflowNo;
+
     /** 测评编号 */
     @Excel(name = "测评编号")
-    private String pflowNo;
+    private String examsNo;
 
     /** 问卷编号 */
     @Excel(name = "问卷编号")
@@ -42,15 +45,15 @@ public class CctPaperflows extends BaseEntity
 
     /** 测评用时 */
     @Excel(name = "测评用时")
-    private String pflowTime;
+    private Long examsDuration;
 
     /** 测评得分 */
     @Excel(name = "测评得分")
-    private Long pflowScore;
+    private Long examsTscore;
 
     /** 测评状态 */
     @Excel(name = "测评状态")
-    private String pflowState;
+    private String mflowState;
 
     /** 分支编号 */
     @Excel(name = "分支编号")
@@ -93,14 +96,23 @@ public class CctPaperflows extends BaseEntity
     {
         return id;
     }
-    public void setPflowNo(String pflowNo) 
+    public void setMflowNo(String mflowNo) 
     {
-        this.pflowNo = pflowNo;
+        this.mflowNo = mflowNo;
     }
 
-    public String getPflowNo() 
+    public String getMflowNo() 
     {
-        return pflowNo;
+        return mflowNo;
+    }
+    public void setExamsNo(String examsNo) 
+    {
+        this.examsNo = examsNo;
+    }
+
+    public String getExamsNo() 
+    {
+        return examsNo;
     }
     public void setPaperNo(String paperNo) 
     {
@@ -138,32 +150,32 @@ public class CctPaperflows extends BaseEntity
     {
         return enditTime;
     }
-    public void setPflowTime(String pflowTime) 
+    public void setExamsDuration(Long examsDuration) 
     {
-        this.pflowTime = pflowTime;
+        this.examsDuration = examsDuration;
     }
 
-    public String getPflowTime() 
+    public Long getExamsDuration() 
     {
-        return pflowTime;
+        return examsDuration;
     }
-    public void setPflowScore(Long pflowScore) 
+    public void setExamsTscore(Long examsTscore) 
     {
-        this.pflowScore = pflowScore;
-    }
-
-    public Long getPflowScore() 
-    {
-        return pflowScore;
-    }
-    public void setPflowState(String pflowState) 
-    {
-        this.pflowState = pflowState;
+        this.examsTscore = examsTscore;
     }
 
-    public String getPflowState() 
+    public Long getExamsTscore() 
     {
-        return pflowState;
+        return examsTscore;
+    }
+    public void setMflowState(String mflowState) 
+    {
+        this.mflowState = mflowState;
+    }
+
+    public String getMflowState() 
+    {
+        return mflowState;
     }
     public void setBranchNo(String branchNo) 
     {
@@ -251,14 +263,15 @@ public class CctPaperflows extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("pflowNo", getPflowNo())
+            .append("mflowNo", getMflowNo())
+            .append("examsNo", getExamsNo())
             .append("paperNo", getPaperNo())
             .append("ruserNo", getRuserNo())
             .append("startTime", getStartTime())
             .append("enditTime", getEnditTime())
-            .append("pflowTime", getPflowTime())
-            .append("pflowScore", getPflowScore())
-            .append("pflowState", getPflowState())
+            .append("examsDuration", getExamsDuration())
+            .append("examsTscore", getExamsTscore())
+            .append("mflowState", getMflowState())
             .append("branchNo", getBranchNo())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())

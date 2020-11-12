@@ -50,7 +50,7 @@ public class CctQuestclassController extends BaseController
     /**
      * 首页
      */
-    @PreAuthorize("@ps.hasPermit('system:questclass:index')")
+    @PreAuthorize("@ps.hasPermit('collect:questclass:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {

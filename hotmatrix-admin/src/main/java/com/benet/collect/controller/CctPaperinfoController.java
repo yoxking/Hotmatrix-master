@@ -97,7 +97,7 @@ public class CctPaperinfoController extends BaseController
         QuestInfoVo questVo=null;
         QuestOptsVo optsVo=null;
 
-        List<CctQuestinfo> questList = cctQuestinfoService.getRecordsByClassNo(loginUser.getUser().getAppCode(),paperInfo.getQuestClass());
+        List<CctQuestinfo> questList = cctQuestinfoService.getRecordsByClassNo(loginUser.getUser().getAppCode(),paperInfo.getClassNo());
         if(questList!=null&&questList.size()>0){
             for(CctQuestinfo questItem:questList){
                 questVo=new QuestInfoVo();
@@ -108,7 +108,7 @@ public class CctPaperinfoController extends BaseController
                 questVo.setQuestMust(questItem.getQuestMust());
                 questVo.setClassNo(questItem.getClassNo());
                 questVo.setOrderNo(questItem.getOrderNo());
-                questVo.setQuestScore(questItem.getQuestScore());
+                questVo.setQuestScore(questItem.getQuestTscore());
                 questVo.setCheckState(questItem.getCheckState());
                 questVo.setComments(questItem.getComments());
 
@@ -117,9 +117,9 @@ public class CctPaperinfoController extends BaseController
                     optsVoList.clear();
                     for(CctQuestopts optItem:optsList){
                         optsVo=new QuestOptsVo();
-                        optsVo.setOptNo(optItem.getOptNo());
-                        optsVo.setOptTitle(optItem.getOptTitle());
-                        optsVo.setOptScore(optItem.getOptScore());
+                        optsVo.setOptNo(optItem.getOptsNo());
+                        optsVo.setOptTitle(optItem.getOptsTitle());
+                        optsVo.setOptScore(optItem.getOptsScore());
 
                         optsVoList.add(optsVo);
                     }

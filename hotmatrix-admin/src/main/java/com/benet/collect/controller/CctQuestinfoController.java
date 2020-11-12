@@ -92,7 +92,7 @@ public class CctQuestinfoController extends BaseController {
         cctQuestinfo.setClassNo(questInfoVo.getClassNo());
         cctQuestinfo.setOrderNo(questInfoVo.getOrderNo());
         cctQuestinfo.setQuestMust(questInfoVo.getQuestMust());
-        cctQuestinfo.setQuestScore(questInfoVo.getQuestScore());
+        cctQuestinfo.setQuestTscore(questInfoVo.getQuestScore());
         cctQuestinfo.setCheckState(questInfoVo.getCheckState());
         cctQuestinfo.setBranchNo("");
         cctQuestinfo.setCreateBy(loginUser.getUser().getUserNo());
@@ -106,14 +106,13 @@ public class CctQuestinfoController extends BaseController {
             if(questInfoVo.getQuestType()!="1"&&questInfoVo.getOptions()!=null&&questInfoVo.getOptions().length>0) {
                 for (QuestOptsVo item : questInfoVo.getOptions()) {
                     CctQuestopts questOpts = new CctQuestopts();
-                    questOpts.setOptNo(UuidUtils.shortUUID());
-                    questOpts.setOptTitle(item.getOptTitle());
-                    questOpts.setOptDesc("");
+                    questOpts.setOptsNo(UuidUtils.shortUUID());
+                    questOpts.setOptsTitle(item.getOptTitle());
+                    questOpts.setOptsDesc("");
                     questOpts.setQuestNo(cctQuestinfo.getQuestNo());
                     questOpts.setOrderNo(i++);
-                    questOpts.setOptScore(item.getOptScore());
+                    questOpts.setOptsScore(item.getOptScore());
                     questOpts.setCheckState("1");
-                    questOpts.setBranchNo("");
                     questOpts.setCreateBy(loginUser.getUser().getUserNo());
                     questOpts.setUpdateBy(loginUser.getUser().getUserNo());
                     questOpts.setDeleteFlag("1");
@@ -144,7 +143,7 @@ public class CctQuestinfoController extends BaseController {
         cctQuestinfo.setClassNo(questInfoVo.getClassNo());
         cctQuestinfo.setOrderNo(questInfoVo.getOrderNo());
         cctQuestinfo.setQuestMust(questInfoVo.getQuestMust());
-        cctQuestinfo.setQuestScore(questInfoVo.getQuestScore());
+        cctQuestinfo.setQuestTscore(questInfoVo.getQuestScore());
         cctQuestinfo.setUpdateBy(loginUser.getUser().getUserNo());
         cctQuestinfo.setComments(questInfoVo.getComments());
         if (cctQuestinfoService.UpdateRecord(loginUser.getUser().getAppCode(), cctQuestinfo) > 0) {
@@ -154,14 +153,13 @@ public class CctQuestinfoController extends BaseController {
             if(questInfoVo.getQuestType()!="1"&&questInfoVo.getOptions()!=null&&questInfoVo.getOptions().length>0) {
                 for (QuestOptsVo item : questInfoVo.getOptions()) {
                     CctQuestopts questOpts = new CctQuestopts();
-                    questOpts.setOptNo(UuidUtils.shortUUID());
-                    questOpts.setOptTitle(item.getOptTitle());
-                    questOpts.setOptDesc("");
+                    questOpts.setOptsNo(UuidUtils.shortUUID());
+                    questOpts.setOptsTitle(item.getOptTitle());
+                    questOpts.setOptsDesc("");
                     questOpts.setQuestNo(cctQuestinfo.getQuestNo());
                     questOpts.setOrderNo(i++);
-                    questOpts.setOptScore(item.getOptScore());
+                    questOpts.setOptsScore(item.getOptScore());
                     questOpts.setCheckState("1");
-                    questOpts.setBranchNo("");
                     questOpts.setCreateBy(loginUser.getUser().getUserNo());
                     questOpts.setUpdateBy(loginUser.getUser().getUserNo());
                     questOpts.setDeleteFlag("1");
@@ -223,7 +221,7 @@ public class CctQuestinfoController extends BaseController {
             questInfo.setQuestMust(cctQuestinfo.getQuestMust());
             questInfo.setClassNo(cctQuestinfo.getClassNo());
             questInfo.setOrderNo(cctQuestinfo.getOrderNo());
-            questInfo.setQuestScore(cctQuestinfo.getQuestScore());
+            questInfo.setQuestScore(cctQuestinfo.getQuestTscore());
             questInfo.setCheckState(cctQuestinfo.getCheckState());
             questInfo.setComments(cctQuestinfo.getComments());
 
@@ -233,9 +231,9 @@ public class CctQuestinfoController extends BaseController {
             if(questOptsList!=null&&questOptsList.size()>0){
                 for(CctQuestopts item:questOptsList){
                     questOpts=new QuestOptsVo();
-                    questOpts.setOptNo(item.getOptNo());
-                    questOpts.setOptTitle(item.getOptTitle());
-                    questOpts.setOptScore(item.getOptScore());
+                    questOpts.setOptNo(item.getOptsNo());
+                    questOpts.setOptTitle(item.getOptsTitle());
+                    questOpts.setOptScore(item.getOptsScore());
 
                     questOptVos.add(questOpts);
                 }

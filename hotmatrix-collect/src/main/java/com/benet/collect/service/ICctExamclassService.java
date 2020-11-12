@@ -2,44 +2,44 @@ package com.benet.collect.service;
 
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
-import com.benet.collect.domain.CctPaperinfo;
+import com.benet.collect.domain.CctExamclass;
 
 /**
- * 问卷信息Service接口
+ * 测评类型Service接口
  * 
  * @author yoxking
  * @date 2020-11-10
  */
-public interface ICctPaperinfoService 
+public interface ICctExamclassService 
 {
     /**
-     * 查询所有问卷信息列表
+     * 查询所有测评类型列表
      *
      * @param appCode 应用编号
-     * @return 问卷信息集合
+     * @return 测评类型集合
      */
-    public List<CctPaperinfo> getAllRecords(String appCode);
+    public List<CctExamclass> getAllRecords(String appCode);
 
     /**
-     * 按分类查询问卷信息列表
+     * 按分类查询测评类型列表
      *
      * @param appCode 应用编号
      * @param classNo 分类编号
-     * @return 问卷信息集合
+     * @return 测评类型集合
      */
-    public List<CctPaperinfo> getRecordsByClassNo(String appCode,String classNo);
+    public List<CctExamclass> getRecordsByClassNo(String appCode,String classNo);
 
     /**
-     * 分页查询问卷信息列表
+     * 分页查询测评类型列表
      *
      * @param appCode 应用编号
      * @param model 分页模型
-     * @return 问卷信息集合
+     * @return 测评类型集合
      */
-    public List<CctPaperinfo> getRecordsByPaging(String appCode,PagingModel model);
+    public List<CctExamclass> getRecordsByPaging(String appCode,PagingModel model);
 
     /**
-     * 分页查询问卷信息列表
+     * 分页查询测评类型列表
      *
      * @param appCode 应用编号
      * @param pageIndex 当前页索引
@@ -47,30 +47,30 @@ public interface ICctPaperinfoService
      * @param condition 分页条件
      * @param orderField 排序列
      * @param orderType 排序类型
-     * @return 问卷信息集合
+     * @return 测评类型集合
      */
-    public List<CctPaperinfo> getRecordsByPaging(String appCode,int pageIndex,int pageSize,String condition,String orderField,String orderType);
+    public List<CctExamclass> getRecordsByPaging(String appCode,int pageIndex,int pageSize,String condition,String orderField,String orderType);
 
     /**
-     * 查询问卷信息
+     * 查询测评类型
      *
      * @param appCode 应用编号
-     * @param no 问卷信息ID
-     * @return 问卷信息
+     * @param no 测评类型ID
+     * @return 测评类型
      */
-    public CctPaperinfo getRecordByNo(String appCode,String no);
+    public CctExamclass getRecordByNo(String appCode,String no);
 
     /**
-     * 查询问卷信息名称
+     * 查询测评类型名称
      *
      * @param appCode 应用编号
-     * @param no 问卷信息ID
+     * @param no 测评类型ID
      * @return 名称
      */
     public String getRecordNameByNo(String appCode,String no);
 
     /**
-     * 查询问卷信息计数
+     * 查询测评类型计数
      *
      * @param appCode 应用编号
      * @param condition 查询条件
@@ -79,43 +79,43 @@ public interface ICctPaperinfoService
     public int getCountByCondition(String appCode,String condition);
 
     /**
-     * 新增问卷信息
+     * 新增测评类型
      *
      * @param appCode 应用编号
-     * @param info 问卷信息
+     * @param info 测评类型
      * @return 结果
      */
-    public int AddNewRecord(String appCode,CctPaperinfo info);
+    public int AddNewRecord(String appCode,CctExamclass info);
 
     /**
-     * 更新问卷信息
+     * 更新测评类型
      *
      * @param appCode 应用编号
-     * @param info 问卷信息
+     * @param info 测评类型
      * @return 结果
      */
-    public int UpdateRecord(String appCode,CctPaperinfo info);
+    public int UpdateRecord(String appCode,CctExamclass info);
 
     /**
-     * 硬删除问卷信息
+     * 硬删除测评类型
      *
      * @param appCode 应用编号
-     * @param no 问卷信息ID
+     * @param no 测评类型ID
      * @return 结果
      */
     public int HardDeleteByNo(String appCode,String no);
 
     /**
-     * 批量硬删除问卷信息
+     * 批量硬删除测评类型
      *
      * @param appCode 应用编号
-     * @param nos 问卷信息IDs
+     * @param nos 测评类型IDs
      * @return 结果
      */
     public int HardDeleteByNos(String appCode,String[] nos);
 
     /**
-     * 按条件硬删除问卷信息
+     * 按条件硬删除测评类型
      *
      * @param appCode 应用编号
      * @param condition 条件
@@ -124,25 +124,25 @@ public interface ICctPaperinfoService
     public int HardDeleteByCondition(String appCode,String condition);
 
     /**
-     * 软删除问卷信息
+     * 软删除测评类型
      *
      * @param appCode 应用编号
-     * @param no 问卷信息ID
+     * @param no 测评类型ID
      * @return 结果
      */
     public int SoftDeleteByNo(String appCode,String no);
 
     /**
-     * 批量软删除问卷信息
+     * 批量软删除测评类型
      *
      * @param appCode 应用编号
-     * @param nos 问卷信息IDs
+     * @param nos 测评类型IDs
      * @return 结果
      */
     public int SoftDeleteByNos(String appCode,String[] nos);
 
     /**
-     * 按条件软删除问卷信息
+     * 按条件软删除测评类型
      *
      * @param appCode 应用编号
      * @param condition 条件

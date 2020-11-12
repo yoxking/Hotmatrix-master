@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.benet.collect.mapper.CctPaperclassMapper">
+<mapper namespace="com.benet.collect.mapper.CctExamclassMapper">
 
-    <resultMap type="CctPaperclass" id="CctPaperclassResult">
+    <resultMap type="CctExamclass" id="CctExamclassResult">
         <result property="id" column="id"/>
         <result property="classNo" column="class_no"/>
         <result property="className" column="class_name"/>
@@ -21,45 +21,45 @@
         <result property="version" column="version"/>
     </resultMap>
 
-    <sql id="selectCctPaperclassVo">
-        select id, class_no, class_name, parent_no, order_no, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from cct_paperclass
+    <sql id="selectCctExamclassVo">
+        select id, class_no, class_name, parent_no, order_no, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from cct_examclass
     </sql>
 
-    <select id="getAllRecords" resultMap="CctPaperclassResult">
-        <include refid="selectCctPaperclassVo"/>
+    <select id="getAllRecords" resultMap="CctExamclassResult">
+        <include refid="selectCctExamclassVo"/>
         where delete_flag='1' and app_code=#{appCode}
     </select>
 
-    <select id="getRecordsByClassNo" resultMap="CctPaperclassResult">
-        <include refid="selectCctPaperclassVo"/>
+    <select id="getRecordsByClassNo" resultMap="CctExamclassResult">
+        <include refid="selectCctExamclassVo"/>
         where delete_flag='1' and app_code=#{appCode} and parent_no=#{classNo}
     </select>
 
-    <select id="getRecordsByPaging" resultMap="CctPaperclassResult">
-        <include refid="selectCctPaperclassVo"/>
+    <select id="getRecordsByPaging" resultMap="CctExamclassResult">
+        <include refid="selectCctExamclassVo"/>
         where delete_flag='1' and app_code=${appCode}
         <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
         order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
     </select>
 
-    <select id="getRecordByNo" resultMap="CctPaperclassResult">
-        <include refid="selectCctPaperclassVo"/>
+    <select id="getRecordByNo" resultMap="CctExamclassResult">
+        <include refid="selectCctExamclassVo"/>
         where delete_flag='1' and app_code=#{appCode} and class_no = #{no}
     </select>
 
     <select id="getRecordNameByNo" resultType="String">
-        select class_name from cct_paperclass
+        select class_name from cct_examclass
         where delete_flag='1' and app_code=#{appCode} and class_no = #{no}
     </select>
 
     <select id="getCountByCondition" resultType="Integer">
-        select count(*) from cct_paperclass
+        select count(*) from cct_examclass
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </select>
 
-    <insert id="AddNewRecord" parameterType="CctPaperclass" useGeneratedKeys="true" keyProperty="id">
-        insert into cct_paperclass (
+    <insert id="AddNewRecord" parameterType="CctExamclass" useGeneratedKeys="true" keyProperty="id">
+        insert into cct_examclass (
         <if test="info.classNo != null  and info.classNo != ''">class_no,</if>
         <if test="info.className != null  and info.className != ''">class_name,</if>
         <if test="info.parentNo != null  and info.parentNo != ''">parent_no,</if>
@@ -90,8 +90,8 @@
         )
     </insert>
 
-    <update id="UpdateRecord" parameterType="CctPaperclass">
-        update cct_paperclass
+    <update id="UpdateRecord" parameterType="CctExamclass">
+        update cct_examclass
         <set>
             <if test="info.classNo != null  and info.classNo != ''">class_no = #{info.classNo},</if>
             <if test="info.className != null  and info.className != ''">class_name = #{info.className},</if>
@@ -112,12 +112,12 @@
     </update>
 
     <delete id="HardDeleteByNo">
-        delete from cct_paperclass
+        delete from cct_examclass
         where delete_flag='1' and app_code=#{appCode} and class_no = #{no}
     </delete>
 
     <delete id="HardDeleteByNos">
-        delete from cct_paperclass
+        delete from cct_examclass
         where delete_flag='1' and app_code=#{appCode} and class_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
@@ -125,18 +125,18 @@
     </delete>
 
     <delete id="HardDeleteByCondition">
-        delete from cct_paperclass
+        delete from cct_examclass
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>
 
     <delete id="SoftDeleteByNo">
-        update cct_paperclass set delete_flag='0'
+        update cct_examclass set delete_flag='0'
         where delete_flag='1' and app_code=#{appCode} and class_no = #{no}
     </delete>
 
     <delete id="SoftDeleteByNos">
-        update cct_paperclass set delete_flag='0'
+        update cct_examclass set delete_flag='0'
         where delete_flag='1' and app_code=#{appCode} and class_no in
         <foreach item="no" collection="nos" open="(" separator="," close=")">
             #{no}
@@ -144,7 +144,7 @@
     </delete>
 
     <delete id="SoftDeleteByCondition">
-        update cct_paperclass set delete_flag='0'
+        update cct_examclass set delete_flag='0'
         where delete_flag='1' and app_code=#{appCode}
         <if test="condition != null  and condition != ''">and ${condition}</if>
     </delete>

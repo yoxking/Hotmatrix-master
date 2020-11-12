@@ -1,7 +1,6 @@
 package com.benet.console.controller;
 
-import com.benet.collect.service.ICctBlogsinfoService;
-import com.benet.collect.service.ICctRegistflowsService;
+import com.benet.collect.service.ICctRegistinfoService;
 import com.benet.console.common.BaseViewController;
 import com.benet.console.utils.ShiroUtils;
 import com.benet.system.domain.SysRuserinfo;
@@ -23,7 +22,7 @@ public class RegistViewController extends BaseViewController {
     private String prefix = "registview";
 
     @Autowired
-    private ICctRegistflowsService registflowsService;
+    private ICctRegistinfoService registflowsService;
 
     /**
      * 首页

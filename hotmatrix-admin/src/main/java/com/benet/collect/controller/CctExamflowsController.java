@@ -19,35 +19,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import com.benet.collect.domain.CctPaperflows;
-import com.benet.collect.service.ICctPaperflowsService;
+import com.benet.collect.domain.CctExamflows;
+import com.benet.collect.service.ICctExamflowsService;
 import com.benet.common.annotation.Oplog;
 import com.benet.common.core.controller.BaseController;
 import com.benet.common.core.domain.AjaxResult;
 import com.benet.common.enums.BusinessType;
 import com.benet.common.utils.poi.ExcelUtils;
 import com.benet.common.utils.string.StringUtils;
+import com.benet.common.core.pager.TableDataInfo;
 
 /**
  * 测评结果Controller
  * 
  * @author yoxking
- * @date 2020-08-27
+ * @date 2020-11-10
  */
-@Api(value = "collect/paperflows", tags = "测评结果控制器")
+@Api(value = "collect/examflows", tags = "测评结果控制器")
 @RestController
-@RequestMapping("/collect/paperflows")
-public class CctPaperflowsController extends BaseController
+@RequestMapping("/collect/examflows")
+public class CctExamflowsController extends BaseController
 {
     @Autowired
     private MyJwtokenService tokenService;
 
     @Autowired
-    private ICctPaperflowsService cctPaperflowsService;
+    private ICctExamflowsService cctExamflowsService;
     /**
      * 首页
      */
-    @PreAuthorize("@ps.hasPermit('collect:paperflows:index')")
+    @PreAuthorize("@ps.hasPermit('collect:examflows:index')")
     @GetMapping(value="/index")
     public ModelAndView index()
     {
@@ -58,98 +59,98 @@ public class CctPaperflowsController extends BaseController
     /**
      * 查询测评结果列表
      */
-    @PreAuthorize("@ps.hasPermit('collect:paperflows:list')")
+    @PreAuthorize("@ps.hasPermit('collect:examflows:list')")
     @PostMapping(value = "/list")
     public TableDataInfo list(@RequestBody PageRequest pRequest)
     {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        int count = cctPaperflowsService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
-        List<CctPaperflows> list = cctPaperflowsService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
+        int count = cctExamflowsService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        List<CctExamflows> list = cctExamflowsService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
     }
 
     /**
      * 新增测评结果
      */
-    @PreAuthorize("@ps.hasPermit('collect:paperflows:addnew')")
+    @PreAuthorize("@ps.hasPermit('collect:examflows:addnew')")
     @Oplog(title = "测评结果", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult insert(@RequestBody CctPaperflows cctPaperflows) {
+    public AjaxResult insert(@RequestBody CctExamflows cctExamflows) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        cctPaperflows.setPflowNo(UuidUtils.shortUUID());
-        cctPaperflows.setCreateBy(loginUser.getUser().getUserNo());
-        cctPaperflows.setUpdateBy(loginUser.getUser().getUserNo());
-        return toAjax(cctPaperflowsService.AddNewRecord(loginUser.getUser().getAppCode(),cctPaperflows));
+        cctExamflows.setMflowNo(UuidUtils.shortUUID());
+        cctExamflows.setCreateBy(loginUser.getUser().getUserNo());
+        cctExamflows.setUpdateBy(loginUser.getUser().getUserNo());
+        return toAjax(cctExamflowsService.AddNewRecord(loginUser.getUser().getAppCode(),cctExamflows));
     }
 
     /**
      * 编辑测评结果
      */
-    @PreAuthorize("@ps.hasPermit('collect:paperflows:update')")
+    @PreAuthorize("@ps.hasPermit('collect:examflows:update')")
     @Oplog(title = "测评结果", businessType = BusinessType.UPDATE)
     @PutMapping
-        public AjaxResult update(@RequestBody CctPaperflows cctPaperflows) {
+        public AjaxResult update(@RequestBody CctExamflows cctExamflows) {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        cctPaperflows.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(cctPaperflowsService.UpdateRecord(loginUser.getUser().getAppCode(),cctPaperflows));
+        cctExamflows.setUpdateBy(loginUser.getUser().getUserNo());
+            return toAjax(cctExamflowsService.UpdateRecord(loginUser.getUser().getAppCode(),cctExamflows));
         }
 
     /**
      * 保存测评结果
      */
-    @PreAuthorize("@ps.hasPermit('collect:paperflows:save')")
+    @PreAuthorize("@ps.hasPermit('collect:examflows:save')")
     @Oplog(title = "测评结果", businessType = BusinessType.SAVE)
     @PostMapping(value = "/save")
-    public AjaxResult save(@RequestBody CctPaperflows cctPaperflows) {
+    public AjaxResult save(@RequestBody CctExamflows cctExamflows) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        if (StringUtils.isNull(cctPaperflowsService.getRecordByNo(loginUser.getUser().getAppCode(),cctPaperflows.getPflowNo()))) {
-            cctPaperflows.setPflowNo(UuidUtils.shortUUID());
-            cctPaperflows.setCreateBy(loginUser.getUser().getUserNo());
-            cctPaperflows.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(cctPaperflowsService.AddNewRecord(loginUser.getUser().getAppCode(),cctPaperflows));
+        if (StringUtils.isNull(cctExamflowsService.getRecordByNo(loginUser.getUser().getAppCode(),cctExamflows.getMflowNo()))) {
+            cctExamflows.setMflowNo(UuidUtils.shortUUID());
+            cctExamflows.setCreateBy(loginUser.getUser().getUserNo());
+            cctExamflows.setUpdateBy(loginUser.getUser().getUserNo());
+            return toAjax(cctExamflowsService.AddNewRecord(loginUser.getUser().getAppCode(),cctExamflows));
         } else {
-            cctPaperflows.setUpdateBy(loginUser.getUser().getUserNo());
-            return toAjax(cctPaperflowsService.UpdateRecord(loginUser.getUser().getAppCode(),cctPaperflows));
+            cctExamflows.setUpdateBy(loginUser.getUser().getUserNo());
+            return toAjax(cctExamflowsService.UpdateRecord(loginUser.getUser().getAppCode(),cctExamflows));
         }
     }
 
     /**
      * 删除测评结果
      */
-    @PreAuthorize("@ps.hasPermit('collect:paperflows:delete')")
+    @PreAuthorize("@ps.hasPermit('collect:examflows:delete')")
     @Oplog(title = "测评结果", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult delete(@PathVariable("ids") String[] ids)
     {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        return toAjax(cctPaperflowsService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
+        return toAjax(cctExamflowsService.SoftDeleteByNos(loginUser.getUser().getAppCode(),ids));
     }
 
     /**
      * 获取测评结果详细信息
      */
-    @PreAuthorize("@ps.hasPermit('collect:paperflows:detail')")
+    @PreAuthorize("@ps.hasPermit('collect:examflows:detail')")
     @GetMapping(value = "/{id}")
     public AjaxResult detail(@PathVariable("id") String id)
     {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        return AjaxResult.success(cctPaperflowsService.getRecordByNo(loginUser.getUser().getAppCode(),id));
+        return AjaxResult.success(cctExamflowsService.getRecordByNo(loginUser.getUser().getAppCode(),id));
     }
 
     /**
      * 导出测评结果列表
      */
-    @PreAuthorize("@ps.hasPermit('collect:paperflows:export')")
+    @PreAuthorize("@ps.hasPermit('collect:examflows:export')")
     @Oplog(title = "测评结果", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public AjaxResult export(@RequestBody PageRequest pRequest)
     {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        int count = cctPaperflowsService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
+        int count = cctExamflowsService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
 
-        List<CctPaperflows> list = cctPaperflowsService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
-        ExcelUtils<CctPaperflows> util = new ExcelUtils<CctPaperflows>(CctPaperflows.class);
-        return util.exportExcel(list, "CctPaperflows");
+        List<CctExamflows> list = cctExamflowsService.getRecordsByPaging(loginUser.getUser().getAppCode(),1,count,pRequest.getCondition(),"id","Asc");
+        ExcelUtils<CctExamflows> util = new ExcelUtils<CctExamflows>(CctExamflows.class);
+        return util.exportExcel(list, "CctExamflows");
     }
 
 }

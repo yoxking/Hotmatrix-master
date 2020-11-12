@@ -10,7 +10,7 @@ import com.benet.common.core.domain.BaseEntity;
  * 测题类型对象 cct_questclass
  * 
  * @author yoxking
- * @date 2020-08-31
+ * @date 2020-11-10
  */
 public class CctQuestclass extends BaseEntity
 {
@@ -35,8 +35,8 @@ public class CctQuestclass extends BaseEntity
     @Excel(name = "显示顺序")
     private Integer orderNo;
 
-    /** 分支编号 */
-    @Excel(name = "分支编号")
+    /** 应用编号 */
+    @Excel(name = "应用编号")
     private String branchNo;
 
     /** 创建者 */

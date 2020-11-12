@@ -6,67 +6,67 @@ import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.benet.collect.mapper.CctPaperflowsMapper;
-import com.benet.collect.domain.CctPaperflows;
-import com.benet.collect.service.ICctPaperflowsService;
+import com.benet.collect.mapper.CctRegistinfoMapper;
+import com.benet.collect.domain.CctRegistinfo;
+import com.benet.collect.service.ICctRegistinfoService;
 
 /**
- * 测评结果Service业务层处理
+ * 预约信息Service业务层处理
  * 
  * @author yoxking
- * @date 2020-10-06
+ * @date 2020-11-10
  */
 @Service
-public class CctPaperflowsServiceImpl implements ICctPaperflowsService 
+public class CctRegistinfoServiceImpl implements ICctRegistinfoService 
 {
     @Autowired
-    private CctPaperflowsMapper cctPaperflowsMapper;
+    private CctRegistinfoMapper cctRegistinfoMapper;
 
     /**
-     * 查询所有测评结果列表
+     * 查询所有预约信息列表
      *
      * @param appCode 应用编号
-     * @return 测评结果集合
+     * @return 预约信息集合
      */
     @Override
-    public List<CctPaperflows> getAllRecords(String appCode) {
-        return cctPaperflowsMapper.getAllRecords(appCode);
+    public List<CctRegistinfo> getAllRecords(String appCode) {
+        return cctRegistinfoMapper.getAllRecords(appCode);
     }
 
     /**
-     * 按分类查询测评结果列表
+     * 按分类查询预约信息列表
      *
      * @param appCode 应用编号
      * @param classNo 分类编号
-     * @return 测评结果集合
+     * @return 预约信息集合
      */
     @Override
-    public List<CctPaperflows> getRecordsByClassNo(String appCode,String classNo) {
+    public List<CctRegistinfo> getRecordsByClassNo(String appCode,String classNo) {
         if (StringUtils.isNotEmpty(classNo)) {
-            return cctPaperflowsMapper.getRecordsByClassNo(appCode,classNo);
+            return cctRegistinfoMapper.getRecordsByClassNo(appCode,classNo);
         }
         return null;
     }
 
     /**
-     * 分页查询测评结果列表
+     * 分页查询预约信息列表
      *
      * @param appCode 应用编号
      * @param model 分页模型
-     * @return 测评结果集合
+     * @return 预约信息集合
      */
     @Override
-    public List<CctPaperflows> getRecordsByPaging(String appCode,PagingModel model) {
+    public List<CctRegistinfo> getRecordsByPaging(String appCode,PagingModel model) {
         if (StringUtils.isNotNull(model)) {
             model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
-            return cctPaperflowsMapper.getRecordsByPaging(appCode,model);
+            return cctRegistinfoMapper.getRecordsByPaging(appCode,model);
         }
         return null;
     }
 
 
     /**
-     * 分页查询测评结果列表
+     * 分页查询预约信息列表
      *
      * @param appCode 应用编号
      * @param pageIndex 当前页起始索引
@@ -74,10 +74,10 @@ public class CctPaperflowsServiceImpl implements ICctPaperflowsService
      * @param condition 条件
      * @param orderField 排序列
      * @param orderType 排序类型
-     * @return 测评结果集合
+     * @return 预约信息集合
      */
     @Override
-    public List<CctPaperflows> getRecordsByPaging(String appCode,int pageIndex,int pageSize,String condition,String orderField,String orderType) {
+    public List<CctRegistinfo> getRecordsByPaging(String appCode,int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();
         model.setPageIndex((pageIndex-1) * pageSize);
@@ -93,41 +93,41 @@ public class CctPaperflowsServiceImpl implements ICctPaperflowsService
         } else {
             model.setOrderType(orderType);
         }
-        return cctPaperflowsMapper.getRecordsByPaging(appCode,model);
+        return cctRegistinfoMapper.getRecordsByPaging(appCode,model);
     }
 
     /**
-     * 查询测评结果
+     * 查询预约信息
      *
      * @param appCode 应用编号
-     * @param no 测评结果ID
-     * @return 测评结果
+     * @param no 预约信息ID
+     * @return 预约信息
      */
     @Override
-    public CctPaperflows getRecordByNo(String appCode,String no) {
+    public CctRegistinfo getRecordByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return cctPaperflowsMapper.getRecordByNo(appCode,no);
+            return cctRegistinfoMapper.getRecordByNo(appCode,no);
         }
         return null;
     }
 
     /**
-     * 查询测评结果名称
+     * 查询预约信息名称
      *
      * @param appCode 应用编号
-     * @param no 测评结果ID
+     * @param no 预约信息ID
      * @return 名称
      */
     @Override
     public String getRecordNameByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return cctPaperflowsMapper.getRecordNameByNo(appCode,no);
+            return cctRegistinfoMapper.getRecordNameByNo(appCode,no);
         }
         return null;
     }
 
     /**
-     * 查询测评结果计数
+     * 查询预约信息计数
      *
      * @param appCode 应用编号
      * @param condition 查询条件
@@ -135,71 +135,71 @@ public class CctPaperflowsServiceImpl implements ICctPaperflowsService
      */
     @Override
     public int getCountByCondition(String appCode,String condition) {
-        return cctPaperflowsMapper.getCountByCondition(appCode,condition);
+        return cctRegistinfoMapper.getCountByCondition(appCode,condition);
     }
 
     /**
-     * 新增测评结果
+     * 新增预约信息
      *
      * @param appCode 应用编号
-     * @param info 测评结果
+     * @param info 预约信息
      * @return 结果
      */
     @Override
-    public int AddNewRecord(String appCode,CctPaperflows info) {
+    public int AddNewRecord(String appCode,CctRegistinfo info) {
         info.setCreateTime(DateUtils.getNowDate());
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(appCode);
         info.setVersion(1L);
-        return cctPaperflowsMapper.AddNewRecord(info);
+        return cctRegistinfoMapper.AddNewRecord(info);
     }
 
     /**
-     * 更新测评结果
+     * 更新预约信息
      *
      * @param appCode 应用编号
-     * @param info 测评结果
+     * @param info 预约信息
      * @return 结果
      */
     @Override
-    public int UpdateRecord(String appCode,CctPaperflows info) {
+    public int UpdateRecord(String appCode,CctRegistinfo info) {
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(appCode);
-        return cctPaperflowsMapper.UpdateRecord(info);
+        return cctRegistinfoMapper.UpdateRecord(info);
     }
 
     /**
-     * 硬删除测评结果
+     * 硬删除预约信息
      *
      * @param appCode 应用编号
-     * @param no 测评结果ID
+     * @param no 预约信息ID
      * @return 结果
      */
     @Override
     public int HardDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return cctPaperflowsMapper.HardDeleteByNo(appCode,no);
+            return cctRegistinfoMapper.HardDeleteByNo(appCode,no);
         }
         return 0;
     }
 
     /**
-     * 批量硬删除测评结果
+     * 批量硬删除预约信息
      *
      * @param appCode 应用编号
-     * @param nos 测评结果IDs
+     * @param nos 预约信息IDs
      * @return 结果
      */
     @Override
     public int HardDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return cctPaperflowsMapper.HardDeleteByNos(appCode,nos);
+            return cctRegistinfoMapper.HardDeleteByNos(appCode,nos);
         }
         return 0;
     }
 
     /**
-     * 按条件硬删除测评结果
+     * 按条件硬删除预约信息
      *
      * @param appCode 应用编号
      * @param condition 条件
@@ -207,41 +207,41 @@ public class CctPaperflowsServiceImpl implements ICctPaperflowsService
      */
     @Override
     public int HardDeleteByCondition(String appCode,String condition) {
-        return cctPaperflowsMapper.HardDeleteByCondition(appCode,condition);
+        return cctRegistinfoMapper.HardDeleteByCondition(appCode,condition);
     }
 
     /**
-     * 软删除测评结果
+     * 软删除预约信息
      *
      * @param appCode 应用编号
-     * @param no 测评结果ID
+     * @param no 预约信息ID
      * @return 结果
      */
     @Override
     public int SoftDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return cctPaperflowsMapper.SoftDeleteByNo(appCode,no);
+            return cctRegistinfoMapper.SoftDeleteByNo(appCode,no);
         }
         return 0;
     }
 
     /**
-     * 批量软删除测评结果
+     * 批量软删除预约信息
      *
      * @param appCode 应用编号
-     * @param nos 测评结果IDs
+     * @param nos 预约信息IDs
      * @return 结果
      */
     @Override
     public int SoftDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return cctPaperflowsMapper.SoftDeleteByNos(appCode,nos);
+            return cctRegistinfoMapper.SoftDeleteByNos(appCode,nos);
         }
         return 0;
     }
 
     /**
-     * 按条件软删除测评结果
+     * 按条件软删除预约信息
      *
      * @param appCode 应用编号
      * @param condition 条件
@@ -249,6 +249,6 @@ public class CctPaperflowsServiceImpl implements ICctPaperflowsService
      */
     @Override
     public int SoftDeleteByCondition(String appCode,String condition) {
-        return cctPaperflowsMapper.SoftDeleteByCondition(appCode,condition);
+        return cctRegistinfoMapper.SoftDeleteByCondition(appCode,condition);
     }
 }

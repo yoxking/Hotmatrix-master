@@ -6,67 +6,67 @@ import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.benet.collect.mapper.CctRegistflowsMapper;
-import com.benet.collect.domain.CctRegistflows;
-import com.benet.collect.service.ICctRegistflowsService;
+import com.benet.collect.mapper.CctExamclassMapper;
+import com.benet.collect.domain.CctExamclass;
+import com.benet.collect.service.ICctExamclassService;
 
 /**
- * 预约信息Service业务层处理
+ * 测评类型Service业务层处理
  * 
  * @author yoxking
- * @date 2020-10-14
+ * @date 2020-11-10
  */
 @Service
-public class CctRegistflowsServiceImpl implements ICctRegistflowsService 
+public class CctExamclassServiceImpl implements ICctExamclassService 
 {
     @Autowired
-    private CctRegistflowsMapper cctRegistflowsMapper;
+    private CctExamclassMapper cctExamclassMapper;
 
     /**
-     * 查询所有预约信息列表
+     * 查询所有测评类型列表
      *
      * @param appCode 应用编号
-     * @return 预约信息集合
+     * @return 测评类型集合
      */
     @Override
-    public List<CctRegistflows> getAllRecords(String appCode) {
-        return cctRegistflowsMapper.getAllRecords(appCode);
+    public List<CctExamclass> getAllRecords(String appCode) {
+        return cctExamclassMapper.getAllRecords(appCode);
     }
 
     /**
-     * 按分类查询预约信息列表
+     * 按分类查询测评类型列表
      *
      * @param appCode 应用编号
      * @param classNo 分类编号
-     * @return 预约信息集合
+     * @return 测评类型集合
      */
     @Override
-    public List<CctRegistflows> getRecordsByClassNo(String appCode,String classNo) {
+    public List<CctExamclass> getRecordsByClassNo(String appCode,String classNo) {
         if (StringUtils.isNotEmpty(classNo)) {
-            return cctRegistflowsMapper.getRecordsByClassNo(appCode,classNo);
+            return cctExamclassMapper.getRecordsByClassNo(appCode,classNo);
         }
         return null;
     }
 
     /**
-     * 分页查询预约信息列表
+     * 分页查询测评类型列表
      *
      * @param appCode 应用编号
      * @param model 分页模型
-     * @return 预约信息集合
+     * @return 测评类型集合
      */
     @Override
-    public List<CctRegistflows> getRecordsByPaging(String appCode,PagingModel model) {
+    public List<CctExamclass> getRecordsByPaging(String appCode,PagingModel model) {
         if (StringUtils.isNotNull(model)) {
             model.setPageIndex((model.getPageIndex()-1)*model.getPageSize());
-            return cctRegistflowsMapper.getRecordsByPaging(appCode,model);
+            return cctExamclassMapper.getRecordsByPaging(appCode,model);
         }
         return null;
     }
 
 
     /**
-     * 分页查询预约信息列表
+     * 分页查询测评类型列表
      *
      * @param appCode 应用编号
      * @param pageIndex 当前页起始索引
@@ -74,10 +74,10 @@ public class CctRegistflowsServiceImpl implements ICctRegistflowsService
      * @param condition 条件
      * @param orderField 排序列
      * @param orderType 排序类型
-     * @return 预约信息集合
+     * @return 测评类型集合
      */
     @Override
-    public List<CctRegistflows> getRecordsByPaging(String appCode,int pageIndex,int pageSize,String condition,String orderField,String orderType) {
+    public List<CctExamclass> getRecordsByPaging(String appCode,int pageIndex,int pageSize,String condition,String orderField,String orderType) {
 
         PagingModel model = new PagingModel();
         model.setPageIndex((pageIndex-1) * pageSize);
@@ -93,41 +93,41 @@ public class CctRegistflowsServiceImpl implements ICctRegistflowsService
         } else {
             model.setOrderType(orderType);
         }
-        return cctRegistflowsMapper.getRecordsByPaging(appCode,model);
+        return cctExamclassMapper.getRecordsByPaging(appCode,model);
     }
 
     /**
-     * 查询预约信息
+     * 查询测评类型
      *
      * @param appCode 应用编号
-     * @param no 预约信息ID
-     * @return 预约信息
+     * @param no 测评类型ID
+     * @return 测评类型
      */
     @Override
-    public CctRegistflows getRecordByNo(String appCode,String no) {
+    public CctExamclass getRecordByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return cctRegistflowsMapper.getRecordByNo(appCode,no);
+            return cctExamclassMapper.getRecordByNo(appCode,no);
         }
         return null;
     }
 
     /**
-     * 查询预约信息名称
+     * 查询测评类型名称
      *
      * @param appCode 应用编号
-     * @param no 预约信息ID
+     * @param no 测评类型ID
      * @return 名称
      */
     @Override
     public String getRecordNameByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return cctRegistflowsMapper.getRecordNameByNo(appCode,no);
+            return cctExamclassMapper.getRecordNameByNo(appCode,no);
         }
         return null;
     }
 
     /**
-     * 查询预约信息计数
+     * 查询测评类型计数
      *
      * @param appCode 应用编号
      * @param condition 查询条件
@@ -135,71 +135,71 @@ public class CctRegistflowsServiceImpl implements ICctRegistflowsService
      */
     @Override
     public int getCountByCondition(String appCode,String condition) {
-        return cctRegistflowsMapper.getCountByCondition(appCode,condition);
+        return cctExamclassMapper.getCountByCondition(appCode,condition);
     }
 
     /**
-     * 新增预约信息
+     * 新增测评类型
      *
      * @param appCode 应用编号
-     * @param info 预约信息
+     * @param info 测评类型
      * @return 结果
      */
     @Override
-    public int AddNewRecord(String appCode,CctRegistflows info) {
+    public int AddNewRecord(String appCode,CctExamclass info) {
         info.setCreateTime(DateUtils.getNowDate());
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(appCode);
         info.setVersion(1L);
-        return cctRegistflowsMapper.AddNewRecord(info);
+        return cctExamclassMapper.AddNewRecord(info);
     }
 
     /**
-     * 更新预约信息
+     * 更新测评类型
      *
      * @param appCode 应用编号
-     * @param info 预约信息
+     * @param info 测评类型
      * @return 结果
      */
     @Override
-    public int UpdateRecord(String appCode,CctRegistflows info) {
+    public int UpdateRecord(String appCode,CctExamclass info) {
         info.setUpdateTime(DateUtils.getNowDate());
         info.setAppCode(appCode);
-        return cctRegistflowsMapper.UpdateRecord(info);
+        return cctExamclassMapper.UpdateRecord(info);
     }
 
     /**
-     * 硬删除预约信息
+     * 硬删除测评类型
      *
      * @param appCode 应用编号
-     * @param no 预约信息ID
+     * @param no 测评类型ID
      * @return 结果
      */
     @Override
     public int HardDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return cctRegistflowsMapper.HardDeleteByNo(appCode,no);
+            return cctExamclassMapper.HardDeleteByNo(appCode,no);
         }
         return 0;
     }
 
     /**
-     * 批量硬删除预约信息
+     * 批量硬删除测评类型
      *
      * @param appCode 应用编号
-     * @param nos 预约信息IDs
+     * @param nos 测评类型IDs
      * @return 结果
      */
     @Override
     public int HardDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return cctRegistflowsMapper.HardDeleteByNos(appCode,nos);
+            return cctExamclassMapper.HardDeleteByNos(appCode,nos);
         }
         return 0;
     }
 
     /**
-     * 按条件硬删除预约信息
+     * 按条件硬删除测评类型
      *
      * @param appCode 应用编号
      * @param condition 条件
@@ -207,41 +207,41 @@ public class CctRegistflowsServiceImpl implements ICctRegistflowsService
      */
     @Override
     public int HardDeleteByCondition(String appCode,String condition) {
-        return cctRegistflowsMapper.HardDeleteByCondition(appCode,condition);
+        return cctExamclassMapper.HardDeleteByCondition(appCode,condition);
     }
 
     /**
-     * 软删除预约信息
+     * 软删除测评类型
      *
      * @param appCode 应用编号
-     * @param no 预约信息ID
+     * @param no 测评类型ID
      * @return 结果
      */
     @Override
     public int SoftDeleteByNo(String appCode,String no) {
         if (StringUtils.isNotEmpty(no)) {
-            return cctRegistflowsMapper.SoftDeleteByNo(appCode,no);
+            return cctExamclassMapper.SoftDeleteByNo(appCode,no);
         }
         return 0;
     }
 
     /**
-     * 批量软删除预约信息
+     * 批量软删除测评类型
      *
      * @param appCode 应用编号
-     * @param nos 预约信息IDs
+     * @param nos 测评类型IDs
      * @return 结果
      */
     @Override
     public int SoftDeleteByNos(String appCode,String[] nos) {
         if (StringUtils.isNotEmpty(nos)) {
-            return cctRegistflowsMapper.SoftDeleteByNos(appCode,nos);
+            return cctExamclassMapper.SoftDeleteByNos(appCode,nos);
         }
         return 0;
     }
 
     /**
-     * 按条件软删除预约信息
+     * 按条件软删除测评类型
      *
      * @param appCode 应用编号
      * @param condition 条件
@@ -249,6 +249,6 @@ public class CctRegistflowsServiceImpl implements ICctRegistflowsService
      */
     @Override
     public int SoftDeleteByCondition(String appCode,String condition) {
-        return cctRegistflowsMapper.SoftDeleteByCondition(appCode,condition);
+        return cctExamclassMapper.SoftDeleteByCondition(appCode,condition);
     }
 }

@@ -7,12 +7,12 @@ import java.util.Date;
 import com.benet.common.core.domain.BaseEntity;
 
 /**
- * 问卷类型对象 cct_paperclass
+ * 测评类型对象 cct_examclass
  * 
  * @author yoxking
  * @date 2020-11-10
  */
-public class CctPaperclass extends BaseEntity
+public class CctExamclass extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
