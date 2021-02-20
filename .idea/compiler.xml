@@ -15,5 +15,9 @@
         <module name="hotmatrix-console" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="hotmatrix-fireflow" target="1.8" />
+      <module name="hotmatrix-process" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
