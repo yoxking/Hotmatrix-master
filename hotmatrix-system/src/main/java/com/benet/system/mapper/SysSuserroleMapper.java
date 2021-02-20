@@ -1,7 +1,5 @@
 package com.benet.system.mapper;
 
-import java.util.List;
-import com.benet.common.core.pager.PagingModel;
 import com.benet.system.domain.SysSuserrole;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

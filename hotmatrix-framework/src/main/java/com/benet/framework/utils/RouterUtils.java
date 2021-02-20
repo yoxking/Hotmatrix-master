@@ -1,6 +1,5 @@
 package com.benet.framework.utils;
 
-import com.benet.common.utils.string.StringUtils;
 import com.benet.framework.web.vmodel.RouterVo;
 import com.benet.system.domain.SysPermitinfo;
 

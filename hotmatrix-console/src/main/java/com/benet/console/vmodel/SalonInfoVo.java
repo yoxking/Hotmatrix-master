@@ -4,11 +4,12 @@ public class SalonInfoVo {
 
     private String salonNo;
     private String salonName;
+    private String salonPoster;
     private String className;
     private String startTime;
     private String enditTime;
     private String salonAddress;
-    private String registRusers;
+    private String salonRusers;
     private String salonContent;
     private String checkState;
 
@@ -26,6 +27,14 @@ public class SalonInfoVo {
 
     public void setSalonName(String salonName) {
         this.salonName = salonName;
+    }
+
+    public String getSalonPoster() {
+        return salonPoster;
+    }
+
+    public void setSalonPoster(String salonPoster) {
+        this.salonPoster = salonPoster;
     }
 
     public String getClassName() {
@@ -60,12 +69,12 @@ public class SalonInfoVo {
         this.salonAddress = salonAddress;
     }
 
-    public String getRegistRusers() {
-        return registRusers;
+    public String getSalonRusers() {
+        return salonRusers;
     }
 
-    public void setRegistRusers(String registRusers) {
-        this.registRusers = registRusers;
+    public void setSalonRusers(String salonRusers) {
+        this.salonRusers = salonRusers;
     }
 
     public String getSalonContent() {

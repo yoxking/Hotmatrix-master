@@ -8,7 +8,11 @@
     <file url="file://$PROJECT_DIR$/hotmatrix-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hotmatrix-console/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hotmatrix-console/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hotmatrix-fireflow/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hotmatrix-fireflow/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hotmatrix-framework/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hotmatrix-process/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hotmatrix-process/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hotmatrix-system/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hotmatrix-system/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hotmatrix-workflow/src/main/java" charset="UTF-8" />

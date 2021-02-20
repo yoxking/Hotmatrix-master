@@ -1,19 +1,20 @@
 package com.benet.console.controller;
 
-import com.benet.collect.domain.CctBlogsinfo;
-import com.benet.collect.service.ICctBlogsinfoService;
+import com.benet.collect.domain.CoctBlogsinfo;
+import com.benet.collect.service.ICoctBlogsinfoService;
+import com.benet.common.core.domain.AjaxResult;
 import com.benet.common.utils.date.DateUtils;
+import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.console.common.BaseViewController;
-import com.benet.console.utils.ShiroUtils;
+import com.benet.console.utils.PageHelper;
+import com.benet.console.utils.ShiroHelper;
 import com.benet.console.vmodel.BlogInfoVo;
 import com.benet.console.vmodel.PagerInfoVo;
 import com.benet.system.domain.SysRuserinfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class BlogsViewController extends BaseViewController {
     private String prefix = "blogsview";
 
     @Autowired
-    private ICctBlogsinfoService blogsinfoService;
+    private ICoctBlogsinfoService blogsinfoService;
 
     /**
      * 首页
@@ -39,15 +40,15 @@ public class BlogsViewController extends BaseViewController {
     public String index(ModelMap model,@RequestParam(defaultValue = "1",value = "pageIndex") Integer pageIndex,
                         @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize)
     {
-        SysRuserinfo loginUser = ShiroUtils.getLoginRuser().getUser();
+        SysRuserinfo loginUser = ShiroHelper.getLoginRuser().getUser();
         List<BlogInfoVo> blogsList=new ArrayList<>();
         BlogInfoVo blog=null;
 
         String condition="";
         int count=blogsinfoService.getCountByCondition(loginUser.getAppCode(),condition);
-        List<CctBlogsinfo> infoList=blogsinfoService.getRecordsByPaging(loginUser.getAppCode(),pageIndex,pageSize,condition,"id","desc");
+        List<CoctBlogsinfo> infoList=blogsinfoService.getRecordsByPaging(loginUser.getAppCode(),pageIndex,pageSize,condition,"id","desc");
         if(infoList!=null&&infoList.size()>0){
-            for(CctBlogsinfo info:infoList){
+            for(CoctBlogsinfo info:infoList){
                 blog=new BlogInfoVo();
                 blog.setBlogNo(info.getBlogNo());
                 blog.setBlogTitle(info.getBlogTitle());
@@ -65,6 +66,31 @@ public class BlogsViewController extends BaseViewController {
 
         model.put("loginer",getLoginer());
         model.put("pagerInfo",pagerInfo);
+        model.put("mclassList", PageHelper.getExamClasses());
+        model.put("topExperts", PageHelper.getTopExperts(3));
         return prefix +"/index";
+    }
+
+    @PostMapping("/saveBlog")
+    @ResponseBody
+    public AjaxResult saveBlog(String title, String content)
+    {
+        SysRuserinfo loginUser = ShiroHelper.getLoginRuser().getUser();
+
+        CoctBlogsinfo blogInfo=new CoctBlogsinfo();
+        blogInfo.setBlogNo(UuidUtils.shortUUID());
+        blogInfo.setBlogTitle(title);
+        blogInfo.setClassNo("");
+        blogInfo.setRuserNo(loginUser.getUserNo());
+        blogInfo.setBlogContent(content);
+        blogInfo.setDolikeHit(0);
+        blogInfo.setRepostHit(0);
+        blogInfo.setCheckState("1");
+        blogInfo.setCreateBy(loginUser.getUserNo());
+        blogInfo.setUpdateBy(loginUser.getUserNo());
+        blogInfo.setDeleteFlag("1");
+        blogInfo.setComments("");
+
+        return toAjax(blogsinfoService.AddNewRecord(loginUser.getAppCode(),blogInfo));
     }
 }

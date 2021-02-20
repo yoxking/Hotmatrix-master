@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.benet.wkflow.mapper.FlowFlowbuttonMapper">
+
+    <resultMap type="FlowFlowbutton" id="FlowFlowbuttonResult">
+        <result property="id" column="id"/>
+        <result property="btnNo" column="btn_no"/>
+        <result property="btnTitle" column="btn_title"/>
+        <result property="btnIcon" column="btn_icon"/>
+        <result property="btnScript" column="btn_script"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="checkState" column="check_state"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteFlag" column="delete_flag"/>
+        <result property="comments" column="comments"/>
+        <result property="appCode" column="app_code"/>
+        <result property="version" column="version"/>
+    </resultMap>
+
+    <sql id="selectFlowFlowbuttonVo">
+        select id, btn_no, btn_title, btn_icon, btn_script, order_no, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from flow_flowbutton
+    </sql>
+
+    <select id="getAllRecords" resultMap="FlowFlowbuttonResult">
+        <include refid="selectFlowFlowbuttonVo"/>
+        where delete_flag='1' and app_code=#{appCode}
+    </select>
+
+    <select id="getRecordsByClassNo" resultMap="FlowFlowbuttonResult">
+        <include refid="selectFlowFlowbuttonVo"/>
+        where delete_flag='1' and app_code=#{appCode} and btn_no=#{classNo}
+    </select>
+
+    <select id="getRecordsByPaging" resultMap="FlowFlowbuttonResult">
+        <include refid="selectFlowFlowbuttonVo"/>
+        where delete_flag='1' and app_code=${appCode}
+        <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
+        order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
+    </select>
+
+    <select id="getRecordByNo" resultMap="FlowFlowbuttonResult">
+        <include refid="selectFlowFlowbuttonVo"/>
+        where delete_flag='1' and app_code=#{appCode} and btn_no = #{no}
+    </select>
+
+    <select id="getRecordNameByNo" resultType="String">
+        select btn_title from flow_flowbutton
+        where delete_flag='1' and app_code=#{appCode} and btn_no = #{no}
+    </select>
+
+    <select id="getCountByCondition" resultType="Integer">
+        select count(*) from flow_flowbutton
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </select>
+
+    <insert id="AddNewRecord" parameterType="FlowFlowbutton" useGeneratedKeys="true" keyProperty="id">
+        insert into flow_flowbutton (
+        <if test="info.btnNo != null  and info.btnNo != ''">btn_no,</if>
+        <if test="info.btnTitle != null  and info.btnTitle != ''">btn_title,</if>
+        <if test="info.btnIcon != null  and info.btnIcon != ''">btn_icon,</if>
+        <if test="info.btnScript != null  and info.btnScript != ''">btn_script,</if>
+        <if test="info.orderNo != null ">order_no,</if>
+        <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
+        <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
+        <if test="info.createTime != null ">create_time,</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">update_by,</if>
+        <if test="info.updateTime != null ">update_time,</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag,</if>
+        <if test="info.comments != null  and info.comments != ''">comments,</if>
+        <if test="info.appCode != null  and info.appCode != ''">app_code,</if>
+        <if test="info.version != null ">version</if>
+        )values(
+        <if test="info.btnNo != null  and info.btnNo != ''">#{info.btnNo},</if>
+        <if test="info.btnTitle != null  and info.btnTitle != ''">#{info.btnTitle},</if>
+        <if test="info.btnIcon != null  and info.btnIcon != ''">#{info.btnIcon},</if>
+        <if test="info.btnScript != null  and info.btnScript != ''">#{info.btnScript},</if>
+        <if test="info.orderNo != null ">#{info.orderNo},</if>
+        <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
+        <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
+        <if test="info.createTime != null ">#{info.createTime},</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">#{info.updateBy},</if>
+        <if test="info.updateTime != null ">#{info.updateTime},</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">#{info.deleteFlag},</if>
+        <if test="info.comments != null  and info.comments != ''">#{info.comments},</if>
+        <if test="info.appCode != null  and info.appCode != ''">#{info.appCode},</if>
+        <if test="info.version != null ">#{info.version}</if>
+        )
+    </insert>
+
+    <update id="UpdateRecord" parameterType="FlowFlowbutton">
+        update flow_flowbutton
+        <set>
+            <if test="info.btnNo != null  and info.btnNo != ''">btn_no = #{info.btnNo},</if>
+            <if test="info.btnTitle != null  and info.btnTitle != ''">btn_title = #{info.btnTitle},</if>
+            <if test="info.btnIcon != null  and info.btnIcon != ''">btn_icon = #{info.btnIcon},</if>
+            <if test="info.btnScript != null  and info.btnScript != ''">btn_script = #{info.btnScript},</if>
+            <if test="info.orderNo != null ">order_no = #{info.orderNo},</if>
+            <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
+            <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
+            <if test="info.createTime != null ">create_time = #{info.createTime},</if>
+            <if test="info.updateBy != null  and info.updateBy != ''">update_by = #{info.updateBy},</if>
+            <if test="info.updateTime != null ">update_time = #{info.updateTime},</if>
+            <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag = #{info.deleteFlag},</if>
+            <if test="info.comments != null  and info.comments != ''">comments = #{info.comments},</if>
+            <if test="info.appCode != null  and info.appCode != ''">app_code = #{info.appCode},</if>
+            <if test="info.version != null ">version = #{info.version}</if>
+        </set>
+        where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and btn_no =
+        #{info.btnNo}
+    </update>
+
+    <delete id="HardDeleteByNo">
+        delete from flow_flowbutton
+        where delete_flag='1' and app_code=#{appCode} and btn_no = #{no}
+    </delete>
+
+    <delete id="HardDeleteByNos">
+        delete from flow_flowbutton
+        where delete_flag='1' and app_code=#{appCode} and btn_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="HardDeleteByCondition">
+        delete from flow_flowbutton
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </delete>
+
+    <delete id="SoftDeleteByNo">
+        update flow_flowbutton set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and btn_no = #{no}
+    </delete>
+
+    <delete id="SoftDeleteByNos">
+        update flow_flowbutton set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and btn_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="SoftDeleteByCondition">
+        update flow_flowbutton set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </delete>
+
+</mapper>

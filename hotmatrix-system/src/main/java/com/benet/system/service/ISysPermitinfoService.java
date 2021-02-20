@@ -5,7 +5,6 @@ import java.util.Set;
 
 import com.benet.common.core.pager.PagingModel;
 import com.benet.system.domain.SysPermitinfo;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * 菜单权限Service接口

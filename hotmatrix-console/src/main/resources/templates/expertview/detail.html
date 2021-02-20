@@ -36,11 +36,13 @@
                                 </div><!--vcp_inf end-->
                                 <ul class="chan_cantrz">
                                     <li>
-                                        <a href="#" title="" class="donate">马上预约</a>
+                                        <a href="javascript:void(0);" title="马上预约" class="donate" th:onclick="onRegist([[${exptInfo.ruserNo}]])">马上预约</a>
                                     </li>
+                                    <!--
                                     <li>
                                         <a href="#" title="" class="subscribe">订阅收藏</a>
                                     </li>
+                                    -->
                                 </ul><!--chan_cantrz end-->
                                 <div class="clearfix"></div>
                             </div>
@@ -75,38 +77,7 @@
                     </div><!--mn-vid-sc end--->
                 </div><!---col-lg-9 end-->
                 <div class="col-lg-3">
-                    <div class="sidebar">
-                        <div class="vidz-prt">
-                            <h2 class="sm-vidz" style="font-weight: bold;">推荐咨询师</h2>
-                            <div class="clearfix"></div>
-                        </div><!--vidz-prt end-->
-                        <div class="videoo-list-ab">
-                            <div class="videoo">
-                                <div class="vid_thumbainl">
-                                    <a href="#" title="马上预约">
-                                        <img src="http://127.0.0.1:8095/imgs/resources/vide6.png" alt="">
-                                    </a>
-                                </div><!--vid_thumbnail end-->
-                                <div class="video_info">
-                                    <h3><a href="#" title="马上预约">张三</a></h3>
-                                    <h4>心理咨询师</h4>
-                                    <span>咨询人数：2K.  <small class="posted_dt">1天前</small></span>
-                                </div>
-                            </div><!--videoo end-->
-                            <div class="videoo">
-                                <div class="vid_thumbainl">
-                                    <a href="#" title="马上预约">
-                                        <img src="http://127.0.0.1:8095/imgs/resources/vide6.png" alt="">
-                                    </a>
-                                </div><!--vid_thumbnail end-->
-                                <div class="video_info">
-                                    <h3><a href="#" title="马上预约">李四</a></h3>
-                                    <h4>心理咨询师</h4>
-                                    <span>咨询人数：2K.  <small class="posted_dt">1周前</small></span>
-                                </div>
-                            </div><!--videoo end-->
-                        </div><!--videoo-list-ab end-->
-                    </div><!--side-bar end-->
+                    <th:block th:include="include :: topexperts" />
                 </div>
             </div>
         </div>
@@ -117,6 +88,19 @@
 <!--wrapper end-->
 
 <th:block th:include="include :: scriptblock" />
+<script type="text/javascript" >
+    function onRegist(val){
+        layer.open({
+            type: 2,
+            title: '心理咨询预约',
+            shadeClose: true,
+            shade: false,
+            maxmin: false, //开启最大化最小化按钮
+            area: ['893px', '600px'],
+            content: '/expertview/regist?id='+val
+        });
+    }
+</script>
 </body>
 
 </html>

@@ -172,6 +172,11 @@ button:hover,
 	max-width: 1170px;
 }
 
+.wrapper_box{
+	margin: 0;
+	padding: 5px;
+}
+
 
 /* ========================= TRANSITIONS ========================= */
 
@@ -2658,7 +2663,6 @@ strong {
   cursor: pointer;
 }
 .checkmark:before {
-	content: '\e82d';
 	font-family: 'fontello';
 	position: absolute;
 	top: 50%;

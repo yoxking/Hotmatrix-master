@@ -40,6 +40,9 @@ public class KaptchaConfig {
         properties.setProperty(KAPTCHA_TEXTPRODUCER_FONT_NAMES, "Arial,Courier");
         // 图片样式 水纹com.google.code.kaptcha.impl.WaterRipple 鱼眼com.google.code.kaptcha.impl.FishEyeGimpy 阴影com.google.code.kaptcha.impl.ShadowGimpy
         properties.setProperty(KAPTCHA_OBSCURIFICATOR_IMPL, "com.google.code.kaptcha.impl.WaterRipple");
+        //背景颜色渐变，开始-结束颜色 	light grey-white
+        properties.setProperty(KAPTCHA_BACKGROUND_CLR_FROM,"LIGHT_GRAY");
+        properties.setProperty(KAPTCHA_BACKGROUND_CLR_TO,"LIGHT_GRAY");
         Config config = new Config(properties);
         defaultKaptcha.setConfig(config);
         return defaultKaptcha;

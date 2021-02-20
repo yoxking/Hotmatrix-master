@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: headform('心理测评中心-控制台')" />
+    <style type="text/css">
+        .wrapper_box {
+            margin: 0;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper_box">
+    <br/>
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">专家姓名</label>
+            <div class="layui-input-block">
+                <input type="hidden" id="ruserNo" name="ruserNo" th:value="${exptInfo.ruserNo}" >
+                <input type="text" id="ruserName" name="ruserName" th:value="${exptInfo.ruserName}" readonly class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">专家简介</label>
+            <div class="layui-input-block">
+                <textarea id="email" name="email" class="layui-textarea">
+                    [[${exptInfo.email}]]
+                </textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">预约时间</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" id="registTime" name="registTime" placeholder="yyyy-MM-dd">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">验证文本</label>
+                <div class="layui-input-block">
+                    <input type="text" id="validStr" name="validStr" required lay-verify="required" placeholder="请输入YES"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal" onclick="onRegist()">确认预约</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</div>
+
+<th:block th:include="include :: scriptform" />
+<script type="text/javascript" th:inline="javascript">
+
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+
+            //常规用法
+            laydate.render({
+                elem: '#registTime'
+            });
+        });
+
+    function onRegist(){
+
+        var ruserNo = $("input[name='ruserNo']").val();
+        var registTime = $("input[name='registTime']").val();
+        var validStr = $("input[name='validStr']").val();
+
+        if(validStr=='YES'){
+            $.ajax({
+                type: "post",
+                url: "/expertview/saveRegist",
+                data: {
+                    "ruserNo": ruserNo,
+                    "registTime":registTime
+                },
+                success: function(res) {
+                    layer.msg(res.msg)
+                }
+            });
+        }else{
+            layer.msg("请输入验证文本YES并提交!");
+        }
+    }
+    function onCancel(){
+        layer.closeAll();
+    }
+</script>
+</body>
+</html>

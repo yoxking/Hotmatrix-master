@@ -1,149 +1,93 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: headblock('心理测评中心-控制台')" />
+    <th:block th:include="include :: headform('心理测评中心-控制台')" />
+    <style type="text/css">
+        .wrapper_box {
+            margin: 0;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-<div class="wrapper hp_1">
-    <th:block th:include="include :: topmenubar" />
 
-    <th:block th:include="include :: sidemenubar" />
-
-    <section class="mn-sec">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-9">
-                    <div class="mn-vid-sc single_video">
-                        <div class="vid-1">
-                            <div class="vid-info">
-                                <h3>[[${paperInfo.paperTitle}]]</h3>
-                                <div class="info-pr">
-                                    <span>测评次数：[[${paperInfo.examTimes}]]</span>
-                                    <ul class="pr_links">
-                                        <li>
-                                            <button data-toggle="tooltip" data-placement="top" title="喜欢">
-                                                <i class="icon-thumbs_up_fill"></i>
-                                            </button>
-                                            <span>[[${paperInfo.examTimes}]]</span>
-                                        </li>
-                                        <li>
-                                            <button data-toggle="tooltip" data-placement="top" title="不喜欢">
-                                                <i class="icon-thumbs_down_fill"></i>
-                                            </button>
-                                            <span>0</span>
-                                        </li>
-                                    </ul>
-                                    <div class="clearfix"></div>
-                                </div><!--info-pr end-->
-                            </div><!--vid-info end-->
-                        </div><!--vid-1 end-->
-                        <div class="abt-mk">
-                            <div class="info-pr-sec">
-                                <div class="vcp_inf cr">
-                                    <div class="vc_hd">
-                                        <img th:src="(${paperInfo.paperPoster} == '') ? @{/imgs/resources/vide6.png} : @{${paperInfo.paperPoster}}" alt="海报图片">
-                                    </div>
-                                    <div class="vc_info pr">
-                                        <h4>测评用时</h4>
-                                        <span>[[${paperInfo.exDruation}]]</span>
-                                    </div>
-                                </div><!--vcp_inf end-->
-                                <ul class="chan_cantrz">
-                                    <li>
-                                        <a th:href="@{/paperview/examview(id=${paperInfo.paperNo})}" th:title="${paperInfo.paperTitle}" class="donate">马上测评</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="" class="subscribe">订阅收藏</a>
-                                    </li>
-                                </ul><!--chan_cantrz end-->
-                                <ul class="df-list">
-                                    <li>
-                                        <button data-toggle="tooltip" data-placement="top" title="分享测评">
-                                            <i class="icon-share"></i>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button data-toggle="tooltip" data-placement="top" title="反馈问题">
-                                            <i class="icon-flag"></i>
-                                        </button>
-                                    </li>
-                                </ul><!--df-list end-->
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="about-ch-sec">
-                                <div class="abt-rw">
-                                    <h4>费用:</h4>
-                                    <p>[[${paperInfo.paperPrice}]]</p>
-                                </div>
-                                <div class="abt-rw">
-                                    <h4>分类 : </h4>
-                                    <ul>
-                                        <li><span>Gaming</span></li>
-                                        <li><span>PS4 Exclusive  </span></li>
-                                        <li><span>Gameplay  </span></li>
-                                        <li><span>1080p</span></li>
-                                    </ul>
-                                </div>
-                                <div class="abt-rw">
-                                    <h4>简介 : </h4>
-                                    <p>[[${paperInfo.paperDesc}]]</p>
-                                </div>
-                                <div class="abt-rw tgs">
-                                    <h4>标签 : </h4>
-                                    <ul>
-                                        <li><a href="#" title="">#[[${paperInfo.paperTitle}]]</a></li>
-                                        <li><a href="#" title="">#denim</a></li>
-                                        <li><a href="#" title="">#tshirt</a></li>
-                                    </ul>
-                                </div>
-                            </div><!--about-ch-sec end-->
-                        </div><!--abt-mk end-->
-                    </div><!--mn-vid-sc end--->
-                </div><!---col-lg-9 end-->
-                <div class="col-lg-3">
-                    <div class="sidebar">
-                        <div class="vidz-prt">
-                            <h2 class="sm-vidz" style="font-weight: bold;">推荐咨询师</h2>
-                            <div class="clearfix"></div>
-                        </div><!--vidz-prt end-->
-                        <div class="videoo-list-ab">
-                            <div class="videoo">
-                                <div class="vid_thumbainl">
-                                    <a href="#" title="马上预约">
-                                        <img src="http://127.0.0.1:8095/imgs/resources/vide6.png" alt="">
-                                    </a>
-                                </div><!--vid_thumbnail end-->
-                                <div class="video_info">
-                                    <h3><a href="#" title="马上预约">张三</a></h3>
-                                    <h4>心理咨询师</h4>
-                                    <span>咨询人数：2K.  <small class="posted_dt">1天前</small></span>
-                                </div>
-                            </div><!--videoo end-->
-                            <div class="videoo">
-                                <div class="vid_thumbainl">
-                                    <a href="#" title="马上预约">
-                                        <img src="http://127.0.0.1:8095/imgs/resources/vide6.png" alt="">
-                                    </a>
-                                </div><!--vid_thumbnail end-->
-                                <div class="video_info">
-                                    <h3><a href="#" title="马上预约">李四</a></h3>
-                                    <h4>心理咨询师</h4>
-                                    <span>咨询人数：2K.  <small class="posted_dt">1周前</small></span>
-                                </div>
-                            </div><!--videoo end-->
-                        </div><!--videoo-list-ab end-->
-                    </div><!--side-bar end-->
+<div class="wrapper_box">
+    <br/>
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">活动名称</label>
+            <div class="layui-input-block">
+                <input type="hidden" id="salonNo" name="salonNo" th:value="${salonInfo.salonNo}" >
+                <input type="text" id="salonName" name="salonName" th:value="${salonInfo.salonName}" readonly class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">活动时间</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" id="startTime" name="startTime" readonly th:value="${salonInfo.startTime}">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">活动地址</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="salonAddress" name="salonAddress" readonly class="layui-input" th:value="${salonInfo.salonAddress}">
                 </div>
             </div>
         </div>
-    </section><!--mn-sec end-->
-
-    <th:block th:include="include :: copyright" />
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">活动说明</label>
+            <div class="layui-input-block">
+                <textarea id="salonContent" name="salonContent" class="layui-textarea">
+                    [[${salonInfo.salonContent}]]
+                </textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">验证文本</label>
+                <div class="layui-input-block">
+                    <input type="text" id="validStr" name="validStr" required lay-verify="required" placeholder="请输入YES"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal" onclick="onRegist()">确认报名</button>
+            </div>
+        </div>
+    </form>
 </div>
-<!--wrapper end-->
 
-<th:block th:include="include :: scriptblock" />
+</div>
+
+<th:block th:include="include :: scriptform" />
+<script type="text/javascript" th:inline="javascript">
+
+    function onRegist(){
+
+        var salonNo = $("input[name='salonNo']").val();
+        var validStr = $("input[name='validStr']").val();
+
+        if(validStr=='YES'){
+            $.ajax({
+                type: "post",
+                url: "/salonsview/saveRegist",
+                data: {
+                    "salonNo": salonNo
+                },
+                success: function(res) {
+                    layer.msg(res.msg)
+                }
+            });
+        }else{
+            layer.msg("请输入验证文本YES并提交!");
+        }
+    }
+    function onCancel(){
+        layer.closeAll();
+    }
+</script>
 </body>
-
 </html>

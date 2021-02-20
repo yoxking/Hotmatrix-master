@@ -13,7 +13,7 @@
 
     <name>hotmatrix</name>
     <url>http://www.hotmatrix.net</url>
-    <description>基云后台管理系统</description>
+    <description>热度空间管理系统</description>
 
     <properties>
         <hotmatrix.version>1.0.0</hotmatrix.version>
@@ -167,6 +167,8 @@
         <module>hotmatrix-system</module>
         <module>hotmatrix-collect</module>
         <module>hotmatrix-console</module>
+        <module>hotmatrix-process</module>
+        <module>hotmatrix-fireflow</module>
     </modules>
 
     <dependencies>

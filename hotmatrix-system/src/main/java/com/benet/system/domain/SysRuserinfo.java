@@ -3,14 +3,14 @@ package com.benet.system.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.benet.common.annotation.Excel;
-import com.benet.common.core.domain.BaseEntity;
 import java.util.Date;
+import com.benet.common.core.domain.BaseEntity;
 
 /**
  * 注册用户信息对象 sys_ruserinfo
  * 
  * @author yoxking
- * @date 2020-04-06
+ * @date 2020-12-01
  */
 public class SysRuserinfo extends BaseEntity
 {
@@ -22,14 +22,6 @@ public class SysRuserinfo extends BaseEntity
     /** 用户ID */
     @Excel(name = "用户ID")
     private String userNo;
-
-    /** 部门ID */
-    @Excel(name = "部门ID")
-    private String deptNo;
-
-    /** 机构ID */
-    @Excel(name = "机构ID")
-    private String orgzNo;
 
     /** 登录账号 */
     @Excel(name = "登录账号")
@@ -47,9 +39,25 @@ public class SysRuserinfo extends BaseEntity
     @Excel(name = "英文用户昵称")
     private String userEnname;
 
-    /** 用户类型（00系统用户） */
-    @Excel(name = "用户类型", readConverterExp = "0=0系统用户")
+    /** 用户类型（1普通用户 2系统用户） */
+    @Excel(name = "用户类型", readConverterExp = "1=普通用户,2=系统用户")
     private String userType;
+
+    /** 部门ID */
+    @Excel(name = "部门ID")
+    private String deptNo;
+
+    /** 机构ID */
+    @Excel(name = "机构ID")
+    private String orgzNo;
+
+    /** 岗位ID */
+    @Excel(name = "岗位ID")
+    private String postNo;
+
+    /** 关联系统账号 */
+    @Excel(name = "关联系统账号")
+    private String suserNo;
 
     /** 手机号码 */
     @Excel(name = "手机号码")
@@ -87,6 +95,18 @@ public class SysRuserinfo extends BaseEntity
     @Excel(name = "分支编号")
     private String branchNo;
 
+    /** 创建者 */
+    private String createBy;
+
+    /** 创建时间 */
+    private Date createTime;
+
+    /** 更新者 */
+    private String updateBy;
+
+    /** 更新时间 */
+    private Date updateTime;
+
     /** 删除标志（1代表存在 0代表删除） */
     @Excel(name = "删除标志", readConverterExp = "1=代表存在,0=代表删除")
     private String deleteFlag;
@@ -120,24 +140,6 @@ public class SysRuserinfo extends BaseEntity
     public String getUserNo() 
     {
         return userNo;
-    }
-    public void setDeptNo(String deptNo) 
-    {
-        this.deptNo = deptNo;
-    }
-
-    public String getDeptNo() 
-    {
-        return deptNo;
-    }
-    public void setOrgzNo(String orgzNo) 
-    {
-        this.orgzNo = orgzNo;
-    }
-
-    public String getOrgzNo() 
-    {
-        return orgzNo;
     }
     public void setLoginName(String loginName) 
     {
@@ -183,6 +185,42 @@ public class SysRuserinfo extends BaseEntity
     public String getUserType() 
     {
         return userType;
+    }
+    public void setDeptNo(String deptNo) 
+    {
+        this.deptNo = deptNo;
+    }
+
+    public String getDeptNo() 
+    {
+        return deptNo;
+    }
+    public void setOrgzNo(String orgzNo) 
+    {
+        this.orgzNo = orgzNo;
+    }
+
+    public String getOrgzNo() 
+    {
+        return orgzNo;
+    }
+    public void setPostNo(String postNo) 
+    {
+        this.postNo = postNo;
+    }
+
+    public String getPostNo() 
+    {
+        return postNo;
+    }
+    public void setSuserNo(String suserNo) 
+    {
+        this.suserNo = suserNo;
+    }
+
+    public String getSuserNo() 
+    {
+        return suserNo;
     }
     public void setTelephone(String telephone) 
     {
@@ -265,6 +303,42 @@ public class SysRuserinfo extends BaseEntity
     {
         return branchNo;
     }
+    public void setCreateBy(String createBy) 
+    {
+        this.createBy = createBy;
+    }
+
+    public String getCreateBy() 
+    {
+        return createBy;
+    }
+    public void setCreateTime(Date createTime) 
+    {
+        this.createTime = createTime;
+    }
+
+    public Date getCreateTime() 
+    {
+        return createTime;
+    }
+    public void setUpdateBy(String updateBy) 
+    {
+        this.updateBy = updateBy;
+    }
+
+    public String getUpdateBy() 
+    {
+        return updateBy;
+    }
+    public void setUpdateTime(Date updateTime) 
+    {
+        this.updateTime = updateTime;
+    }
+
+    public Date getUpdateTime() 
+    {
+        return updateTime;
+    }
     public void setDeleteFlag(String deleteFlag) 
     {
         this.deleteFlag = deleteFlag;
@@ -307,13 +381,15 @@ public class SysRuserinfo extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("userNo", getUserNo())
-            .append("deptNo", getDeptNo())
-            .append("orgzNo", getOrgzNo())
             .append("loginName", getLoginName())
             .append("password", getPassword())
             .append("userCnname", getUserCnname())
             .append("userEnname", getUserEnname())
             .append("userType", getUserType())
+            .append("deptNo", getDeptNo())
+            .append("orgzNo", getOrgzNo())
+            .append("postNo", getPostNo())
+            .append("suserNo", getSuserNo())
             .append("telephone", getTelephone())
             .append("email", getEmail())
             .append("sex", getSex())

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+    <bean id="runtimeContext"
+          class="com.benet.fireflow.engine.RuntimeContext"
+          init-method="initialize">
+        <property name="taskInstanceManager" ref="taskInstanceManager"></property>
+        <property name="definitionService" ref="definitionService"></property>
+        <property name="persistenceService" ref="persistenceService"></property>
+        <property name="conditionResolver" ref="conditionResolver"></property>
+        <property name="calendarService" ref="calendarService"></property>
+        <property name="beanFactory" ref="springBeanFactory"></property>
+        <property name="kernelManager" ref="kernelManager"></property>
+        <property name="enableTrace" value="true"></property>
+    </bean>
+    
+        <!-- ************ TaskInstance Manager Begin*************************** -->
+    <bean id="taskInstanceManager"  class="com.benet.fireflow.engine.taskinstance.BasicTaskInstanceManager">
+        <property name="defaultTaskInstanceCreator" ref="defaultTaskInstanceCreator"></property>
+        <property name="defaultFormTaskInstanceRunner" ref="defaultFormTaskInstanceRunner"></property>
+        <property name="defaultToolTaskInstanceRunner" ref="defaultToolTaskInstanceRunner"></property>
+        <property name="defaultSubflowTaskInstanceRunner" ref="defaultSubflowTaskInstanceRunner"></property>
+        <property name="defaultFormTaskInstanceCompletionEvaluator" ref="defaultFormTaskInstanceCompletionEvaluator"></property>
+        <property name="defaultToolTaskInstanceCompletionEvaluator" ref="defaultToolTaskInstanceCompletionEvaluator"></property>
+        <property name="defaultSubflowTaskInstanceCompletionEvaluator" ref="defaultSubflowTaskInstanceCompletionEvaluator"></property>
+        <property name="defaultTaskInstanceEventListener" ref="defaultTaskInstanceEventListener"></property>
+    </bean>
+    <bean id="defaultTaskInstanceCreator" class="com.benet.fireflow.engine.taskinstance.DefaultTaskInstanceCreator">
+    </bean>
+    <bean id="defaultFormTaskInstanceRunner" class="com.benet.fireflow.engine.taskinstance.DefaultFormTaskInstanceRunner">
+    </bean>
+    <bean id="defaultToolTaskInstanceRunner" class="com.benet.fireflow.engine.taskinstance.DefaultToolTaskInstanceRunner">
+    </bean>
+    <bean id="defaultSubflowTaskInstanceRunner" class="com.benet.fireflow.engine.taskinstance.DefaultSubflowTaskInstanceRunner">
+    </bean>
+    <bean id="defaultFormTaskInstanceCompletionEvaluator" class="com.benet.fireflow.engine.taskinstance.DefaultFormTaskInstanceCompletionEvaluator">
+    </bean>
+    <bean id="defaultToolTaskInstanceCompletionEvaluator" class="com.benet.fireflow.engine.taskinstance.DefaultToolTaskInstanceCompletionEvaluator">
+    </bean>
+    <bean id="defaultSubflowTaskInstanceCompletionEvaluator" class="com.benet.fireflow.engine.taskinstance.DefaultSubflowTaskInstanceCompletionEvaluator">
+    </bean>
+    <bean id="defaultTaskInstanceEventListener" class="com.benet.fireflow.engine.taskinstance.DefaultTaskInstanceEventListener">
+    </bean>
+    
+        <!-- ************ TaskInstance Manager End*************************** -->
+
+        <!-- **************Persistence Begin******************** -->
+    <bean id="persistenceService"
+		      class="com.benet.fireflow.engine.persistence.DefaultPersistenceService">
+    </bean>
+        <!-- ***************Persistence End******************* -->
+        <!-- **************workflow Definitions Begin*******  -->
+    <bean id="definitionService"
+		class="com.benet.fireflow.engine.definition.DefinitionService4DBMS"></bean>
+        <!-- **************workflow Definitions End*******  -->
+        <!-- **************CalendarService Begin******************** -->
+    <bean id="calendarService"
+		class="com.benet.fireflow.engine.calendar.DefaultCalendarService">
+    </bean>
+        <!-- ***************CalendarService End******************* -->
+    <bean id="conditionResolver" class="com.benet.fireflow.engine.condition.ConditionResolver">
+    </bean>
+    <bean id="springBeanFactory" class="com.benet.fireflow.engine.beanfactory.SpringBeanFactory">
+    </bean>
+        <!-- **************Kernel Manager Begin*************** -->
+    <bean id="kernelManager"
+          class="com.benet.fireflow.kernel.KernelManager">
+        <property name="kernelExtensions">
+            <map>
+                <entry key="com.benet.fireflow.kernel.StartNodeInstance">
+                    <list>
+                        <ref bean="startNodeInstanceEventListenser"/>
+                    </list>
+                </entry>
+                <entry key="com.benet.fireflow.kernel.ActivityInstance" >
+                    <list>
+                        <ref bean="activityInstanceEventListener"/>
+                    </list>
+                </entry>
+                <entry key="com.benet.fireflow.kernel.SynchronizerInstance">
+                    <list>
+                        <ref  bean="synchronizerInstanceEventListenser"/>
+                    </list>
+                </entry>
+                <entry key="com.benet.fireflow.kernel.EndNodeInstance">
+                    <list>
+                        <ref bean="endNodeInstanceEventListenser"/>
+                    </list>
+                </entry>
+                <entry key="com.benet.fireflow.kernel.TransitionInstance">
+                    <list>
+                        <ref bean="transitionInstanceEventListenser"/>
+                    </list>
+                </entry>
+                <entry key="com.benet.fireflow.kernel.LoopInstance">
+                    <list>
+                        <ref bean="loopInstanceEventListenser"/>
+                    </list>
+                </entry>
+            </map>
+        </property>
+    </bean>
+        <!-- **************Kernel Manager End*************** -->
+        
+        <!-- kernel extensions (begin) -->
+    <bean id="startNodeInstanceEventListenser"
+        class="com.benet.fireflow.engine.kernelextensions.StartNodeInstanceExtension">
+    </bean>
+    <bean id="activityInstanceEventListener"
+        class="com.benet.fireflow.engine.kernelextensions.ActivityInstanceExtension">
+    </bean>
+    <bean id="synchronizerInstanceEventListenser"
+        class="com.benet.fireflow.engine.kernelextensions.SynchronizerInstanceExtension">
+    </bean>
+    <bean id="endNodeInstanceEventListenser"
+        class="com.benet.fireflow.engine.kernelextensions.EndNodeInstanceExtension">
+    </bean>
+    <bean id="transitionInstanceEventListenser"
+        class="com.benet.fireflow.engine.kernelextensions.TransitionInstanceExtension">
+    </bean>
+    <bean id="loopInstanceEventListenser"
+        class="com.benet.fireflow.engine.kernelextensions.LoopInstanceExtension">
+    </bean>
+
+        <!-- kernel extensions  (end)-->
+</beans>

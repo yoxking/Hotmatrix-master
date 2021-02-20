@@ -9,7 +9,7 @@ public class QuestInfoVo {
     private String questType;
     private String questDesc;
     private String questMust;
-    private List<QuestOptVo> questOpts;
+    private List<QuestOptsVo> questOpts;
 
     public String getQuestNo() {
         return questNo;
@@ -51,11 +51,11 @@ public class QuestInfoVo {
         this.questMust = questMust;
     }
 
-    public List<QuestOptVo> getQuestOpts() {
+    public List<QuestOptsVo> getQuestOpts() {
         return questOpts;
     }
 
-    public void setQuestOpts(List<QuestOptVo> questOpts) {
+    public void setQuestOpts(List<QuestOptsVo> questOpts) {
         this.questOpts = questOpts;
     }
 }

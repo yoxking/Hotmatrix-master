@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: headblock('心理测评中心-控制台')" />
+</head>
+<body>
+<div class="wrapper hp_1">
+    <th:block th:include="include :: topmenubar" />
+
+    <th:block th:include="include :: sidemenubar" />
+
+    <section class="videso_section">
+        <div class="info-pr-sec">
+            <div class="container">
+                <div class="vidz_sec">
+                    <h3>栏目列表</h3>
+                    <div class="clearfix"></div>
+                    <div class="vidz_list">
+                        <div class="row">
+                            <div th:each="exams:${pagerInfo.list}" class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
+                                <div class="videoo">
+                                    <div class="vid_thumbainl">
+                                        <a th:href="@{/examsview/detail(id=${exams.examsNo})}" target="_blank" th:title="${exams.examsTitle}">
+                                            <img th:src="(${exams.examsPoster} == '') ? @{/imgs/resources/vide6.png} : @{${exams.examsPoster}}" alt="海报图片">
+                                            <span class="vid-time">[[${exams.examsDruation}]]</span>
+                                            <span class="watch_later">
+                                                       <i class="icon-watch_later_fill"></i>
+                                                    </span>
+                                        </a>
+                                    </div>
+                                    <!--vid_thumbnail end-->
+                                    <div class="video_info">
+                                        <h3><a href="#" title="">[[${exams.examsTitle}]]</a></h3>
+                                        <h4><a href="#" title="">[[${exams.examsDesc}]]</a></h4>
+                                        <span>次数：[[${exams.examsTimes}]] &nbsp;&nbsp;价格：[[${exams.examsPrice}]]</span>
+                                    </div>
+                                </div>
+                                <!--videoo end-->
+                            </div>
+                        </div>
+                    </div><!--vidz_list end-->
+                    <nav aria-label="salons list pages" style="text-align: center;">
+                        <ul class="pagination">
+                            <li th:class="${pagerInfo.pageIndex>1}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/examsview/catelist(classNo=${classNo},pageIndex=1)}">首页</a></li>
+                            <li th:class="${pagerInfo.pageIndex>1}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/examsview/catelist(classNo=${classNo},pageIndex=${pagerInfo.pageIndex-1})}">上一页</a></li>
+                            <li th:class="${pagerInfo.pageIndex<pagerInfo.pageTotal}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/examsview/catelist(classNo=${classNo},pageIndex=${pagerInfo.pageIndex+1})}">下一页</a></li>
+                            <li th:class="${pagerInfo.pageIndex<pagerInfo.pageTotal}?'page-item':'page-item disabled'"><a class="page-link" th:href="@{/examsview/catelist(classNo=${classNo},pageIndex=${pagerInfo.pageTotal})}">尾页</a></li>
+                            <li class="page-item disabled"> <a class="page-link" href="#">当前第[[${pagerInfo.pageIndex}]]页/共[[${pagerInfo.pageTotal}]]页</a></li>
+                        </ul>
+                    </nav>
+                    <div class="clearfix"></div>
+                </div><!--vidz_videos end-->
+            </div>
+        </div>
+    </section>
+
+    <th:block th:include="include :: copyright" />
+</div>
+<!--wrapper end-->
+
+<th:block th:include="include :: scriptblock" />
+</body>
+
+</html>

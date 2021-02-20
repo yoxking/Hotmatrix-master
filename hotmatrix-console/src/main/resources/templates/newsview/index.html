@@ -2,6 +2,22 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="include :: headblock('心理测评中心-控制台')" />
+    <style type="text/css">
+        .clearit{
+            clear: both;
+        }
+        .newswrap{
+            margin: 0;
+            padding: 10px 5px;
+        }
+
+        .newswrap .title{
+            float:left;
+        }
+        .newswrap .desc{
+            float:right;
+        }
+    </style>
 </head>
 <body>
 <div class="wrapper hp_1">
@@ -30,10 +46,11 @@
                             <div class="tab-pane fade show active" id="watch_history" role="tabpanel" aria-labelledby="watch_history_tab">
                                 <div class="tabs_lzt">
                                     <div th:each="contzInfo:${pagerInfo.list}">
-                                        <p>
-                                            <a th:href="@{/newsview/detail(id=${contzInfo.cntzNo})}" target="_blank" th:title="${contzInfo.title}">[[${contzInfo.title}]]</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <span>点击次数:[[${contzInfo.hitCount}]]  &nbsp;&nbsp;&nbsp;&nbsp;发布时间:<small class="posted_dt">[[${contzInfo.pubdate}]]</small></span>
-                                        </p>
+                                        <div class="newswrap">
+                                            <div class="title"><a th:href="@{/newsview/detail(id=${contzInfo.cntzNo})}" target="_blank" th:title="${contzInfo.title}">[[${contzInfo.title}]]</a></div>
+                                            <div class="desc"><small class="posted_dt">[[${contzInfo.pubdate}]]([[${contzInfo.hitCount}]])</small></div>
+                                            <div class="clearit"></div>
+                                        </div>
                                     </div><!--tab-history end-->
                                     <nav aria-label="news list pages" style="text-align: center;">
                                         <ul class="pagination">
@@ -50,23 +67,7 @@
                     </div>
                 </div><!---col-lg-9 end-->
                 <div class="col-lg-3">
-                    <div class="sidebar">
-                        <div class="vidz-adimg">
-                            <img src="/imgs/resources/vide6.png" alt="" />
-                        </div>
-                        <div class="vidz-prt">
-                            <h2 class="sm-vidz" style="font-weight: bold;">热门推荐</h2>
-                            <div class="clearfix"></div>
-                        </div><!--vidz-prt end-->
-                        <div class="videoo-list-ab">
-                            <ul>
-                                <li><a href="#" title="">一例厌学高中生的咨询案例报告 79140次阅读  9个赞</a> </li>
-                                <li><a href="#" title="">一例厌学高中生的咨询案例报告 79140次阅读  9个赞</a> </li>
-                                <li><a href="#" title="">一例厌学高中生的咨询案例报告 79140次阅读  9个赞</a> </li>
-                                <li><a href="#" title="">一例厌学高中生的咨询案例报告 79140次阅读  9个赞</a> </li>
-                            </ul>
-                        </div><!--videoo-list-ab end-->
-                    </div><!--side-bar end-->
+                    <th:block th:include="include :: hotopreads" />
                 </div>
             </div>
         </div>

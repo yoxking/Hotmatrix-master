@@ -2,7 +2,6 @@ package com.benet.system.service.impl;
 
 import java.util.List;
 
-import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;

@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
@@ -13,7 +12,6 @@ import com.benet.system.domain.SysRolepermit;
 import com.benet.system.domain.SysSuserrole;
 import com.benet.system.mapper.SysRolepermitMapper;
 import com.benet.system.mapper.SysSuserroleMapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.benet.system.mapper.SysRoleinfoMapper;

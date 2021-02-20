@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.benet.collect.mapper.CoctSalonsinfoMapper">
+
+    <resultMap type="CoctSalonsinfo" id="CoctSalonsinfoResult">
+        <result property="id" column="id"/>
+        <result property="salonNo" column="salon_no"/>
+        <result property="salonName" column="salon_name"/>
+        <result property="salonPoster" column="salon_poster"/>
+        <result property="salonDesc" column="salon_desc"/>
+        <result property="salonType" column="salon_type"/>
+        <result property="dataFrom" column="data_from"/>
+        <result property="viewType" column="view_type"/>
+        <result property="classNo" column="class_no"/>
+        <result property="startTime" column="start_time"/>
+        <result property="enditTime" column="endit_time"/>
+        <result property="salonAddress" column="salon_address"/>
+        <result property="salonRusers" column="salon_rusers"/>
+        <result property="salonContent" column="salon_content"/>
+        <result property="salonState" column="salon_state"/>
+        <result property="checkState" column="check_state"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteFlag" column="delete_flag"/>
+        <result property="comments" column="comments"/>
+        <result property="appCode" column="app_code"/>
+        <result property="version" column="version"/>
+    </resultMap>
+
+    <sql id="selectCoctSalonsinfoVo">
+        select id, salon_no, salon_name, salon_poster, salon_desc, salon_type, data_from, view_type, class_no, start_time, endit_time, salon_address, salon_rusers, salon_content, salon_state, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from coct_salonsinfo
+    </sql>
+
+    <select id="getAllRecords" resultMap="CoctSalonsinfoResult">
+        <include refid="selectCoctSalonsinfoVo"/>
+        where delete_flag='1' and app_code=#{appCode}
+    </select>
+
+    <select id="getRecordsByClassNo" resultMap="CoctSalonsinfoResult">
+        <include refid="selectCoctSalonsinfoVo"/>
+        where delete_flag='1' and app_code=#{appCode} and class_no=#{classNo}
+    </select>
+
+    <select id="getRecordsByPaging" resultMap="CoctSalonsinfoResult">
+        <include refid="selectCoctSalonsinfoVo"/>
+        where delete_flag='1' and app_code=${appCode}
+        <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
+        order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
+    </select>
+
+    <select id="getRecordByNo" resultMap="CoctSalonsinfoResult">
+        <include refid="selectCoctSalonsinfoVo"/>
+        where delete_flag='1' and app_code=#{appCode} and salon_no = #{no}
+    </select>
+
+    <select id="getRecordNameByNo" resultType="String">
+        select salon_name from coct_salonsinfo
+        where delete_flag='1' and app_code=#{appCode} and salon_no = #{no}
+    </select>
+
+    <select id="getCountByCondition" resultType="Integer">
+        select count(*) from coct_salonsinfo
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </select>
+
+    <insert id="AddNewRecord" parameterType="CoctSalonsinfo" useGeneratedKeys="true" keyProperty="id">
+        insert into coct_salonsinfo (
+        <if test="info.salonNo != null  and info.salonNo != ''">salon_no,</if>
+        <if test="info.salonName != null  and info.salonName != ''">salon_name,</if>
+        <if test="info.salonPoster != null  and info.salonPoster != ''">salon_poster,</if>
+        <if test="info.salonDesc != null  and info.salonDesc != ''">salon_desc,</if>
+        <if test="info.salonType != null  and info.salonType != ''">salon_type,</if>
+        <if test="info.dataFrom != null  and info.dataFrom != ''">data_from,</if>
+        <if test="info.viewType != null  and info.viewType != ''">view_type,</if>
+        <if test="info.classNo != null  and info.classNo != ''">class_no,</if>
+        <if test="info.startTime != null ">start_time,</if>
+        <if test="info.enditTime != null ">endit_time,</if>
+        <if test="info.salonAddress != null  and info.salonAddress != ''">salon_address,</if>
+        <if test="info.salonRusers != null  and info.salonRusers != ''">salon_rusers,</if>
+        <if test="info.salonContent != null  and info.salonContent != ''">salon_content,</if>
+        <if test="info.salonState != null  and info.salonState != ''">salon_state,</if>
+        <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
+        <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
+        <if test="info.createTime != null ">create_time,</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">update_by,</if>
+        <if test="info.updateTime != null ">update_time,</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag,</if>
+        <if test="info.comments != null  and info.comments != ''">comments,</if>
+        <if test="info.appCode != null  and info.appCode != ''">app_code,</if>
+        <if test="info.version != null ">version</if>
+        )values(
+        <if test="info.salonNo != null  and info.salonNo != ''">#{info.salonNo},</if>
+        <if test="info.salonName != null  and info.salonName != ''">#{info.salonName},</if>
+        <if test="info.salonPoster != null  and info.salonPoster != ''">#{info.salonPoster},</if>
+        <if test="info.salonDesc != null  and info.salonDesc != ''">#{info.salonDesc},</if>
+        <if test="info.salonType != null  and info.salonType != ''">#{info.salonType},</if>
+        <if test="info.dataFrom != null  and info.dataFrom != ''">#{info.dataFrom},</if>
+        <if test="info.viewType != null  and info.viewType != ''">#{info.viewType},</if>
+        <if test="info.classNo != null  and info.classNo != ''">#{info.classNo},</if>
+        <if test="info.startTime != null ">#{info.startTime},</if>
+        <if test="info.enditTime != null ">#{info.enditTime},</if>
+        <if test="info.salonAddress != null  and info.salonAddress != ''">#{info.salonAddress},</if>
+        <if test="info.salonRusers != null  and info.salonRusers != ''">#{info.salonRusers},</if>
+        <if test="info.salonContent != null  and info.salonContent != ''">#{info.salonContent},</if>
+        <if test="info.salonState != null  and info.salonState != ''">#{info.salonState},</if>
+        <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
+        <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
+        <if test="info.createTime != null ">#{info.createTime},</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">#{info.updateBy},</if>
+        <if test="info.updateTime != null ">#{info.updateTime},</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">#{info.deleteFlag},</if>
+        <if test="info.comments != null  and info.comments != ''">#{info.comments},</if>
+        <if test="info.appCode != null  and info.appCode != ''">#{info.appCode},</if>
+        <if test="info.version != null ">#{info.version}</if>
+        )
+    </insert>
+
+    <update id="UpdateRecord" parameterType="CoctSalonsinfo">
+        update coct_salonsinfo
+        <set>
+            <if test="info.salonNo != null  and info.salonNo != ''">salon_no = #{info.salonNo},</if>
+            <if test="info.salonName != null  and info.salonName != ''">salon_name = #{info.salonName},</if>
+            <if test="info.salonPoster != null  and info.salonPoster != ''">salon_poster = #{info.salonPoster},</if>
+            <if test="info.salonDesc != null  and info.salonDesc != ''">salon_desc = #{info.salonDesc},</if>
+            <if test="info.salonType != null  and info.salonType != ''">salon_type = #{info.salonType},</if>
+            <if test="info.dataFrom != null  and info.dataFrom != ''">data_from = #{info.dataFrom},</if>
+            <if test="info.viewType != null  and info.viewType != ''">view_type = #{info.viewType},</if>
+            <if test="info.classNo != null  and info.classNo != ''">class_no = #{info.classNo},</if>
+            <if test="info.startTime != null ">start_time = #{info.startTime},</if>
+            <if test="info.enditTime != null ">endit_time = #{info.enditTime},</if>
+            <if test="info.salonAddress != null  and info.salonAddress != ''">salon_address = #{info.salonAddress},</if>
+            <if test="info.salonRusers != null  and info.salonRusers != ''">salon_rusers = #{info.salonRusers},</if>
+            <if test="info.salonContent != null  and info.salonContent != ''">salon_content = #{info.salonContent},</if>
+            <if test="info.salonState != null  and info.salonState != ''">salon_state = #{info.salonState},</if>
+            <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
+            <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
+            <if test="info.createTime != null ">create_time = #{info.createTime},</if>
+            <if test="info.updateBy != null  and info.updateBy != ''">update_by = #{info.updateBy},</if>
+            <if test="info.updateTime != null ">update_time = #{info.updateTime},</if>
+            <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag = #{info.deleteFlag},</if>
+            <if test="info.comments != null  and info.comments != ''">comments = #{info.comments},</if>
+            <if test="info.appCode != null  and info.appCode != ''">app_code = #{info.appCode},</if>
+            <if test="info.version != null ">version = #{info.version}</if>
+        </set>
+        where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and salon_no =
+        #{info.salonNo}
+    </update>
+
+    <delete id="HardDeleteByNo">
+        delete from coct_salonsinfo
+        where delete_flag='1' and app_code=#{appCode} and salon_no = #{no}
+    </delete>
+
+    <delete id="HardDeleteByNos">
+        delete from coct_salonsinfo
+        where delete_flag='1' and app_code=#{appCode} and salon_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="HardDeleteByCondition">
+        delete from coct_salonsinfo
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </delete>
+
+    <delete id="SoftDeleteByNo">
+        update coct_salonsinfo set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and salon_no = #{no}
+    </delete>
+
+    <delete id="SoftDeleteByNos">
+        update coct_salonsinfo set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and salon_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="SoftDeleteByCondition">
+        update coct_salonsinfo set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </delete>
+
+</mapper>

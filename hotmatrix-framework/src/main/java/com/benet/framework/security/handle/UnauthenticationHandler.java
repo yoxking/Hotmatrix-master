@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.benet.common.core.domain.AjaxResult;
-import com.benet.common.enums.HttpStatus;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.web.ServletUtils;
 import org.springframework.security.core.AuthenticationException;

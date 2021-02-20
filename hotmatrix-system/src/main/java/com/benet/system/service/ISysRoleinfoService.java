@@ -5,7 +5,6 @@ import java.util.Set;
 
 import com.benet.common.core.pager.PagingModel;
 import com.benet.system.domain.SysRoleinfo;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * 角色信息Service接口

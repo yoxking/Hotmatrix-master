@@ -3,7 +3,6 @@ package ${packageName}.mapper;
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
 import ${packageName}.domain.${ClassName};
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**

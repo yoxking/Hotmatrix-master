@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: headform('心理测评中心-控制台')" />
+    <style type="text/css">
+        .wrapper_box {
+            margin: 0;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper_box">
+    <br/>
+    <ul class="layui-timeline">
+        <li class="layui-timeline-item">
+            <i class="layui-icon layui-timeline-axis"></i>
+            <div class="layui-timeline-content layui-text">
+                <h3 class="layui-timeline-title">2020.12.8</h3>
+                <p>
+                    热度空间 v1.0 发布了，
+                    <br>不枉近百个日日夜夜与之为伴。因小而大，因弱而强。
+                    <br>无论它能走多远，抑或如何支撑？至少我曾倾注全心，无怨无悔 <i class="layui-icon"></i>
+                </p>
+            </div>
+        </li>
+    </ul>
+</div>
+
+</div>
+
+<th:block th:include="include :: scriptform" />
+<script type="text/javascript" th:inline="javascript">
+
+</script>
+</body>
+</html>

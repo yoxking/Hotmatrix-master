@@ -27,11 +27,6 @@ public class HomeViewController extends BaseViewController {
         return "forget";
     }
 
-    @GetMapping(value="/helper")
-    public  String helper(){
-        return "helper";
-    }
-
     @GetMapping("/unauth")
     public String unauth()
     {

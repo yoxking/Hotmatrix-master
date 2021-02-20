@@ -33,13 +33,13 @@
                                         <div th:each="exptInfo:${pagerInfo.list}" class="tab-history">
                                             <div class="videoo">
                                                 <div class="vid_thumbainl ms">
-                                                    <a href="#" title="">
-                                                        <img src="images/resources/vide1.png" alt="">
+                                                    <a th:href="@{/expertview/detail(id=${exptInfo.ruserNo})}" th:title="${exptInfo.ruserName}">
+                                                        <img th:src="(${exptInfo.avatar} == '') ? @{/imgs/resources/vide6.png} : @{${exptInfo.avatar}}" alt="海报图片">
                                                     </a>
                                                 </div><!--vid_thumbnail end-->
                                                 <div class="video_info ms">
-                                                    <h3><a th:href="@{/expertview/detail(id=${exptInfo.ruserNo})}" title="">[[${exptInfo.ruserName}]]</a></h3>
-                                                    <h4><a th:href="@{/expertview/detail(id=${exptInfo.ruserNo})}" title="">[[${exptInfo.sex}]]</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+                                                    <h3><a th:href="@{/expertview/detail(id=${exptInfo.ruserNo})}" th:title="${exptInfo.ruserName}">[[${exptInfo.ruserName}]]</a></h3>
+                                                    <h4><a th:href="@{/expertview/detail(id=${exptInfo.ruserNo})}" th:title="${exptInfo.ruserName}">[[${exptInfo.sex}]]</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
                                                     <span>[[${exptInfo.ruserType}]] <small class="posted_dt">[[${exptInfo.telephone}]]</small></span>
                                                 </div>
                                                 <div class="clearfix"></div>
@@ -62,38 +62,7 @@
                     </div><!--ab-history end-->
                 </div><!---col-lg-9 end-->
                 <div class="col-lg-3">
-                    <div class="sidebar">
-                        <div class="vidz-prt">
-                            <h2 class="sm-vidz" style="font-weight: bold;">推荐咨询师</h2>
-                            <div class="clearfix"></div>
-                        </div><!--vidz-prt end-->
-                        <div class="videoo-list-ab">
-                            <div class="videoo">
-                                <div class="vid_thumbainl">
-                                    <a href="#" title="马上预约">
-                                        <img src="http://127.0.0.1:8095/imgs/resources/vide6.png" alt="">
-                                    </a>
-                                </div><!--vid_thumbnail end-->
-                                <div class="video_info">
-                                    <h3><a href="#" title="马上预约">张三</a></h3>
-                                    <h4>心理咨询师</h4>
-                                    <span>咨询人数：2K.  <small class="posted_dt">1天前</small></span>
-                                </div>
-                            </div><!--videoo end-->
-                            <div class="videoo">
-                                <div class="vid_thumbainl">
-                                    <a href="#" title="马上预约">
-                                        <img src="http://127.0.0.1:8095/imgs/resources/vide6.png" alt="">
-                                    </a>
-                                </div><!--vid_thumbnail end-->
-                                <div class="video_info">
-                                    <h3><a href="#" title="马上预约">李四</a></h3>
-                                    <h4>心理咨询师</h4>
-                                    <span>咨询人数：2K.  <small class="posted_dt">1周前</small></span>
-                                </div>
-                            </div><!--videoo end-->
-                        </div><!--videoo-list-ab end-->
-                    </div><!--side-bar end-->
+                    <th:block th:include="include :: topexperts" />
                 </div>
             </div>
         </div>

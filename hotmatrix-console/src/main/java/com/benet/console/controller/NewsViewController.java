@@ -2,7 +2,8 @@ package com.benet.console.controller;
 
 import com.benet.common.utils.date.DateUtils;
 import com.benet.console.common.BaseViewController;
-import com.benet.console.utils.ShiroUtils;
+import com.benet.console.utils.PageHelper;
+import com.benet.console.utils.ShiroHelper;
 import com.benet.console.vmodel.ContentInfoVo;
 import com.benet.console.vmodel.PagerInfoVo;
 import com.benet.system.domain.SysContentinfo;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 咨询
+ * 通知公告
  *
  * @author yoxking
  * @date 2020-04-20
@@ -39,12 +40,12 @@ public class NewsViewController extends BaseViewController {
     public String index(ModelMap model,@RequestParam(defaultValue = "1",value = "pageIndex") Integer pageIndex,
                         @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize)
     {
-        SysRuserinfo loginUser = ShiroUtils.getLoginRuser().getUser();
+        SysRuserinfo loginUser = ShiroHelper.getLoginRuser().getUser();
 
         List<ContentInfoVo> contzList=new ArrayList<>();
         ContentInfoVo contz=null;
 
-        String condition="";
+        String condition=" class_no in ('6000000161132102')  ";
         int count=contentinfoService.getCountByCondition(loginUser.getAppCode(),condition);
         List<SysContentinfo> infoList=contentinfoService.getRecordsByPaging(loginUser.getAppCode(),pageIndex,pageSize,condition,"pubdate","desc");
         if(infoList!=null&&infoList.size()>0){
@@ -68,6 +69,8 @@ public class NewsViewController extends BaseViewController {
 
         model.put("loginer",getLoginer());
         model.put("pagerInfo",pagerInfo);
+        model.put("mclassList", PageHelper.getExamClasses());
+        model.put("hotopReads", PageHelper.getHotopReads(3));
         return prefix +"/index";
     }
 
@@ -76,7 +79,7 @@ public class NewsViewController extends BaseViewController {
      */
     @GetMapping(value="/detail")
     public String detail(ModelMap model,@RequestParam("id") String id) {
-        SysRuserinfo loginUser = ShiroUtils.getLoginRuser().getUser();
+        SysRuserinfo loginUser = ShiroHelper.getLoginRuser().getUser();
 
         SysContentinfo info = contentinfoService.getRecordByNo(loginUser.getAppCode(), id);
         ContentInfoVo contz = new ContentInfoVo();
@@ -93,6 +96,8 @@ public class NewsViewController extends BaseViewController {
 
         model.put("loginer", getLoginer());
         model.put("contzInfo", contz);
+        model.put("mclassList", PageHelper.getExamClasses());
+        model.put("hotopReads", PageHelper.getHotopReads(3));
         return prefix + "/detail";
     }
 }

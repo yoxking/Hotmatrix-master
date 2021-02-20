@@ -4,7 +4,6 @@ import com.benet.common.exception.user.UserNotExistsException;
 import com.benet.common.exception.user.UserPasswordNotMatchException;
 import com.benet.common.utils.security.EncDesUtils;
 import com.benet.common.utils.string.StringUtils;
-import com.benet.console.utils.ShiroUtils;
 import com.benet.system.domain.SysRuserinfo;
 import com.benet.system.service.ISysRuserinfoService;
 import org.springframework.beans.factory.annotation.Autowired;

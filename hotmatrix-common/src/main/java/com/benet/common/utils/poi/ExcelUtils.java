@@ -20,12 +20,12 @@ import java.util.UUID;
 import com.benet.common.annotation.Excel;
 import com.benet.common.annotation.ExcelSet;
 import com.benet.common.configure.GlobalConfig;
-import com.benet.common.core.domain.AjaxResult;
 import com.benet.common.core.text.ConvertHelper;
 import com.benet.common.exception.BusinessException;
 import com.benet.common.utils.date.DateUtils;
 import com.benet.common.utils.reflect.ReflectUtils;
 import com.benet.common.utils.string.StringUtils;
+import com.benet.common.core.domain.AjaxResult;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -49,7 +49,6 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFDataValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.benet.common.annotation.Excel.Type;
 
 /**
  * Excel相关处理
@@ -73,7 +72,7 @@ public class ExcelUtils<T>
     /**
      * 导出类型（EXPORT:导出数据；IMPORT：导入模板）
      */
-    private Type type;
+    private Excel.Type type;
 
     /**
      * 工作薄对象
@@ -110,7 +109,7 @@ public class ExcelUtils<T>
         this.clazz = clazz;
     }
 
-    public void init(List<T> list, String sheetName, Type type)
+    public void init(List<T> list, String sheetName, Excel.Type type)
     {
         if (list == null)
         {
@@ -143,7 +142,7 @@ public class ExcelUtils<T>
      */
     public List<T> importExcel(String sheetName, InputStream is) throws Exception
     {
-        this.type = Type.IMPORT;
+        this.type = Excel.Type.IMPORT;
         this.wb = WorkbookFactory.create(is);
         List<T> list = new ArrayList<T>();
         Sheet sheet = null;
@@ -192,7 +191,7 @@ public class ExcelUtils<T>
             {
                 Field field = allFields[col];
                 Excel attr = field.getAnnotation(Excel.class);
-                if (attr != null && (attr.type() == Type.ALL || attr.type() == type))
+                if (attr != null && (attr.type() == Excel.Type.ALL || attr.type() == type))
                 {
                     // 设置类的私有字段属性可访问.
                     field.setAccessible(true);
@@ -296,7 +295,7 @@ public class ExcelUtils<T>
      */
     public AjaxResult exportExcel(List<T> list, String sheetName)
     {
-        this.init(list, sheetName, Type.EXPORT);
+        this.init(list, sheetName, Excel.Type.EXPORT);
         return exportExcel();
     }
 
@@ -308,7 +307,7 @@ public class ExcelUtils<T>
      */
     public AjaxResult importTemplateExcel(String sheetName)
     {
-        this.init(null, sheetName, Type.IMPORT);
+        this.init(null, sheetName, Excel.Type.IMPORT);
         return exportExcel();
     }
 
@@ -337,7 +336,7 @@ public class ExcelUtils<T>
                     Excel excel = (Excel) os[1];
                     this.createCell(excel, row, column++);
                 }
-                if (Type.EXPORT.equals(type))
+                if (Excel.Type.EXPORT.equals(type))
                 {
                     fillExcelData(index, row);
                 }
@@ -783,7 +782,7 @@ public class ExcelUtils<T>
      */
     private void putToField(Field field, Excel attr)
     {
-        if (attr != null && (attr.type() == Type.ALL || attr.type() == type))
+        if (attr != null && (attr.type() == Excel.Type.ALL || attr.type() == type))
         {
             this.fields.add(new Object[] { field, attr });
         }

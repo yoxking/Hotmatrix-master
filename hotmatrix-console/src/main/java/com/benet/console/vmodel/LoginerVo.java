@@ -11,6 +11,7 @@ public class LoginerVo {
     private String telephone;
     private String ruserMail;
     private String loginDate;
+    private String suserNo;//关联的系统账号
 
     public String getRuserNo() {
         return ruserNo;
@@ -82,5 +83,13 @@ public class LoginerVo {
 
     public void setLoginDate(String loginDate) {
         this.loginDate = loginDate;
+    }
+
+    public String getSuserNo() {
+        return suserNo;
+    }
+
+    public void setSuserNo(String suserNo) {
+        this.suserNo = suserNo;
     }
 }

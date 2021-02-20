@@ -81,10 +81,24 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <!-- 流程引擎模块-->
+        <dependency>
+            <groupId>com.benet</groupId>
+            <artifactId>hotmatrix-fireflow</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- 问卷调查模块-->
         <dependency>
             <groupId>com.benet</groupId>
             <artifactId>hotmatrix-collect</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- 追溯模块-->
+        <dependency>
+            <groupId>com.benet</groupId>
+            <artifactId>hotmatrix-process</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
@@ -96,6 +110,10 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.1.1.RELEASE</version>
+                <!--这里写上main方法所在类的路径-->
+                <configuration>
+                    <mainClass>com.benet.MainService</mainClass>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>

@@ -1,17 +1,11 @@
 package com.benet.system.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import com.benet.common.core.pager.PageRequest;
 import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
-import com.benet.system.domain.SysDepartment;
-import com.benet.system.vmodel.DeptmentVo;
-import com.benet.system.vmodel.ItemObjectVo;
-import com.benet.system.domain.SysConteeclass;
-import com.benet.system.service.ISysConteeclassService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

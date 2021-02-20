@@ -1,11 +1,10 @@
 package com.benet.system.service.impl;
 
 import java.util.List;
-import com.benet.common.configure.GlobalConfig;
+
 import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
-import com.benet.system.domain.SysSuserinfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.benet.system.mapper.SysRuserinfoMapper;

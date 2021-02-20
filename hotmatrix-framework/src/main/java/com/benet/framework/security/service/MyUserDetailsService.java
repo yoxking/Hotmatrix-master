@@ -1,6 +1,5 @@
 package com.benet.framework.security.service;
 
-import com.benet.common.configure.GlobalConfig;
 import com.benet.common.enums.UserStatus;
 import com.benet.common.exception.base.BaseException;
 import com.benet.common.utils.string.StringUtils;

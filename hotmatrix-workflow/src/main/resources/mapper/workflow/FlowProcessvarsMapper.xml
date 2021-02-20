@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.benet.wkflow.mapper.FlowProcessvarsMapper">
+
+    <resultMap type="FlowProcessvars" id="FlowProcessvarsResult">
+        <result property="id" column="id"/>
+        <result property="pvarsNo" column="pvars_no"/>
+        <result property="pflowNo" column="pflow_no"/>
+        <result property="pvarsName" column="pvars_name"/>
+        <result property="pvarsValue" column="pvars_value"/>
+        <result property="valueType" column="value_type"/>
+        <result property="checkState" column="check_state"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteFlag" column="delete_flag"/>
+        <result property="comments" column="comments"/>
+        <result property="appCode" column="app_code"/>
+        <result property="version" column="version"/>
+    </resultMap>
+
+    <sql id="selectFlowProcessvarsVo">
+        select id, pvars_no, pflow_no, pvars_name, pvars_value, value_type, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from flow_processvars
+    </sql>
+
+    <select id="getAllRecords" resultMap="FlowProcessvarsResult">
+        <include refid="selectFlowProcessvarsVo"/>
+        where delete_flag='1' and app_code=#{appCode}
+    </select>
+
+    <select id="getRecordsByClassNo" resultMap="FlowProcessvarsResult">
+        <include refid="selectFlowProcessvarsVo"/>
+        where delete_flag='1' and app_code=#{appCode} and pflow_no=#{classNo}
+    </select>
+
+    <select id="getRecordsByPaging" resultMap="FlowProcessvarsResult">
+        <include refid="selectFlowProcessvarsVo"/>
+        where delete_flag='1' and app_code=${appCode}
+        <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
+        order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
+    </select>
+
+    <select id="getRecordByNo" resultMap="FlowProcessvarsResult">
+        <include refid="selectFlowProcessvarsVo"/>
+        where delete_flag='1' and app_code=#{appCode} and pvars_no = #{no}
+    </select>
+
+    <select id="getRecordNameByNo" resultType="String">
+        select pvars_name from flow_processvars
+        where delete_flag='1' and app_code=#{appCode} and pvars_no = #{no}
+    </select>
+
+    <select id="getCountByCondition" resultType="Integer">
+        select count(*) from flow_processvars
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </select>
+
+    <insert id="AddNewRecord" parameterType="FlowProcessvars" useGeneratedKeys="true" keyProperty="id">
+        insert into flow_processvars (
+        <if test="info.pvarsNo != null  and info.pvarsNo != ''">pvars_no,</if>
+        <if test="info.pflowNo != null  and info.pflowNo != ''">pflow_no,</if>
+        <if test="info.pvarsName != null  and info.pvarsName != ''">pvars_name,</if>
+        <if test="info.pvarsValue != null  and info.pvarsValue != ''">pvars_value,</if>
+        <if test="info.valueType != null  and info.valueType != ''">value_type,</if>
+        <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
+        <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
+        <if test="info.createTime != null ">create_time,</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">update_by,</if>
+        <if test="info.updateTime != null ">update_time,</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag,</if>
+        <if test="info.comments != null  and info.comments != ''">comments,</if>
+        <if test="info.appCode != null  and info.appCode != ''">app_code,</if>
+        <if test="info.version != null ">version</if>
+        )values(
+        <if test="info.pvarsNo != null  and info.pvarsNo != ''">#{info.pvarsNo},</if>
+        <if test="info.pflowNo != null  and info.pflowNo != ''">#{info.pflowNo},</if>
+        <if test="info.pvarsName != null  and info.pvarsName != ''">#{info.pvarsName},</if>
+        <if test="info.pvarsValue != null  and info.pvarsValue != ''">#{info.pvarsValue},</if>
+        <if test="info.valueType != null  and info.valueType != ''">#{info.valueType},</if>
+        <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
+        <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
+        <if test="info.createTime != null ">#{info.createTime},</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">#{info.updateBy},</if>
+        <if test="info.updateTime != null ">#{info.updateTime},</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">#{info.deleteFlag},</if>
+        <if test="info.comments != null  and info.comments != ''">#{info.comments},</if>
+        <if test="info.appCode != null  and info.appCode != ''">#{info.appCode},</if>
+        <if test="info.version != null ">#{info.version}</if>
+        )
+    </insert>
+
+    <update id="UpdateRecord" parameterType="FlowProcessvars">
+        update flow_processvars
+        <set>
+            <if test="info.pvarsNo != null  and info.pvarsNo != ''">pvars_no = #{info.pvarsNo},</if>
+            <if test="info.pflowNo != null  and info.pflowNo != ''">pflow_no = #{info.pflowNo},</if>
+            <if test="info.pvarsName != null  and info.pvarsName != ''">pvars_name = #{info.pvarsName},</if>
+            <if test="info.pvarsValue != null  and info.pvarsValue != ''">pvars_value = #{info.pvarsValue},</if>
+            <if test="info.valueType != null  and info.valueType != ''">value_type = #{info.valueType},</if>
+            <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
+            <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
+            <if test="info.createTime != null ">create_time = #{info.createTime},</if>
+            <if test="info.updateBy != null  and info.updateBy != ''">update_by = #{info.updateBy},</if>
+            <if test="info.updateTime != null ">update_time = #{info.updateTime},</if>
+            <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag = #{info.deleteFlag},</if>
+            <if test="info.comments != null  and info.comments != ''">comments = #{info.comments},</if>
+            <if test="info.appCode != null  and info.appCode != ''">app_code = #{info.appCode},</if>
+            <if test="info.version != null ">version = #{info.version}</if>
+        </set>
+        where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and pvars_no =
+        #{info.pvarsNo}
+    </update>
+
+    <delete id="HardDeleteByNo">
+        delete from flow_processvars
+        where delete_flag='1' and app_code=#{appCode} and pvars_no = #{no}
+    </delete>
+
+    <delete id="HardDeleteByNos">
+        delete from flow_processvars
+        where delete_flag='1' and app_code=#{appCode} and pvars_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="HardDeleteByCondition">
+        delete from flow_processvars
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </delete>
+
+    <delete id="SoftDeleteByNo">
+        update flow_processvars set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and pvars_no = #{no}
+    </delete>
+
+    <delete id="SoftDeleteByNos">
+        update flow_processvars set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and pvars_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="SoftDeleteByCondition">
+        update flow_processvars set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </delete>
+
+</mapper>

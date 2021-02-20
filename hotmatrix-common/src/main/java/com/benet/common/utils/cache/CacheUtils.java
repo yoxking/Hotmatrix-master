@@ -6,7 +6,6 @@ import java.util.Set;
 import com.benet.common.utils.spring.SpringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 
 /**
