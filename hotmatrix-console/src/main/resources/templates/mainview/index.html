@@ -72,12 +72,12 @@
           <h3>心理测评</h3>
           <div class="vidz_list">
             <div class="row">
-              <div th:each="paper:${paperList}" class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
+              <div th:each="exams:${examsList}" class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
                 <div class="videoo">
                   <div class="vid_thumbainl">
-                    <a th:href="@{/paperview/detail(id=${paper.paperNo})}" target="_blank" th:title="${paper.paperTitle}">
-                      <img th:src="(${paper.paperPoster} == '') ? @{/imgs/resources/vide6.png} : @{${paper.paperPoster}}" alt="海报图片">
-                      <span class="vid-time">[[${paper.exDruation}]]</span>
+                    <a th:href="@{/examsview/detail(id=${exams.examsNo})}" th:title="${exams.examsTitle}">
+                      <img th:src="(${exams.examsPoster} == '') ? @{/imgs/resources/vide6.png} : @{${exams.examsPoster}}" alt="海报图片">
+                      <span class="vid-time">[[${exams.examsDruation}]]</span>
                       <span class="watch_later">
                           <i class="icon-watch_later_fill"></i>
                         </span>
@@ -85,9 +85,9 @@
                   </div>
                   <!--vid_thumbnail end-->
                   <div class="video_info">
-                    <h3><a href="#" title="">[[${paper.paperTitle}]]</a></h3>
-                    <h4><a href="#" title="">[[${paper.paperDesc}]]</a></h4>
-                    <span>次数：[[${paper.examTimes}]] &nbsp;&nbsp;价格：[[${paper.paperPrice}]]</span>
+                    <h3><a th:href="@{/examsview/detail(id=${exams.examsNo})}" th:title="${exams.examsTitle}">[[${exams.examsTitle}]]</a></h3>
+                    <h4><a th:href="@{/examsview/detail(id=${exams.examsNo})}" th:title="${exams.examsTitle}">[[${exams.examsDesc}]]</a></h4>
+                    <span>次数：[[${exams.examsTimes}]] &nbsp;&nbsp;价格：[[${exams.examsPrice}]]</span>
                   </div>
                 </div>
                 <!--videoo end-->
@@ -103,15 +103,15 @@
     <div class="vidz-row">
       <div class="container">
         <div class="vidz_sec">
-          <h3>测试报告</h3>
+          <h3>主题活动</h3>
           <div class="vidz_list">
             <div class="row">
-              <div th:each="paperInfo:${paperList}" class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
+              <div th:each="salon:${salonsList}" class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
                 <div class="videoo">
                   <div class="vid_thumbainl">
-                    <a th:href="@{/paperview/detail(id=${paperInfo.paperNo})}" target="_blank" th:title="${paperInfo.paperTitle}">
-                      <img th:src="(${paperInfo.paperPoster} == '') ? @{/imgs/resources/vide6.png} : @{${paperInfo.paperPoster}}" alt="海报图片">
-                      <span class="vid-time">[[${paperInfo.exDruation}]]</span>
+                    <a th:href="@{/salonsview/detail(id=${salon.salonNo})}" th:title="${salon.salonName}">
+                      <img th:src="(${salon.salonPoster} == '') ? @{/imgs/resources/vide6.png} : @{${salon.salonPoster}}" alt="海报图片">
+                      <span class="vid-time">[[${salon.salonName}]]</span>
                       <span class="watch_later">
                           <i class="icon-watch_later_fill"></i>
                         </span>
@@ -119,9 +119,9 @@
                   </div>
                   <!--vid_thumbnail end-->
                   <div class="video_info">
-                    <h3><a href="#" title="">[[${paperInfo.paperTitle}]]</a></h3>
-                    <h4><a href="#" title="">[[${paperInfo.paperDesc}]]</a></h4>
-                    <span>次数：[[${paperInfo.examTimes}]] &nbsp;&nbsp;价格：[[${paperInfo.paperPrice}]]</span>
+                    <h3><a th:href="@{/salonsview/detail(id=${salon.salonNo})}" th:title="${salon.salonName}">[[${salon.salonName}]]</a></h3>
+                    <h4><a th:href="@{/salonsview/detail(id=${salon.salonNo})}" th:title="${salon.salonName}">[[${salon.salonAddress}]]</a></h4>
+                    <span>时间：[[${salon.startTime}]]</span>
                   </div>
                 </div>
                 <!--videoo end-->

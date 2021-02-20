@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<th:block th:include="include :: headblock('心理测评中心-登录')" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<title th:text="心理测评中心-登录"></title>
+	<link rel="shortcut icon" th:href="@{/images/favicon.png}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/animate.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/fontello.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/fontello-codes.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/responsive.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/color.css}">
 </head>
 <body>
 
 <div class="wrapper">
-	<th:block th:include="include :: topsimpbar" />
-
 	<section class="form_popup">
 		<div class="login_form" id="login_form">
 		 	<div class="hd-lg">
-		 		<img th:src="@{/imgs/logo.png}" alt="">
+		 		<img th:src="@{/imgs/logo.png}" alt="" style="width:150px;height:60px;">
 		 		<span>登录账号</span>
 		 	</div><!--hd-lg end-->
 			<div class="user-account-pr">
@@ -51,8 +61,13 @@
 	<th:block th:include="include :: copyright" />
 </div><!--wrapper end-->
 
-<th:block th:include="include :: scriptblock" />
-<script type="text/javascript">
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+<script type="text/javascript" th:src="@{/js/script.js}"></script>
+<script type="text/javascript" th:inline="javascript"> var ctx = [[@{/}]]; </script>
+<script type="text/javascript" th:inline="javascript">
 
 	function getCode() {
 		document.getElementById("verifyCode").setAttribute("src","/getCode");

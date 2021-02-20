@@ -10,9 +10,21 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/fontello.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/fontello-codes.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/layui/css/layui.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/responsive.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/color.css}">
+</head>
+
+<!-- 表单CSS -->
+<head th:fragment=headform(title)>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <title th:text="${title}"></title>
+  <link rel="shortcut icon" th:href="@{/images/favicon.png}">
+  <link rel="stylesheet" type="text/css" th:href="@{/layui/css/layui.css}">
 </head>
 
 <!-- 通用JS -->
@@ -20,9 +32,27 @@
   <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
   <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
   <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
-  <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+  <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
   <script type="text/javascript" th:src="@{/js/script.js}"></script>
   <script type="text/javascript" th:inline="javascript"> var ctx = [[@{/}]]; </script>
+  <script type="text/javascript" th:inline="javascript">
+    //一般直接写在一个js文件中
+    layui.use('layer', function(){
+      var layer = layui.layer;
+    });
+  </script>
+</div>
+
+<!-- 表单JS -->
+<div th:fragment="scriptform">
+  <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+  <script type="text/javascript" th:inline="javascript">
+    //一般直接写在一个js文件中
+    layui.use(['layer', 'form'], function(){
+      var layer = layui.layer,form = layui.form;
+    });
+  </script>
 </div>
 
 <!-- 底部版权 -->
@@ -43,7 +73,7 @@
         <div class="top_header_content">
           <div class="menu_logo">
             <a href="/index" title="" class="logo">
-              <img th:src="@{/imgs/logo.png}" alt="">
+              <img th:src="@{/imgs/logo.png}" alt="logo" style="width:75px;heigth:30px;">
             </a>
           </div>
           <!--menu_logo end-->
@@ -53,6 +83,77 @@
       </div>
     </div>
     <!--header_content end-->
+  </header>
+  <!--header end-->
+</div>
+
+<!-- 顶部管理导航 -->
+<div th:fragment="topadminbar">
+  <header>
+    <div class="top_bar">
+      <div class="container">
+        <div class="top_header_content">
+          <div class="menu_logo">
+            <a href="/adminview/exams" title="" class="logo">
+              <img th:src="@{/imgs/logo.png}" alt="logo" style="width:75px;heigth:30px;">
+            </a>
+          </div>
+          <!--menu_logo end-->
+          <ul class="controls-lv">
+            <li>
+              <a href="/mainview/helper" title="帮助文档" target="_blank"><i class="icon-notification"></i></a>
+            </li>
+            <li class="user-log">
+              <div class="user-ac-img">
+                <img th:src="(${loginer.ruserAvatar} == '') ? @{/imgs/profile.jpg} : @{${loginer.ruserAvatar}}" width="50" height="50" alt="用户头像">
+              </div>
+              <div class="account-menu">
+                <h4>[[${loginer.rnickName}]] <span class="usr-status">[[${loginer.ruserType}]]</span></h4>
+                <div style="border-bottom: 1px solid #e2ebef;">&nbsp;</div>
+                <div class="sd_menu">
+                  <ul class="mm_menu">
+                    <li>
+                      <span>
+                        <i class="icon-logout"></i>
+                      </span>
+                      <a href="javascript:void(0);" class="logout" title="">退出</a>
+                    </li>
+                  </ul>
+                </div>
+                <!--restricted-more end-->
+              </div>
+            </li>
+          </ul>
+          <!--controls-lv end-->
+          <div class="clearfix"></div>
+        </div>
+        <!--top_header_content end-->
+      </div>
+    </div>
+    <!--header_content end-->
+    <div class="btm_bar">
+      <div class="container">
+        <div class="btm_bar_content">
+          <nav>
+            <ul>
+              <li><span title="" style="font-weight: bold;">后台管理</span></li>
+              <li><a href="/adminview/exams" title="心理测评管理">心理测评</a></li>
+              <li><a href="/adminview/salons" title="主题活动管理">主题活动</a></li>
+            </ul>
+          </nav>
+          <!--shr_links end-->
+          <ul class="vid_thums">
+            <li>
+              <a class="active" href="#" title=""><i class="icon-grid"></i></a>
+            </li>
+          </ul>
+          <!--vid_status end-->
+          <div class="clearfix"></div>
+        </div>
+        <!--btm_bar_content end-->
+      </div>
+    </div>
+    <!--btm_bar end-->
   </header>
   <!--header end-->
 </div>
@@ -68,16 +169,16 @@
               <i class="icon-menu"></i>
             </a>
             <a href="/index" title="" class="logo">
-              <img th:src="@{/imgs/logo.png}" alt="">
+              <img th:src="@{/imgs/logo.png}" alt="logo" style="width:75px;heigth:30px;">
             </a>
           </div>
           <!--menu_logo end-->
           <ul class="controls-lv">
             <li>
-              <a href="/ruserview/message" title="我的消息" target="_blank"><i class="icon-message"></i></a>
+              <a href="/mssgview/index" title="我的消息" target="_blank"><i class="icon-message"></i></a>
             </li>
             <li>
-              <a href="/helper" title="帮助文档" target="_blank"><i class="icon-notification"></i></a>
+              <a href="/mainview/helper" title="帮助文档" target="_blank"><i class="icon-notification"></i></a>
             </li>
             <li class="user-log">
               <div class="user-ac-img">
@@ -139,14 +240,11 @@
                     <li><a href="/reportview/index" title="测评报告">测评报告</a></li>
                   </ul>
                   <ul>
-                    <li><a href="/paperview/index" title="心理测评">心理测评<span class="icon-arrow_below"></span></a>
+                    <li><a href="/examsview/index" title="心理测评">心理测评<span class="icon-arrow_below"></span></a>
                       <ul>
-                        <li><a href="/paperview/classlist" title="恋爱婚姻">恋爱婚姻</a></li>
-                        <li><a href="/paperview/classlist" title="情绪压力">情绪压力</a></li>
-                        <li><a href="/paperview/classlist" title="人际关系">人际关系</a></li>
-                        <li><a href="/paperview/classlist" title="孩子教育">孩子教育</a></li>
-                        <li><a href="/paperview/classlist" title="职场发展">职场发展</a></li>
-                        <li><a href="/paperview/classlist" title="个人成长">个人成长</a></li>
+                        <li th:each="mclass:${mclassList}">
+                          <a th:href="@{/examsview/catelist(classNo=${mclass.classNo})}" th:title="${mclass.className}">[[${mclass.className}]]</a>
+                        </li>
                       </ul>
                     </li>
                     <li><a href="/expertview/index" title="心理咨询">心理咨询</a></li>
@@ -156,7 +254,7 @@
                 </div>
                 <div class="clearfix"></div>
               </li>
-              <li><a href="/paperview/index" title="心理测评">心理测评</a></li>
+              <li><a href="/examsview/index" title="心理测评">心理测评</a></li>
               <li><a href="/reportview/index" title="测评报告">测评报告</a></li>
               <li><a href="/expertview/index" title="心理咨询">心理咨询</a></li>
               <li><a href="/salonsview/index" title="主题活动">主题活动</a></li>
@@ -199,21 +297,21 @@
       <ul class="mm_menu">
         <li>
           <span>
-            <i class="icon-history"></i>
+            <i class="icon-watch_later"></i>
           </span>
-          <a href="#" title="">成长日志</a>
+          <a href="/examsview/history" title="我的测评">我的测评</a>
         </li>
         <li>
           <span>
-            <i class="icon-watch_later"></i>
+            <i class="icon-history"></i>
           </span>
-          <a href="#" title="">我的测评</a>
+          <a href="/expertview/history" title="我的预约">我的预约</a>
         </li>
         <li>
           <span>
             <i class="icon-purchased"></i>
           </span>
-          <a href="#" title="">购买记录</a>
+          <a href="/salonsview/history" title="我的活动">我的活动</a>
         </li>
       </ul>
     </div>
@@ -222,25 +320,25 @@
       <ul class="mm_menu">
         <li>
           <span>
-            <i class="icon-settings"></i>
+            <i class="icon-flag"></i>
           </span>
-          <a href="#" title="">个人设置</a>
+          <a href="/reportview/index" title="测评报告">测评报告</a>
         </li>
         <li>
           <span>
-            <i class="icon-flag"></i>
+            <i class="icon-settings"></i>
           </span>
-          <a href="#" title="">测评统计</a>
+          <a href="/adminview/sulogin" class="admin" title="后台管理" >后台管理</a>
         </li>
       </ul>
     </div>
     <!--sd_menu end-->
     <div class="sd_menu m_linkz">
       <ul class="mm_menu">
-        <li><a href="#">关于</a></li>
-        <li><a href="#">帮助</a></li>
-        <li><a href="#">隐私</a></li>
-        <li><a href="#">文档</a></li>
+        <li><a href="javascript:void(0);" class="about">关于</a></li>
+        <li><a href="/mainview/helper" target="_blank">帮助</a></li>
+        <li><a href="/mainview/privacy" target="_blank">隐私</a></li>
+        <li><a href="/mainview/legal" target="_blank">条款</a></li>
       </ul>
       <span>&nbsp;</span>
     </div>
@@ -248,4 +346,51 @@
     <div class="dd_menu"></div>
   </div>
   <!--side_menu end-->
+</div>
+
+<!-- 推荐心理咨询师列表 -->
+<div th:fragment="topexperts">
+  <div class="sidebar">
+    <div class="vidz-prt">
+      <h2 class="sm-vidz" style="font-weight: bold;">推荐咨询师</h2>
+      <div class="clearfix"></div>
+    </div><!--vidz-prt end-->
+    <div class="videoo-list-ab">
+      <div class="videoo" th:each="topExpert:${topExperts}">
+        <div class="vid_thumbainl">
+          <a th:href="@{/expertview/detail(id=${topExpert.ruserNo})}" th:title="${topExpert.ruserName}">
+            <img th:src="(${topExpert.avatar} == '') ? @{/imgs/resources/vide6.png} : @{${topExpert.avatar}}" alt="图片">
+          </a>
+        </div><!--vid_thumbnail end-->
+        <div class="video_info">
+          <h3><a th:href="@{/expertview/detail(id=${topExpert.ruserNo})}" th:title="${topExpert.ruserName}">[[${topExpert.ruserName}]]</a></h3>
+          <h4>心理咨询师</h4>
+          <span>咨询人数：2K.  <small class="posted_dt">1天前</small></span>
+        </div>
+      </div><!--videoo end-->
+    </div><!--videoo-list-ab end-->
+  </div><!--side-bar end-->
+  <!--header end-->
+</div>
+
+<!-- 热门资讯列表 -->
+<div th:fragment="hotopreads">
+  <div class="sidebar">
+    <div class="vidz-adimg">
+      <img src="/imgs/resources/vide6.png" alt="" style="height:50px;width:100%;" />
+    </div>
+    <div class="vidz-prt">
+      <h2 class="sm-vidz" style="font-weight: bold;">热门推荐</h2>
+      <div class="clearfix"></div>
+    </div><!--vidz-prt end-->
+    <div class="videoo-list-ab">
+      <ul>
+        <li th:each="hotopRead:${hotopReads}">
+          <a th:href="@{/readsview/detail(id=${hotopRead.cntzNo})}" target="_blank" th:title="${hotopRead.title}">[[${hotopRead.title}]]</a>
+          <span>([[${hotopRead.hitCount}]] )</span>
+        </li>
+      </ul>
+    </div><!--videoo-list-ab end-->
+  </div><!--side-bar end-->
+  <!--header end-->
 </div>

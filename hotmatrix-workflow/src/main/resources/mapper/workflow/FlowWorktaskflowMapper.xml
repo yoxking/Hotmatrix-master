@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.benet.wkflow.mapper.FlowWorktaskflowMapper">
+
+    <resultMap type="FlowWorktaskflow" id="FlowWorktaskflowResult">
+        <result property="id" column="id"/>
+        <result property="tflowNo" column="tflow_no"/>
+        <result property="pflowNo" column="pflow_no"/>
+        <result property="processNo" column="process_no"/>
+        <result property="processVersion" column="process_version"/>
+        <result property="bizType" column="biz_type"/>
+        <result property="taskId" column="task_id"/>
+        <result property="activityId" column="activity_id"/>
+        <result property="taskName" column="task_name"/>
+        <result property="displayName" column="display_name"/>
+        <result property="taskType" column="task_type"/>
+        <result property="taskState" column="task_state"/>
+        <result property="suspended" column="suspended"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="startedTime" column="started_time"/>
+        <result property="expiredTime" column="expired_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="assignStrategy" column="assign_strategy"/>
+        <result property="fromActivityId" column="from_activity_id"/>
+        <result property="toActivityId" column="to_activity_id"/>
+        <result property="stepNumber" column="step_number"/>
+        <result property="canWithdrawn" column="can_withdrawn"/>
+        <result property="checkState" column="check_state"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteFlag" column="delete_flag"/>
+        <result property="comments" column="comments"/>
+        <result property="appCode" column="app_code"/>
+        <result property="version" column="version"/>
+    </resultMap>
+
+    <sql id="selectFlowWorktaskflowVo">
+        select id, tflow_no, pflow_no, process_no, process_version, biz_type, task_id, activity_id, task_name, display_name, task_type, task_state, suspended, created_time, started_time, expired_time, end_time, assign_strategy, from_activity_id, to_activity_id, step_number, can_withdrawn, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from flow_worktaskflow
+    </sql>
+
+    <select id="getAllRecords" resultMap="FlowWorktaskflowResult">
+        <include refid="selectFlowWorktaskflowVo"/>
+        where delete_flag='1' and app_code=#{appCode}
+    </select>
+
+    <select id="getRecordsByClassNo" resultMap="FlowWorktaskflowResult">
+        <include refid="selectFlowWorktaskflowVo"/>
+        where delete_flag='1' and app_code=#{appCode} and pflow_no=#{classNo}
+    </select>
+
+    <select id="getRecordsByPaging" resultMap="FlowWorktaskflowResult">
+        <include refid="selectFlowWorktaskflowVo"/>
+        where delete_flag='1' and app_code=${appCode}
+        <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
+        order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
+    </select>
+
+    <select id="getRecordByNo" resultMap="FlowWorktaskflowResult">
+        <include refid="selectFlowWorktaskflowVo"/>
+        where delete_flag='1' and app_code=#{appCode} and tflow_no = #{no}
+    </select>
+
+    <select id="getRecordNameByNo" resultType="String">
+        select tflow_no from flow_worktaskflow
+        where delete_flag='1' and app_code=#{appCode} and tflow_no = #{no}
+    </select>
+
+    <select id="getCountByCondition" resultType="Integer">
+        select count(*) from flow_worktaskflow
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </select>
+
+    <insert id="AddNewRecord" parameterType="FlowWorktaskflow" useGeneratedKeys="true" keyProperty="id">
+        insert into flow_worktaskflow (
+        <if test="info.tflowNo != null  and info.tflowNo != ''">tflow_no,</if>
+        <if test="info.pflowNo != null  and info.pflowNo != ''">pflow_no,</if>
+        <if test="info.processNo != null  and info.processNo != ''">process_no,</if>
+        <if test="info.processVersion != null ">process_version,</if>
+        <if test="info.bizType != null  and info.bizType != ''">biz_type,</if>
+        <if test="info.taskId != null  and info.taskId != ''">task_id,</if>
+        <if test="info.activityId != null  and info.activityId != ''">activity_id,</if>
+        <if test="info.taskName != null  and info.taskName != ''">task_name,</if>
+        <if test="info.displayName != null  and info.displayName != ''">display_name,</if>
+        <if test="info.taskType != null  and info.taskType != ''">task_type,</if>
+        <if test="info.taskState != null  and info.taskState != ''">task_state,</if>
+        <if test="info.suspended != null  and info.suspended != ''">suspended,</if>
+        <if test="info.createdTime != null ">created_time,</if>
+        <if test="info.startedTime != null ">started_time,</if>
+        <if test="info.expiredTime != null ">expired_time,</if>
+        <if test="info.endTime != null ">end_time,</if>
+        <if test="info.assignStrategy != null  and info.assignStrategy != ''">assign_strategy,</if>
+        <if test="info.fromActivityId != null  and info.fromActivityId != ''">from_activity_id,</if>
+        <if test="info.toActivityId != null  and info.toActivityId != ''">to_activity_id,</if>
+        <if test="info.stepNumber != null ">step_number,</if>
+        <if test="info.canWithdrawn != null  and info.canWithdrawn != ''">can_withdrawn,</if>
+        <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
+        <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
+        <if test="info.createTime != null ">create_time,</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">update_by,</if>
+        <if test="info.updateTime != null ">update_time,</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag,</if>
+        <if test="info.comments != null  and info.comments != ''">comments,</if>
+        <if test="info.appCode != null  and info.appCode != ''">app_code,</if>
+        <if test="info.version != null ">version</if>
+        )values(
+        <if test="info.tflowNo != null  and info.tflowNo != ''">#{info.tflowNo},</if>
+        <if test="info.pflowNo != null  and info.pflowNo != ''">#{info.pflowNo},</if>
+        <if test="info.processNo != null  and info.processNo != ''">#{info.processNo},</if>
+        <if test="info.processVersion != null ">#{info.processVersion},</if>
+        <if test="info.bizType != null  and info.bizType != ''">#{info.bizType},</if>
+        <if test="info.taskId != null  and info.taskId != ''">#{info.taskId},</if>
+        <if test="info.activityId != null  and info.activityId != ''">#{info.activityId},</if>
+        <if test="info.taskName != null  and info.taskName != ''">#{info.taskName},</if>
+        <if test="info.displayName != null  and info.displayName != ''">#{info.displayName},</if>
+        <if test="info.taskType != null  and info.taskType != ''">#{info.taskType},</if>
+        <if test="info.taskState != null  and info.taskState != ''">#{info.taskState},</if>
+        <if test="info.suspended != null  and info.suspended != ''">#{info.suspended},</if>
+        <if test="info.createdTime != null ">#{info.createdTime},</if>
+        <if test="info.startedTime != null ">#{info.startedTime},</if>
+        <if test="info.expiredTime != null ">#{info.expiredTime},</if>
+        <if test="info.endTime != null ">#{info.endTime},</if>
+        <if test="info.assignStrategy != null  and info.assignStrategy != ''">#{info.assignStrategy},</if>
+        <if test="info.fromActivityId != null  and info.fromActivityId != ''">#{info.fromActivityId},</if>
+        <if test="info.toActivityId != null  and info.toActivityId != ''">#{info.toActivityId},</if>
+        <if test="info.stepNumber != null ">#{info.stepNumber},</if>
+        <if test="info.canWithdrawn != null  and info.canWithdrawn != ''">#{info.canWithdrawn},</if>
+        <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
+        <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
+        <if test="info.createTime != null ">#{info.createTime},</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">#{info.updateBy},</if>
+        <if test="info.updateTime != null ">#{info.updateTime},</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">#{info.deleteFlag},</if>
+        <if test="info.comments != null  and info.comments != ''">#{info.comments},</if>
+        <if test="info.appCode != null  and info.appCode != ''">#{info.appCode},</if>
+        <if test="info.version != null ">#{info.version}</if>
+        )
+    </insert>
+
+    <update id="UpdateRecord" parameterType="FlowWorktaskflow">
+        update flow_worktaskflow
+        <set>
+            <if test="info.tflowNo != null  and info.tflowNo != ''">tflow_no = #{info.tflowNo},</if>
+            <if test="info.pflowNo != null  and info.pflowNo != ''">pflow_no = #{info.pflowNo},</if>
+            <if test="info.processNo != null  and info.processNo != ''">process_no = #{info.processNo},</if>
+            <if test="info.processVersion != null ">process_version = #{info.processVersion},</if>
+            <if test="info.bizType != null  and info.bizType != ''">biz_type = #{info.bizType},</if>
+            <if test="info.taskId != null  and info.taskId != ''">task_id = #{info.taskId},</if>
+            <if test="info.activityId != null  and info.activityId != ''">activity_id = #{info.activityId},</if>
+            <if test="info.taskName != null  and info.taskName != ''">task_name = #{info.taskName},</if>
+            <if test="info.displayName != null  and info.displayName != ''">display_name = #{info.displayName},</if>
+            <if test="info.taskType != null  and info.taskType != ''">task_type = #{info.taskType},</if>
+            <if test="info.taskState != null  and info.taskState != ''">task_state = #{info.taskState},</if>
+            <if test="info.suspended != null  and info.suspended != ''">suspended = #{info.suspended},</if>
+            <if test="info.createdTime != null ">created_time = #{info.createdTime},</if>
+            <if test="info.startedTime != null ">started_time = #{info.startedTime},</if>
+            <if test="info.expiredTime != null ">expired_time = #{info.expiredTime},</if>
+            <if test="info.endTime != null ">end_time = #{info.endTime},</if>
+            <if test="info.assignStrategy != null  and info.assignStrategy != ''">assign_strategy =
+                #{info.assignStrategy},
+            </if>
+            <if test="info.fromActivityId != null  and info.fromActivityId != ''">from_activity_id =
+                #{info.fromActivityId},
+            </if>
+            <if test="info.toActivityId != null  and info.toActivityId != ''">to_activity_id = #{info.toActivityId},
+            </if>
+            <if test="info.stepNumber != null ">step_number = #{info.stepNumber},</if>
+            <if test="info.canWithdrawn != null  and info.canWithdrawn != ''">can_withdrawn = #{info.canWithdrawn},</if>
+            <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
+            <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
+            <if test="info.createTime != null ">create_time = #{info.createTime},</if>
+            <if test="info.updateBy != null  and info.updateBy != ''">update_by = #{info.updateBy},</if>
+            <if test="info.updateTime != null ">update_time = #{info.updateTime},</if>
+            <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag = #{info.deleteFlag},</if>
+            <if test="info.comments != null  and info.comments != ''">comments = #{info.comments},</if>
+            <if test="info.appCode != null  and info.appCode != ''">app_code = #{info.appCode},</if>
+            <if test="info.version != null ">version = #{info.version}</if>
+        </set>
+        where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and tflow_no =
+        #{info.tflowNo}
+    </update>
+
+    <delete id="HardDeleteByNo">
+        delete from flow_worktaskflow
+        where delete_flag='1' and app_code=#{appCode} and tflow_no = #{no}
+    </delete>
+
+    <delete id="HardDeleteByNos">
+        delete from flow_worktaskflow
+        where delete_flag='1' and app_code=#{appCode} and tflow_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="HardDeleteByCondition">
+        delete from flow_worktaskflow
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </delete>
+
+    <delete id="SoftDeleteByNo">
+        update flow_worktaskflow set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and tflow_no = #{no}
+    </delete>
+
+    <delete id="SoftDeleteByNos">
+        update flow_worktaskflow set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and tflow_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="SoftDeleteByCondition">
+        update flow_worktaskflow set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </delete>
+
+</mapper>

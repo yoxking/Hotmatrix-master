@@ -3,12 +3,17 @@ package com.benet.collect.vmodel;
 public class QuestInfoVo {
     private String questNo;
     private String questTitle;
-    private String questDesc;
+    private String questImage;
     private String questType;
-    private String questMust;
+    private String questDesc;
     private String classNo;
+    private String qsetsNo;
     private int orderNo;
-    private Long questScore;
+    private String questMust;
+    private Long questTscore;
+    private String questAnswer;
+    private String questKeyword;
+    private String questExplain;
     private String checkState;
     private String comments;
     private QuestOptsVo[] options;
@@ -29,12 +34,12 @@ public class QuestInfoVo {
         this.questTitle = questTitle;
     }
 
-    public String getQuestDesc() {
-        return questDesc;
+    public String getQuestImage() {
+        return questImage;
     }
 
-    public void setQuestDesc(String questDesc) {
-        this.questDesc = questDesc;
+    public void setQuestImage(String questImage) {
+        this.questImage = questImage;
     }
 
     public String getQuestType() {
@@ -45,12 +50,12 @@ public class QuestInfoVo {
         this.questType = questType;
     }
 
-    public String getQuestMust() {
-        return questMust;
+    public String getQuestDesc() {
+        return questDesc;
     }
 
-    public void setQuestMust(String questMust) {
-        this.questMust = questMust;
+    public void setQuestDesc(String questDesc) {
+        this.questDesc = questDesc;
     }
 
     public String getClassNo() {
@@ -61,6 +66,14 @@ public class QuestInfoVo {
         this.classNo = classNo;
     }
 
+    public String getQsetsNo() {
+        return qsetsNo;
+    }
+
+    public void setQsetsNo(String qsetsNo) {
+        this.qsetsNo = qsetsNo;
+    }
+
     public int getOrderNo() {
         return orderNo;
     }
@@ -69,12 +82,44 @@ public class QuestInfoVo {
         this.orderNo = orderNo;
     }
 
-    public Long getQuestScore() {
-        return questScore;
+    public String getQuestMust() {
+        return questMust;
     }
 
-    public void setQuestScore(Long questScore) {
-        this.questScore = questScore;
+    public void setQuestMust(String questMust) {
+        this.questMust = questMust;
+    }
+
+    public Long getQuestTscore() {
+        return questTscore;
+    }
+
+    public void setQuestTscore(Long questTscore) {
+        this.questTscore = questTscore;
+    }
+
+    public String getQuestAnswer() {
+        return questAnswer;
+    }
+
+    public void setQuestAnswer(String questAnswer) {
+        this.questAnswer = questAnswer;
+    }
+
+    public String getQuestKeyword() {
+        return questKeyword;
+    }
+
+    public void setQuestKeyword(String questKeyword) {
+        this.questKeyword = questKeyword;
+    }
+
+    public String getQuestExplain() {
+        return questExplain;
+    }
+
+    public void setQuestExplain(String questExplain) {
+        this.questExplain = questExplain;
     }
 
     public String getCheckState() {

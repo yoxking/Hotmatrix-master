@@ -1,13 +1,9 @@
 package ${packageName}.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.benet.common.annotation.Excel;
-import java.util.Date;
+
 #if($table.crud)
-import com.benet.common.core.domain.BaseEntity;
 #elseif($table.tree)
-import com.benet.common.core.domain.TreeEntity;
 #end
 #foreach ($import in $importList)
 import ${import};

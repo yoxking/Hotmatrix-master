@@ -96,4 +96,16 @@
         });
     });
 
+    $(".sd_menu .mm_menu .about").on("click", function(e) {
+        layer.open({
+            type: 2,
+            title: '关于',
+            shadeClose: true,
+            shade: false,
+            maxmin: false, //开启最大化最小化按钮
+            area: ['600px', '370px'],
+            content: '/mainview/about'
+        });
+    });
+
 })(window.jQuery);

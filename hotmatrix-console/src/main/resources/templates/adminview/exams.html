@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: headblock('心理测评中心-在线测评')"/>
+</head>
+<body>
+<div class="wrapper">
+    <th:block th:include="include :: topadminbar"/>
+
+    <section class="mn-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ab-history">
+                        <div class="history-lst">
+                            <div class="container">
+                                <div class="history-hd-head">
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="watch_examslist_tab" data-toggle="tab" href="#watch_examslist" role="tab" aria-controls="watch_examslist_tab" aria-selected="true">心理测评问卷</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="watch_examsflows_tab" data-toggle="tab" href="#watch_examsflows" role="tab" aria-controls="watch_examsflows_tab" aria-selected="false">心理测评结果</a>
+                                        </li>
+                                    </ul><!--nav-tabs end-->
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="watch_examslist" role="tabpanel" aria-labelledby="watch_examslist_tab">
+                                    <div class="tabs_lzt">
+                                        <div class="tab-history">
+                                            <div style="text-align: right;">
+                                                <button type="button" class="layui-btn layui-btn-normal" onclick="onRefresh()">刷新</button>
+                                                <button type="button" class="layui-btn layui-btn-normal" onclick="onAddExam()">新建心理测评</button>
+                                            </div>
+                                            <table id="mytable_examslist" ></table>
+                                        </div><!--tab-history end-->
+                                    </div><!--tabs_lz end-->
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="tab-pane fade" id="watch_examsflows" role="tabpanel" aria-labelledby="watch_examsflows_tab">
+                                    <div class="tabs_lzt">
+                                        <div class="tab-history">
+                                            <div style="text-align: right;">
+                                                <button type="button" class="layui-btn layui-btn-normal" onclick="onRefresh()">刷新</button>
+                                                <button type="button" class="layui-btn layui-btn-normal" onclick="onAddExam()">新建心理测评</button>
+                                            </div>
+                                            <table id="mytable_examsflows" class="layui-bg-blue"></table>
+                                        </div><!--tab-history end-->
+                                    </div><!--tabs_lz end-->
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--ab-history end-->
+                </div><!---col-lg-9 end-->
+            </div>
+        </div>
+    </section><!--mn-sec end-->
+
+    <th:block th:include="include :: copyright"/>
+</div><!--wrapper end-->
+
+<th:block th:include="include :: scriptblock"/>
+<script type="text/javascript"  th:inline="javascript">
+
+    layui.use('table', function(){
+        var table = layui.table;
+
+        table.render({
+            elem: '#mytable_examslist'
+            ,url:'/adminview/getExamsList'
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,cols: [[
+                {type:'checkbox'}
+                ,{field:'id', title: 'ID', sort: true}
+                ,{field:'examsTitle',  title: '测评名称'}
+                ,{field:'classNo',  title: '类型'}
+                ,{field:'startTime',  title: '开始时间'}
+                ,{field:'enditTime', title: '结束时间'} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                ,{field:'examsAdmin', title: '测评管理员'}
+            ]]
+            ,page: true
+        });
+
+        table.render({
+            elem: '#mytable_examsflows'
+            ,url:'/adminview/getExamsFlows'
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,cols: [[
+                {type:'checkbox'}
+                ,{field:'id', title: 'ID', sort: true}
+                ,{field:'examsNo',  title: '测评名称'}
+                ,{field:'ruserNo',  title: '测评人员', sort: true}
+                ,{field:'startTime',  title: '测评时间'}
+                ,{field:'examsTscore', title: '得分'} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                ,{field:'mflowState', title: '状态'}
+            ]]
+            ,page: true
+        });
+    });
+
+    function onRefresh(){
+        location.reload();
+    }
+
+    function onAddExam(){
+        layer.open({
+            type: 2,
+            title: '新增心理测评',
+            shadeClose: true,
+            shade: false,
+            maxmin: false, //开启最大化最小化按钮
+            area: ['893px', '600px'],
+            content: '/adminview/exams_edit'
+        });
+    }
+</script>
+</body>
+</html>

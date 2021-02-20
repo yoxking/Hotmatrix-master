@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.benet.wkflow.mapper.FlowFlowarchivsMapper">
+
+    <resultMap type="FlowFlowarchivs" id="FlowFlowarchivsResult">
+        <result property="id" column="id"/>
+        <result property="archvNo" column="archv_no"/>
+        <result property="flowNo" column="flow_no"/>
+        <result property="flowName" column="flow_name"/>
+        <result property="flowTitle" column="flow_title"/>
+        <result property="stepNo" column="step_no"/>
+        <result property="stepName" column="step_name"/>
+        <result property="taskNo" column="task_no"/>
+        <result property="groupNo" column="group_no"/>
+        <result property="instanceNo" column="instance_no"/>
+        <result property="contents" column="contents"/>
+        <result property="writeTime" column="write_time"/>
+        <result property="writeNote" column="write_note"/>
+        <result property="rarFiles" column="rar_files"/>
+        <result property="pdfFiles" column="pdf_files"/>
+        <result property="userNo" column="user_no"/>
+        <result property="userName" column="user_name"/>
+        <result property="checkState" column="check_state"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleteFlag" column="delete_flag"/>
+        <result property="comments" column="comments"/>
+        <result property="appCode" column="app_code"/>
+        <result property="version" column="version"/>
+    </resultMap>
+
+    <sql id="selectFlowFlowarchivsVo">
+        select id, archv_no, flow_no, flow_name, flow_title, step_no, step_name, task_no, group_no, instance_no, contents, write_time, write_note, rar_files, pdf_files, user_no, user_name, check_state, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from flow_flowarchivs
+    </sql>
+
+    <select id="getAllRecords" resultMap="FlowFlowarchivsResult">
+        <include refid="selectFlowFlowarchivsVo"/>
+        where delete_flag='1' and app_code=#{appCode}
+    </select>
+
+    <select id="getRecordsByClassNo" resultMap="FlowFlowarchivsResult">
+        <include refid="selectFlowFlowarchivsVo"/>
+        where delete_flag='1' and app_code=#{appCode} and flow_no=#{classNo}
+    </select>
+
+    <select id="getRecordsByPaging" resultMap="FlowFlowarchivsResult">
+        <include refid="selectFlowFlowarchivsVo"/>
+        where delete_flag='1' and app_code=${appCode}
+        <if test="model.condition != null  and model.condition != ''">and ${model.condition}</if>
+        order by ${model.orderField} ${model.orderType} limit ${model.pageIndex},${model.pageSize}
+    </select>
+
+    <select id="getRecordByNo" resultMap="FlowFlowarchivsResult">
+        <include refid="selectFlowFlowarchivsVo"/>
+        where delete_flag='1' and app_code=#{appCode} and archv_no = #{no}
+    </select>
+
+    <select id="getRecordNameByNo" resultType="String">
+        select flow_name from flow_flowarchivs
+        where delete_flag='1' and app_code=#{appCode} and archv_no = #{no}
+    </select>
+
+    <select id="getCountByCondition" resultType="Integer">
+        select count(*) from flow_flowarchivs
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </select>
+
+    <insert id="AddNewRecord" parameterType="FlowFlowarchivs" useGeneratedKeys="true" keyProperty="id">
+        insert into flow_flowarchivs (
+        <if test="info.archvNo != null  and info.archvNo != ''">archv_no,</if>
+        <if test="info.flowNo != null  and info.flowNo != ''">flow_no,</if>
+        <if test="info.flowName != null  and info.flowName != ''">flow_name,</if>
+        <if test="info.flowTitle != null  and info.flowTitle != ''">flow_title,</if>
+        <if test="info.stepNo != null  and info.stepNo != ''">step_no,</if>
+        <if test="info.stepName != null  and info.stepName != ''">step_name,</if>
+        <if test="info.taskNo != null  and info.taskNo != ''">task_no,</if>
+        <if test="info.groupNo != null  and info.groupNo != ''">group_no,</if>
+        <if test="info.instanceNo != null  and info.instanceNo != ''">instance_no,</if>
+        <if test="info.contents != null  and info.contents != ''">contents,</if>
+        <if test="info.writeTime != null ">write_time,</if>
+        <if test="info.writeNote != null  and info.writeNote != ''">write_note,</if>
+        <if test="info.rarFiles != null  and info.rarFiles != ''">rar_files,</if>
+        <if test="info.pdfFiles != null  and info.pdfFiles != ''">pdf_files,</if>
+        <if test="info.userNo != null  and info.userNo != ''">user_no,</if>
+        <if test="info.userName != null  and info.userName != ''">user_name,</if>
+        <if test="info.checkState != null  and info.checkState != ''">check_state,</if>
+        <if test="info.createBy != null  and info.createBy != ''">create_by,</if>
+        <if test="info.createTime != null ">create_time,</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">update_by,</if>
+        <if test="info.updateTime != null ">update_time,</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag,</if>
+        <if test="info.comments != null  and info.comments != ''">comments,</if>
+        <if test="info.appCode != null  and info.appCode != ''">app_code,</if>
+        <if test="info.version != null ">version</if>
+        )values(
+        <if test="info.archvNo != null  and info.archvNo != ''">#{info.archvNo},</if>
+        <if test="info.flowNo != null  and info.flowNo != ''">#{info.flowNo},</if>
+        <if test="info.flowName != null  and info.flowName != ''">#{info.flowName},</if>
+        <if test="info.flowTitle != null  and info.flowTitle != ''">#{info.flowTitle},</if>
+        <if test="info.stepNo != null  and info.stepNo != ''">#{info.stepNo},</if>
+        <if test="info.stepName != null  and info.stepName != ''">#{info.stepName},</if>
+        <if test="info.taskNo != null  and info.taskNo != ''">#{info.taskNo},</if>
+        <if test="info.groupNo != null  and info.groupNo != ''">#{info.groupNo},</if>
+        <if test="info.instanceNo != null  and info.instanceNo != ''">#{info.instanceNo},</if>
+        <if test="info.contents != null  and info.contents != ''">#{info.contents},</if>
+        <if test="info.writeTime != null ">#{info.writeTime},</if>
+        <if test="info.writeNote != null  and info.writeNote != ''">#{info.writeNote},</if>
+        <if test="info.rarFiles != null  and info.rarFiles != ''">#{info.rarFiles},</if>
+        <if test="info.pdfFiles != null  and info.pdfFiles != ''">#{info.pdfFiles},</if>
+        <if test="info.userNo != null  and info.userNo != ''">#{info.userNo},</if>
+        <if test="info.userName != null  and info.userName != ''">#{info.userName},</if>
+        <if test="info.checkState != null  and info.checkState != ''">#{info.checkState},</if>
+        <if test="info.createBy != null  and info.createBy != ''">#{info.createBy},</if>
+        <if test="info.createTime != null ">#{info.createTime},</if>
+        <if test="info.updateBy != null  and info.updateBy != ''">#{info.updateBy},</if>
+        <if test="info.updateTime != null ">#{info.updateTime},</if>
+        <if test="info.deleteFlag != null  and info.deleteFlag != ''">#{info.deleteFlag},</if>
+        <if test="info.comments != null  and info.comments != ''">#{info.comments},</if>
+        <if test="info.appCode != null  and info.appCode != ''">#{info.appCode},</if>
+        <if test="info.version != null ">#{info.version}</if>
+        )
+    </insert>
+
+    <update id="UpdateRecord" parameterType="FlowFlowarchivs">
+        update flow_flowarchivs
+        <set>
+            <if test="info.archvNo != null  and info.archvNo != ''">archv_no = #{info.archvNo},</if>
+            <if test="info.flowNo != null  and info.flowNo != ''">flow_no = #{info.flowNo},</if>
+            <if test="info.flowName != null  and info.flowName != ''">flow_name = #{info.flowName},</if>
+            <if test="info.flowTitle != null  and info.flowTitle != ''">flow_title = #{info.flowTitle},</if>
+            <if test="info.stepNo != null  and info.stepNo != ''">step_no = #{info.stepNo},</if>
+            <if test="info.stepName != null  and info.stepName != ''">step_name = #{info.stepName},</if>
+            <if test="info.taskNo != null  and info.taskNo != ''">task_no = #{info.taskNo},</if>
+            <if test="info.groupNo != null  and info.groupNo != ''">group_no = #{info.groupNo},</if>
+            <if test="info.instanceNo != null  and info.instanceNo != ''">instance_no = #{info.instanceNo},</if>
+            <if test="info.contents != null  and info.contents != ''">contents = #{info.contents},</if>
+            <if test="info.writeTime != null ">write_time = #{info.writeTime},</if>
+            <if test="info.writeNote != null  and info.writeNote != ''">write_note = #{info.writeNote},</if>
+            <if test="info.rarFiles != null  and info.rarFiles != ''">rar_files = #{info.rarFiles},</if>
+            <if test="info.pdfFiles != null  and info.pdfFiles != ''">pdf_files = #{info.pdfFiles},</if>
+            <if test="info.userNo != null  and info.userNo != ''">user_no = #{info.userNo},</if>
+            <if test="info.userName != null  and info.userName != ''">user_name = #{info.userName},</if>
+            <if test="info.checkState != null  and info.checkState != ''">check_state = #{info.checkState},</if>
+            <if test="info.createBy != null  and info.createBy != ''">create_by = #{info.createBy},</if>
+            <if test="info.createTime != null ">create_time = #{info.createTime},</if>
+            <if test="info.updateBy != null  and info.updateBy != ''">update_by = #{info.updateBy},</if>
+            <if test="info.updateTime != null ">update_time = #{info.updateTime},</if>
+            <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag = #{info.deleteFlag},</if>
+            <if test="info.comments != null  and info.comments != ''">comments = #{info.comments},</if>
+            <if test="info.appCode != null  and info.appCode != ''">app_code = #{info.appCode},</if>
+            <if test="info.version != null ">version = #{info.version}</if>
+        </set>
+        where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and archv_no =
+        #{info.archvNo}
+    </update>
+
+    <delete id="HardDeleteByNo">
+        delete from flow_flowarchivs
+        where delete_flag='1' and app_code=#{appCode} and archv_no = #{no}
+    </delete>
+
+    <delete id="HardDeleteByNos">
+        delete from flow_flowarchivs
+        where delete_flag='1' and app_code=#{appCode} and archv_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="HardDeleteByCondition">
+        delete from flow_flowarchivs
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </delete>
+
+    <delete id="SoftDeleteByNo">
+        update flow_flowarchivs set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and archv_no = #{no}
+    </delete>
+
+    <delete id="SoftDeleteByNos">
+        update flow_flowarchivs set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode} and archv_no in
+        <foreach item="no" collection="nos" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+    <delete id="SoftDeleteByCondition">
+        update flow_flowarchivs set delete_flag='0'
+        where delete_flag='1' and app_code=#{appCode}
+        <if test="condition != null  and condition != ''">and ${condition}</if>
+    </delete>
+
+</mapper>

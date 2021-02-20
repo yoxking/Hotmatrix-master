@@ -7,13 +7,14 @@
     <resultMap type="SysSuserinfo" id="SysSuserinfoResult">
         <result property="id" column="id"/>
         <result property="userNo" column="user_no"/>
-        <result property="deptNo" column="dept_no"/>
-        <result property="orgzNo" column="orgz_no"/>
         <result property="loginName" column="login_name"/>
         <result property="password" column="password"/>
         <result property="userCnname" column="user_cnname"/>
         <result property="userEnname" column="user_enname"/>
         <result property="userType" column="user_type"/>
+        <result property="deptNo" column="dept_no"/>
+        <result property="orgzNo" column="orgz_no"/>
+        <result property="postNo" column="post_no"/>
         <result property="telephone" column="telephone"/>
         <result property="email" column="email"/>
         <result property="sex" column="sex"/>
@@ -34,7 +35,7 @@
     </resultMap>
 
     <sql id="selectSysSuserinfoVo">
-        select id, user_no, dept_no, orgz_no, login_name, password, user_cnname, user_enname, user_type, telephone, email, sex, avatar, salt, login_ip, login_date, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_suserinfo
+        select id, user_no, login_name, password, user_cnname, user_enname, user_type, dept_no, orgz_no, post_no, telephone, email, sex, avatar, salt, login_ip, login_date, check_state, branch_no, create_by, create_time, update_by, update_time, delete_flag, comments, app_code, version from sys_suserinfo
     </sql>
 
     <select id="getAllRecords" resultMap="SysSuserinfoResult">
@@ -73,13 +74,14 @@
     <insert id="AddNewRecord" parameterType="SysSuserinfo" useGeneratedKeys="true" keyProperty="id">
         insert into sys_suserinfo (
         <if test="info.userNo != null  and info.userNo != ''">user_no,</if>
-        <if test="info.deptNo != null  and info.deptNo != ''">dept_no,</if>
-        <if test="info.orgzNo != null  and info.orgzNo != ''">orgz_no,</if>
         <if test="info.loginName != null  and info.loginName != ''">login_name,</if>
         <if test="info.password != null  and info.password != ''">password,</if>
         <if test="info.userCnname != null  and info.userCnname != ''">user_cnname,</if>
         <if test="info.userEnname != null  and info.userEnname != ''">user_enname,</if>
         <if test="info.userType != null  and info.userType != ''">user_type,</if>
+        <if test="info.deptNo != null  and info.deptNo != ''">dept_no,</if>
+        <if test="info.orgzNo != null  and info.orgzNo != ''">orgz_no,</if>
+        <if test="info.postNo != null  and info.postNo != ''">post_no,</if>
         <if test="info.telephone != null  and info.telephone != ''">telephone,</if>
         <if test="info.email != null  and info.email != ''">email,</if>
         <if test="info.sex != null  and info.sex != ''">sex,</if>
@@ -99,13 +101,14 @@
         <if test="info.version != null ">version</if>
         )values(
         <if test="info.userNo != null  and info.userNo != ''">#{info.userNo},</if>
-        <if test="info.deptNo != null  and info.deptNo != ''">#{info.deptNo},</if>
-        <if test="info.orgzNo != null  and info.orgzNo != ''">#{info.orgzNo},</if>
         <if test="info.loginName != null  and info.loginName != ''">#{info.loginName},</if>
         <if test="info.password != null  and info.password != ''">#{info.password},</if>
         <if test="info.userCnname != null  and info.userCnname != ''">#{info.userCnname},</if>
         <if test="info.userEnname != null  and info.userEnname != ''">#{info.userEnname},</if>
         <if test="info.userType != null  and info.userType != ''">#{info.userType},</if>
+        <if test="info.deptNo != null  and info.deptNo != ''">#{info.deptNo},</if>
+        <if test="info.orgzNo != null  and info.orgzNo != ''">#{info.orgzNo},</if>
+        <if test="info.postNo != null  and info.postNo != ''">#{info.postNo},</if>
         <if test="info.telephone != null  and info.telephone != ''">#{info.telephone},</if>
         <if test="info.email != null  and info.email != ''">#{info.email},</if>
         <if test="info.sex != null  and info.sex != ''">#{info.sex},</if>
@@ -130,13 +133,14 @@
         update sys_suserinfo
         <set>
             <if test="info.userNo != null  and info.userNo != ''">user_no = #{info.userNo},</if>
-            <if test="info.deptNo != null  and info.deptNo != ''">dept_no = #{info.deptNo},</if>
-            <if test="info.orgzNo != null  and info.orgzNo != ''">orgz_no = #{info.orgzNo},</if>
             <if test="info.loginName != null  and info.loginName != ''">login_name = #{info.loginName},</if>
             <if test="info.password != null  and info.password != ''">password = #{info.password},</if>
             <if test="info.userCnname != null  and info.userCnname != ''">user_cnname = #{info.userCnname},</if>
             <if test="info.userEnname != null  and info.userEnname != ''">user_enname = #{info.userEnname},</if>
             <if test="info.userType != null  and info.userType != ''">user_type = #{info.userType},</if>
+            <if test="info.deptNo != null  and info.deptNo != ''">dept_no = #{info.deptNo},</if>
+            <if test="info.orgzNo != null  and info.orgzNo != ''">orgz_no = #{info.orgzNo},</if>
+            <if test="info.postNo != null  and info.postNo != ''">post_no = #{info.postNo},</if>
             <if test="info.telephone != null  and info.telephone != ''">telephone = #{info.telephone},</if>
             <if test="info.email != null  and info.email != ''">email = #{info.email},</if>
             <if test="info.sex != null  and info.sex != ''">sex = #{info.sex},</if>
@@ -153,7 +157,7 @@
             <if test="info.deleteFlag != null  and info.deleteFlag != ''">delete_flag = #{info.deleteFlag},</if>
             <if test="info.comments != null  and info.comments != ''">comments = #{info.comments},</if>
             <if test="info.appCode != null  and info.appCode != ''">app_code = #{info.appCode},</if>
-            <if test="info.version != null ">version = version+1</if>
+            <if test="info.version != null ">version = #{info.version},</if>
         </set>
         where delete_flag='1' and app_code=#{info.appCode} and version=#{info.version} and user_no = #{info.userNo}
     </update>
@@ -198,7 +202,7 @@
 
     <select id="getRecordByLoginName" resultMap="SysSuserinfoResult">
         <include refid="selectSysSuserinfoVo"/>
-        where delete_flag='1'  and login_name = #{loginName}
+        where delete_flag='1' and login_name = #{loginName}
     </select>
 
     <select id="getRecordByTelephone" resultMap="SysSuserinfoResult">

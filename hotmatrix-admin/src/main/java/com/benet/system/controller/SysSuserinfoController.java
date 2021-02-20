@@ -1,17 +1,18 @@
 package com.benet.system.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PageRequest;
-import com.benet.common.utils.date.DateUtils;
 import com.benet.common.utils.file.FileUploadUtils;
 import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
 import com.benet.framework.utils.SecurityUtils;
+import com.benet.system.vmodel.ItemObjectVo;
 import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,41 @@ public class SysSuserinfoController extends BaseController {
         int count = sysSuserinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
         List<SysSuserinfo> list = sysSuserinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
+    }
+
+    /**
+     * 查询内容类型列表
+     */
+    @PreAuthorize("@ps.hasPermit('system:suserinfo:list')")
+    @GetMapping(value = "/tree")
+    public TableDataInfo tree()
+    {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysSuserinfoService.getCountByCondition(loginUser.getUser().getAppCode(),"");
+        List<ItemObjectVo> list = buildItemTree(loginUser.getUser().getAppCode());
+        return getDataTable(list, count);
+    }
+
+    private List<ItemObjectVo> buildItemTree(String appCode) {
+
+        List<ItemObjectVo> itemTree = null;
+        ItemObjectVo item = null;
+        List<SysSuserinfo> infoList = sysSuserinfoService.getAllRecords(appCode);
+
+        if (infoList != null && infoList.size() > 0) {
+            itemTree = new ArrayList<>();
+            for (SysSuserinfo info : infoList) {
+                item = new ItemObjectVo();
+                item.setId(info.getUserNo());
+                item.setKey(info.getUserNo());
+                item.setTitle(info.getUserCnname());
+                item.setValue(info.getUserNo());
+                item.setChildren(null);
+
+                itemTree.add(item);
+            }
+        }
+        return itemTree;
     }
 
     /**

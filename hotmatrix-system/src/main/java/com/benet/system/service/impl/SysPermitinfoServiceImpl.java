@@ -2,13 +2,9 @@ package com.benet.system.service.impl;
 
 import java.util.*;
 
-import com.benet.common.configure.GlobalConfig;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.date.DateUtils;
-import com.benet.system.domain.SysDepartment;
-import com.benet.system.mapper.SysRolepermitMapper;
-import com.benet.system.mapper.SysSuserroleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.benet.system.mapper.SysPermitinfoMapper;

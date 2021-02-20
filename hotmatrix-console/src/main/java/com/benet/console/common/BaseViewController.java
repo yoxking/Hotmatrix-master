@@ -5,7 +5,7 @@ import com.benet.common.core.domain.AjaxResult.Type;
 import com.benet.common.utils.string.StringUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.console.security.LoginRuser;
-import com.benet.console.utils.ShiroUtils;
+import com.benet.console.utils.ShiroHelper;
 import com.benet.console.vmodel.LoginerVo;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +23,7 @@ public class BaseViewController {
     public LoginerVo getLoginer(){
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        LoginRuser ruser = ShiroUtils.getLoginRuser();
+        LoginRuser ruser = ShiroHelper.getLoginRuser();
         LoginerVo loginer=new LoginerVo();
 
         loginer.setRuserNo(ruser.getUser().getUserNo());

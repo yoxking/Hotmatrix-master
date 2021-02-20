@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: headblock('心理测评中心-在线测评')"/>
+</head>
+<body>
+<div class="wrapper">
+    <th:block th:include="include :: topsimpbar"/>
+
+    <section class="videso_section">
+        <div class="info-pr-sec">
+            <div class="container">
+                <div class="vcp_inf cr">
+					<span class="vc_hd">
+						<img th:src="(${loginer.ruserAvatar} == '') ? @{/imgs/profile.jpg} : @{${loginer.ruserAvatar}}"
+                             alt="用户头像">
+					</span>
+                    <div class="vc_info pr">
+                        <h4>[[${loginer.rnickName}]] <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+                        <span>测试次数：4次</span>
+                    </div>
+                </div><!--vcp_inf end-->
+                <ul class="chan_cantrz">
+                    <li>
+                        <a href="#" title="" class="donate">提交</a>
+                    </li>
+                    <li>
+                        <a href="#" title="" class="subscribe">暂存</a>
+                    </li>
+                </ul><!--chan_cantrz end-->
+                <div class="clearfix"></div>
+            </div>
+        </div><!--info-pr-sec end-->
+        <div class="history-lst tbY">
+            <div class="container">
+                <input type="hidden" id="paperNo" name="paperNo" th:value="${examsInfo.examsNo}">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about_tab" role="tab"
+                           aria-controls="about-tab" aria-selected="false">[[${examsInfo.examsTitle}]]</a>
+                    </li>
+                </ul><!--nav-tabs end-->
+                <div class="clearfix"></div>
+            </div>
+        </div><!--history-lst end-->
+        <div class="tab-content p-0" id="myTabContent">
+            <div class="tab-pane fade show active" id="about_tab" role="tabpanel" aria-labelledby="about-tab">
+                <div class="about_tab_content">
+                    <div class="container">
+                        <div class="description">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div th:each="qeustInfo:${pagerInfo.list}">
+                                        <div class="decp_cotnet">
+                                            <h2 class="ab-fd">第[[${pagerInfo.pageIndex}]]题：[[${qeustInfo.questTitle}]] </h2>
+                                            <p>[[${qeustInfo.questDesc}]]</p>
+                                            <input type="hidden" id="questNo" name="questNo"
+                                                   th:value="${qeustInfo.questNo}"/>
+                                            <input type="hidden" id="questMust" name="questMust"
+                                                   th:value="${qeustInfo.questMust}"/>
+                                            <input type="hidden" id="questType" name="questType"
+                                                   th:value="${qeustInfo.questType}"/>
+                                        </div><!--abt-founder end-->
+                                        <div class="link-pr" th:if="${qeustInfo.questType=='1'}">
+                                            <ul>
+                                                <li>
+                                                    <textarea class="form-control" rows="5" name="optValue"></textarea>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="link-pr" th:if="${qeustInfo.questType=='2'}">
+                                            <ul>
+                                                <li th:each="qoptInfo,status:${qeustInfo.questOpts}" style="padding-left: 20px;">
+                                                    <input type="checkbox" name="optValue" class="form-check-input"/>[[${status.index+1}]].[[${qoptInfo.optsTitle}]]
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="link-pr" th:if="${qeustInfo.questType=='3'}">
+                                            <ul>
+                                                <li th:each="qoptInfo,status:${qeustInfo.questOpts}" style="padding-left: 20px;">
+                                                    <input type="radio" name="optValue" class="form-check-input"/>[[${status.index+1}]].[[${qoptInfo.optsTitle}]]
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="link-pr">
+                                        <p style="text-align: right;">
+                                            <a th:if="${pagerInfo.pageIndex>1}" th:href="@{/examsview/collect(mflowNo=${mflowNo},pageIndex=${pagerInfo.pageIndex-1})}" title="上一题" style="color:#4a90e2;margin: 0 8px;">上一题</a>
+                                            <a th:if="${pagerInfo.pageIndex<pagerInfo.pageTotal}" th:href="@{/examsview/collect(mflowNo=${mflowNo},pageIndex=${pagerInfo.pageIndex+1})}" title="下一题" style="color:#4a90e2;margin: 0 8px;">下一题</a>
+                                        </p>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="stats">
+                                        <h2 class="ab-fd" style="font-weight: bold;">答题统计</h2>
+                                        <ul>
+                                            <li>已完成[[${pagerInfo.pageIndex}]]/[[${pagerInfo.pageTotal}]]题</li>
+                                            <li>已用时30/120分钟</li>
+                                            <li>已标记5题</li>
+                                            <li>当前时间：9:00</li>
+                                        </ul>
+                                    </div><!--stats end-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--about_tab_content end-->
+            </div>
+        </div>
+    </section><!--Featured Videos end-->
+
+    <th:block th:include="include :: copyright"/>
+</div><!--wrapper end-->
+
+<th:block th:include="include :: scriptblock"/>
+<script type="text/javascript">
+    $(document).ready(function () {
+    });
+
+</script>
+</body>
+</html>

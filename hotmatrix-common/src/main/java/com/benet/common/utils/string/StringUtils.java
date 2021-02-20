@@ -1,9 +1,9 @@
 package com.benet.common.utils.string;
 
 import com.benet.common.core.text.StringFormatter;
+import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 字符串工具类
@@ -401,5 +401,61 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
     public static <T> T cast(Object obj)
     {
         return (T) obj;
+    }
+
+    public static String addSplitStr(String srcStr,String tgtStr,String splitStr){
+
+        try {
+            List<String> myArr = null;
+            if (StringUtils.isNotEmpty(srcStr)) {
+                myArr = new ArrayList<>(Arrays.asList(srcStr.split(splitStr)));
+                if (!myArr.contains(tgtStr)) {
+                    myArr.add(tgtStr);
+                }
+            } else {
+                myArr = new ArrayList<>();
+                myArr.add(tgtStr);
+            }
+            return StringUtils.join(myArr.toArray(), splitStr);
+        }
+        catch (Exception e){
+            return "";
+        }
+    }
+
+    public static String delSplitStr(String srcStr,String tgtStr,String splitStr){
+
+        try {
+            List<String> myArr = null;
+            if (StringUtils.isNotEmpty(srcStr)) {
+                myArr = new ArrayList<>(Arrays.asList(srcStr.split(splitStr)));
+                if (myArr.contains(tgtStr)) {
+                    myArr.remove(tgtStr);
+                }
+                return StringUtils.join(myArr.toArray(), splitStr);
+            }
+            return "";
+        }
+        catch (Exception e){
+            return "";
+        }
+    }
+
+    /**
+     * 将List<String>集合 转化为String
+     * 如{"aaa","bbb"} To 'aaa','bbb'
+     */
+    public static String listToString(List<String> strlist){
+        StringBuffer sb = new StringBuffer();
+        if(CollectionUtils.isNotEmpty(strlist)){
+            for (int i=0;i<strlist.size();i++) {
+                if(i==0){
+                    sb.append("'").append(strlist.get(i)).append("'");
+                }else{
+                    sb.append(",").append("'").append(strlist.get(i)).append("'");
+                }
+            }
+        }
+        return sb.toString();
     }
 }

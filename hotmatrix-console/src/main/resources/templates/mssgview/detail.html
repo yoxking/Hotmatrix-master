@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: headblock('心理测评中心-控制台')" />
+</head>
+<body>
+<div class="wrapper hp_1">
+    <th:block th:include="include :: topsimpbar" />
+
+    <section class="mn-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mn-vid-sc single_video">
+                        <div class="vid-1">
+                            <div class="vid-info">
+                                <h3>[[${mssgInfo.mtitle}]]</h3>
+                                <div class="info-pr">
+                                    <span>接收时间：[[${mssgInfo.recTime}]] &nbsp;&nbsp;&nbsp;&nbsp;发送者：[[${mssgInfo.msender}]] </span>
+                                    <div class="clearfix"></div>
+                                </div><!--info-pr end-->
+                            </div><!--vid-info end-->
+                        </div><!--vid-1 end-->
+                        <div class="vid-desc">
+                            <p>
+                                [[${mssgInfo.mcontent}]]
+                            </p><!--about-ch-sec end-->
+                        </div><!--abt-mk end-->
+                    </div><!--mn-vid-sc end--->
+                </div><!---col-lg-9 end-->
+            </div>
+        </div>
+    </section><!--mn-sec end-->
+
+    <th:block th:include="include :: copyright" />
+</div>
+<!--wrapper end-->
+
+<th:block th:include="include :: scriptblock" />
+</body>
+
+</html>

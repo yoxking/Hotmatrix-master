@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: headblock('心理测评中心-消息中心')" />
+</head>
+<body>
+<div class="wrapper hp_1">
+    <th:block th:include="include :: topmenubar" />
+
+    <th:block th:include="include :: sidemenubar" />
+
+    <section class="ab-history">
+        <div class="history-lst">
+            <div class="container">
+                <div class="history-hd-head">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="watch_history_tab" data-toggle="tab" href="#watch_history" role="tab" aria-controls="watch_history_tab" aria-selected="true">我的消息</a>
+                        </li>
+                    </ul><!--nav-tabs end-->
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="watch_history" role="tabpanel" aria-labelledby="watch_history_tab">
+                    <div class="tabs_lzt">
+                        <div class="tab-history" th:each="msgInfo:${pagerInfo.list}">
+                            <div class="videoo">
+                                <div class="video_info ms">
+                                    <h3><a th:href="@{/mssgview/detail(id=${msgInfo.msgNo})}" target="_blank" th:title="${msgInfo.mtitle}">[[${msgInfo.mtitle}]]</a></h3>
+                                    <h4><a th:href="@{/mssgview/detail(id=${msgInfo.msgNo})}" target="_blank" th:title="${msgInfo.mtitle}">[[${msgInfo.msender}]]</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+                                    <span>状态:[[${msgInfo.readState}]]    时间:<small class="posted_dt">[[${msgInfo.recTime}]]</small></span>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div><!--videoo end-->
+                        </div><!--tab-history end-->
+                    </div><!--tabs_lz end-->
+                </div>
+            </div>
+        </div>
+    </section><!--ab-history end-->
+
+    <th:block th:include="include :: copyright" />
+</div>
+<!--wrapper end-->
+
+<th:block th:include="include :: scriptblock" />
+</body>
+
+</html>

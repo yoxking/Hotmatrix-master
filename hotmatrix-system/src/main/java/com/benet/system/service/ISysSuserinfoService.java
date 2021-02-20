@@ -3,7 +3,6 @@ package com.benet.system.service;
 import java.util.List;
 import com.benet.common.core.pager.PagingModel;
 import com.benet.system.domain.SysSuserinfo;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * 系统用户信息Service接口

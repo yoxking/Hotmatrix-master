@@ -20,7 +20,8 @@
                             <div th:each="reptInfo:${pagerInfo.list}" class="col-lg-3 col-md-3 col-sm-6 col-6 full_wdth">
                                 <div class="videoo">
                                     <div class="vid_thumbainl">
-                                        <a th:href="@{/reportview/detail(id=${reptInfo.reptNo})}" title="">
+                                        <a th:href="@{/reportview/detail(id=${reptInfo.reptNo})}" th:title="${reptInfo.reptName}" target="_blank">
+                                            <img th:src="(${reptInfo.reptImage} == '') ? @{/imgs/resources/vide6.png} : @{${exams.examsPoster}}" alt="海报图片">
                                             <img src="images/resources/vide1.png" alt="">
                                         </a>
                                     </div><!--vid_thumbnail end-->

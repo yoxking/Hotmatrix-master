@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<bean id="com.benet.leaveapp.RoleDepartmentBasedAssignmentHandler"
+		class="com.benet.leaveapp.RoleDepartmentBasedAssignmentHandler">
+		</bean>
+	<bean id="com.benet.leaveapp.CurrentUserAssignmentHandler"
+		class="com.benet.leaveapp.CurrentUserAssignmentHandler">
+		</bean>
+	<bean id="com.benet.leaveapp.EmailSender"
+		class="com.benet.leaveapp.EmailSender">
+		</bean>
+</beans>

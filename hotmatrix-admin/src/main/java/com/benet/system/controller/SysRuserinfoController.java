@@ -1,11 +1,13 @@
 package com.benet.system.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.benet.common.core.pager.PageRequest;
 import com.benet.common.utils.uuid.UuidUtils;
 import com.benet.common.utils.web.ServletUtils;
 import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
+import com.benet.system.vmodel.ItemObjectVo;
 import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +68,41 @@ public class SysRuserinfoController extends BaseController
         int count = sysRuserinfoService.getCountByCondition(loginUser.getUser().getAppCode(),pRequest.getCondition());
         List<SysRuserinfo> list = sysRuserinfoService.getRecordsByPaging(loginUser.getUser().getAppCode(),pRequest.getPageIndex(), pRequest.getPageSize(), pRequest.getCondition(), "id", "Asc");
         return getDataTable(list, count);
+    }
+
+    /**
+     * 查询内容类型列表
+     */
+    @PreAuthorize("@ps.hasPermit('system:ruserinfo:list')")
+    @GetMapping(value = "/tree")
+    public TableDataInfo tree()
+    {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        int count = sysRuserinfoService.getCountByCondition(loginUser.getUser().getAppCode(),"");
+        List<ItemObjectVo> list = buildItemTree(loginUser.getUser().getAppCode());
+        return getDataTable(list, count);
+    }
+
+    private List<ItemObjectVo> buildItemTree(String appCode) {
+
+        List<ItemObjectVo> itemTree = null;
+        ItemObjectVo item = null;
+        List<SysRuserinfo> infoList = sysRuserinfoService.getAllRecords(appCode);
+
+        if (infoList != null && infoList.size() > 0) {
+            itemTree = new ArrayList<>();
+            for (SysRuserinfo info : infoList) {
+                item = new ItemObjectVo();
+                item.setId(info.getUserNo());
+                item.setKey(info.getUserNo());
+                item.setTitle(info.getUserCnname());
+                item.setValue(info.getUserNo());
+                item.setChildren(null);
+
+                itemTree.add(item);
+            }
+        }
+        return itemTree;
     }
 
     /**

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: headblock('心理测评中心-控制台')" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/loading.css}">
+</head>
+<body>
+<div class="wrapper hp_1">
+    <th:block th:include="include :: topmenubar" />
+
+    <th:block th:include="include :: sidemenubar" />
+
+    <section class="mn-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="mn-vid-sc single_video">
+                        <div class="vid-1">
+                            <div class="vid-info">
+                                <h3>[[${examsInfo.examsTitle}]]</h3>
+                                <div class="info-pr">
+                                    <span>测评次数：[[${examsInfo.examsTimes}]]</span>
+                                    <ul class="pr_links">
+                                        <li>
+                                            <button data-toggle="tooltip" data-placement="top" title="喜欢">
+                                                <i class="icon-thumbs_up_fill"></i>
+                                            </button>
+                                            <span>[[${examsInfo.examsTimes}]]</span>
+                                        </li>
+                                        <li>
+                                            <button data-toggle="tooltip" data-placement="top" title="不喜欢">
+                                                <i class="icon-thumbs_down_fill"></i>
+                                            </button>
+                                            <span>0</span>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div><!--info-pr end-->
+                            </div><!--vid-info end-->
+                        </div><!--vid-1 end-->
+                        <div class="abt-mk">
+                            <div class="info-pr-sec">
+                                <div class="vcp_inf cr">
+                                    <div class="vc_hd">
+                                        <img th:src="(${examsInfo.examsPoster} == '') ? @{/imgs/resources/vide6.png} : @{${examsInfo.examsPoster}}" alt="海报图片">
+                                    </div>
+                                    <div class="vc_info pr">
+                                        <h4>测评用时</h4>
+                                        <span>[[${examsInfo.examsDruation}]]</span>
+                                    </div>
+                                </div><!--vcp_inf end-->
+                                <ul class="chan_cantrz">
+                                    <li>
+                                        <input type="hidden" id="examsNo" name="examsNo" th:value="${examsInfo.examsNo}">
+                                        <a href="#" title="马上测评" onclick="loadit()" class="donate">马上测评</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="" class="subscribe">订阅收藏</a>
+                                    </li>
+                                </ul><!--chan_cantrz end-->
+                                <ul class="df-list">
+                                    <li>
+                                        <button data-toggle="tooltip" data-placement="top" title="分享测评">
+                                            <i class="icon-share"></i>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button data-toggle="tooltip" data-placement="top" title="反馈问题">
+                                            <i class="icon-flag"></i>
+                                        </button>
+                                    </li>
+                                </ul><!--df-list end-->
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="about-ch-sec">
+                                <div class="abt-rw">
+                                    <h4>费用:</h4>
+                                    <p>[[${examsInfo.examsPrice}]]</p>
+                                </div>
+                                <div class="abt-rw">
+                                    <h4>分类 : </h4>
+                                    <ul>
+                                        <li><span>Gaming</span></li>
+                                        <li><span>PS4 Exclusive  </span></li>
+                                        <li><span>Gameplay  </span></li>
+                                        <li><span>1080p</span></li>
+                                    </ul>
+                                </div>
+                                <div class="abt-rw">
+                                    <h4>简介 : </h4>
+                                    <p>[[${examsInfo.examsDesc}]]</p>
+                                </div>
+                                <div class="abt-rw tgs">
+                                    <h4>标签 : </h4>
+                                    <ul>
+                                        <li><a href="#" title="">#[[${examsInfo.examsTitle}]]</a></li>
+                                        <li><a href="#" title="">#denim</a></li>
+                                        <li><a href="#" title="">#tshirt</a></li>
+                                    </ul>
+                                </div>
+                            </div><!--about-ch-sec end-->
+                        </div><!--abt-mk end-->
+                    </div><!--mn-vid-sc end--->
+                </div><!---col-lg-9 end-->
+                <div class="col-lg-3">
+                    <th:block th:include="include :: topexperts" />
+                </div>
+            </div>
+        </div>
+    </section><!--mn-sec end-->
+
+    <th:block th:include="include :: copyright" />
+</div>
+<!--wrapper end-->
+
+<th:block th:include="include :: scriptblock" />
+<script type="text/javascript" th:src="@{/js/loading.js}"></script>
+<script type="text/javascript">
+    function loadit() {
+
+        loading.showLoading({
+            type:1,
+            tip:"正在生成,请稍等..."
+        })
+
+        var examsNo = $("input[name='examsNo']").val();
+        $.ajax({
+            type: "post",
+            url: "/examsview/createExams",
+            data: {
+                "examsNo": examsNo
+            },
+            success: function(res) {
+                if(res.code===200){
+                    loading.hideLoading();
+                    location.href = ctx + 'examsview/collect?mflowNo='+res.msg;
+                }else {
+                    layer.msg(res.msg)
+                }
+            }
+        });
+    }
+</script>
+</body>
+
+</html>

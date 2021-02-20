@@ -1,9 +1,7 @@
 package com.benet.console.controller;
 
 import com.benet.common.core.domain.AjaxResult;
-import com.benet.common.utils.string.StringUtils;
 import com.benet.console.common.BaseViewController;
-import com.benet.console.utils.ShiroUtils;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -102,10 +100,6 @@ public class RuserLoginController extends BaseViewController {
         catch (AuthenticationException e)
         {
             String msg = "用户名或密码错误!";
-            if (StringUtils.isNotEmpty(e.getMessage()))
-            {
-                msg = e.getMessage();
-            }
             return error(msg);
         }
     }

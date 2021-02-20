@@ -9,6 +9,7 @@ public class ExpertInfoVo {
     private String telephone;
     private String email;
     private String avatar;
+    private String profile;
 
     public String getRuserNo() {
         return ruserNo;
@@ -72,5 +73,13 @@ public class ExpertInfoVo {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 }

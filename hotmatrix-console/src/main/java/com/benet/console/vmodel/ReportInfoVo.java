@@ -4,6 +4,7 @@ public class ReportInfoVo {
 
     private String reptNo;
     private String reptName;
+    private String reptImage;
     private String reptType;
     private String reptDesc;
     private String checkState;
@@ -23,6 +24,14 @@ public class ReportInfoVo {
 
     public void setReptName(String reptName) {
         this.reptName = reptName;
+    }
+
+    public String getReptImage() {
+        return reptImage;
+    }
+
+    public void setReptImage(String reptImage) {
+        this.reptImage = reptImage;
     }
 
     public String getReptType() {

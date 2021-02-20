@@ -7,7 +7,6 @@ import com.benet.framework.security.LoginUser;
 import com.benet.framework.security.service.MyJwtokenService;
 import com.benet.framework.security.service.SysLoginService;
 import com.benet.framework.utils.RouterUtils;
-import com.benet.framework.utils.SecurityUtils;
 import com.benet.framework.web.vmodel.RouterVo;
 import com.benet.system.vmodel.RenterInfoVo;
 import com.benet.system.domain.SysPermitinfo;
