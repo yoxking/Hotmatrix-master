@@ -27,7 +27,7 @@
         <oshi.version>4.5.0</oshi.version>
         <velocity.version>1.7</velocity.version>
         <swagger.version>2.9.2</swagger.version>
-        <fastjson.version>1.2.73</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <javajwt.version>0.9.0</javajwt.version>
         <commons.io.version>2.6</commons.io.version>
         <pagehelper.boot.version>1.2.13</pagehelper.boot.version>
